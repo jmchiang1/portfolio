@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jonathan Chiang | UX Designer</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="desktop.css">
+</head>
+<body>
+    <main class="container">
+        <!-- Background Gradient -->
+        <div class="background-gradient"></div>
+
+        <!-- Monitor Frame -->
+        <div class="monitor">
+            <div class="monitor-frame">
+                <div class="monitor-screen desktop-screen">
+                    <!-- macOS-style Wallpaper -->
+                    <div class="desktop-wallpaper"></div>
+
+                    <!-- macOS Menu Bar -->
+                    <div class="macos-menubar">
+                        <div class="menubar-left">
+                            <i class="ph-fill ph-apple-logo"></i>
+                            <span class="menu-item active" id="menuAppName">Finder</span>
+                            <span class="menu-item">File</span>
+                            <span class="menu-item">Edit</span>
+                            <span class="menu-item">View</span>
+                        </div>
+                        <div class="menubar-right">
+                            <i class="ph ph-wifi-high"></i>
+                            <i class="ph ph-battery-full"></i>
+                            <span class="menubar-time" id="menubarTime">12:00 PM</span>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Content (Default View) -->
+                    <div class="desktop-content active" id="desktopView">
+                        <!-- Tagline -->
+                        <div class="desktop-tagline">
+                            <h1 class="tagline-main">Jonathan Chiang</h1>
+                            <p class="tagline-sub">Designing experiences that feel like magic</p>
+                        </div>
+
+                        <!-- Desktop Icons Grid -->
+                        <div class="desktop-icons">
+                            <button class="desktop-folder" data-section="design">
+                                <div class="folder-icon">
+                                    <i class="ph-fill ph-folder"></i>
+                                    <span class="folder-badge">
+                                        <i class="ph ph-figma-logo"></i>
+                                    </span>
+                                </div>
+                                <span class="folder-label">Design</span>
+                            </button>
+                            <button class="desktop-folder" data-section="code">
+                                <div class="folder-icon">
+                                    <i class="ph-fill ph-folder"></i>
+                                    <span class="folder-badge">
+                                        <i class="ph ph-code"></i>
+                                    </span>
+                                </div>
+                                <span class="folder-label">Code</span>
+                            </button>
+                            <button class="desktop-folder" data-section="motion">
+                                <div class="folder-icon">
+                                    <i class="ph-fill ph-folder"></i>
+                                    <span class="folder-badge">
+                                        <i class="ph ph-circle-half"></i>
+                                    </span>
+                                </div>
+                                <span class="folder-label">Motion</span>
+                            </button>
+                            <button class="desktop-folder" data-section="about">
+                                <div class="folder-icon">
+                                    <i class="ph-fill ph-folder"></i>
+                                    <span class="folder-badge">
+                                        <i class="ph ph-user-circle"></i>
+                                    </span>
+                                </div>
+                                <span class="folder-label">About</span>
+                            </button>
+                        </div>
+
+                        <!-- Widgets Area -->
+                        <div class="desktop-widgets">
+                            <!-- Weather Widget -->
+                            <div class="weather-widget">
+                                <div class="weather-location">
+                                    <i class="ph ph-map-pin"></i>
+                                    <span>San Francisco, CA</span>
+                                </div>
+                                <div class="weather-main">
+                                    <div class="weather-icon">
+                                        <i class="ph ph-sun"></i>
+                                    </div>
+                                    <div class="weather-temp">72°</div>
+                                </div>
+                                <div class="weather-details">
+                                    <span class="weather-condition">Sunny</span>
+                                    <span class="weather-range">H:78° L:62°</span>
+                                </div>
+                            </div>
+
+                            <!-- Sticky Note 1 -->
+                            <div class="sticky-note sticky-yellow">
+                                <div class="sticky-header">
+                                    <span class="sticky-date">Pinned</span>
+                                </div>
+                                <p class="sticky-content">Currently exploring the intersection of AI and human-centered design.</p>
+                            </div>
+
+                            <!-- Sticky Note 2 -->
+                            <div class="sticky-note sticky-blue">
+                                <div class="sticky-header">
+                                    <span class="sticky-date">Note</span>
+                                </div>
+                                <p class="sticky-content">Open to new opportunities! Let's create something amazing together.</p>
+                            </div>
+
+                            <!-- Spotify Widget -->
+                            <div class="spotify-embed-wrapper">
+                                <iframe
+                                    src="https://open.spotify.com/embed/track/2aL4lMGhWdPpyPL6COPou7?utm_source=generator&theme=0&autoplay=1"
+                                    width="100%"
+                                    height="152"
+                                    frameBorder="0"
+                                    allowfullscreen=""
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    loading="eager"
+                                    style="border-radius: 12px;">
+                                </iframe>
+                            </div>
+                        </div>
+
+                        <!-- Photo Widget (Bottom Center) -->
+                        <div class="photo-widget">
+                            <div class="photo-frame">
+                                <img src="https://picsum.photos/300/200?random=50" alt="Memory" class="photo-image">
+                            </div>
+                            <div class="photo-caption">
+                                <i class="ph ph-heart-fill"></i>
+                                <span>Adventure awaits</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DESIGN Section Window -->
+                    <div class="macos-window finder-window" id="designSection" data-section="design">
+                        <div class="window-titlebar">
+                            <div class="window-controls">
+                                <button class="window-btn window-close" data-action="close" aria-label="Close"></button>
+                                <button class="window-btn window-minimize" aria-label="Minimize"></button>
+                                <button class="window-btn window-maximize" aria-label="Maximize"></button>
+                            </div>
+                            <span class="window-title">Design</span>
+                            <div class="window-toolbar">
+                                <div class="toolbar-group">
+                                    <button class="toolbar-btn" title="Back"><i class="ph ph-caret-left"></i></button>
+                                    <button class="toolbar-btn" title="Forward"><i class="ph ph-caret-right"></i></button>
+                                </div>
+                                <div class="toolbar-group view-options">
+                                    <button class="toolbar-btn active" title="Grid View"><i class="ph ph-squares-four"></i></button>
+                                    <button class="toolbar-btn" title="List View"><i class="ph ph-list"></i></button>
+                                    <button class="toolbar-btn" title="Column View"><i class="ph ph-columns"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="finder-body">
+                            <div class="finder-content">
+                                <div class="finder-path">
+                                    <span class="path-item"><i class="ph ph-house"></i></span>
+                                    <i class="ph ph-caret-right path-separator"></i>
+                                    <span class="path-item">Projects</span>
+                                    <i class="ph ph-caret-right path-separator"></i>
+                                    <span class="path-item current">Design</span>
+                                </div>
+                                <div class="projects-grid">
+                                <article class="project-card" data-project="1">
+                                    <div class="project-thumbnail">
+                                        <img src="https://picsum.photos/400/300?random=10" alt="Design System" loading="lazy">
+                                    </div>
+                                    <div class="project-info">
+                                        <div class="project-tags">
+                                            <span class="tag tag-category">UI/UX</span>
+                                            <span class="tag tag-type">Design System</span>
+                                        </div>
+                                        <h3 class="project-name">Enterprise Design System</h3>
+                                        <p class="project-description">Scalable component library for enterprise applications.</p>
+                                    </div>
+                                </article>
+                                <article class="project-card" data-project="2">
+                                    <div class="project-thumbnail">
+                                        <img src="https://picsum.photos/400/300?random=11" alt="Mobile Banking" loading="lazy">
+                                    </div>
+                                    <div class="project-info">
+                                        <div class="project-tags">
+                                            <span class="tag tag-category">Mobile</span>
+                                            <span class="tag tag-type">Fintech</span>
+                                        </div>
+                                        <h3 class="project-name">Mobile Banking App</h3>
+                                        <p class="project-description">Reimagining personal finance management.</p>
+                                    </div>
+                                </article>
+                                <article class="project-card" data-project="3">
+                                    <div class="project-thumbnail">
+                                        <img src="https://picsum.photos/400/300?random=12" alt="E-commerce" loading="lazy">
+                                    </div>
+                                    <div class="project-info">
+                                        <div class="project-tags">
+                                            <span class="tag tag-category">Web</span>
+                                            <span class="tag tag-type">E-commerce</span>
+                                        </div>
+                                        <h3 class="project-name">E-commerce Platform</h3>
+                                        <p class="project-description">Conversion-focused shopping experience.</p>
+                                    </div>
+                                </article>
+                                <article class="project-card" data-project="4">
+                                    <div class="project-thumbnail">
+                                        <img src="https://picsum.photos/400/300?random=13" alt="Healthcare" loading="lazy">
+                                    </div>
+                                    <div class="project-info">
+                                        <div class="project-tags">
+                                            <span class="tag tag-category">Dashboard</span>
+                                            <span class="tag tag-type">Healthcare</span>
+                                        </div>
+                                        <h3 class="project-name">Healthcare Dashboard</h3>
+                                        <p class="project-description">Patient management made simple.</p>
+                                    </div>
+                                </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CODE Section Window -->
+                    <div class="macos-window finder-window" id="codeSection" data-section="code">
+                        <div class="window-titlebar">
+                            <div class="window-controls">
+                                <button class="window-btn window-close" data-action="close" aria-label="Close"></button>
+                                <button class="window-btn window-minimize" aria-label="Minimize"></button>
+                                <button class="window-btn window-maximize" aria-label="Maximize"></button>
+                            </div>
+                            <span class="window-title">Code</span>
+                            <div class="window-toolbar">
+                                <div class="toolbar-group">
+                                    <button class="toolbar-btn" title="Back"><i class="ph ph-caret-left"></i></button>
+                                    <button class="toolbar-btn" title="Forward"><i class="ph ph-caret-right"></i></button>
+                                </div>
+                                <div class="toolbar-group view-options">
+                                    <button class="toolbar-btn active" title="Grid View"><i class="ph ph-squares-four"></i></button>
+                                    <button class="toolbar-btn" title="List View"><i class="ph ph-list"></i></button>
+                                    <button class="toolbar-btn" title="Column View"><i class="ph ph-columns"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="finder-body">
+                            <div class="finder-content">
+                                <div class="finder-path">
+                                    <span class="path-item"><i class="ph ph-house"></i></span>
+                                    <i class="ph ph-caret-right path-separator"></i>
+                                    <span class="path-item">Projects</span>
+                                    <i class="ph ph-caret-right path-separator"></i>
+                                    <span class="path-item current">Code</span>
+                                </div>
+                                <div class="projects-grid">
+                                    <article class="project-card" data-project="1">
+                                        <div class="project-thumbnail">
+                                            <img src="https://picsum.photos/400/300?random=20" alt="Component Library" loading="lazy">
+                                        </div>
+                                        <div class="project-info">
+                                            <div class="project-tags">
+                                                <span class="tag tag-category">React</span>
+                                                <span class="tag tag-type">TypeScript</span>
+                                            </div>
+                                            <h3 class="project-name">Component Library</h3>
+                                            <p class="project-description">Reusable React components with full TypeScript support.</p>
+                                        </div>
+                                    </article>
+                                    <article class="project-card" data-project="2">
+                                        <div class="project-thumbnail">
+                                            <img src="https://picsum.photos/400/300?random=21" alt="API Platform" loading="lazy">
+                                        </div>
+                                        <div class="project-info">
+                                            <div class="project-tags">
+                                                <span class="tag tag-category">Node.js</span>
+                                                <span class="tag tag-type">Backend</span>
+                                            </div>
+                                            <h3 class="project-name">REST API Platform</h3>
+                                            <p class="project-description">Scalable backend architecture for modern apps.</p>
+                                        </div>
+                                    </article>
+                                    <article class="project-card" data-project="3">
+                                        <div class="project-thumbnail">
+                                            <img src="https://picsum.photos/400/300?random=22" alt="CLI Tool" loading="lazy">
+                                        </div>
+                                        <div class="project-info">
+                                            <div class="project-tags">
+                                                <span class="tag tag-category">Python</span>
+                                                <span class="tag tag-type">CLI</span>
+                                            </div>
+                                            <h3 class="project-name">Developer CLI</h3>
+                                            <p class="project-description">Automation tools for developer workflows.</p>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MOTION Section Window -->
+                    <div class="macos-window finder-window" id="motionSection" data-section="motion">
+                        <div class="window-titlebar">
+                            <div class="window-controls">
+                                <button class="window-btn window-close" data-action="close" aria-label="Close"></button>
+                                <button class="window-btn window-minimize" aria-label="Minimize"></button>
+                                <button class="window-btn window-maximize" aria-label="Maximize"></button>
+                            </div>
+                            <span class="window-title">Motion</span>
+                            <div class="window-toolbar">
+                                <div class="toolbar-group">
+                                    <button class="toolbar-btn" title="Back"><i class="ph ph-caret-left"></i></button>
+                                    <button class="toolbar-btn" title="Forward"><i class="ph ph-caret-right"></i></button>
+                                </div>
+                                <div class="toolbar-group view-options">
+                                    <button class="toolbar-btn active" title="Grid View"><i class="ph ph-squares-four"></i></button>
+                                    <button class="toolbar-btn" title="List View"><i class="ph ph-list"></i></button>
+                                    <button class="toolbar-btn" title="Column View"><i class="ph ph-columns"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="finder-body">
+                            <div class="finder-content">
+                                <div class="finder-path">
+                                    <span class="path-item"><i class="ph ph-house"></i></span>
+                                    <i class="ph ph-caret-right path-separator"></i>
+                                    <span class="path-item">Projects</span>
+                                    <i class="ph ph-caret-right path-separator"></i>
+                                    <span class="path-item current">Motion</span>
+                                </div>
+                                <div class="projects-grid">
+                                    <article class="project-card" data-project="1">
+                                        <div class="project-thumbnail">
+                                            <img src="https://picsum.photos/400/300?random=30" alt="Brand Animation" loading="lazy">
+                                        </div>
+                                        <div class="project-info">
+                                            <div class="project-tags">
+                                                <span class="tag tag-category">Branding</span>
+                                                <span class="tag tag-type">After Effects</span>
+                                            </div>
+                                            <h3 class="project-name">Brand Animation</h3>
+                                            <p class="project-description">Logo reveals and brand identity motion.</p>
+                                        </div>
+                                    </article>
+                                    <article class="project-card" data-project="2">
+                                        <div class="project-thumbnail">
+                                            <img src="https://picsum.photos/400/300?random=31" alt="Micro-interactions" loading="lazy">
+                                        </div>
+                                        <div class="project-info">
+                                            <div class="project-tags">
+                                                <span class="tag tag-category">UI Motion</span>
+                                                <span class="tag tag-type">Lottie</span>
+                                            </div>
+                                            <h3 class="project-name">Micro-interactions</h3>
+                                            <p class="project-description">Delightful UI animations and transitions.</p>
+                                        </div>
+                                    </article>
+                                    <article class="project-card" data-project="3">
+                                        <div class="project-thumbnail">
+                                            <img src="https://picsum.photos/400/300?random=32" alt="Product Demo" loading="lazy">
+                                        </div>
+                                        <div class="project-info">
+                                            <div class="project-tags">
+                                                <span class="tag tag-category">Video</span>
+                                                <span class="tag tag-type">Explainer</span>
+                                            </div>
+                                            <h3 class="project-name">Product Demo Video</h3>
+                                            <p class="project-description">Engaging product showcase videos.</p>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ABOUT Section Window -->
+                    <div class="macos-window" id="aboutSection" data-section="about">
+                        <div class="window-titlebar">
+                            <div class="window-controls">
+                                <button class="window-btn window-close" data-action="close" aria-label="Close"></button>
+                                <button class="window-btn window-minimize" aria-label="Minimize"></button>
+                                <button class="window-btn window-maximize" aria-label="Maximize"></button>
+                            </div>
+                            <span class="window-title">About Me</span>
+                        </div>
+                        <div class="window-content">
+                            <div class="about-content">
+                                <div class="about-header">
+                                    <img src="https://picsum.photos/200/200?random=99" alt="Jonathan Chiang" class="about-avatar">
+                                    <div class="about-intro">
+                                        <h1 class="about-name">Jonathan Chiang</h1>
+                                        <p class="about-role">UX Designer & Developer</p>
+                                    </div>
+                                </div>
+                                <div class="about-bio">
+                                    <p>I'm a product designer passionate about creating intuitive digital experiences that bridge the gap between design and development.</p>
+                                    <p>With expertise in UI/UX design, front-end development, and motion graphics, I bring a holistic approach to building products that users love.</p>
+                                </div>
+                                <div class="about-skills">
+                                    <span class="skill-tag">Figma</span>
+                                    <span class="skill-tag">React</span>
+                                    <span class="skill-tag">TypeScript</span>
+                                    <span class="skill-tag">After Effects</span>
+                                    <span class="skill-tag">Framer</span>
+                                    <span class="skill-tag">Node.js</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Monitor Stand -->
+            <div class="monitor-stand">
+                <div class="monitor-neck"></div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar (loaded dynamically) -->
+        <div id="navbar-container"></div>
+    </main>
+
+    <script src="components/components.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

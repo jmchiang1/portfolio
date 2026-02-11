@@ -1,0 +1,1528 @@
+/* ============================================
+   macOS Tahoe Desktop Styles
+   ============================================ */
+
+/* Desktop Screen */
+.desktop-screen {
+    position: relative;
+    overflow: hidden;
+}
+
+/* macOS-style Wallpaper - Tahoe gradient */
+.desktop-wallpaper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        #4facfe 0%,
+        #00f2fe 25%,
+        #43e97b 50%,
+        #38f9d7 75%,
+        #4facfe 100%
+    );
+    background-size: 400% 400%;
+    animation: wallpaperShift 20s ease infinite;
+    z-index: 0;
+}
+
+[data-theme="dark"] .desktop-wallpaper {
+    background: linear-gradient(
+        135deg,
+        #0c1445 0%,
+        #1a237e 25%,
+        #283593 50%,
+        #1e3a5f 75%,
+        #0d1b2a 100%
+    );
+}
+
+@keyframes wallpaperShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ============================================
+   macOS Menu Bar
+   ============================================ */
+.macos-menubar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1d1d1f;
+    z-index: 100;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .macos-menubar {
+    background: rgba(30, 30, 30, 0.85);
+    color: #f5f5f7;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.menubar-left,
+.menubar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.menubar-left i {
+    font-size: 16px;
+}
+
+.menu-item {
+    cursor: default;
+    padding: 2px 8px;
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
+}
+
+.menu-item:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item.active {
+    font-weight: 700;
+}
+
+.menubar-right {
+    gap: 12px;
+}
+
+.menubar-right i {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.menubar-time {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   Desktop Content Layout
+   ============================================ */
+.desktop-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: 48px 32px 80px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    gap: 24px;
+}
+
+/* ============================================
+   Tagline
+   ============================================ */
+.desktop-tagline {
+    grid-column: 1 / -1;
+    /* text-align: center; */
+    padding: 24px 0;
+}
+
+.tagline-main {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.tagline-sub {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .tagline-main {
+    color: #ffffff;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .tagline-sub {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   Desktop Folder Icons
+   ============================================ */
+.desktop-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: start;
+    width: fit-content;
+}
+
+.desktop-folder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.desktop-folder:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.desktop-folder:active {
+    transform: scale(0.95);
+}
+
+/* Folder Icon */
+.folder-icon {
+    position: relative;
+    width: 96px;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.folder-icon > i {
+    font-size: 84px;
+    color: #66b3ff;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.22));
+    transition: transform 0.2s ease;
+}
+
+.desktop-folder:hover .folder-icon > i {
+    transform: scale(1.05);
+}
+
+/* Folder badge */
+.folder-badge {
+    position: absolute;
+    bottom: 6px;
+    right: 3px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+.folder-badge i {
+    font-size: 18px;
+    color: var(--accent-blue);
+}
+
+[data-theme="dark"] .folder-badge {
+    background: rgba(40, 40, 40, 0.95);
+}
+
+/* Folder Label */
+.folder-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ============================================
+   Widgets Area
+   ============================================ */
+.desktop-widgets {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: start;
+    align-items: end;
+}
+
+/* ============================================
+   Sticky Notes
+   ============================================ */
+.sticky-note {
+    width: 180px;
+    min-height: 120px;
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        0 1px 4px rgba(0, 0, 0, 0.1);
+    transform: rotate(-2deg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sticky-note:nth-child(2) {
+    transform: rotate(1deg);
+}
+
+.sticky-note:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.2),
+        0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Yellow Sticky */
+.sticky-yellow {
+    background: linear-gradient(135deg, #fff9c4 0%, #fff176 100%);
+}
+
+.sticky-yellow .sticky-header {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Blue Sticky */
+.sticky-blue {
+    background: linear-gradient(135deg, #e3f2fd 0%, #90caf9 100%);
+}
+
+/* Pink Sticky (available for future use) */
+.sticky-pink {
+    background: linear-gradient(135deg, #fce4ec 0%, #f48fb1 100%);
+}
+
+/* Green Sticky */
+.sticky-green {
+    background: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+}
+
+.sticky-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.sticky-date {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.sticky-content {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.75);
+    line-height: 1.5;
+}
+
+/* ============================================
+   Spotify Embed Widget
+   ============================================ */
+.spotify-embed-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.spotify-embed-wrapper:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.spotify-embed-wrapper iframe {
+    display: block;
+}
+
+/* ============================================
+   Weather Widget
+   ============================================ */
+.weather-widget {
+    width: 180px;
+    padding: 16px;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    border-radius: 16px;
+    color: #ffffff;
+    box-shadow: 0 8px 32px rgba(79, 172, 254, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.weather-widget:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(79, 172, 254, 0.4);
+}
+
+.weather-location {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 8px;
+}
+
+.weather-location i {
+    font-size: 12px;
+}
+
+.weather-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.weather-icon i {
+    font-size: 48px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.weather-temp {
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weather-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.weather-condition {
+    opacity: 0.95;
+}
+
+.weather-range {
+    opacity: 0.8;
+}
+
+/* Dark theme weather - evening gradient */
+[data-theme="dark"] .weather-widget {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+    box-shadow: 0 8px 32px rgba(26, 35, 126, 0.4);
+}
+
+[data-theme="dark"] .weather-widget:hover {
+    box-shadow: 0 12px 40px rgba(26, 35, 126, 0.5);
+}
+
+[data-theme="dark"] .weather-icon i {
+    content: '\e900'; /* Moon icon placeholder - will use ph-moon */
+}
+
+/* ============================================
+   Photo Widget
+   ============================================ */
+.photo-widget {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.photo-frame {
+    width: 220px;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    padding: 8px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.photo-widget:hover .photo-frame {
+    transform: scale(1.02) rotate(-1deg);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.25),
+        0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.photo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.photo-caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.photo-caption i {
+    color: #ff6b6b;
+    font-size: 14px;
+}
+
+[data-theme="dark"] .photo-frame {
+    background: #2a2a2a;
+}
+
+/* ============================================
+   macOS Dock
+   ============================================ */
+.macos-dock {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    z-index: 50;
+}
+
+[data-theme="dark"] .macos-dock {
+    background: rgba(30, 30, 30, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dock-item {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffffff, #e8e8e8);
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dock-item:hover {
+    transform: translateY(-8px) scale(1.1);
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.dock-item:active {
+    transform: translateY(-4px) scale(1.05);
+}
+
+.dock-item i {
+    font-size: 28px;
+    color: var(--accent-blue);
+}
+
+[data-theme="dark"] .dock-item {
+    background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .dock-item i {
+    color: var(--accent-blue-light);
+}
+
+.dock-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.15);
+    margin: 0 4px;
+}
+
+[data-theme="dark"] .dock-divider {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+@media (max-width: 1024px) {
+    .desktop-content {
+        padding: 40px 24px 72px;
+        gap: 16px;
+    }
+
+    .tagline-main {
+        font-size: 2.5rem;
+    }
+
+    .tagline-sub {
+        font-size: 1.1rem;
+    }
+
+    .folder-icon {
+        width: 84px;
+        height: 72px;
+    }
+
+    .folder-icon > i {
+        font-size: 72px;
+    }
+
+    .folder-badge {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+    }
+
+    .folder-badge i {
+        font-size: 16px;
+    }
+
+    .sticky-note {
+        width: 160px;
+        min-height: 100px;
+    }
+
+    .spotify-embed-wrapper {
+        width: 180px;
+    }
+
+    .weather-widget {
+        width: 160px;
+        padding: 14px;
+    }
+
+    .weather-icon i {
+        font-size: 40px;
+    }
+
+    .weather-temp {
+        font-size: 36px;
+    }
+
+    .photo-widget {
+        bottom: 70px;
+    }
+
+    .photo-frame {
+        width: 180px;
+        height: 130px;
+        padding: 6px;
+    }
+
+    .dock-item {
+        width: 44px;
+        height: 44px;
+    }
+
+    .dock-item i {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .desktop-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 36px 16px 64px;
+        gap: 20px;
+    }
+
+    .tagline-main {
+        font-size: 1.75rem;
+    }
+
+    .tagline-sub {
+        font-size: 0.9rem;
+    }
+
+    .desktop-icons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .folder-icon {
+        width: 72px;
+        height: 60px;
+    }
+
+    .folder-icon > i {
+        font-size: 60px;
+    }
+
+    .folder-badge {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+    }
+
+    .folder-badge i {
+        font-size: 14px;
+    }
+
+    .folder-label {
+        font-size: 11px;
+    }
+
+    .desktop-widgets {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .sticky-note {
+        width: 140px;
+        min-height: 90px;
+        padding: 10px;
+    }
+
+    .sticky-content {
+        font-size: 11px;
+    }
+
+    .spotify-embed-wrapper {
+        width: 160px;
+    }
+
+    .weather-widget {
+        width: 140px;
+        padding: 12px;
+    }
+
+    .weather-location {
+        font-size: 10px;
+    }
+
+    .weather-icon i {
+        font-size: 32px;
+    }
+
+    .weather-temp {
+        font-size: 28px;
+    }
+
+    .weather-details {
+        font-size: 10px;
+    }
+
+    .photo-widget {
+        bottom: 60px;
+    }
+
+    .photo-frame {
+        width: 150px;
+        height: 110px;
+        padding: 5px;
+    }
+
+    .photo-caption {
+        font-size: 10px;
+    }
+
+    .macos-dock {
+        padding: 6px 10px;
+        gap: 6px;
+    }
+
+    .dock-item {
+        width: 40px;
+        height: 40px;
+    }
+
+    .dock-item i {
+        font-size: 22px;
+    }
+
+    .macos-menubar {
+        font-size: 11px;
+        height: 24px;
+        padding: 0 8px;
+    }
+
+    .menubar-left,
+    .menubar-right {
+        gap: 8px;
+    }
+
+    .menu-item {
+        display: none;
+    }
+
+    .menu-item.active {
+        display: inline;
+    }
+}
+
+@media (max-width: 480px) {
+    .desktop-content {
+        padding: 32px 12px 56px;
+    }
+
+    .tagline-main {
+        font-size: 1.5rem;
+    }
+
+    .tagline-sub {
+        font-size: 0.8rem;
+    }
+
+    .desktop-folder {
+        padding: 4px;
+    }
+
+    .folder-icon {
+        width: 54px;
+        height: 48px;
+    }
+
+    .folder-icon > i {
+        font-size: 48px;
+    }
+
+    .folder-badge {
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+    }
+
+    .folder-badge i {
+        font-size: 11px;
+    }
+
+    .folder-label {
+        font-size: 10px;
+    }
+
+    .sticky-note {
+        width: 120px;
+        min-height: 80px;
+        padding: 8px;
+    }
+
+    .sticky-date {
+        font-size: 8px;
+    }
+
+    .sticky-content {
+        font-size: 10px;
+    }
+
+    .spotify-embed-wrapper {
+        width: 140px;
+    }
+
+    .weather-widget {
+        width: 120px;
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .weather-location {
+        font-size: 9px;
+        margin-bottom: 6px;
+    }
+
+    .weather-icon i {
+        font-size: 28px;
+    }
+
+    .weather-temp {
+        font-size: 24px;
+    }
+
+    .weather-details {
+        font-size: 9px;
+    }
+
+    .photo-widget {
+        display: none; /* Hide on very small screens */
+    }
+
+    .dock-item {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .dock-item i {
+        font-size: 18px;
+    }
+
+    .dock-divider {
+        height: 30px;
+    }
+}
+
+/* ============================================
+   macOS Window Styles
+   ============================================ */
+.macos-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 85%;
+    height: 80%;
+    max-width: 1200px;
+    background: var(--surface-primary);
+    border-radius: 12px;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="dark"] .macos-window {
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.macos-window.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Window Title Bar */
+.window-titlebar {
+    display: flex;
+    align-items: center;
+    height: 52px;
+    padding: 0 16px;
+    background: var(--surface-secondary);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+    border-radius: 12px 12px 0 0;
+}
+
+[data-theme="dark"] .window-titlebar {
+    background: rgba(40, 40, 40, 0.95);
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+}
+
+.window-btn {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.window-close {
+    background: #ff5f57;
+}
+
+.window-close:hover {
+    background: #ff3b30;
+}
+
+.window-minimize {
+    background: #febc2e;
+}
+
+.window-minimize:hover {
+    background: #f7a400;
+}
+
+.window-maximize {
+    background: #28c840;
+}
+
+.window-maximize:hover {
+    background: #1db934;
+}
+
+.window-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+    text-align: center;
+    margin-right: 70px; /* Balance for controls */
+}
+
+/* Window Content */
+.window-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    background: var(--surface-secondary);
+}
+
+[data-theme="dark"] .window-content {
+    background: var(--surface-primary);
+}
+
+/* ============================================
+   Projects Grid (inside windows)
+   ============================================ */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.project-card {
+    background: var(--surface-primary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-theme="dark"] .project-card {
+    background: var(--surface-secondary);
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.project-card:active {
+    transform: scale(0.98);
+}
+
+.project-thumbnail {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--surface-secondary);
+}
+
+.project-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-thumbnail img {
+    transform: scale(1.05);
+}
+
+.project-info {
+    padding: 16px;
+}
+
+.project-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.tag-category {
+    background: var(--accent-blue);
+    color: #ffffff;
+}
+
+.tag-type {
+    background: var(--surface-secondary);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .tag-type {
+    background: var(--surface-elevated);
+}
+
+.project-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.project-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* ============================================
+   About Content (inside window)
+   ============================================ */
+.macos-window .about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    gap: 32px;
+    min-height: 100%;
+}
+
+.macos-window .about-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.macos-window .about-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-blue);
+    box-shadow: var(--shadow-md);
+}
+
+.macos-window .about-intro {
+    text-align: left;
+}
+
+.macos-window .about-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.macos-window .about-role {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.macos-window .about-bio {
+    max-width: 600px;
+    text-align: center;
+}
+
+.macos-window .about-bio p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.macos-window .about-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-width: 500px;
+}
+
+.macos-window .skill-tag {
+    padding: 8px 16px;
+    background: var(--nav-btn-bg);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.macos-window .skill-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   Desktop Content Visibility
+   ============================================ */
+.desktop-content {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.desktop-content.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ============================================
+   Desktop Folder Button Reset
+   ============================================ */
+.desktop-folder {
+    background: none;
+    border: none;
+    font-family: inherit;
+}
+
+/* ============================================
+   Dock Item Button Reset
+   ============================================ */
+button.dock-item {
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* ============================================
+   Window Responsive Styles
+   ============================================ */
+@media (max-width: 768px) {
+    .macos-window {
+        width: 95%;
+        height: 85%;
+        border-radius: 10px;
+    }
+
+    .window-titlebar {
+        height: 44px;
+        padding: 0 12px;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .window-btn {
+        width: 12px;
+        height: 12px;
+    }
+
+    .window-title {
+        font-size: 13px;
+        margin-right: 50px;
+    }
+
+    .window-content {
+        padding: 16px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .project-info {
+        padding: 12px;
+    }
+
+    .project-name {
+        font-size: 1rem;
+    }
+
+    .project-description {
+        font-size: 0.85rem;
+    }
+
+    .macos-window .about-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .macos-window .about-intro {
+        text-align: center;
+    }
+
+    .macos-window .about-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .macos-window .about-name {
+        font-size: 1.5rem;
+    }
+
+    .macos-window .about-role {
+        font-size: 1rem;
+    }
+
+    .macos-window .about-bio p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .macos-window {
+        width: 98%;
+        height: 90%;
+        border-radius: 8px;
+    }
+
+    .window-titlebar {
+        border-radius: 8px 8px 0 0;
+    }
+
+    .window-controls {
+        margin-right: 12px;
+    }
+
+    .window-btn {
+        width: 10px;
+        height: 10px;
+    }
+
+    .window-title {
+        font-size: 12px;
+        margin-right: 40px;
+    }
+
+    .window-content {
+        padding: 12px;
+    }
+
+    .macos-window .about-content {
+        padding: 24px 16px;
+        gap: 24px;
+    }
+}
+
+/* ============================================
+   macOS Finder Window Styles
+   ============================================ */
+
+/* Finder Window Specific */
+.finder-window .window-titlebar {
+    height: 52px;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.finder-window .window-controls {
+    padding-left: 16px;
+}
+
+.finder-window .window-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-right: 0;
+}
+
+/* Window Toolbar */
+.window-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+    padding-right: 16px;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.toolbar-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.toolbar-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .toolbar-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.toolbar-btn.active {
+    background: var(--accent-blue);
+    color: #ffffff;
+}
+
+.toolbar-btn i {
+    font-size: 16px;
+}
+
+.view-options {
+    background: var(--surface-primary);
+    border-radius: 8px;
+    padding: 2px;
+}
+
+[data-theme="dark"] .view-options {
+    background: var(--surface-secondary);
+}
+
+/* Finder Body Layout */
+.finder-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Finder Content Area */
+.finder-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface-secondary);
+}
+
+[data-theme="dark"] .finder-content {
+    background: var(--surface-primary);
+}
+
+/* Path Breadcrumbs */
+.finder-path {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 16px;
+    background: var(--surface-primary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 13px;
+}
+
+[data-theme="dark"] .finder-path {
+    background: var(--surface-secondary);
+}
+
+.path-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.path-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .path-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.path-item.current {
+    background: var(--accent-blue);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.path-item.current:hover {
+    background: var(--accent-blue);
+    color: #ffffff;
+}
+
+.path-item i {
+    font-size: 14px;
+}
+
+.path-separator {
+    font-size: 10px;
+    color: var(--text-tertiary);
+}
+
+/* Projects Grid inside Finder */
+.finder-content .projects-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* ============================================
+   Finder Responsive Styles
+   ============================================ */
+@media (max-width: 768px) {
+    .window-toolbar {
+        display: none;
+    }
+
+    .finder-path {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .path-item {
+        padding: 3px 6px;
+    }
+
+    .finder-content .projects-grid {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .finder-path {
+        padding: 6px 10px;
+        font-size: 11px;
+        gap: 2px;
+    }
+
+    .path-item {
+        padding: 2px 4px;
+    }
+
+    .path-separator {
+        font-size: 8px;
+    }
+
+    .finder-content .projects-grid {
+        padding: 10px;
+        gap: 12px;
+    }
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Projects | Jonathan Chiang</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+    <main class="page-container">
+        <!-- Background Gradient -->
+        <div class="background-gradient"></div>
+
+        <!-- Home Button -->
+        <a href="index.html" class="home-btn" aria-label="Go to home">
+            <i class="ph ph-house"></i>
+        </a>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <a href="index.html" class="back-btn">
+                <i class="ph ph-arrow-left"></i>
+                <span>Back</span>
+            </a>
+            <h1 class="page-title">Code Projects</h1>
+            <p class="page-subtitle">Front-end Development & Engineering Work</p>
+        </header>
+
+        <!-- Projects Grid -->
+        <section class="projects-grid">
+            <!-- Project Card 1 -->
+            <article class="project-card" data-project="1">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=201" alt="Component Library" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2024</span>
+                        <span class="tag tag-type">React</span>
+                    </div>
+                    <h3 class="project-name">Component Library</h3>
+                    <p class="project-description">React + TypeScript component library with Storybook documentation and 95% test coverage.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 2 -->
+            <article class="project-card" data-project="2">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=202" alt="API Platform" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2024</span>
+                        <span class="tag tag-type">Node.js</span>
+                    </div>
+                    <h3 class="project-name">REST API Platform</h3>
+                    <p class="project-description">Scalable Node.js backend with GraphQL support serving 1M+ requests/day.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 3 -->
+            <article class="project-card" data-project="3">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=203" alt="CLI Tool" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2023</span>
+                        <span class="tag tag-type">Python</span>
+                    </div>
+                    <h3 class="project-name">Developer CLI Tool</h3>
+                    <p class="project-description">Python automation tool for streamlining development workflows with 500+ GitHub stars.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 4 -->
+            <article class="project-card" data-project="4">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=204" alt="Chrome Extension" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2023</span>
+                        <span class="tag tag-type">Extension</span>
+                    </div>
+                    <h3 class="project-name">Productivity Extension</h3>
+                    <p class="project-description">Chrome extension for developer productivity with 10K+ active users.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 5 -->
+            <article class="project-card" data-project="5">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=205" alt="Portfolio Template" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2023</span>
+                        <span class="tag tag-type">Next.js</span>
+                    </div>
+                    <h3 class="project-name">Portfolio Template</h3>
+                    <p class="project-description">Open-source portfolio template built with Next.js and Tailwind CSS.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 6 -->
+            <article class="project-card" data-project="6">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=206" alt="VS Code Extension" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2022</span>
+                        <span class="tag tag-type">TypeScript</span>
+                    </div>
+                    <h3 class="project-name">VS Code Theme</h3>
+                    <p class="project-description">Custom VS Code theme with syntax highlighting optimized for readability.</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- Navigation Bar (loaded dynamically) -->
+        <div id="navbar-container"></div>
+    </main>
+
+    <script src="components/components.js"></script>
+    <script src="pages.js"></script>
+</body>
+</html>

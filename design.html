@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Projects | Jonathan Chiang</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+    <main class="page-container">
+        <!-- Background Gradient -->
+        <div class="background-gradient"></div>
+
+        <!-- Home Button -->
+        <a href="index.html" class="home-btn" aria-label="Go to home">
+            <i class="ph ph-house"></i>
+        </a>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <a href="index.html" class="back-btn">
+                <i class="ph ph-arrow-left"></i>
+                <span>Back</span>
+            </a>
+            <h1 class="page-title">Design Projects</h1>
+            <p class="page-subtitle">UX/UI Design & Product Design Work</p>
+        </header>
+
+        <!-- Projects Grid -->
+        <section class="projects-grid">
+            <!-- Project Card 1 -->
+            <article class="project-card" data-project="1">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=101" alt="Design System" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2024</span>
+                        <span class="tag tag-type">UI/UX</span>
+                    </div>
+                    <h3 class="project-name">Enterprise Design System</h3>
+                    <p class="project-description">A comprehensive design system for enterprise applications with 200+ components.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 2 -->
+            <article class="project-card" data-project="2">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=102" alt="Mobile Banking App" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2024</span>
+                        <span class="tag tag-type">Mobile App</span>
+                    </div>
+                    <h3 class="project-name">Mobile Banking Redesign</h3>
+                    <p class="project-description">Complete redesign of a fintech app serving 2M+ users.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 3 -->
+            <article class="project-card" data-project="3">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=103" alt="E-commerce Platform" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2023</span>
+                        <span class="tag tag-type">E-commerce</span>
+                    </div>
+                    <h3 class="project-name">E-commerce Platform</h3>
+                    <p class="project-description">End-to-end shopping experience design with checkout optimization.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 4 -->
+            <article class="project-card" data-project="4">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=104" alt="Healthcare Dashboard" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2023</span>
+                        <span class="tag tag-type">Dashboard</span>
+                    </div>
+                    <h3 class="project-name">Healthcare Dashboard</h3>
+                    <p class="project-description">Patient management interface for healthcare providers.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 5 -->
+            <article class="project-card" data-project="5">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=105" alt="Travel App" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2023</span>
+                        <span class="tag tag-type">Mobile App</span>
+                    </div>
+                    <h3 class="project-name">Travel Companion App</h3>
+                    <p class="project-description">AI-powered travel planning and booking experience.</p>
+                </div>
+            </article>
+
+            <!-- Project Card 6 -->
+            <article class="project-card" data-project="6">
+                <div class="project-image-wrapper">
+                    <img src="https://picsum.photos/800/600?random=106" alt="SaaS Dashboard" class="project-thumb">
+                    <div class="project-hover-overlay">
+                        <span class="view-project">View Project</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag tag-year">2022</span>
+                        <span class="tag tag-type">SaaS</span>
+                    </div>
+                    <h3 class="project-name">Analytics Dashboard</h3>
+                    <p class="project-description">Data visualization platform for marketing teams.</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- Navigation Bar (loaded dynamically) -->
+        <div id="navbar-container"></div>
+    </main>
+
+    <script src="components/components.js"></script>
+    <script src="pages.js"></script>
+</body>
+</html>
