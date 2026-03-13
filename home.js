@@ -17,6 +17,41 @@
     var isTransitioning = false;
     var TRANSITION_MS = 450;
 
+    // Returning from a case study page — expand dots into nav-links
+    var isReturning = sessionStorage.getItem('nav-returning');
+    if (isReturning) {
+        sessionStorage.removeItem('nav-returning');
+        var navbar = document.querySelector('.navbar');
+        var navLinks = navbar.querySelectorAll('.nav-link');
+        var logo = navbar.querySelector('.nav-logo');
+
+        // Suppress default entrance animations
+        logo.style.animation = 'none';
+        logo.style.opacity = '1';
+        navLinks.forEach(function (link) {
+            link.style.animation = 'none';
+        });
+
+        // Start with dots visible, links collapsed
+        navbar.classList.add('nav-dots-returning');
+
+        // After a beat, expand dots into nav-links
+        setTimeout(function () {
+            navbar.classList.remove('nav-dots-returning');
+            navbar.classList.add('nav-dots-returning-expanded');
+        }, 300);
+
+        // Clean up class after animation completes
+        setTimeout(function () {
+            navbar.classList.remove('nav-dots-returning-expanded');
+            // Set links to their final state
+            navLinks.forEach(function (link) {
+                link.style.opacity = '1';
+                link.style.transform = 'translateY(0)';
+            });
+        }, 750);
+    }
+
     // Glow entry animation → hand off to CSS transitions
     glow.addEventListener('animationend', function handler(e) {
         if (e.animationName === 'glow-enter') {
@@ -158,6 +193,16 @@
 
     // Position cards for initial hero view
     positionCardsForHero();
+
+    // After entrance animation, switch to class-driven state so transitions work
+    heroContent.addEventListener('animationend', function handler() {
+        heroContent.classList.add('entered');
+        heroContent.removeEventListener('animationend', handler);
+    });
+    footerInfo.addEventListener('animationend', function handler() {
+        footerInfo.classList.add('entered');
+        footerInfo.removeEventListener('animationend', handler);
+    });
     // Enable transitions after a frame so initial positions don't animate
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
@@ -191,6 +236,67 @@
             isTransitioning = false;
         }, TRANSITION_MS);
     }, { passive: false });
+
+    // Video hover play/pause
+    cards.forEach(function (card) {
+        var video = card.querySelector('.project-video');
+        if (!video) return;
+
+        card.addEventListener('mouseenter', function () {
+            if (card.classList.contains('pos-center')) {
+                video.currentTime = 0;
+                video.play();
+            }
+        });
+
+        card.addEventListener('mouseleave', function () {
+            video.pause();
+        });
+    });
+
+    // Project card click → collapse nav into dots, fade out content, navigate
+    cards.forEach(function (card) {
+        if (card.tagName !== 'A') return;
+
+        card.addEventListener('click', function (e) {
+            if (!card.classList.contains('pos-center')) return;
+            e.preventDefault();
+
+            var href = card.getAttribute('href');
+            var navbar = document.querySelector('.navbar');
+            var navLinks = navbar.querySelectorAll('.nav-link');
+
+            // Ensure logo is fully visible (cancel any entrance animation)
+            var logo = navbar.querySelector('.nav-logo');
+            logo.style.animation = 'none';
+            logo.style.opacity = '1';
+
+            // Freeze nav-links in their current visible state
+            // (they're animated in via keyframes — killing the animation
+            //  would snap them back to opacity:0, so we inline the computed values first)
+            navLinks.forEach(function (link) {
+                link.style.animation = 'none';
+                link.style.opacity = '1';
+                link.style.transform = 'translateY(0)';
+            });
+
+            // Force reflow so inline styles apply before transition starts
+            navbar.offsetHeight;
+
+            // Step 1: Collapse nav-links into dots-three icon
+            navbar.classList.add('nav-collapsing');
+
+            // Step 2: After a beat, fade out page content (not navbar)
+            setTimeout(function () {
+                container.classList.add('page-exit-active');
+            }, 150);
+
+            // Step 3: Navigate after everything settles
+            setTimeout(function () {
+                window.location.href = href;
+            }, 600);
+        });
+    });
 
     // Touch support
     var touchStartY = 0;

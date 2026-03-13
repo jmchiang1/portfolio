@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nocta — Case Study | Jonathan Chiang</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="nocta.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+</head>
+<body>
+    <!-- White cover — visible from first paint to prevent flash between pages -->
+    <div class="page-transition-cover"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
+        </a>
+        <div class="nav-links">
+            <a href="#problem" class="nav-link">Problem</a>
+            <a href="#background" class="nav-link">Background</a>
+            <a href="#research" class="nav-link">Research</a>
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#testing" class="nav-link">Testing</a>
+            <a href="#impact" class="nav-link">Impact</a>
+        </div>
+        <div class="nav-dots">
+            <i class="ph-bold ph-dots-three"></i>
+        </div>
+    </nav>
+
+    <!-- Back to top button -->
+    <a href="#top" class="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+
+    <main id="top" class="case-study">
+        <!-- Header -->
+        <section id="problem" class="cs-header">
+            <div class="cs-header-text">
+                <p class="cs-label">Nocta | Mobile Application Concept</p>
+                <h1 class="cs-title">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long term usage</h1>
+            </div>
+
+            <div class="cs-hero-image">
+                <img src="assets/nocta-mockup.png" alt="Nocta app mockup with MacBook">
+            </div>
+
+            <div class="cs-meta-row">
+                <div class="cs-meta-main">
+                    <p class="cs-label">Project Overview</p>
+                    <p>Nocta is a mobile application that transforms complex CPAP data into easy to understand visuals and actionable insights for patients with sleep apnea</p>
+                </div>
+                <div class="cs-meta-side">
+                    <p class="cs-label">Role</p>
+                    <p>UX Research</p>
+                    <p>UX/UI Design</p>
+                </div>
+            </div>
+
+            <div class="cs-meta-row cs-meta-row-three">
+                <div class="cs-meta-col">
+                    <p class="cs-label">Problem</p>
+                    <p>CPAP therapy apps are either overloaded with information or don't show enough information for sleep apnea patients, discouraging use and self treatment.</p>
+                </div>
+                <div class="cs-meta-col">
+                    <p class="cs-label">Solution</p>
+                    <p>Create a mobile app that transforms complex CPAP data into easy to scan charts, graphs, and actionable insights</p>
+                </div>
+                <div class="cs-meta-side">
+                    <p class="cs-label">Timeline</p>
+                    <p>Spring 2025</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <hr class="cs-divider">
+
+        <!-- Background: Sleep Apnea -->
+        <section id="background" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Background</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">What is Sleep Apnea?</p>
+                    <p>Sleep apnea is a disorder in which breathing repeatedly stops and starts during sleep. This can cause pauses in breathing for periods of time, ranging from a few seconds to minutes, and may occur many times throughout the night.</p>
+                    <p>There are 2 main types of apnea: <strong>Central sleep apnea</strong> (CSA), and <strong>Obstructive sleep apnea</strong> (OSA).</p>
+                </div>
+            </div>
+            <div class="cs-card-row">
+                <div class="cs-card cs-card-horizontal">
+                    <div class="cs-card-text">
+                        <p class="cs-card-heading">Obstructive Sleep Apnea</p>
+                        <p>is caused by blockages in the upper airways that restricts oxygen to the body</p>
+                    </div>
+                    <div class="cs-card-img">
+                        <img src="assets/nocta/osa-diagram.jpg" alt="Obstructive Sleep Apnea diagram">
+                    </div>
+                </div>
+                <div class="cs-card cs-card-horizontal">
+                    <div class="cs-card-text">
+                        <p class="cs-card-heading">Central Sleep Apnea</p>
+                        <p>occurs when the brain's area that controls your breathing doesn't work, causing you to simply not breathe.</p>
+                    </div>
+                    <div class="cs-card-img">
+                        <img src="assets/nocta/osa-diagram.jpg" alt="Central Sleep Apnea diagram">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Background: CPAP Machine -->
+        <section class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Background</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">What is a CPAP Machine?</p>
+                    <p>CPAP or "Continuous Positive Airway Pressure" is a machine that delivers a steady stream of pressurized oxygen through a mask worn over the nose or mouth, keeping the upper airways open during sleep and preventing breathing interruptions.</p>
+                    <p>Machine pressures and timings can be customized to either central or obstructive sleep apnea patients.</p>
+                </div>
+            </div>
+            <div class="cs-card-row">
+                <div class="cs-card cs-card-machines">
+                    <p class="cs-card-heading">Types of CPAP machines</p>
+                    <div class="cs-machines-grid">
+                        <div class="cs-machine-item">
+                            <img src="assets/nocta/cpap-airsense11.jpg" alt="ResMed Airsense 11">
+                            <span>ResMed Airsense 11</span>
+                        </div>
+                        <div class="cs-machine-item">
+                            <img src="assets/nocta/cpap-airsense10.jpg" alt="ResMed Airsense 10">
+                            <span>ResMed Airsense 10</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cs-card cs-card-masks">
+                    <p class="cs-card-heading">Types of CPAP masks</p>
+                    <div class="cs-masks-grid">
+                        <div class="cs-mask-item">
+                            <img src="assets/nocta/mask-p30i.jpg" alt="ResMed Airfit P30i">
+                            <span>ResMed Airfit P30i</span>
+                        </div>
+                        <div class="cs-mask-item">
+                            <img src="assets/nocta/mask-f30i.jpg" alt="ResMed Airfit F30i">
+                            <span>ResMed Airfit F30i</span>
+                        </div>
+                        <div class="cs-mask-item">
+                            <img src="assets/nocta/mask-f20.jpg" alt="ResMed Airfit F20">
+                            <span>ResMed Airfit F20</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Background: Compliance -->
+        <section class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Background</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">Finally, what is "compliance"?</p>
+                    <p>Compliance refers to how consistently a person uses their CPAP machine as prescribed by their doctor. It's often defined as using the device for at least 4 hours each night on at least 70% of nights within a 30-day period.</p>
+                    <p>Failure to meet compliance can result in loss of insurance coverage and paying out-of-pocket for all equipment and maintenance supplies.</p>
+                </div>
+            </div>
+            <div class="cs-compliance-card">
+                <div class="cs-compliance-stats">
+                    <div class="cs-compliance-stat">
+                        <span class="cs-big-number">4</span>
+                        <span class="cs-stat-desc">hours per night</span>
+                    </div>
+                    <span class="cs-compliance-plus">+</span>
+                    <div class="cs-compliance-stat">
+                        <span class="cs-big-number">70%</span>
+                        <span class="cs-stat-desc">of successful nights within a 30 day window</span>
+                    </div>
+                    <span class="cs-compliance-plus">+</span>
+                    <div class="cs-compliance-stat">
+                        <span class="cs-big-number">90</span>
+                        <span class="cs-stat-desc">day total trial period</span>
+                    </div>
+                </div>
+                <p class="cs-compliance-caption">Minimum usage to meet compliance</p>
+            </div>
+        </section>
+
+        <!-- Desk Research -->
+        <section id="research" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">Desk Research</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">The majority of patients were not sticking with their therapy long term</p>
+                    <p>To find out more about the disorder, I did secondary research and found the following statistics from the National Library of Medicine, BMC Pulmonary Medicine, and the Journal of American Heart Association.</p>
+                </div>
+            </div>
+            <div class="cs-card-row cs-research-row">
+                <div class="cs-card cs-research-chart">
+                    <img src="assets/nocta/stats-chart.jpg" alt="Sleep apnea statistics chart">
+                </div>
+                <div class="cs-card cs-research-stats">
+                    <div class="cs-research-stat">
+                        <span class="cs-big-number">30</span>
+                        <span class="cs-stat-desc">million Americans are suspected of having sleep apnea</span>
+                    </div>
+                    <div class="cs-research-stat">
+                        <span class="cs-big-number">20%</span>
+                        <span class="cs-stat-desc">of cases are diagnosed in the United States</span>
+                    </div>
+                    <div class="cs-research-stat">
+                        <span class="cs-big-number">25-34%</span>
+                        <span class="cs-stat-desc">of CPAP patients stick with therapy long term (+ 1 year)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cs-card cs-callout">
+                <img src="assets/nocta/icon-bulb.svg" alt="" class="cs-callout-icon">
+                <p>Only <span class="cs-highlight-green">6.8%</span> of all people with sleep apnea are diagnosed AND stick with their treatment long term</p>
+            </div>
+        </section>
+
+        <!-- How Might We + Solution -->
+        <section class="cs-section cs-hmw-section">
+            <div class="cs-hmw-card">
+                <p class="cs-hmw-label">How might we</p>
+                <p class="cs-hmw-question">make CPAP data more actionable and engaging so users feel empowered rather than overwhelmed?</p>
+            </div>
+            <div class="cs-arrow-down">
+                <img src="assets/nocta/icon-arrow.svg" alt="">
+            </div>
+            <div class="cs-solution-card">
+                <p class="cs-solution-label">Solution</p>
+                <p class="cs-solution-text">Simplify CPAP data into <strong>clear</strong>, <strong>actionable insights</strong> that <strong>boost confidence</strong>, drive compliance, and <strong>support long-term success.</strong></p>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features" class="cs-section">
+            <p class="cs-sidebar-label cs-label">Features</p>
+
+            <!-- Feature 1: Morning Check-In -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Morning Check-In</p>
+                    <p>Just focusing on pure sleep numbers can only do so much, so incorporating user sentiment can increase the accuracy of the insight</p>
+                </div>
+                <div class="cs-card cs-feature-screens">
+                    <img src="assets/nocta/screen-checkin1.jpg" alt="Morning check-in screen 1">
+                    <img src="assets/nocta/screen-checkin2.jpg" alt="Morning check-in screen 2">
+                    <img src="assets/nocta/screen-checkin3.jpg" alt="Morning check-in screen 3">
+                </div>
+            </div>
+
+            <!-- Feature 2: Single Chart -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Single Chart</p>
+                    <p>The allows users to explore their breathing data in detail, with apnea events clearly marked and tappable for expanded explanations.</p>
+                    <p>Users can compare their breathing patterns against other key metrics, such as pressure, leak rate, or snoring, using a dynamic overlay feature.</p>
+                </div>
+                <div class="cs-card cs-feature-screens">
+                    <img src="assets/nocta/screen-chart1.jpg" alt="Single chart screen 1">
+                    <img src="assets/nocta/screen-chart2.jpg" alt="Single chart screen 2">
+                    <img src="assets/nocta/screen-chart3.jpg" alt="Single chart screen 3">
+                </div>
+            </div>
+
+            <!-- Feature 3: Trends -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Trends</p>
+                    <p>This helps users reflect on their long-term progress with customizable timeframes and a clean summary and insights.</p>
+                    <p>Users can also compare their best and worst nights, revealing what changed and why. By highlighting meaningful patterns over time, the feature supports habit-building, reinforces positive behaviors, and makes therapy feel more measurable and manageable.</p>
+                </div>
+                <div class="cs-card cs-feature-screens">
+                    <img src="assets/nocta/screen-trends1.jpg" alt="Trends screen 1">
+                    <img src="assets/nocta/screen-trends2.jpg" alt="Trends screen 2">
+                    <img src="assets/nocta/screen-trends3.jpg" alt="Trends screen 3">
+                </div>
+            </div>
+        </section>
+
+        <!-- User Testing -->
+        <section id="testing" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">User Testing</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">What do real users think of this product?</p>
+                    <p>I invited back my survey and interview participants to test my mid-fidelity wireframes and got some great feedback on current/missing features and edge cases I hadn't thought of before.</p>
+                </div>
+            </div>
+
+            <!-- Testing Insight 1 -->
+            <div class="cs-testing-row">
+                <div class="cs-testing-text">
+                    <div class="cs-testing-insight">
+                        <p class="cs-subtitle">Insight</p>
+                        <p>Users asked about CPAP compliance and health insurance participation</p>
+                    </div>
+                    <hr class="cs-testing-divider">
+                    <div class="cs-testing-insight">
+                        <p class="cs-feature-title">Solution</p>
+                        <p>Add a compliance / insurance participation to the onboarding flow and design a compliance tracker</p>
+                    </div>
+                </div>
+                <div class="cs-card cs-testing-screen">
+                    <img src="assets/nocta/screen-testing1.jpg" alt="Compliance testing screen">
+                </div>
+            </div>
+
+            <!-- Testing Insight 2 -->
+            <div class="cs-testing-row cs-testing-row-reverse">
+                <div class="cs-card cs-testing-screen">
+                    <img src="assets/nocta/screen-testing2.jpg" alt="Wearables testing screen">
+                </div>
+                <div class="cs-testing-text">
+                    <div class="cs-testing-insight">
+                        <p class="cs-subtitle">Insight</p>
+                        <p>Patients asked about linking smart health wearables to the app for more data tracking</p>
+                    </div>
+                    <hr class="cs-testing-divider">
+                    <div class="cs-testing-insight">
+                        <p class="cs-feature-title">Solution</p>
+                        <p>Add an option to link smart wearables on onboarding and display their data on the app</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testing Insight 3 -->
+            <div class="cs-testing-row">
+                <div class="cs-testing-text">
+                    <div class="cs-testing-insight">
+                        <p class="cs-subtitle">Insight</p>
+                        <p>Many patients wanted to be able to customize the four main stats on the homepage freely</p>
+                    </div>
+                    <hr class="cs-testing-divider">
+                    <div class="cs-testing-insight">
+                        <p class="cs-feature-title">Solution</p>
+                        <p>Allow the user to edit what stats they want to see, including any smart wearable device metrics</p>
+                    </div>
+                </div>
+                <div class="cs-card cs-testing-screen">
+                    <img src="assets/nocta/screen-testing3.jpg" alt="Customization testing screen">
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Solution -->
+        <section class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">Final Solution</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">A more personal way to treat sleep apnea</p>
+                    <p>By transforming complex CPAP data into scannable cards and actionable insights, Nocta helps sleep apnea patients with their CPAP therapy, encouraging continued usage and familiarity with their treatment.</p>
+                </div>
+            </div>
+
+            <div class="cs-final-showcase">
+                <div class="cs-final-screens">
+                    <img src="assets/nocta/screen-final1.jpg" alt="Final screen 1">
+                    <img src="assets/nocta/screen-final2.jpg" alt="Final screen 2">
+                    <img src="assets/nocta/screen-final3.jpg" alt="Final screen 3">
+                </div>
+                <p class="cs-final-label cs-final-label-left" style="top: 38px; left: 45px;">Compliance tracker for patients that are using insurance</p>
+                <p class="cs-final-label cs-final-label-left" style="top: 260px; left: 45px;">Daily metrics with easy to scan graphics and progress indicators</p>
+                <p class="cs-final-label cs-final-label-right" style="top: 195px; right: 45px;">In-depth charts for patients that want to dive deeper into their sleep results</p>
+            </div>
+
+            <div class="cs-final-showcase">
+                <div class="cs-final-screens cs-final-screens-two">
+                    <img src="assets/nocta/screen-final4.jpg" alt="Insights screen">
+                    <img src="assets/nocta/screen-final5.jpg" alt="Insight detail screen">
+                </div>
+                <p class="cs-final-label cs-final-label-left" style="top: 223px; left: 90px;">AI-powered sleep insights tell the patient exactly what went wrong and how to potentially fix them</p>
+                <p class="cs-final-label cs-final-label-right" style="top: 87px; right: 45px;">In-depth explanation of the insight along with recommended actions and easy application of the solution</p>
+            </div>
+        </section>
+
+        <!-- User Impact -->
+        <section id="impact" class="cs-section">
+            <p class="cs-sidebar-label cs-label">User Impact</p>
+            <div class="cs-impact-row">
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/nocta/icon-impact.jpg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Reduce Confusion</p>
+                    <p class="cs-impact-desc">by translating raw CPAP data into personalized, plain-language insights that users can understand and act on.</p>
+                </div>
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/nocta/icon-impact.jpg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Boosts Confidence</p>
+                    <p class="cs-impact-desc">by helping users identify what's working, what's not, and how to make adjustments.</p>
+                </div>
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/nocta/icon-impact.jpg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Supports long term usage</p>
+                    <p class="cs-impact-desc">through gentle habit-building features that encourage consistent use over time</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Development Handoff -->
+        <section class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">Development Handoff</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">A live site you can interact with!</p>
+                    <p>In addition to designing this application, I have also coded a working MVP version, linked below. Features include using my own personal CPAP data, Morning Check In, and OPENAI's API to generate sleep insights.</p>
+                    <p>Languages: HTML, CSS, JavaScript<br>Technology: OpenAI API, SleepHQ API</p>
+                </div>
+            </div>
+            <div class="cs-card-row">
+                <div class="cs-card cs-handoff-card">
+                    <img src="assets/nocta/icon-github.jpg" alt="GitHub" class="cs-handoff-icon">
+                    <a href="#" class="cs-handoff-btn">GitHub Repo</a>
+                </div>
+                <div class="cs-card cs-handoff-card">
+                    <img src="assets/nocta/icon-globe.svg" alt="Live site" class="cs-handoff-icon cs-handoff-icon-globe">
+                    <a href="#" class="cs-handoff-btn">Live Site</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="nocta.js"></script>
+</body>
+</html>

@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="home.css">
+    <link rel="prefetch" href="assets/nocta/hero-mockup.jpg">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
 </head>
 <body>
     <div class="scroll-container">
@@ -28,11 +31,23 @@
                 <a href="#" class="nav-link">Motion</a>
                 <a href="#" class="nav-link">About</a>
             </div>
-            <div class="nav-external">
-                <a href="#" class="nav-link">Resume&#x2197;</a>
-                <a href="#" class="nav-link">LinkedIn&#x2197;</a>
+            <div class="nav-dots">
+                <i class="ph-bold ph-dots-three"></i>
             </div>
         </nav>
+
+        <!-- Social links — bottom right -->
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn" data-tooltip="LinkedIn">
+                <i class="ph-duotone ph-linkedin-logo"></i>
+            </a>
+            <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub" data-tooltip="Github">
+                <i class="ph-duotone ph-github-logo"></i>
+            </a>
+            <a href="Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Resume" data-tooltip="Resume">
+                <i class="ph-duotone ph-read-cv-logo"></i>
+            </a>
+        </div>
 
         <!-- Section: Hero -->
         <section class="section section-hero" id="hero">
@@ -54,8 +69,8 @@
         <section class="section section-carousel" id="projects">
             <div class="carousel-viewport">
                 <!-- Project 1 — Nocta -->
-                <div class="project-card" style="--card-bg: url('assets/nocta-mockup.jpg')">
-                    <img src="assets/nocta-mockup.jpg" alt="Nocta — CPAP therapy insights app" class="project-image">
+                <a href="nocta.html" class="project-card" style="--card-bg: url('assets/nocta-mockup.png')">
+                    <img src="assets/nocta-mockup.png" alt="Nocta — CPAP therapy insights app" class="project-image">
                     <div class="project-tags">
                         <span>Product Design</span>
                         <span class="tag-divider"></span>
@@ -71,11 +86,11 @@
                             <p class="project-description">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long-term therapy</p>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Project 2 — ScriptChain Health -->
-                <div class="project-card" style="--card-bg: url('assets/scriptchain-mockup.jpg')">
-                    <img src="assets/scriptchain-mockup.jpg" alt="ScriptChain Health — patient data dashboard" class="project-image">
+                <div class="project-card" style="--card-bg: url('assets/scriptchain-mockup.png')">
+                    <img src="assets/scriptchain-mockup.png" alt="ScriptChain Health — patient data dashboard" class="project-image">
                     <div class="project-tags">
                         <span>Product Design</span>
                         <span class="tag-divider"></span>
@@ -114,8 +129,8 @@
                 </div>
 
                 <!-- Project 4 — SkillCat -->
-                <div class="project-card" style="--card-bg: url('assets/skillcat-mockup.jpg')">
-                    <img src="assets/skillcat-mockup.jpg" alt="SkillCat — mobile learning path app" class="project-image">
+                <div class="project-card" style="--card-bg: url('assets/skillcat-mockup.png')">
+                    <img src="assets/skillcat-mockup.png" alt="SkillCat — mobile learning path app" class="project-image">
                     <div class="project-tags">
                         <span>Product Design</span>
                         <span class="tag-divider"></span>
@@ -133,9 +148,10 @@
                     </div>
                 </div>
 
-                <!-- Project 4 — Reveal -->
-                <div class="project-card" style="--card-bg: url('assets/skillcat-mockup.jpg')">
-                    <img src="assets/skillcat-mockup.jpg" alt="SkillCat — mobile learning path app" class="project-image">
+                <!-- Project 5 — Reveal -->
+                <div class="project-card" style="--card-bg: url('assets/reveal-mockup.png')">
+                    <img src="assets/reveal-mockup.png" alt="Reveal Augmented Reality App" class="project-image has-video">
+                    <video src="assets/Reveal-animation.mp4" class="project-video" muted loop playsinline preload="auto"></video>
                     <div class="project-tags">
                         <span>Product Design</span>
                         <span class="tag-divider"></span>
