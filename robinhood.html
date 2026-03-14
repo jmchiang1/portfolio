@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robinhood Mirror — Case Study | Jonathan Chiang</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="robinhood.css">
+</head>
+<body>
+    <!-- White cover — visible from first paint to prevent flash between pages -->
+    <div class="page-transition-cover"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
+        </a>
+        <div class="nav-links">
+            <a href="#background" class="nav-link">Background</a>
+            <a href="#research" class="nav-link">Research</a>
+            <a href="#problem" class="nav-link">Problem</a>
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#edge-cases" class="nav-link">Edge Cases</a>
+            <a href="#impact" class="nav-link">Impact</a>
+        </div>
+    </nav>
+
+    <!-- Back to top button -->
+    <a href="#top" class="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+
+    <main id="top" class="case-study">
+        <!-- Header -->
+        <section class="cs-header">
+            <div class="cs-header-text">
+                <p class="cs-label">Robinhood Mirror | Feature Add Concept</p>
+                <h1 class="cs-title">Introducing Public Profiles and Mirror Trading to help young investors build financial expertise and confidence</h1>
+            </div>
+
+            <div class="cs-hero-image">
+                <img src="assets/robinhood/hero-mockup.jpg" alt="Robinhood Mirror app mockup">
+            </div>
+
+            <div class="cs-meta-grid">
+                <div class="cs-meta-overview">
+                    <p class="cs-label">Project Overview</p>
+                    <p>Robinhood Mirror is an expansion of the Robinhood investing platform, designed to empower users with personalized onboarding, investor discovery, and Copy Trading features.</p>
+                </div>
+                <div class="cs-meta-role">
+                    <p class="cs-label">Role</p>
+                    <p>UX Research</p>
+                    <p>UX/UI Design</p>
+                </div>
+                <div class="cs-meta-problem">
+                    <p class="cs-label">Problem</p>
+                    <p>Many Robinhood users feel overwhelmed and isolated when making investment decisions, especially for the first time.</p>
+                </div>
+                <div class="cs-meta-solution">
+                    <p class="cs-label">Solution</p>
+                    <p>Add more transparency to encourage young investors to learn investing strategies and grow in their investing career</p>
+                </div>
+                <div class="cs-meta-timeline">
+                    <p class="cs-label">Timeline</p>
+                    <p>Fall 2024</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <hr class="cs-divider">
+
+        <!-- Background -->
+        <section id="background" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Background</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">What is Robinhood?</p>
+                    <p>Robinhood is an online banking financial services platform that aims to provide everyone with access to the financial markets, not just the wealthy.</p>
+                    <p>They helped pioneer and popularize commission-free trading, low minimum account balances, and fractional shares trading.</p>
+                </div>
+            </div>
+            <div class="cs-bg-screens">
+                <div class="cs-bg-phone">
+                    <img src="assets/robinhood/bg-screen1.jpg" alt="Robinhood app screen">
+                </div>
+                <div class="cs-bg-phone">
+                    <img src="assets/robinhood/bg-screen2.jpg" alt="Robinhood app screen">
+                </div>
+                <div class="cs-bg-phone">
+                    <img src="assets/robinhood/bg-screen3.jpg" alt="Robinhood app screen">
+                </div>
+                <div class="cs-bg-phone">
+                    <img src="assets/robinhood/bg-screen4.jpg" alt="Robinhood app screen">
+                </div>
+            </div>
+        </section>
+
+        <!-- Research -->
+        <section id="research" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">Research</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">Investors can be bucketed into 3 main categories</p>
+                    <p>Based on interviews from 20 investors of all styles and levels, I grouped them into 3 distinct personas and investing experiences, then uncovered the following problems regarding investing habits and knowledge.</p>
+                </div>
+            </div>
+
+            <!-- Persona Cards -->
+            <div class="cs-persona-row">
+                <div class="cs-persona-card">
+                    <div class="cs-persona-avatar">
+                        <img src="assets/robinhood/persona-photo.jpg" alt="Beginner investor persona">
+                    </div>
+                    <p class="cs-persona-title">Beginner Investor</p>
+                    <p class="cs-persona-exp">0-3 years of experience</p>
+                </div>
+                <div class="cs-persona-card">
+                    <div class="cs-persona-avatar">
+                        <img src="assets/robinhood/persona-photo.jpg" alt="Intermediate investor persona">
+                    </div>
+                    <p class="cs-persona-title">Intermediate Investor</p>
+                    <p class="cs-persona-exp">3-5 years of experience</p>
+                </div>
+                <div class="cs-persona-card">
+                    <div class="cs-persona-avatar">
+                        <img src="assets/robinhood/persona-photo.jpg" alt="Advanced investor persona">
+                    </div>
+                    <p class="cs-persona-title">Advanced Investor</p>
+                    <p class="cs-persona-exp">5+ years of experience</p>
+                </div>
+            </div>
+
+            <!-- Insight Cards -->
+            <div class="cs-insight-grid">
+                <div class="cs-card cs-insight-card">
+                    <span class="cs-insight-num">01</span>
+                    <p>Users struggle to assess the credibility of people they follow online due to lack of transparency, performance history, and trust signals.</p>
+                </div>
+                <div class="cs-card cs-insight-card">
+                    <span class="cs-insight-num">02</span>
+                    <p>Users want to benefit from social insights without sacrificing their privacy or revealing sensitive information.</p>
+                </div>
+                <div class="cs-card cs-insight-card">
+                    <span class="cs-insight-num">03</span>
+                    <p>Beginners lack accessible examples and frameworks for building well-balanced, long-term portfolios.</p>
+                </div>
+                <div class="cs-card cs-insight-card">
+                    <span class="cs-insight-num">04</span>
+                    <p>Trend-chasing and hype-driven trades can mislead inexperienced investors and lead to poor financial outcomes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem -->
+        <section id="problem" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">Problem</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">Young investors simply lack the financial knowledge to invest properly</p>
+                    <p>Many Robinhood users feel overwhelmed and isolated when making investment decisions. Without mentorship or clear guidance, younger investors, who make up the majority of Robinhood's user base, often rely on informal sources like friends or social media, leading to inconsistent strategies and low confidence.</p>
+                </div>
+            </div>
+            <div class="cs-stat-callout">
+                <p class="cs-stat-prefix">with over</p>
+                <p class="cs-stat-number">26.5 million</p>
+                <p class="cs-stat-suffix">funded users on the platform, Robinhood has an opportunity to turn isolation into collaboration</p>
+            </div>
+        </section>
+
+        <!-- Introducing Section (Dark) -->
+        <section class="cs-introducing">
+            <div class="cs-introducing-top">
+                <img src="assets/robinhood/mirror-logo.png" alt="Robinhood Mirror logo" class="cs-introducing-logo">
+                <p class="cs-introducing-text">Introducing</p>
+            </div>
+            <div class="cs-introducing-mockup">
+                <img src="assets/robinhood/introducing-mockup.jpg" alt="Robinhood Mirror iPhone mockup">
+            </div>
+        </section>
+
+        <!-- Solution Overview / Features -->
+        <section id="features" class="cs-section">
+            <p class="cs-sidebar-label cs-label">Solution Overview</p>
+
+            <!-- Feature 1: Onboarding -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Improved Onboarding Flow</p>
+                    <p>The onboarding flow is designed to personalize the user experience by guiding investors through a series of tailored questions, helping them identify their investing preferences and goals, ensuring a more relevant and engaging platform experience from the start.</p>
+                </div>
+                <div class="cs-card cs-feature-screens">
+                    <img src="assets/robinhood/screen-onboard1.jpg" alt="Onboarding screen 1">
+                    <img src="assets/robinhood/screen-onboard2.jpg" alt="Onboarding screen 2">
+                    <img src="assets/robinhood/screen-onboard3.jpg" alt="Onboarding screen 3">
+                </div>
+            </div>
+
+            <!-- Feature 2: Discovery -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Finding an Investor</p>
+                    <p>The investor discovery feature enables users to find and connect with like-minded investors by categorizing them based on strategies and financial goals, fostering a sense of collaboration and tailored learning.</p>
+                </div>
+                <div class="cs-card cs-feature-screens">
+                    <img src="assets/robinhood/screen-discover1.jpg" alt="Discovery screen 1">
+                    <img src="assets/robinhood/screen-discover2.jpg" alt="Discovery screen 2">
+                    <img src="assets/robinhood/screen-discover3.jpg" alt="Discovery screen 3">
+                </div>
+            </div>
+
+            <!-- Feature 3: Mirroring -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Mirroring an Investor</p>
+                    <p>The Mirroring feature allows users to replicate the trades of other investors, enabling them to align their portfolios with proven strategies while maintaining control over allocation and risk management.</p>
+                </div>
+                <div class="cs-card cs-feature-screens">
+                    <img src="assets/robinhood/screen-mirror1.jpg" alt="Mirror screen 1">
+                    <img src="assets/robinhood/screen-mirror2.jpg" alt="Mirror screen 2">
+                    <img src="assets/robinhood/screen-mirror3.jpg" alt="Mirror screen 3">
+                </div>
+            </div>
+        </section>
+
+        <!-- Edge Cases -->
+        <section id="edge-cases" class="cs-section">
+            <p class="cs-sidebar-label cs-label">Edge Cases</p>
+
+            <!-- Edge Case 1 -->
+            <div class="cs-edge-row">
+                <div class="cs-edge-text">
+                    <p class="cs-feature-title">Incomplete Onboarding</p>
+                    <p>If a user skips the onboarding process, Robinhood will display a reminder on the home page, telling the user to complete the onboarding flow.</p>
+                </div>
+                <div class="cs-card cs-edge-screen">
+                    <img src="assets/robinhood/screen-edge1.jpg" alt="Incomplete onboarding edge case">
+                </div>
+            </div>
+
+            <!-- Edge Case 2 (reversed) -->
+            <div class="cs-edge-row cs-edge-row-reverse">
+                <div class="cs-card cs-edge-screen">
+                    <img src="assets/robinhood/screen-edge2.jpg" alt="Investor privacy edge case">
+                </div>
+                <div class="cs-edge-text">
+                    <p class="cs-feature-title">Investor Privacy</p>
+                    <p>All investors can edit what they show to the public, including their: portfolio value, gains/losses, # of shares owned, asset allocation, or their entire profile</p>
+                </div>
+            </div>
+
+            <!-- Edge Case 3 -->
+            <div class="cs-edge-row">
+                <div class="cs-edge-text">
+                    <p class="cs-feature-title">Complete Beginner Onboarding</p>
+                    <p>If a user is a complete beginner according to their investing questions, Robinhood will redirect them to the Beginner Resource Hub, separate from the standard onboarding flow</p>
+                </div>
+                <div class="cs-card cs-edge-screen">
+                    <img src="assets/robinhood/screen-edge3.jpg" alt="Beginner onboarding edge case">
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Impact -->
+        <section id="impact" class="cs-section">
+            <p class="cs-sidebar-label cs-label">Business Impact</p>
+            <div class="cs-impact-row">
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/robinhood/icon-check.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Completion Rate</p>
+                    <p class="cs-impact-desc">Percentage of users who complete the onboarding process and receive an investor profile.</p>
+                </div>
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/robinhood/icon-user.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Investor Follow Rate</p>
+                    <p class="cs-impact-desc">How many users follow an investor after completing onboarding.</p>
+                </div>
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/robinhood/icon-binoculars.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Time Spent on Discovery</p>
+                    <p class="cs-impact-desc">Tracks engagement with the investor directory and filtering tools.</p>
+                </div>
+            </div>
+            <div class="cs-impact-row">
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/robinhood/icon-coins.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Adoption Rate</p>
+                    <p class="cs-impact-desc">Percentage of users who enable Copy Trading after viewing an investor's profile.</p>
+                </div>
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/robinhood/icon-circles.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Average Investment Allocation</p>
+                    <p class="cs-impact-desc">How much capital users allocate toward mirroring an investor.</p>
+                </div>
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/robinhood/icon-warning.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Stop-Loss & Risk Settings</p>
+                    <p class="cs-impact-desc">Tracks how often users customize risk management options when copying trades.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="robinhood.js"></script>
+</body>
+</html>
