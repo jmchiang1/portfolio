@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reveal — Case Study | Jonathan Chiang</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="reveal.css">
+</head>
+<body>
+    <!-- White cover — visible from first paint to prevent flash between pages -->
+    <div class="page-transition-cover"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
+        </a>
+        <div class="nav-links">
+            <a href="#background" class="nav-link">Background</a>
+            <a href="#pact" class="nav-link">PACT Analysis</a>
+            <a href="#lofi" class="nav-link">Low Fidelity</a>
+            <a href="#testing" class="nav-link">User Testing</a>
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#takeaways" class="nav-link">Takeaways</a>
+        </div>
+    </nav>
+
+    <!-- Back to top button -->
+    <a href="#top" class="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+
+    <main id="top" class="case-study">
+        <!-- Header -->
+        <section class="cs-header">
+            <div class="cs-header-text">
+                <p class="cs-label">Reveal | Augmented Reality Application Concept</p>
+                <h1 class="cs-title">Raising awareness for hostile architecture through the lens of augmented reality</h1>
+            </div>
+
+            <div class="cs-hero-banner">
+                <p class="cs-hero-title">Reveal</p>
+                <img src="assets/reveal/reveal-logo.svg" alt="Reveal logo" class="cs-hero-logo">
+            </div>
+
+            <div class="cs-meta-grid">
+                <div class="cs-meta-overview">
+                    <p class="cs-label">Project Overview</p>
+                    <p>An augmented reality advocacy tool that identifies hostile architecture in public spaces, raising awareness and educating users on its social impact and empowers them to take action toward a more inclusive urban design.</p>
+                </div>
+                <div class="cs-meta-role">
+                    <p class="cs-label">Role</p>
+                    <p>UX Research</p>
+                    <p>UX/UI Design</p>
+                </div>
+                <div class="cs-meta-problem">
+                    <p class="cs-label">Problem</p>
+                    <p>Most people walk past hostile architecture every day without realizing its purpose or impact on vulnerable populations.</p>
+                </div>
+                <div class="cs-meta-solution">
+                    <p class="cs-label">Solution</p>
+                    <p>Use augmented reality to identify, educate, and reimagine hostile architecture in public spaces</p>
+                </div>
+                <div class="cs-meta-timeline">
+                    <p class="cs-label">Timeline</p>
+                    <p>Fall 2024</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <hr class="cs-divider">
+
+        <!-- Background -->
+        <section id="background" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Background</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">What is Hostile Architecture?</p>
+                    <p>Hostile Architecture (Defensive Design) is an urban-design strategy that uses elements of the built environment to purposefully guide behavior.</p>
+                    <p>It often targets people who use or rely on public space more than others, such as youth, poor people, and homeless people, by restricting the physical behaviors they can engage in.</p>
+                </div>
+            </div>
+
+            <!-- Background Photo 1 -->
+            <div class="cs-bg-photo">
+                <img src="assets/reveal/bg-photo1.jpg" alt="Leaning bar replacing bench at transit station">
+                <img src="assets/reveal/icon-pin.svg" alt="" class="cs-bg-pin" style="left: 13.3%; top: 25.6%">
+                <div class="cs-bg-overlay" style="right: 24px; bottom: 24px;">
+                    <div class="cs-bg-overlay-section">
+                        <p class="cs-bg-overlay-heading">Problem</p>
+                        <p>Replaced a regular bench with a leaning bar to prevent sitting, sleeping, and loitering</p>
+                    </div>
+                    <hr class="cs-bg-overlay-divider">
+                    <div class="cs-bg-overlay-section">
+                        <p class="cs-bg-overlay-heading">Affected Populations</p>
+                        <p>Everyday passengers, homeless, elderly, and people with physical/situational disabilities</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Photo 2 -->
+            <div class="cs-bg-photo">
+                <img src="assets/reveal/bg-photo2.jpg" alt="Spikes placed on steps near buildings">
+                <div class="cs-bg-overlay" style="right: 24px; bottom: 24px;">
+                    <div class="cs-bg-overlay-section">
+                        <p class="cs-bg-overlay-heading">Problem</p>
+                        <p>Spikes placed over steps near buildings and businesses.</p>
+                    </div>
+                    <hr class="cs-bg-overlay-divider">
+                    <div class="cs-bg-overlay-section">
+                        <p class="cs-bg-overlay-heading">Affected Populations</p>
+                        <p>Everyday people, the elderly, people with physical disabilities, and the unhoused.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Photo 3 -->
+            <div class="cs-bg-photo">
+                <img src="assets/reveal/bg-photo3.jpg" alt="Covered grates over subway vents">
+                <img src="assets/reveal/icon-pin.svg" alt="" class="cs-bg-pin" style="left: 17.9%; top: 30.5%">
+                <div class="cs-bg-overlay" style="right: 24px; bottom: 24px;">
+                    <div class="cs-bg-overlay-section">
+                        <p class="cs-bg-overlay-heading">Problem</p>
+                        <p>Covered grates over subway vents, specifically designed not to be sat / slept on.</p>
+                    </div>
+                    <hr class="cs-bg-overlay-divider">
+                    <div class="cs-bg-overlay-section">
+                        <p class="cs-bg-overlay-heading">Affected Populations</p>
+                        <p>Mainly unhoused people trying to keep warm during the winter months.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PACT Analysis -->
+        <section id="pact" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">PACT Analysis</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">Narrowing down a user base and use case for Reveal</p>
+                    <p>By understanding the diverse needs of urban commuters, unhoused individuals, and accessibility advocates, the analysis ensures the app is designed for real-world impact.</p>
+                </div>
+            </div>
+            <div class="cs-pact-grid">
+                <div class="cs-card cs-pact-card">
+                    <p class="cs-pact-heading">Primary Users</p>
+                    <p><strong>Urban explorers</strong>: People interested in understanding the impact of public spaces and architecture.</p>
+                    <p><strong>Advocates for social change</strong>: people who want to raise awareness for hostile architecture</p>
+                </div>
+                <div class="cs-card cs-pact-card">
+                    <p class="cs-pact-heading">Context</p>
+                    <p><strong>Urban Environments:</strong> The app will primarily be used outdoors in parks, city streets, and public transportation.</p>
+                    <p><strong>Busy Locations:</strong> Since many public spaces are crowded, the app's interface needs to be non-intrusive and simple.</p>
+                </div>
+                <div class="cs-card cs-pact-card">
+                    <p class="cs-pact-heading">Activities</p>
+                    <p><strong>Exploring public spaces:</strong> Users will walk through their urban environments while using the app to scan for and identify hostile architecture elements.</p>
+                    <p><strong>Education and awareness:</strong> The app will inform users about the purpose of defensive designs and their societal impact on the most vulnerable populations.</p>
+                </div>
+                <div class="cs-card cs-pact-card">
+                    <p class="cs-pact-heading">Technology</p>
+                    <p><strong>AR headset:</strong> AR headsets are ideal for overlaying real-time information onto physical objects in the user's environment. It includes features such as:</p>
+                    <p><strong>AR headsets battery:</strong> most AR headsets have a battery life of 2 hours so users need to be aware that they can't use it forever.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Low Fidelity -->
+        <section id="lofi" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">Low Fidelity</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">Initial Designs (Based on the Apple Vision Pro Interface)</p>
+                    <p>Finding examples and interfaces was actually quite a challenge, as there weren't many design examples of apps being created on AR/VR headsets, so I ultimately decided on the Apple Vision Pro so it has the most extensive design documentation and design elements online.</p>
+                </div>
+            </div>
+            <div class="cs-lofi-row">
+                <img src="assets/reveal/lofi1.jpg" alt="Low fidelity wireframe 1">
+                <img src="assets/reveal/lofi2.jpg" alt="Low fidelity wireframe 2">
+                <img src="assets/reveal/lofi3.jpg" alt="Low fidelity wireframe 3">
+            </div>
+            <div class="cs-lofi-row">
+                <img src="assets/reveal/lofi4.jpg" alt="Low fidelity wireframe 4">
+                <img src="assets/reveal/lofi5.jpg" alt="Low fidelity wireframe 5">
+                <img src="assets/reveal/lofi6.jpg" alt="Low fidelity wireframe 6">
+            </div>
+        </section>
+
+        <!-- User Testing -->
+        <section id="testing" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label cs-label">User Testing</p>
+                <div class="cs-content">
+                    <p class="cs-subtitle">Feedback and Iterations from Real Users</p>
+                    <p>Based on user testing feedback from the my low and mid fidelity wireframes, I iterated on the main screens to be more user friendly, less text heavy, and more visual focused.</p>
+                </div>
+            </div>
+
+            <!-- Testing Iteration 1 -->
+            <div class="cs-testing-block">
+                <p class="cs-subtitle">Main screen was too crowded and text heavy</p>
+                <div class="cs-testing-comparison">
+                    <div class="cs-testing-card cs-testing-before">
+                        <img src="assets/reveal/testing-before1.jpg" alt="Before: crowded main screen">
+                        <p class="cs-testing-card-title">Too Much Text and Overwhelming Layout</p>
+                        <p class="cs-testing-card-desc">Users were overwhelmed with the number of buttons on the screen, and many skipped this part completely to go over to the 3D redesign.</p>
+                    </div>
+                    <div class="cs-testing-card cs-testing-after">
+                        <img src="assets/reveal/testing-after1.jpg" alt="After: cleaner layout">
+                        <p class="cs-testing-card-title">Moved the layouts further towards the edges</p>
+                        <p class="cs-testing-card-desc">I redesigned the overall layout to focus more on the 3D overlay rather than informational text. Users can still read more about it on right hand side if they wish</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testing Iteration 2 -->
+            <div class="cs-testing-block">
+                <p class="cs-subtitle">Submit Form wasn't user friendly and confusing to fill out</p>
+                <div class="cs-testing-comparison">
+                    <div class="cs-testing-card cs-testing-before">
+                        <img src="assets/reveal/testing-before2.jpg" alt="Before: confusing form">
+                        <p class="cs-testing-card-title">Confusing Form Field</p>
+                        <p class="cs-testing-card-desc">Users were confused with the overall layout of the form field. They were not sure what was pre-filled out and what they had to fill out themselves.</p>
+                    </div>
+                    <div class="cs-testing-card cs-testing-after">
+                        <img src="assets/reveal/testing-after2.jpg" alt="After: clearer form">
+                        <p class="cs-testing-card-title">More Intuitive Forms and Submit Button</p>
+                        <p class="cs-testing-card-desc">I redesigned the layout of the form field to have more visual hierarchy and affordance to users. They now know what to click and how to add media before submitting.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solution Overview / Features -->
+        <section id="features" class="cs-section">
+            <p class="cs-sidebar-label cs-label">Solution Overview</p>
+
+            <!-- Feature 1 -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Identifying Hostile Architecture</p>
+                    <p>After the user onboards, Reveal will automatically identify any hostile architecture in the area, where the user can then interact with it.</p>
+                    <p>They can overlay a re-designed version, read up on the architecture, and understand why it's hostile in nature.</p>
+                </div>
+                <div class="cs-card cs-feature-video">
+                    <p>After Effects Video</p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Understand the History of the Architecture</p>
+                    <p>Users can also view the history of the architecture throughout the years, via descriptions and images. This way, users can get a better sense of how the current design came to be.</p>
+                    <p>They can then share this location and report it to city officials with a simple form.</p>
+                </div>
+                <div class="cs-card cs-feature-video">
+                    <p>After Effects Video</p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="cs-feature-row">
+                <div class="cs-feature-text">
+                    <p class="cs-feature-title">Find Hostile Architecture in the Real World</p>
+                    <p>Users can also go to the map and check out other identified or tagged hostile architecture in their area.</p>
+                    <p>This encourages users to explore their environment through the lens of urban design and maybe even find more examples!</p>
+                </div>
+                <div class="cs-card cs-feature-video">
+                    <p>After Effects Video</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Takeaways -->
+        <section id="takeaways" class="cs-section">
+            <p class="cs-sidebar-label cs-label">Takeaways</p>
+            <div class="cs-impact-row">
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/reveal/icon-train.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Frequent Interaction with Public Spaces</p>
+                    <p class="cs-impact-desc">Most participants are daily commuters or urban dwellers who regularly navigate public spaces like transit hubs, parks, and sidewalks. Their reliance on these spaces underscores the importance of inclusive design.</p>
+                </div>
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/reveal/icon-handeye.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Varied levels of Awareness</p>
+                    <p class="cs-impact-desc">While some users were familiar with the concept of hostile architecture, many were unaware of its impact on vulnerable populations, highlighting the need for educational elements in the app.</p>
+                </div>
+            </div>
+            <div class="cs-impact-row">
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/reveal/icon-sad.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Significant Pain Points Identified</p>
+                    <p class="cs-impact-desc">Common issues include a lack of seating, inaccessible pathways, and exclusionary features, affecting elderly individuals, people with disabilities, and unhoused populations.</p>
+                </div>
+                <div class="cs-card cs-impact-card">
+                    <img src="assets/reveal/icon-wheelchair.svg" alt="" class="cs-impact-icon">
+                    <p class="cs-impact-title">Accessibility Is a Design Priority, Not a Bonus</p>
+                    <p class="cs-impact-desc">Creating something meant to highlight exclusion pushed me to be extra intentional about inclusive design in the app itself, from how users navigate it to how information is presented.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="reveal.js"></script>
+</body>
+</html>
