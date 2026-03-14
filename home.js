@@ -17,41 +17,6 @@
     var isTransitioning = false;
     var TRANSITION_MS = 450;
 
-    // Returning from a case study page — expand dots into nav-links
-    var isReturning = sessionStorage.getItem('nav-returning');
-    if (isReturning) {
-        sessionStorage.removeItem('nav-returning');
-        var navbar = document.querySelector('.navbar');
-        var navLinks = navbar.querySelectorAll('.nav-link');
-        var logo = navbar.querySelector('.nav-logo');
-
-        // Suppress default entrance animations
-        logo.style.animation = 'none';
-        logo.style.opacity = '1';
-        navLinks.forEach(function (link) {
-            link.style.animation = 'none';
-        });
-
-        // Start with dots visible, links collapsed
-        navbar.classList.add('nav-dots-returning');
-
-        // After a beat, expand dots into nav-links
-        setTimeout(function () {
-            navbar.classList.remove('nav-dots-returning');
-            navbar.classList.add('nav-dots-returning-expanded');
-        }, 300);
-
-        // Clean up class after animation completes
-        setTimeout(function () {
-            navbar.classList.remove('nav-dots-returning-expanded');
-            // Set links to their final state
-            navLinks.forEach(function (link) {
-                link.style.opacity = '1';
-                link.style.transform = 'translateY(0)';
-            });
-        }, 750);
-    }
-
     // Glow entry animation → hand off to CSS transitions
     glow.addEventListener('animationend', function handler(e) {
         if (e.animationName === 'glow-enter') {
@@ -272,8 +237,6 @@
             logo.style.opacity = '1';
 
             // Freeze nav-links in their current visible state
-            // (they're animated in via keyframes — killing the animation
-            //  would snap them back to opacity:0, so we inline the computed values first)
             navLinks.forEach(function (link) {
                 link.style.animation = 'none';
                 link.style.opacity = '1';
@@ -283,18 +246,14 @@
             // Force reflow so inline styles apply before transition starts
             navbar.offsetHeight;
 
-            // Step 1: Collapse nav-links into dots-three icon
-            navbar.classList.add('nav-collapsing');
+            // Animate everything out simultaneously
+            navbar.classList.add('nav-exiting');
+            container.classList.add('page-exit-active');
 
-            // Step 2: After a beat, fade out page content (not navbar)
-            setTimeout(function () {
-                container.classList.add('page-exit-active');
-            }, 150);
-
-            // Step 3: Navigate after everything settles
+            // Navigate after exit animation completes
             setTimeout(function () {
                 window.location.href = href;
-            }, 600);
+            }, 500);
         });
     });
 

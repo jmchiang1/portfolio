@@ -1,30 +1,19 @@
-// Page entrance — dark bg with white dots → fade to white bg → dots expand to links
+// Page entrance — fade black cover to white, stagger nav-links down
 (function () {
     var cover = document.querySelector('.page-transition-cover');
     var navbar = document.querySelector('.navbar');
 
-    // Phase 1: Dark background, white dots visible, navbar bg hidden
-    navbar.classList.add('nav-dots-entrance');
+    // Start nav-links entrance animation
+    navbar.classList.add('nav-entering');
 
-    // Phase 2: After brief pause, start fading cover + transitioning navbar to light
+    // Fade out black cover to reveal white page
     setTimeout(function () {
-        // Fade out dark cover to reveal white page
         if (cover) {
-            cover.style.transition = 'opacity 0.5s ease';
+            cover.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)';
             cover.style.opacity = '0';
-            setTimeout(function () { cover.remove(); }, 500);
+            setTimeout(function () { cover.remove(); }, 400);
         }
-
-        // Transition dots from white to dark, bring in navbar bg
-        navbar.classList.remove('nav-dots-entrance');
-        navbar.classList.add('nav-dots-transition');
-    }, 200);
-
-    // Phase 3: After navbar bg settles, expand dots into nav-links
-    setTimeout(function () {
-        navbar.classList.remove('nav-dots-transition');
-        navbar.classList.add('nav-dots-expanded');
-    }, 700);
+    }, 50);
 })();
 
 // Exit animation when clicking logo to go back to home
@@ -39,26 +28,26 @@
         e.preventDefault();
 
         var navbar = document.querySelector('.navbar');
+        var navLinks = navbar.querySelectorAll('.nav-link');
 
-        // Step 1: Collapse nav-links into dots-three icon
-        navbar.classList.remove('nav-dots-expanded');
-        navbar.classList.add('nav-collapsing');
+        // Freeze nav-links at their current visible state
+        navLinks.forEach(function (link) {
+            link.style.animation = 'none';
+            link.style.opacity = '1';
+            link.style.transform = 'translateY(0)';
+        });
 
-        // Fade out page content (but not navbar)
+        // Force reflow so inline styles apply before transition starts
+        navbar.offsetHeight;
+
+        // Animate everything out simultaneously
+        navbar.classList.add('nav-exiting');
         document.body.classList.add('cs-exiting');
 
-        // Step 2: After links collapse, transition navbar to dark state
-        // (white dots, no bg) to match home page
+        // Navigate after exit animation completes
         setTimeout(function () {
-            navbar.classList.remove('nav-collapsing');
-            navbar.classList.add('nav-dots-exit-dark');
-        }, 350);
-
-        // Step 3: Navigate after full transition
-        setTimeout(function () {
-            sessionStorage.setItem('nav-returning', 'true');
             window.location.href = href;
-        }, 650);
+        }, 700);
     });
 })();
 
