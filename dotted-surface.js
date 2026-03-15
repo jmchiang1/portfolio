@@ -8,6 +8,8 @@
     var AMOUNTY = 60;
     var count = 0;
     var animationId;
+    // Allow per-page speed override via data attribute, default 0.03
+    var SPEED = parseFloat(container.getAttribute('data-speed')) || 0.03;
 
     // Scene
     var scene = new THREE.Scene();
@@ -77,7 +79,7 @@
         geometry.attributes.position.needsUpdate = true;
 
         renderer.render(scene, camera);
-        count += 0.03;
+        count += SPEED;
     }
 
     // Resize

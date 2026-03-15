@@ -1,158 +1,101 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motion Projects | Jonathan Chiang</title>
+    <title>Motion | Jonathan Chiang</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="motion.css">
+    <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <main class="page-container">
-        <!-- Background Gradient -->
-        <div class="background-gradient"></div>
+    <!-- Dotted Surface background -->
+    <div id="dotted-surface" data-speed="0.015"></div>
 
-        <!-- Home Button -->
-        <a href="index.html" class="home-btn" aria-label="Go to home">
-            <i class="ph ph-house"></i>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
         </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">UX/UI</a>
+            <a href="#" class="nav-link">Coding</a>
+            <a href="#" class="nav-link active">Motion</a>
+            <a href="#" class="nav-link">About</a>
+        </div>
+    </nav>
 
-        <!-- Page Header -->
-        <header class="page-header">
-            <a href="index.html" class="back-btn">
-                <i class="ph ph-arrow-left"></i>
-                <span>Back</span>
-            </a>
-            <h1 class="page-title">Motion Projects</h1>
-            <p class="page-subtitle">Animation & Motion Graphics Work</p>
-        </header>
+    <!-- Carousel (same structure as home page) -->
+    <div class="carousel-viewport">
+        <!-- Card 1 — Neon Drift -->
+        <div class="project-card" data-modal="neon-drift-modal">
+            <video src="assets/Motion/Neon Drift/neon-lights-logo.mp4" class="project-video" muted loop playsinline></video>
+            <div class="project-placeholder"></div>
+        </div>
+        <div class="project-card"><div class="project-placeholder"></div></div>
+        <div class="project-card"><div class="project-placeholder"></div></div>
+        <div class="project-card"><div class="project-placeholder"></div></div>
+        <div class="project-card"><div class="project-placeholder"></div></div>
+        <div class="project-card"><div class="project-placeholder"></div></div>
+    </div>
 
-        <!-- Projects Grid -->
-        <section class="projects-grid">
-            <!-- Project Card 1 -->
-            <article class="project-card" data-project="1">
-                <div class="project-image-wrapper">
-                    <img src="https://picsum.photos/800/600?random=301" alt="Brand Animation" class="project-thumb">
-                    <div class="project-hover-overlay">
-                        <span class="view-project">View Project</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <div class="project-tags">
-                        <span class="tag tag-year">2024</span>
-                        <span class="tag tag-type">Branding</span>
-                    </div>
-                    <h3 class="project-name">Brand Identity Animation</h3>
-                    <p class="project-description">Animated logo and brand identity system for a tech startup launch.</p>
-                </div>
-            </article>
+    <!-- Neon Drift Modal -->
+    <div class="modal-overlay" id="neon-drift-modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
 
-            <!-- Project Card 2 -->
-            <article class="project-card" data-project="2">
-                <div class="project-image-wrapper">
-                    <img src="https://picsum.photos/800/600?random=302" alt="UI Micro-interactions" class="project-thumb">
-                    <div class="project-hover-overlay">
-                        <span class="view-project">View Project</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <div class="project-tags">
-                        <span class="tag tag-year">2024</span>
-                        <span class="tag tag-type">UI Motion</span>
-                    </div>
-                    <h3 class="project-name">Micro-interactions System</h3>
-                    <p class="project-description">Comprehensive UI animation library with Lottie exports for mobile apps.</p>
-                </div>
-            </article>
+            <div class="modal-body">
+                <p class="modal-label modal-fade-in">Neon Drift | Music Festival Concept</p>
 
-            <!-- Project Card 3 -->
-            <article class="project-card" data-project="3">
-                <div class="project-image-wrapper">
-                    <img src="https://picsum.photos/800/600?random=303" alt="Product Demo" class="project-thumb">
-                    <div class="project-hover-overlay">
-                        <span class="view-project">View Project</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <div class="project-tags">
-                        <span class="tag tag-year">2023</span>
-                        <span class="tag tag-type">Explainer</span>
-                    </div>
-                    <h3 class="project-name">Product Explainer Video</h3>
-                    <p class="project-description">2D animated explainer video showcasing SaaS product features.</p>
-                </div>
-            </article>
+                <div class="modal-video-target"></div>
 
-            <!-- Project Card 4 -->
-            <article class="project-card" data-project="4">
-                <div class="project-image-wrapper">
-                    <img src="https://picsum.photos/800/600?random=304" alt="Loading Animations" class="project-thumb">
-                    <div class="project-hover-overlay">
-                        <span class="view-project">View Project</span>
+                <div class="modal-meta modal-fade-in">
+                    <div class="modal-meta-overview">
+                        <p class="modal-label">Project Overview</p>
+                        <p>Ever since I could remember, I have loved chill pop music, and most recently lofi hip hop beats. But there aren't any music festivals that encompass this sub-genre of music, so I created a website for it and animated it!</p>
+                        <p>Music inspiration came from artists like Keshi, Joji, SZA, and Giveon. While visual inspiration came from Vaporwave and Synthwave aesthetics.</p>
+                    </div>
+                    <div class="modal-meta-sidebar">
+                        <div>
+                            <p class="modal-label">Tools</p>
+                            <p>Figma</p>
+                            <p>Adobe Illustrator</p>
+                            <p>Adobe After Effects</p>
+                            <p>Blender</p>
+                        </div>
+                        <div>
+                            <p class="modal-label">Timeline</p>
+                            <p>Spring 2025</p>
+                        </div>
                     </div>
                 </div>
-                <div class="project-info">
-                    <div class="project-tags">
-                        <span class="tag tag-year">2023</span>
-                        <span class="tag tag-type">Loaders</span>
-                    </div>
-                    <h3 class="project-name">Loading Animation Pack</h3>
-                    <p class="project-description">Collection of 50+ loading animations optimized for web and mobile.</p>
-                </div>
-            </article>
 
-            <!-- Project Card 5 -->
-            <article class="project-card" data-project="5">
-                <div class="project-image-wrapper">
-                    <img src="https://picsum.photos/800/600?random=305" alt="Social Media" class="project-thumb">
-                    <div class="project-hover-overlay">
-                        <span class="view-project">View Project</span>
-                    </div>
+                <div class="modal-video-short modal-fade-in">
+                    <video src="assets/Motion/Neon Drift/neon-lights-website.mp4" controls loop playsinline></video>
                 </div>
-                <div class="project-info">
-                    <div class="project-tags">
-                        <span class="tag tag-year">2023</span>
-                        <span class="tag tag-type">Social</span>
-                    </div>
-                    <h3 class="project-name">Social Media Templates</h3>
-                    <p class="project-description">Animated Instagram and TikTok templates for content creators.</p>
-                </div>
-            </article>
 
-            <!-- Project Card 6 -->
-            <article class="project-card" data-project="6">
-                <div class="project-image-wrapper">
-                    <img src="https://picsum.photos/800/600?random=306" alt="Icon Animation" class="project-thumb">
-                    <div class="project-hover-overlay">
-                        <span class="view-project">View Project</span>
-                    </div>
+                <div class="modal-video-short modal-fade-in">
+                    <video src="assets/Motion/Neon Drift/neon-lights-posterboard.mp4" controls loop playsinline></video>
                 </div>
-                <div class="project-info">
-                    <div class="project-tags">
-                        <span class="tag tag-year">2022</span>
-                        <span class="tag tag-type">Icons</span>
-                    </div>
-                    <h3 class="project-name">Animated Icon Set</h3>
-                    <p class="project-description">200+ animated icons with multiple animation styles and formats.</p>
+
+                <div class="modal-video-short modal-fade-in">
+                    <video src="assets/Motion/Neon Drift/neon-lights-phone.mp4" controls loop playsinline></video>
                 </div>
-            </article>
-        </section>
+            </div>
+        </div>
+    </div>
 
-        <!-- Navigation Bar (loaded dynamically) -->
-        <div id="navbar-container"></div>
-    </main>
-
-    <script src="components/components.js"></script>
-    <script src="pages.js"></script>
+    <script src="dotted-surface.js"></script>
+    <script src="motion.js"></script>
 </body>
 </html>

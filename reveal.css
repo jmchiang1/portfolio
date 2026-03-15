@@ -207,7 +207,7 @@ body {
     color: #083569;
     font-size: 16px;
     font-weight: 700;
-    width: 108px;
+    /* width: 108px; */
     flex-shrink: 0;
 }
 
@@ -266,11 +266,11 @@ body {
     line-height: 1;
 }
 
-.cs-hero-logo {
+.cs-hero-video {
     flex: 1;
-    max-width: 50%;
+    max-width: 100%;
     height: auto;
-    filter: drop-shadow(0 4px 4px rgba(255, 255, 255, 0.5));
+    border-radius: 8px;
 }
 
 .cs-meta-grid {
@@ -370,6 +370,7 @@ body {
     gap: 20px;
     color: #fff;
     font-size: 16px;
+    backdrop-filter: blur(8px);
 }
 
 .cs-bg-overlay-heading {
@@ -511,6 +512,13 @@ body {
     font-weight: 400;
 }
 
+.cs-feature-row > video {
+    flex: 1;
+    min-width: 0;
+    border-radius: 10px;
+    height: auto;
+}
+
 /* ============================================
    Takeaways / Impact
    ============================================ */
@@ -530,9 +538,8 @@ body {
 }
 
 .cs-impact-icon {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
+    font-size: 50px;
+    color: #083569;
 }
 
 .cs-impact-title {
@@ -542,7 +549,7 @@ body {
 }
 
 .cs-impact-desc {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
 }
 
@@ -644,7 +651,7 @@ body {
 @media (max-width: 1200px) {
     .case-study {
         padding: 100px 40px 80px;
-        gap: 80px;
+        gap: 100px;
     }
 
     .navbar {

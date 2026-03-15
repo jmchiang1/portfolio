@@ -257,6 +257,38 @@
         });
     });
 
+    // Nav-links that navigate to other pages (e.g. Motion)
+    var allNavLinks = document.querySelectorAll('.nav-link');
+    allNavLinks.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (!href || href === '#' || href.startsWith('#')) return;
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            var navbar = document.querySelector('.navbar');
+            var navLinks = navbar.querySelectorAll('.nav-link');
+            var logo = navbar.querySelector('.nav-logo');
+
+            logo.style.animation = 'none';
+            logo.style.opacity = '1';
+
+            navLinks.forEach(function (l) {
+                l.style.animation = 'none';
+                l.style.opacity = '1';
+                l.style.transform = 'translateY(0)';
+            });
+
+            navbar.offsetHeight;
+
+            navbar.classList.add('nav-exiting');
+            container.classList.add('page-exit-active');
+
+            setTimeout(function () {
+                window.location.href = href;
+            }, 500);
+        });
+    });
+
     // Touch support
     var touchStartY = 0;
     var touchStartX = 0;
