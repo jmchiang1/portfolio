@@ -715,6 +715,7 @@ body {
 
 .cs-testing-screen {
     flex: 1 1 0;
+    width: 100%;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -760,9 +761,7 @@ body {
 }
 
 .cs-impact-icon {
-    width: 96px;
-    height: 96px;
-    object-fit: cover;
+    font-size: 3rem;
 }
 
 .cs-impact-title {
@@ -787,13 +786,13 @@ body {
 }
 
 .cs-handoff-icon {
-    width: 100px;
-    height: 100px;
+    width: 3rem;
+    height: 3rem;
     object-fit: contain;
 }
 
 .cs-handoff-icon-globe {
-    height: 74px;
+    /* height: 74px; */
 }
 
 .cs-handoff-btn {

@@ -12,12 +12,9 @@
 
     <link rel="stylesheet" href="about.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 </head>
 <body>
-    <!-- Dotted Surface background -->
-    <div id="dotted-surface" data-speed="0.015"></div>
-
     <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="nav-logo">
@@ -48,27 +45,11 @@
         <!-- Left Column -->
         <div class="about-left">
             <div class="about-photo-wrapper about-enter" style="--delay: 0.3s">
-                <div class="about-photo-placeholder">
-                    <i class="ph-duotone ph-user" style="font-size: 64px; opacity: 0.4;"></i>
-                </div>
+                <img src="assets/headshot.png" alt="Jonathan Chiang" class="about-photo">
             </div>
 
             <div class="about-intro about-enter" style="--delay: 0.45s">
-                <h1 class="about-name">Jonathan Chiang</h1>
-                <p class="about-role">UX Designer & Software Engineer</p>
-                <p class="about-bio">I bridge the gap between design and engineering; crafting user experiences with production level code. Currently doing Design Engineering at SkillCat.</p>
-            </div>
-
-            <div class="about-socials about-enter" style="--delay: 0.6s">
-                <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                    <i class="ph-duotone ph-linkedin-logo"></i>
-                </a>
-                <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
-                    <i class="ph-duotone ph-github-logo"></i>
-                </a>
-                <a href="Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Resume">
-                    <i class="ph-duotone ph-read-cv-logo"></i>
-                </a>
+                <p class="about-bio">I’m a product designer based in New York with a background in UX/UI design and front end development. I enjoy turning complex ideas into simple, thoughtful digital experiences that feel clear, useful, and polished. My work is rooted in user research, interaction design, and building products that balance business goals with real human needs.</p>
             </div>
         </div>
 
@@ -99,7 +80,7 @@
             </div>
 
             <!-- Experience -->
-            <div class="about-section about-enter" style="--delay: 0.65s">
+            <div id="experience" class="about-section about-enter" style="--delay: 0.65s">
                 <h2 class="about-section-title">Experience</h2>
 
                 <div class="timeline">
@@ -165,7 +146,19 @@
         </div>
     </main>
 
-    <script src="dotted-surface.js"></script>
+    <!-- Social links — bottom right, hidden until scrolled past Experience -->
+    <div class="social-links social-hidden">
+        <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn" data-tooltip="LinkedIn">
+            <i class="ph-duotone ph-linkedin-logo"></i>
+        </a>
+        <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub" data-tooltip="Github">
+            <i class="ph-duotone ph-github-logo"></i>
+        </a>
+        <a href="Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Resume" data-tooltip="Resume">
+            <i class="ph-duotone ph-read-cv-logo"></i>
+        </a>
+    </div>
+
     <script src="about.js"></script>
 </body>
 </html>

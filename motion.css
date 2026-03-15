@@ -52,6 +52,20 @@ body::before {
     padding: 20px 60px;
 }
 
+/* Progressive blur behind navbar — full blur at top, fading to none */
+.navbar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    bottom: -20px;
+    z-index: -1;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+    transition: opacity 0.4s ease;
+}
+
 .hamburger {
     display: none;
 }
