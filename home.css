@@ -36,6 +36,16 @@ body {
 }
 
 /* ============================================
+   Dotted Surface (Three.js background)
+   ============================================ */
+#dotted-surface {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ============================================
    Radial Glow
    ============================================ */
 .glow {
@@ -428,6 +438,11 @@ a.project-card {
 /* Page exit — fade out content but keep navbar visible */
 .page-exit-active .section,
 .page-exit-active .social-links {
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.page-exit-active #dotted-surface {
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
