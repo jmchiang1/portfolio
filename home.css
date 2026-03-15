@@ -180,6 +180,17 @@ body {
 .nav-exiting .nav-link:nth-child(1) { transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.15s !important; }
 
 /* ============================================
+   Hamburger Menu (hidden on desktop)
+   ============================================ */
+.hamburger {
+    display: none;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+/* ============================================
    Social Links — bottom right corner
    ============================================ */
 .social-links {
@@ -403,6 +414,17 @@ body {
     text-align: end;
 }
 
+.footer-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+}
+
+.footer-link:hover {
+    opacity: 0.7;
+}
+
 /* ============================================
    Carousel Section
    ============================================ */
@@ -573,7 +595,8 @@ a.project-card {
 
 .project-image {
     position: absolute;
-    inset: 0;
+    /* bottom: -2rem;
+    right: -3rem; */
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -688,7 +711,9 @@ a.project-card {
 .project-overlay-gradient {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 100%);
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.7) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
 }
 
 .project-info {
@@ -836,7 +861,8 @@ a.project-card {
 
 @media (max-width: 640px) {
     .navbar {
-        padding: 10px 16px;
+        padding: 2rem;
+        z-index: 110;
     }
 
     .nav-logo {
@@ -856,8 +882,8 @@ a.project-card {
     }
 
     .nav-link {
-        padding: 6px 8px;
-        font-size: 11px;
+        padding: 1rem;
+        font-size: 12px;
     }
 
     .nav-logo img {
@@ -865,7 +891,7 @@ a.project-card {
     }
 
     .hero-heading {
-        font-size: 28px;
+        font-size: 2rem;
     }
 
     .code-icon {
@@ -876,17 +902,20 @@ a.project-card {
     .footer-info {
         flex-direction: column;
         gap: 16px;
-        bottom: 30px;
+        bottom: 4rem;
         left: 16px;
         right: 16px;
     }
 
     .footer-text {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .project-card {
-        max-width: 70%;
+        width: 90vw;
+        max-width: 90vw;
+        height: 70vh;
+        aspect-ratio: auto;
     }
 
     .project-card.pos-left {
@@ -907,18 +936,187 @@ a.project-card {
         font-size: 14px;
     }
 
+    /* Show tags, overlay, and info by default on center card (no hover on mobile) */
+    .project-card.pos-center .project-tags {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .project-card.pos-center .project-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     .project-tags {
-        font-size: 12px;
+        font-size: 14px;
         top: 12px;
         right: 12px;
+        background-color: rgba(0, 0, 0, 0.2);
     }
 
     .project-overlay {
-        height: 180px;
+        height: 50%;
         padding: 20px 12px;
+    }
+
+    .project-blur {
+        -webkit-mask-image: linear-gradient(to bottom, transparent 50%, black 100%);
+        mask-image: linear-gradient(to bottom, transparent 50%, black 100%);
+    }
+
+    .project-overlay-gradient {
+        -webkit-mask-image: linear-gradient(to bottom, transparent 50%, black 100%);
+        mask-image: linear-gradient(to bottom, transparent 50%, black 100%);
     }
 
     .project-info {
         gap: 8px;
+    }
+
+    /* Social links — animate out with footer when leaving hero */
+    .social-links {
+        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .social-links.social-hidden {
+        opacity: 0 !important;
+        transform: translateY(40px) !important;
+    }
+
+    /* Hide desktop nav-links, show hamburger */
+    .nav-links {
+        display: none !important;
+    }
+
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 110;
+        opacity: 0;
+        animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+
+    .hamburger-line {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: #fff;
+        border-radius: 2px;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        transform-origin: center;
+    }
+
+    /* Hamburger → X animation */
+    .hamburger.is-open .hamburger-line:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.is-open .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.is-open .hamburger-line:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        position: fixed;
+        inset: 0;
+        z-index: 105;
+        background: rgba(0, 0, 2, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-menu.menu-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .mobile-menu-link {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 24px;
+        color: #fff;
+        text-decoration: none;
+        padding: 1rem 3rem;
+        border-radius: 1000px;
+        transition: color 0.2s ease, background 0.2s ease;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .mobile-menu.menu-open .mobile-menu-link {
+        animation: nav-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(1) { animation-delay: 0.1s; }
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(2) { animation-delay: 0.15s; }
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(3) { animation-delay: 0.2s; }
+
+    /* Close animation — links slide down + fade out, overlay fades simultaneously */
+    .mobile-menu.menu-closing {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+    }
+
+    .mobile-menu.menu-closing .mobile-menu-link {
+        opacity: 1;
+        transform: translateY(0);
+        animation: menu-exit 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .mobile-menu.menu-closing .mobile-menu-link:nth-child(3) { animation-delay: 0s; }
+    .mobile-menu.menu-closing .mobile-menu-link:nth-child(2) { animation-delay: 0.05s; }
+    .mobile-menu.menu-closing .mobile-menu-link:nth-child(1) { animation-delay: 0.1s; }
+
+    @keyframes menu-exit {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+    }
+
+    .mobile-menu-link:hover {
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .mobile-menu-link.active {
+        color: #1180f9;
+        background: rgba(17, 128, 249, 0.08);
+    }
+
+    /* Nav exit — also animate hamburger out */
+    .nav-exiting .hamburger {
+        opacity: 0 !important;
+        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 }

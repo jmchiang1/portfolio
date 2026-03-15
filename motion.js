@@ -194,6 +194,20 @@
             // Measure target now that modal is fully laid out
             requestAnimationFrame(function () {
                 var target = modal.querySelector('.modal-video-target');
+
+                // Set target height from video's natural aspect ratio so it doesn't collapse
+                var vw = cardVideo.videoWidth;
+                var vh = cardVideo.videoHeight;
+                if (vw && vh) {
+                    target.style.aspectRatio = vw + ' / ' + vh;
+                } else {
+                    // Fallback: use the card video's current dimensions
+                    target.style.aspectRatio = cardRect.width + ' / ' + cardRect.height;
+                }
+
+                // Force layout so target has correct size before measuring
+                target.offsetHeight;
+
                 var targetRect = target.getBoundingClientRect();
 
                 // Animate to the target position
@@ -329,4 +343,44 @@
             triggerExit(href);
         });
     });
+
+    // Hamburger menu toggle (mobile)
+    var hamburger = document.querySelector('.hamburger');
+    var mobileMenu = document.querySelector('.mobile-menu');
+
+    if (hamburger && mobileMenu) {
+        function closeMenu(cb) {
+            hamburger.classList.remove('is-open');
+            mobileMenu.classList.remove('menu-open');
+            mobileMenu.classList.add('menu-closing');
+
+            setTimeout(function () {
+                mobileMenu.classList.remove('menu-closing');
+                if (cb) cb();
+            }, 450);
+        }
+
+        hamburger.addEventListener('click', function () {
+            if (mobileMenu.classList.contains('menu-open')) {
+                closeMenu();
+            } else {
+                mobileMenu.classList.remove('menu-closing');
+                hamburger.classList.add('is-open');
+                mobileMenu.classList.add('menu-open');
+            }
+        });
+
+        var mobileLinks = mobileMenu.querySelectorAll('.mobile-menu-link');
+        mobileLinks.forEach(function (link) {
+            var href = link.getAttribute('href');
+            if (!href || href === '#' || href.startsWith('#')) return;
+
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                closeMenu(function () {
+                    triggerExit(href);
+                });
+            });
+        });
+    }
 })();
