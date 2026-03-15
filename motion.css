@@ -365,6 +365,16 @@ body::before {
     margin-bottom: 0;
 }
 
+/* Simple modal (no meta section) — black title */
+.modal-body > .modal-label:first-child:not(.modal-fade-in) {
+    color: #030b2a;
+}
+
+/* Reduce gap between title and video */
+.modal-label + .modal-video-target {
+    margin-top: -20px;
+}
+
 /* Target slot where the flying video lands */
 .modal-video-target {
     width: 100%;

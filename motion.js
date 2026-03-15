@@ -204,6 +204,12 @@
                     target.appendChild(cardVideo);
                     flyingEl.remove();
 
+                    // Unmute and add controls if target has data-unmute
+                    if (target.hasAttribute('data-unmute')) {
+                        cardVideo.muted = false;
+                        cardVideo.controls = true;
+                    }
+
                     // Stagger-reveal the rest of the modal content
                     fadeItems.forEach(function (el, i) {
                         setTimeout(function () {
@@ -226,6 +232,10 @@
         if (target) {
             var video = target.querySelector('video');
             if (video) {
+                // Re-mute and remove controls before returning to card
+                video.muted = true;
+                video.controls = false;
+
                 // Find the card that owns this modal
                 var modalId = modal.id;
                 var ownerCard = document.querySelector('.project-card[data-modal="' + modalId + '"]');

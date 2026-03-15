@@ -38,11 +38,21 @@
             <video src="assets/Motion/Neon Drift/neon-lights-logo.mp4" class="project-video" muted loop playsinline></video>
             <div class="project-placeholder"></div>
         </div>
-        <div class="project-card"><div class="project-placeholder"></div></div>
-        <div class="project-card"><div class="project-placeholder"></div></div>
-        <div class="project-card"><div class="project-placeholder"></div></div>
-        <div class="project-card"><div class="project-placeholder"></div></div>
-        <div class="project-card"><div class="project-placeholder"></div></div>
+        <!-- Card 2 — Clarity -->
+        <div class="project-card" data-modal="clarity-modal">
+            <video src="assets/Motion/clarity.mp4" class="project-video" muted loop playsinline autoplay></video>
+            <div class="project-placeholder"></div>
+        </div>
+        <!-- Card 3 — Momi -->
+        <div class="project-card" data-modal="momi-modal">
+            <video src="assets/Motion/momi logo.mp4" class="project-video" muted loop playsinline autoplay></video>
+            <div class="project-placeholder"></div>
+        </div>
+        <!-- Card 4 — Robinhood Trim Path -->
+        <div class="project-card" data-modal="robinhood-modal">
+            <video src="assets/Motion/Robinhood Trim Path.mp4" class="project-video" muted loop playsinline autoplay></video>
+            <div class="project-placeholder"></div>
+        </div>
     </div>
 
     <!-- Neon Drift Modal -->
@@ -91,6 +101,61 @@
                 <div class="modal-video-short modal-fade-in">
                     <video src="assets/Motion/Neon Drift/neon-lights-phone.mp4" controls loop playsinline></video>
                 </div>
+
+                <div class="modal-video-short modal-fade-in">
+                    <video src="assets/Motion/Neon Drift/neon-lights-ad.mp4" controls loop playsinline></video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clarity Modal -->
+    <div class="modal-overlay" id="clarity-modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <div class="modal-body">
+                <p class="modal-label">Clarity Generative Motion Music Video</p>
+
+                <div class="modal-video-target" data-unmute></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Momi Modal -->
+    <div class="modal-overlay" id="momi-modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <div class="modal-body">
+                <p class="modal-label">Museum of the Moving Image</p>
+
+                <div class="modal-video-target" data-unmute></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robinhood Trim Path Modal -->
+    <div class="modal-overlay" id="robinhood-modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <div class="modal-body">
+                <p class="modal-label">Robinhood Legends Logo Animation</p>
+
+                <div class="modal-video-target" data-unmute></div>
             </div>
         </div>
     </div>
