@@ -56,22 +56,31 @@
         });
     });
 
-    // Wheel navigation
+    // Wheel navigation — one swipe gesture = one card move
+    var gestureMovedCard = false;
+    var gestureTimer = null;
+
     document.addEventListener('wheel', function (e) {
         if (document.querySelector('.modal-overlay.modal-open')) return;
         e.preventDefault();
-        if (isTransitioning) return;
-        isTransitioning = true;
 
-        if (e.deltaY > 0 || e.deltaX > 0) {
+        clearTimeout(gestureTimer);
+        gestureTimer = setTimeout(function () {
+            gestureMovedCard = false;
+        }, 50);
+
+        if (gestureMovedCard) return;
+
+        var delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+        if (Math.abs(delta) < 5) return;
+
+        gestureMovedCard = true;
+
+        if (delta > 0) {
             nextCard();
         } else {
             prevCard();
         }
-
-        setTimeout(function () {
-            isTransitioning = false;
-        }, TRANSITION_MS);
     }, { passive: false });
 
     // Touch support
@@ -126,7 +135,8 @@
             var video = card.querySelector('.project-video');
             if (!video) return;
             if (card.classList.contains('pos-center')) {
-                video.play();
+                var p = video.play();
+                if (p && p.catch) p.catch(function () {});
             } else {
                 video.pause();
             }

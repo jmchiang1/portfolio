@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,141 +8,131 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <main class="page-container">
-        <!-- Background Gradient -->
-        <div class="background-gradient"></div>
+    <!-- Dotted Surface background -->
+    <div id="dotted-surface" data-speed="0.015"></div>
 
-        <!-- Home Button -->
-        <a href="index.html" class="home-btn" aria-label="Go to home">
-            <i class="ph ph-house"></i>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
         </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">UX/UI</a>
+            <a href="#" class="nav-link">Coding</a>
+            <a href="motion.html" class="nav-link">Motion</a>
+            <a href="#" class="nav-link active">About</a>
+        </div>
+    </nav>
 
-        <!-- Page Header -->
-        <header class="page-header">
-            <a href="index.html" class="back-btn">
-                <i class="ph ph-arrow-left"></i>
-                <span>Back</span>
-            </a>
-            <h1 class="page-title">About Me</h1>
-            <p class="page-subtitle">Designer, Developer, Creator</p>
-        </header>
-
-        <!-- About Content -->
-        <section class="about-page-content">
-            <!-- Hero Section -->
-            <div class="about-hero">
-                <img src="https://picsum.photos/400/400?random=999" alt="Jonathan Chiang" class="about-avatar-large">
-                <div class="about-hero-text">
-                    <h2 class="about-hero-title">Jonathan Chiang</h2>
-                    <p class="about-hero-role">UX Designer & Front-end Developer</p>
-                    <p class="about-hero-location">
-                        <i class="ph ph-map-pin"></i>
-                        San Francisco, CA
-                    </p>
+    <!-- About Content -->
+    <main class="about-layout">
+        <!-- Left Column -->
+        <div class="about-left">
+            <div class="about-photo-wrapper about-enter" style="--delay: 0.3s">
+                <div class="about-photo-placeholder">
+                    <i class="ph-duotone ph-user" style="font-size: 64px; opacity: 0.4;"></i>
                 </div>
             </div>
 
-            <!-- Bio Section -->
-            <div class="about-section">
-                <h3 class="about-section-title">
-                    <i class="ph ph-user"></i>
-                    About
-                </h3>
-                <div class="about-bio-text">
-                    <p>I'm a product designer and developer passionate about creating intuitive digital experiences that bridge the gap between design and engineering. With over 5 years of experience in the tech industry, I've had the opportunity to work with startups and enterprise companies alike.</p>
-                    <p>My approach combines user-centered design thinking with technical expertise, allowing me to take ideas from concept to production. I believe great products emerge from the intersection of beautiful design, solid engineering, and deep user empathy.</p>
-                    <p>When I'm not designing or coding, you can find me exploring new coffee shops, taking photos around the city, or contributing to open-source projects.</p>
-                </div>
+            <div class="about-intro about-enter" style="--delay: 0.45s">
+                <h1 class="about-name">Jonathan Chiang</h1>
+                <p class="about-role">UX Designer & Software Engineer</p>
+                <p class="about-bio">Based in New York City, I bridge the gap between design and engineering — crafting user experiences with production-level code. Currently doing Design Engineering at SkillCat.</p>
             </div>
 
-            <!-- Skills Section -->
-            <div class="about-section">
-                <h3 class="about-section-title">
-                    <i class="ph ph-lightning"></i>
-                    Skills & Tools
-                </h3>
-                <div class="skills-grid">
-                    <div class="skill-item">
-                        <i class="ph ph-figma-logo"></i>
-                        <span>Figma</span>
+            <div class="about-socials about-enter" style="--delay: 0.6s">
+                <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                    <i class="ph-duotone ph-linkedin-logo"></i>
+                </a>
+                <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                    <i class="ph-duotone ph-github-logo"></i>
+                </a>
+                <a href="Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Resume">
+                    <i class="ph-duotone ph-read-cv-logo"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="about-right">
+            <!-- Skills & Tools -->
+            <div class="about-section about-enter" style="--delay: 0.5s">
+                <h2 class="about-section-title">Skills & Tools</h2>
+
+                <div class="skills-group">
+                    <p class="skills-label">Design</p>
+                    <div class="skills-pills">
+                        <span class="skill-pill">Figma</span>
+                        <span class="skill-pill">Illustrator</span>
+                        <span class="skill-pill">After Effects</span>
+                        <span class="skill-pill">Blender</span>
+                        <span class="skill-pill">Photoshop</span>
                     </div>
-                    <div class="skill-item">
-                        <i class="ph ph-sketch-logo"></i>
-                        <span>Sketch</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="ph ph-file-code"></i>
-                        <span>React</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="ph ph-file-ts"></i>
-                        <span>TypeScript</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="ph ph-video"></i>
-                        <span>After Effects</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="ph ph-frame-corners"></i>
-                        <span>Framer</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="ph ph-database"></i>
-                        <span>Node.js</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="ph ph-git-branch"></i>
-                        <span>Git</span>
+                </div>
+
+                <div class="skills-group">
+                    <p class="skills-label">Development</p>
+                    <div class="skills-pills">
+                        <span class="skill-pill">HTML / CSS</span>
+                        <span class="skill-pill">JavaScript</span>
+                        <span class="skill-pill">React</span>
+                        <span class="skill-pill">Python</span>
+                        <span class="skill-pill">Three.js</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Contact Section -->
-            <div class="about-section">
-                <h3 class="about-section-title">
-                    <i class="ph ph-envelope"></i>
-                    Get in Touch
-                </h3>
-                <div class="contact-links">
-                    <a href="mailto:hello@jonathanchiang.com" class="contact-link">
-                        <i class="ph ph-envelope"></i>
-                        <span>Email</span>
-                    </a>
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="contact-link">
-                        <i class="ph ph-linkedin-logo"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" class="contact-link">
-                        <i class="ph ph-github-logo"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer" class="contact-link">
-                        <i class="ph ph-twitter-logo"></i>
-                        <span>Twitter</span>
-                    </a>
-                    <a href="https://dribbble.com/yourprofile" target="_blank" rel="noopener noreferrer" class="contact-link">
-                        <i class="ph ph-dribbble-logo"></i>
-                        <span>Dribbble</span>
-                    </a>
+            <!-- Experience -->
+            <div class="about-section about-enter" style="--delay: 0.65s">
+                <h2 class="about-section-title">Experience</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-title">Design Engineer</p>
+                            <p class="timeline-subtitle">SkillCat</p>
+                            <p class="timeline-date">2024 — Present</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-title">UX Designer</p>
+                            <p class="timeline-subtitle">ScriptChain Health</p>
+                            <p class="timeline-date">2024</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Navigation Bar (loaded dynamically) -->
-        <div id="navbar-container"></div>
+            <!-- Education -->
+            <div class="about-section about-enter" style="--delay: 0.8s">
+                <h2 class="about-section-title">Education</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-title">B.S. Computer Science</p>
+                            <p class="timeline-subtitle">University</p>
+                            <p class="timeline-date">2020 — 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <script src="components/components.js"></script>
-    <script src="pages.js"></script>
+    <script src="dotted-surface.js"></script>
+    <script src="about.js"></script>
 </body>
 </html>

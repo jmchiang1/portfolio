@@ -1,0 +1,488 @@
+/* Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #000002;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 60%, rgba(120, 40, 200, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ============================================
+   Dotted Surface
+   ============================================ */
+#dotted-surface {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px 60px;
+}
+
+.nav-logo {
+    position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+@keyframes nav-enter-logo {
+    to { opacity: 1; }
+}
+
+.nav-logo img {
+    height: 48px;
+    width: auto;
+    display: block;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    border-radius: 1000px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: nav-enter cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.nav-link:nth-child(1) { animation-delay: 0.2s; animation-duration: 0.5s; }
+.nav-link:nth-child(2) { animation-delay: 0.25s; animation-duration: 0.45s; }
+.nav-link:nth-child(3) { animation-delay: 0.3s; animation-duration: 0.4s; }
+.nav-link:nth-child(4) { animation-delay: 0.35s; animation-duration: 0.35s; }
+
+@keyframes nav-enter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link.active {
+    color: #c060ff;
+    background: rgba(192, 96, 255, 0.08);
+}
+
+/* Nav exit */
+.nav-exiting .nav-link {
+    opacity: 0 !important;
+    transform: translateY(-20px) !important;
+}
+
+.nav-exiting .nav-link:nth-child(4) { transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0s !important; }
+.nav-exiting .nav-link:nth-child(3) { transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.05s !important; }
+.nav-exiting .nav-link:nth-child(2) { transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.1s !important; }
+.nav-exiting .nav-link:nth-child(1) { transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.15s !important; }
+
+/* ============================================
+   About Layout
+   ============================================ */
+.about-layout {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    padding: 100px 80px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+/* ============================================
+   Left Column
+   ============================================ */
+.about-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+    width: 300px;
+}
+
+.about-photo-wrapper {
+    width: 100%;
+}
+
+.about-photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.about-intro {
+    text-align: center;
+}
+
+.about-name {
+    font-family: 'Gabarito', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.about-role {
+    font-size: 14px;
+    color: #c060ff;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.about-bio {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Social links */
+.about-socials {
+    display: flex;
+    gap: 12px;
+}
+
+.social-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ============================================
+   Right Column
+   ============================================ */
+.about-right {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.about-right::-webkit-scrollbar {
+    display: none;
+}
+
+.about-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.about-section-title {
+    font-family: 'Gabarito', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* ============================================
+   Skills & Tools
+   ============================================ */
+.skills-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skills-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.skills-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-pill {
+    padding: 6px 14px;
+    border-radius: 1000px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.skill-pill:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* ============================================
+   Timeline
+   ============================================ */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 20px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 8px 0;
+    position: relative;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -20px;
+    top: 14px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #c060ff;
+    flex-shrink: 0;
+}
+
+.timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.timeline-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.timeline-subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.timeline-date {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 500;
+}
+
+/* ============================================
+   Entrance Animations
+   ============================================ */
+.about-enter {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: about-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0.3s) forwards;
+}
+
+@keyframes about-fade-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Page Exit
+   ============================================ */
+.page-exit-active .about-layout {
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.page-exit-active #dotted-surface {
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.page-exit-active .nav-logo {
+    opacity: 0 !important;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 1200px) {
+    .navbar {
+        padding: 16px 40px;
+    }
+
+    .nav-link {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .about-layout {
+        gap: 60px;
+        padding: 90px 60px 40px;
+    }
+
+    .about-left {
+        width: 260px;
+    }
+}
+
+@media (max-width: 900px) {
+    .navbar {
+        padding: 12px 24px;
+    }
+
+    .nav-logo {
+        left: 24px;
+    }
+
+    .nav-link {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .nav-logo img {
+        height: 40px;
+    }
+
+    .about-layout {
+        flex-direction: column;
+        gap: 32px;
+        padding: 80px 24px 24px;
+        overflow-y: auto;
+    }
+
+    .about-left {
+        width: 100%;
+        flex-direction: row;
+        gap: 24px;
+    }
+
+    .about-photo-wrapper {
+        width: 120px;
+        flex-shrink: 0;
+    }
+
+    .about-intro {
+        text-align: left;
+    }
+
+    .about-right {
+        max-height: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .navbar {
+        padding: 10px 16px;
+    }
+
+    .nav-logo {
+        left: 16px;
+    }
+
+    .nav-link {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+
+    .nav-logo img {
+        height: 32px;
+    }
+
+    .about-left {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-photo-wrapper {
+        width: 160px;
+    }
+
+    .about-intro {
+        text-align: center;
+    }
+}

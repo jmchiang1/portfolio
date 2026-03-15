@@ -175,20 +175,32 @@
         });
     });
 
-    // Wheel event handler
+    // Wheel event handler — one swipe gesture = one card move
+    var gestureMovedCard = false;
+    var gestureTimer = null;
+
     container.addEventListener('wheel', function (e) {
         e.preventDefault();
-        if (isTransitioning) return;
 
-        var scrollingDown = e.deltaY > 0;
-        isTransitioning = true;
+        clearTimeout(gestureTimer);
+        gestureTimer = setTimeout(function () {
+            gestureMovedCard = false;
+        }, 50);
+
+        if (gestureMovedCard) return;
+
+        var delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+        if (Math.abs(delta) < 5) return;
+
+        gestureMovedCard = true;
+
+        var scrollingDown = delta > 0;
 
         if (currentView === 'hero') {
             if (scrollingDown) {
                 activeIndex = 0;
                 showCarousel();
             }
-            // Ignore scroll up at hero
         } else {
             if (scrollingDown) {
                 nextCard();
@@ -196,10 +208,6 @@
                 prevCard();
             }
         }
-
-        setTimeout(function () {
-            isTransitioning = false;
-        }, TRANSITION_MS);
     }, { passive: false });
 
     // Video hover play/pause
