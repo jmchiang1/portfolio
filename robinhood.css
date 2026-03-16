@@ -591,7 +591,9 @@ body {
     flex: 1;
     display: flex;
     align-items: flex-start;
+    justify-content: center;
     padding: 20px;
+    width: 100%;
 }
 
 .cs-edge-screen img {
@@ -1047,7 +1049,7 @@ body {
     }
 
     .case-study {
-        padding: 80px 16px 40px;
+        padding: 80px 0px 40px;
         gap: 48px;
     }
 

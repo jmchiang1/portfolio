@@ -1095,9 +1095,12 @@ body {
         max-width: 300px;
     }
 
-    .cs-testing-row,
-    .cs-testing-row-reverse {
+    .cs-testing-row {
         flex-direction: column;
+    }
+
+    .cs-testing-row-reverse {
+        flex-direction: column-reverse;
     }
 
     .cs-testing-text {
@@ -1123,7 +1126,7 @@ body {
 
 @media (max-width: 640px) {
     .case-study {
-        padding: 80px 16px 40px;
+        padding: 80px 0px 40px;
         gap: 48px;
     }
 
