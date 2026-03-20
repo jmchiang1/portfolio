@@ -176,8 +176,8 @@ body::before {
     border-radius: 8px;
     overflow: hidden;
     opacity: 1;
-    transform: translateX(200%) rotateY(-45deg) scale(0.6);
-    z-index: 1;
+    transform: translateX(0) rotateY(0deg) scale(0.5);
+    z-index: 0;
     pointer-events: none;
     cursor: pointer;
 }
@@ -234,23 +234,13 @@ body::before {
     background: rgba(0, 0, 0, 0.45);
 }
 
-/* Far left (hidden) */
-.project-card.pos-far-left {
-    transform: translateX(-200%) rotateY(45deg) scale(0.6);
-    z-index: 1;
+/* Back card (hidden behind center) */
+.project-card.pos-back {
+    transform: translateX(0) rotateY(0deg) scale(0.5);
+    z-index: 0;
 }
 
-.project-card.pos-far-left::after {
-    background: rgba(0, 0, 0, 1);
-}
-
-/* Far right (hidden) */
-.project-card.pos-far-right {
-    transform: translateX(200%) rotateY(-45deg) scale(0.6);
-    z-index: 1;
-}
-
-.project-card.pos-far-right::after {
+.project-card.pos-back::after {
     background: rgba(0, 0, 0, 1);
 }
 
@@ -296,6 +286,75 @@ body::before {
 .page-exit-active .nav-logo {
     opacity: 0 !important;
     transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+/* ============================================
+   Social Links
+   ============================================ */
+.social-links {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 50;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-links.social-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+.social-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 1);
+    font-size: 24px;
+    text-decoration: none;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.social-link:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Tooltip — appears to the left on hover */
+.social-link::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%) translateX(4px);
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.social-link:hover::before {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
 }
 
 /* ============================================
@@ -577,6 +636,18 @@ body::before {
     .project-card.pos-right {
         transform: translateX(85%) rotateY(-20deg) scale(0.65);
         opacity: 0.4;
+    }
+
+    .social-links {
+        bottom: 16px;
+        right: 16px;
+        gap: 8px;
+    }
+
+    .social-link {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
     }
 
     /* Modal — mobile scaling */

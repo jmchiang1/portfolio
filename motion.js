@@ -2,9 +2,10 @@
 (function () {
     var cards = Array.from(document.querySelectorAll('.project-card'));
     var totalCards = cards.length;
-    var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-far-left', 'pos-far-right'];
+    var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-back'];
 
     var activeIndex = 0;
+    var step = 0;
     var isTransitioning = false;
     var TRANSITION_MS = 700;
 
@@ -13,37 +14,40 @@
     }
 
     function positionCards() {
+        activeIndex = ((step % totalCards) + totalCards) % totalCards;
+
         cards.forEach(function (card, i) {
             removePositions(card);
 
-            var diff = i - activeIndex;
-            if (diff === 0) card.classList.add('pos-center');
-            else if (diff === -1) card.classList.add('pos-left');
-            else if (diff === 1) card.classList.add('pos-right');
-            else if (diff < -1) card.classList.add('pos-far-left');
-            else card.classList.add('pos-far-right');
+            // Offset: 0 = center, 1 = right, N-1 = left, others = back
+            var offset = ((i - step) % totalCards + totalCards) % totalCards;
+
+            if (offset === 0) card.classList.add('pos-center');
+            else if (offset === 1) card.classList.add('pos-right');
+            else if (offset === totalCards - 1) card.classList.add('pos-left');
+            else card.classList.add('pos-back');
         });
     }
 
     function nextCard() {
-        if (activeIndex < totalCards - 1) {
-            activeIndex++;
-        } else {
-            activeIndex = 0;
-        }
+        step++;
         positionCards();
         updateCardVideos();
     }
 
     function prevCard() {
-        if (activeIndex > 0) {
-            activeIndex--;
-        } else {
-            activeIndex = totalCards - 1;
-        }
+        step--;
         positionCards();
         updateCardVideos();
     }
+
+    // Preload all videos so peek cards show their first frame
+    cards.forEach(function (card) {
+        var video = card.querySelector('.project-video');
+        if (!video) return;
+        video.preload = 'auto';
+        video.load();
+    });
 
     // Initial position (no transitions yet)
     positionCards();
@@ -256,7 +260,8 @@
         if (target) {
             var video = target.querySelector('video');
             if (video) {
-                // Re-mute and remove controls before returning to card
+                // Pause, re-mute and remove controls before returning to card
+                video.pause();
                 video.muted = true;
                 video.controls = false;
 

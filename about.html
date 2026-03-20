@@ -42,45 +42,73 @@
 
     <!-- About Content -->
     <main class="about-layout">
-        <!-- Left Column -->
-        <div class="about-left">
-            <div class="about-photo-wrapper about-enter" style="--delay: 0.3s">
+        <!-- Top Row: Photo + Bio -->
+        <div class="about-hero about-enter" style="--delay: 0.3s">
+            <div class="about-photo-wrapper">
                 <img src="assets/headshot.png" alt="Jonathan Chiang" class="about-photo">
             </div>
+            <div class="about-intro">
+                <p class="about-bio">Hi, I’m Jonathan, a product designer focused on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I’m especially interested in the details that make products feel seamless, from user flows and interface systems to motion, responsiveness, and overall polish. 
 
-            <div class="about-intro about-enter" style="--delay: 0.45s">
-                <p class="about-bio">I’m a product designer based in New York with a background in UX/UI design and front end development. I enjoy turning complex ideas into simple, thoughtful digital experiences that feel clear, useful, and polished. My work is rooted in user research, interaction design, and building products that balance business goals with real human needs.</p>
+                    <br>
+                    <br>
+
+                    My background spans UX/UI design, prototyping, research, and front end development, which allows me to think beyond static screens and design with execution in mind. I enjoy working on products that sit at the intersection of technology and human behavior, and I’m always looking for ways to make digital experiences more intuitive, engaging, and meaningful.</p>
             </div>
         </div>
 
-        <!-- Right Column -->
-        <div class="about-right">
-            <!-- Skills & Tools -->
-            <div class="about-section about-enter" style="--delay: 0.5s">
-                <h2 class="about-section-title">Skills & Tools</h2>
+                <!-- Skills & Tools -->
+                <div class="about-section about-enter" style="--delay: 0.65s">
+                    <h2 class="about-section-title">Skills & Tools</h2>
 
-                <div class="skills-group">
-                    <p class="skills-label">Design</p>
-                    <div class="skills-pills">
-                        <span class="skill-pill">Figma</span>
-                        <span class="skill-pill">Adobe After Effects</span>
-                        <span class="skill-pill">Blender</span>
+                    <div class="skills-row">
+                        <div class="skills-group">
+                            <p class="skills-label">Design</p>
+                            <div class="skills-pills">
+                                <span class="skill-pill">Figma</span>
+                                <span class="skill-pill">Adobe After Effects</span>
+                                <span class="skill-pill">Blender</span>
+                            </div>
+                        </div>
+
+                        <div class="skills-group">
+                            <p class="skills-label">Development</p>
+                            <div class="skills-pills">
+                                <span class="skill-pill">HTML / CSS</span>
+                                <span class="skill-pill">JavaScript</span>
+                                <span class="skill-pill">React</span>
+                                <span class="skill-pill">Claude Code</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="skills-group">
-                    <p class="skills-label">Development</p>
-                    <div class="skills-pills">
-                        <span class="skill-pill">HTML / CSS</span>
-                        <span class="skill-pill">JavaScript</span>
-                        <span class="skill-pill">React</span>
-                        <span class="skill-pill">Claude Code</span>
+        <!-- Education & Experience — side by side on desktop -->
+        <div class="about-columns about-enter" style="--delay: 0.5s">
+            <!-- Education -->
+            <div class="about-section">
+                <h2 class="about-section-title">Education</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-title">M.S. Communication Design</p>
+                            <p class="timeline-subtitle">Parsons School of Design</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <p class="timeline-title">B.S. Business Administration</p>
+                            <p class="timeline-subtitle">University at Buffalo</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Experience -->
-            <div id="experience" class="about-section about-enter" style="--delay: 0.65s">
+            <div id="experience" class="about-section">
                 <h2 class="about-section-title">Experience</h2>
 
                 <div class="timeline">
@@ -117,28 +145,6 @@
                             <p class="timeline-title">Marketing Analyst</p>
                             <p class="timeline-subtitle">Omnicom Media Group</p>
                             <p class="timeline-date">2018</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Education -->
-            <div class="about-section about-enter" style="--delay: 0.8s">
-                <h2 class="about-section-title">Education</h2>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <p class="timeline-title">M.S. Communication Design</p>
-                            <p class="timeline-subtitle">Parsons School of Design</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <p class="timeline-title">B.S. Business Administration</p>
-                            <p class="timeline-subtitle">University at Buffalo</p>
                         </div>
                     </div>
                 </div>

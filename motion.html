@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="motion.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -25,7 +26,7 @@
         </a>
         <div class="nav-links">
             <a href="/" class="nav-link">UX/UI</a>
-            <a href="#" class="nav-link">Coding</a>
+            <!-- <a href="#" class="nav-link">Coding</a> -->
             <a href="#" class="nav-link active">Motion</a>
             <a href="about.html" class="nav-link">About</a>
         </div>
@@ -51,8 +52,8 @@
             <div class="project-placeholder"></div>
         </div>
         <!-- Card 2 — Clarity -->
-        <div class="project-card" data-modal="clarity-modal">
-            <video src="assets/Motion/clarity.mp4" class="project-video" muted loop playsinline></video>
+        <div class="project-card" data-modal="clarity-modal" style="height: 100%">
+            <video src="assets/Motion/clarity.mp4" class="project-video" style="object-fit: cover" muted loop playsinline></video>
             <div class="project-placeholder"></div>
         </div>
         <!-- Card 3 — Momi -->
@@ -61,8 +62,8 @@
             <div class="project-placeholder"></div>
         </div>
         <!-- Card 4 — Robinhood Trim Path -->
-        <div class="project-card" data-modal="robinhood-modal">
-            <video src="assets/Motion/Robinhood Trim Path.mp4" class="project-video" muted loop playsinline></video>
+        <div class="project-card" data-modal="robinhood-modal" style="background: #fff">
+            <video src="assets/Motion/Robinhood Trim Path.mp4" class="project-video" style="object-fit: cover" muted loop playsinline></video>
             <div class="project-placeholder"></div>
         </div>
     </div>
@@ -223,6 +224,19 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Social links — hidden by default -->
+    <div class="social-links">
+        <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn" data-tooltip="LinkedIn">
+            <i class="ph-duotone ph-linkedin-logo"></i>
+        </a>
+        <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub" data-tooltip="Github">
+            <i class="ph-duotone ph-github-logo"></i>
+        </a>
+        <a href="Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Resume" data-tooltip="Resume">
+            <i class="ph-duotone ph-read-cv-logo"></i>
+        </a>
     </div>
 
     <script src="dotted-surface.js"></script>

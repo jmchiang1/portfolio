@@ -153,9 +153,8 @@ body::before {
    ============================================ */
 .about-layout {
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 80px;
+    flex-direction: column;
+    gap: 60px;
     padding: 100px 80px 60px;
     max-width: 1100px;
     margin: 0 auto;
@@ -163,19 +162,17 @@ body::before {
 }
 
 /* ============================================
-   Left Column
+   Hero Row — Photo + Bio
    ============================================ */
-.about-left {
+.about-hero {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 24px;
-    flex-shrink: 0;
-    width: 300px;
+    align-items: flex-start;
+    gap: 48px;
 }
 
 .about-photo-wrapper {
-    width: 100%;
+    flex-shrink: 0;
+    width: 300px;
 }
 
 .about-photo {
@@ -185,39 +182,29 @@ body::before {
 }
 
 .about-intro {
-    text-align: start;
-}
-
-.about-name {
-    font-family: 'Gabarito', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    margin-bottom: 4px;
-}
-
-.about-role {
-    font-size: 14px;
-    color: white;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.about-bio {
-    font-size: 16px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 1);
-    text-align: start;
-}
-
-/* ============================================
-   Right Column
-   ============================================ */
-.about-right {
     flex: 1;
     min-width: 0;
     display: flex;
-    flex-direction: column;
-    gap: 32px;
+    align-items: center;
+}
+
+.about-bio {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 1);
+}
+
+/* ============================================
+   Skills & Experience — side by side
+   ============================================ */
+.about-columns {
+    display: flex;
+    gap: 48px;
+}
+
+.about-columns > .about-section {
+    flex: 1;
+    min-width: 0;
 }
 
 .about-section {
@@ -228,7 +215,7 @@ body::before {
 
 .about-section-title {
     font-family: 'Gabarito', sans-serif;
-    font-size: 18px;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #fff;
 }
@@ -236,6 +223,16 @@ body::before {
 /* ============================================
    Skills & Tools
    ============================================ */
+.skills-row {
+    display: flex;
+    gap: 48px;
+}
+
+.skills-row > .skills-group {
+    flex: 1;
+    min-width: 0;
+}
+
 .skills-group {
     display: flex;
     flex-direction: column;
@@ -243,7 +240,7 @@ body::before {
 }
 
 .skills-label {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -257,9 +254,9 @@ body::before {
 }
 
 .skill-pill {
-    padding: 6px 14px;
+    padding: 10px 20px;
     border-radius: 1000px;
-    font-size: 13px;
+    font-size: 1rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 0.06);
@@ -297,14 +294,14 @@ body::before {
     display: flex;
     align-items: flex-start;
     gap: 16px;
-    padding: 8px 0;
+    padding: 10px 0;
     position: relative;
 }
 
 .timeline-dot {
     position: absolute;
     left: -20px;
-    top: 14px;
+    top: 16px;
     width: 9px;
     height: 9px;
     border-radius: 50%;
@@ -315,22 +312,22 @@ body::before {
 .timeline-content {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
 }
 
 .timeline-title {
-    font-size: 15px;
+    font-size: 1.125rem;
     font-weight: 600;
     color: #fff;
 }
 
 .timeline-subtitle {
-    font-size: 14px;
+    font-size: 1.125rem;
     color: rgba(255, 255, 255, 0.5);
 }
 
 .timeline-date {
-    font-size: 12px;
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.3);
     font-weight: 500;
 }
@@ -453,11 +450,11 @@ body::before {
     }
 
     .about-layout {
-        gap: 60px;
+        gap: 48px;
         padding: 90px 60px 40px;
     }
 
-    .about-left {
+    .about-photo-wrapper {
         width: 260px;
     }
 }
@@ -481,24 +478,16 @@ body::before {
     }
 
     .about-layout {
-        flex-direction: column;
         gap: 32px;
         padding: 80px 24px 24px;
     }
 
-    .about-left {
-        width: 100%;
-        flex-direction: row;
+    .about-hero {
         gap: 24px;
     }
 
     .about-photo-wrapper {
-        /* width: 120px; */
-        flex-shrink: 0;
-    }
-
-    .about-intro {
-        text-align: left;
+        width: 200px;
     }
 
     .social-links {
@@ -655,13 +644,23 @@ body::before {
         font-size: 18px;
     }
 
-    .about-left {
+    .about-hero {
         flex-direction: column;
         align-items: center;
     }
 
+    .about-columns {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .skills-row {
+        flex-direction: column;
+        gap: 24px;
+    }
+
     .about-photo-wrapper {
-        /* width: 160px; */
+        width: 200px;
     }
 
     .about-intro {
