@@ -304,6 +304,19 @@
         }
     });
 
+    // Dots toggle button
+    var dotsToggle = document.querySelector('.dots-toggle');
+    var dottedSurface = document.getElementById('dotted-surface');
+
+    if (dotsToggle && dottedSurface) {
+        dotsToggle.addEventListener('click', function () {
+            dottedSurface.classList.toggle('dots-hidden');
+            dotsToggle.classList.toggle('dots-off');
+            var isHidden = dottedSurface.classList.contains('dots-hidden');
+            dotsToggle.setAttribute('data-tooltip', isHidden ? 'Show dots' : 'Hide dots');
+        });
+    }
+
     // Exit animation for any link that navigates away
     function triggerExit(href) {
         var navbar = document.querySelector('.navbar');

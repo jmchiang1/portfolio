@@ -85,22 +85,3 @@
     }
 })();
 
-// Show social links when Experience section is in view, hide when scrolled above it
-(function () {
-    var experienceSection = document.getElementById('experience');
-    var socialLinks = document.querySelector('.social-links');
-    if (!experienceSection || !socialLinks) return;
-
-    function checkVisibility() {
-        var rect = experienceSection.getBoundingClientRect();
-        // Show when Experience reaches the middle of the screen
-        if (rect.top < window.innerHeight / 2) {
-            socialLinks.classList.remove('social-hidden');
-        } else {
-            socialLinks.classList.add('social-hidden');
-        }
-    }
-
-    window.addEventListener('scroll', checkVisibility, { passive: true });
-    checkVisibility();
-})();

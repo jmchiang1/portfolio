@@ -133,8 +133,8 @@ body::before {
 }
 
 .nav-link.active {
-    color: #c060ff;
-    background: rgba(192, 96, 255, 0.08);
+    color: #1180f9;
+    background: rgba(17, 128, 249, 0.08);
 }
 
 /* Nav exit */
@@ -359,14 +359,6 @@ body::before {
     flex-direction: column;
     gap: 12px;
     z-index: 50;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.social-links.social-hidden {
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
 }
 
 .social-link {
@@ -382,6 +374,23 @@ body::before {
     font-size: 24px;
     text-decoration: none;
     transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    opacity: 0;
+    animation: social-enter cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.social-link:nth-child(1) { animation-delay: 0.4s; animation-duration: 1.0s; }
+.social-link:nth-child(2) { animation-delay: 0.5s; animation-duration: 0.9s; }
+.social-link:nth-child(3) { animation-delay: 0.6s; animation-duration: 0.8s; }
+
+@keyframes social-enter {
+    from {
+        opacity: 0;
+        transform: translateX(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .social-link:hover {
@@ -421,7 +430,8 @@ body::before {
 /* ============================================
    Page Exit
    ============================================ */
-.page-exit-active .about-layout {
+.page-exit-active .about-layout,
+.page-exit-active .social-links {
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }

@@ -46,6 +46,11 @@ body {
     inset: 0;
     z-index: -1;
     pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#dotted-surface.dots-hidden {
+    opacity: 0;
 }
 
 /* ============================================
@@ -205,6 +210,74 @@ body {
 
 .mobile-menu {
     display: none;
+}
+
+/* ============================================
+   Dots Toggle Button — right side of navbar
+   ============================================ */
+.dots-toggle {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    color: rgba(255, 255, 255, 1);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+    opacity: 0;
+    animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+    z-index: 10;
+}
+
+.dots-toggle:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Tooltip — appears below on hover */
+.dots-toggle::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dots-toggle:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Dimmed state when dots are hidden */
+.dots-toggle.dots-off {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+/* Nav exit — fade dots toggle */
+.nav-exiting .dots-toggle {
+    opacity: 0 !important;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* ============================================
@@ -806,6 +879,10 @@ a.project-card {
         left: 24px;
     }
 
+    .dots-toggle {
+        right: 24px;
+    }
+
     .social-links {
         bottom: 24px;
         right: 24px;
@@ -999,6 +1076,10 @@ a.project-card {
     .social-links.social-hidden {
         opacity: 0 !important;
         transform: translateY(40px) !important;
+    }
+
+    .dots-toggle {
+        display: none;
     }
 
     /* Hide desktop nav-links, show hamburger */

@@ -35,6 +35,11 @@ body::before {
     inset: 0;
     z-index: -1;
     pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#dotted-surface.dots-hidden {
+    opacity: 0;
 }
 
 /* ============================================
@@ -148,6 +153,74 @@ body::before {
 .nav-exiting .nav-link:nth-child(3) { transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.05s !important; }
 .nav-exiting .nav-link:nth-child(2) { transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.1s !important; }
 .nav-exiting .nav-link:nth-child(1) { transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.15s !important; }
+
+/* ============================================
+   Dots Toggle Button — right side of navbar
+   ============================================ */
+.dots-toggle {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    color: rgba(255, 255, 255, 1);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+    opacity: 0;
+    animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+    z-index: 10;
+}
+
+.dots-toggle:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Tooltip — appears below on hover */
+.dots-toggle::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dots-toggle:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Dimmed state when dots are hidden */
+.dots-toggle.dots-off {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+/* Nav exit — fade dots toggle */
+.nav-exiting .dots-toggle {
+    opacity: 0 !important;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 
 /* ============================================
    Carousel (replicated from home page)
@@ -273,7 +346,8 @@ body::before {
 }
 
 /* Page exit */
-.page-exit-active .carousel-viewport {
+.page-exit-active .carousel-viewport,
+.page-exit-active .social-links {
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
@@ -299,14 +373,6 @@ body::before {
     flex-direction: column;
     gap: 12px;
     z-index: 50;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.social-links.social-hidden {
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
 }
 
 .social-link {
@@ -322,6 +388,23 @@ body::before {
     font-size: 24px;
     text-decoration: none;
     transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    opacity: 0;
+    animation: social-enter cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.social-link:nth-child(1) { animation-delay: 0.4s; animation-duration: 1.0s; }
+.social-link:nth-child(2) { animation-delay: 0.5s; animation-duration: 0.9s; }
+.social-link:nth-child(3) { animation-delay: 0.6s; animation-duration: 0.8s; }
+
+@keyframes social-enter {
+    from {
+        opacity: 0;
+        transform: translateX(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .social-link:hover {
@@ -592,6 +675,10 @@ body::before {
         left: 24px;
     }
 
+    .dots-toggle {
+        right: 24px;
+    }
+
     .nav-link {
         padding: 6px 12px;
         font-size: 12px;
@@ -611,6 +698,10 @@ body::before {
 
     .nav-logo {
         left: 16px;
+    }
+
+    .dots-toggle {
+        display: none;
     }
 
     .nav-links {
