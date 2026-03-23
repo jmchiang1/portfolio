@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="about.css">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
 </head>
 <body>
@@ -83,69 +83,73 @@
                     </div>
                 </div>
 
-        <!-- Education & Experience — side by side on desktop -->
-        <div class="about-columns about-enter" style="--delay: 0.5s">
-            <!-- Education -->
-            <div class="about-section">
-                <h2 class="about-section-title">Education</h2>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <p class="timeline-title">M.S. Communication Design</p>
-                            <p class="timeline-subtitle">Parsons School of Design</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <p class="timeline-title">B.S. Business Administration</p>
-                            <p class="timeline-subtitle">University at Buffalo</p>
-                        </div>
-                    </div>
+        <!-- Education -->
+        <div class="about-section about-enter" style="--delay: 0.5s">
+            <h2 class="about-section-title">Education</h2>
+            <div class="education-row">
+                <div class="education-card">
+                    <!-- <div class="education-dot"></div> -->
+                    <p class="education-degree">M.S. Communication Design</p>
+                    <p class="education-school">Parsons School of Design</p>
+                </div>
+                <div class="education-card">
+                    <!-- <div class="education-dot"></div> -->
+                    <p class="education-degree">B.S. Business Administration</p>
+                    <p class="education-school">University at Buffalo</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Experience -->
-            <div id="experience" class="about-section">
-                <h2 class="about-section-title">Experience</h2>
+        <!-- Experience -->
+        <div id="experience" class="about-section about-enter" style="--delay: 0.6s">
+            <h2 class="about-section-title">Experience</h2>
 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <p class="timeline-title">Design Engineer</p>
-                            <p class="timeline-subtitle">SkillCat</p>
-                            <p class="timeline-date">2025 — Present</p>
-                        </div>
+            <div class="exp-cards">
+                <div class="exp-card">
+                    <div class="exp-info">
+                        <p class="exp-date">2025 — Present</p>
+                        <p class="exp-role">Design Engineer</p>
+                        <p class="exp-company">SkillCat</p>
+                        <p class="exp-description">Leading design and front-end development for a mobile learning platform focused on trade skills. Building UI components, prototyping interactions, and bridging the gap between design and engineering.</p>
                     </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <p class="timeline-title">UX Designer</p>
-                            <p class="timeline-subtitle">ScriptChain Health</p>
-                            <p class="timeline-date">2025</p>
-                        </div>
+                    <div class="exp-image">
+                        <img src="assets/Companies/skillcat.png" alt="SkillCat">
                     </div>
+                </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <p class="timeline-title">Software Engineer</p>
-                            <p class="timeline-subtitle">JPMorgan Chase</p>
-                            <p class="timeline-date">2022</p>
-                        </div>
+                <div class="exp-card">
+                    <div class="exp-info">
+                        <p class="exp-date">2025</p>
+                        <p class="exp-role">UX Designer</p>
+                        <p class="exp-company">ScriptChain Health</p>
+                        <p class="exp-description">Designed patient-facing dashboards and data visualization tools for a health-tech startup. Conducted user research and usability testing to simplify complex medical data workflows.</p>
                     </div>
+                    <div class="exp-image">
+                        <img src="assets/Companies/scriptchain.png" alt="ScriptChain Health">
+                    </div>
+                </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <p class="timeline-title">Marketing Analyst</p>
-                            <p class="timeline-subtitle">Omnicom Media Group</p>
-                            <p class="timeline-date">2018</p>
-                        </div>
+                <div class="exp-card">
+                    <div class="exp-info">
+                        <p class="exp-date">2022</p>
+                        <p class="exp-role">Software Engineer</p>
+                        <p class="exp-company">JPMorgan Chase</p>
+                        <p class="exp-description">Developed internal tools and front-end features for financial applications. Collaborated with cross-functional teams to deliver scalable, production-ready code.</p>
+                    </div>
+                    <div class="exp-image">
+                        <img src="assets/Companies/chase.png" alt="JPMorgan Chase">
+                    </div>
+                </div>
+
+                <div class="exp-card">
+                    <div class="exp-info">
+                        <p class="exp-date">2018</p>
+                        <p class="exp-role">Marketing Analyst</p>
+                        <p class="exp-company">Omnicom Media Group</p>
+                        <p class="exp-description">Analyzed campaign performance data and consumer insights to optimize digital marketing strategies for major brand clients across multiple channels.</p>
+                    </div>
+                    <div class="exp-image">
+                        <img src="assets/Companies/omd.png" alt="Omnicom Media Group">
                     </div>
                 </div>
             </div>
@@ -153,15 +157,15 @@
     </main>
 
     <!-- Social links — bottom right, hidden until scrolled past Experience -->
-    <div class="social-links">
+    <div class="social-links social-hidden">
         <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn" data-tooltip="LinkedIn">
-            <i class="ph-duotone ph-linkedin-logo"></i>
+            <i class="ph ph-linkedin-logo"></i>
         </a>
         <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub" data-tooltip="Github">
-            <i class="ph-duotone ph-github-logo"></i>
+            <i class="ph ph-github-logo"></i>
         </a>
         <a href="assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Resume" data-tooltip="Resume">
-            <i class="ph-duotone ph-read-cv-logo"></i>
+            <i class="ph ph-read-cv-logo"></i>
         </a>
     </div>
 

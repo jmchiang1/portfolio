@@ -54,6 +54,53 @@ body {
 }
 
 /* ============================================
+   Background Paths (SVG flowing curves)
+   ============================================ */
+#background-paths {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#background-paths.paths-visible {
+    opacity: 0.1;
+}
+
+/* ============================================
+   Background Grid (CSS pattern)
+   ============================================ */
+#background-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black, transparent);
+    mask-image: radial-gradient(ellipse at center, black, transparent);
+}
+
+#background-grid.grid-visible {
+    opacity: 1;
+}
+
+@keyframes path-flow {
+    from {
+        stroke-dashoffset: 0;
+    }
+    to {
+        stroke-dashoffset: 2;
+    }
+}
+
+/* ============================================
    Radial Glow
    ============================================ */
 .glow {
@@ -213,37 +260,46 @@ body {
 }
 
 /* ============================================
-   Dots Toggle Button — right side of navbar
+   Background Controls — right side of navbar
    ============================================ */
-.dots-toggle {
+.bg-controls {
     position: absolute;
     right: 60px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
+    gap: 4px;
+    z-index: 10;
+    opacity: 0;
+    animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.bg-switch,
+.bg-visibility {
+    position: relative;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     border: none;
     background: none;
-    color: rgba(255, 255, 255, 1);
-    font-size: 20px;
+    color: #fff;
+    font-size: 28px;
     cursor: pointer;
     transition: color 0.2s ease, background 0.2s ease;
-    opacity: 0;
-    animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
-    z-index: 10;
 }
 
-.dots-toggle:hover {
-    color: #fff;
+.bg-switch:hover,
+.bg-visibility:hover {
     background: rgba(255, 255, 255, 0.08);
 }
 
 /* Tooltip — appears below on hover */
-.dots-toggle::before {
+.bg-switch::before,
+.bg-visibility::before {
     content: attr(data-tooltip);
     position: absolute;
     top: calc(100% + 8px);
@@ -264,18 +320,19 @@ body {
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.dots-toggle:hover::before {
+.bg-switch:hover::before,
+.bg-visibility:hover::before {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
 
-/* Dimmed state when dots are hidden */
-.dots-toggle.dots-off {
-    color: rgba(255, 255, 255, 0.25);
+/* Dimmed when animation is hidden */
+.bg-switch.bg-hidden {
+    color: rgba(255, 255, 255, 0.3);
 }
 
-/* Nav exit — fade dots toggle */
-.nav-exiting .dots-toggle {
+/* Nav exit — fade controls */
+.nav-exiting .bg-controls {
     opacity: 0 !important;
     transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -554,7 +611,9 @@ a.project-card {
     transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.page-exit-active #dotted-surface {
+.page-exit-active #dotted-surface,
+.page-exit-active #background-paths,
+.page-exit-active #background-grid {
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
@@ -879,7 +938,7 @@ a.project-card {
         left: 24px;
     }
 
-    .dots-toggle {
+    .bg-controls {
         right: 24px;
     }
 
@@ -981,7 +1040,7 @@ a.project-card {
     }
 
     .nav-logo img {
-        height: 32px;
+        height: 3rem;
     }
 
     .hero-heading {
@@ -1067,19 +1126,35 @@ a.project-card {
         gap: 8px;
     }
 
-    /* Social links — animate out with footer when leaving hero */
-    .social-links {
-        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    /* Social links — animate from column to row when leaving hero */
+    .social-link {
+        animation: none;
+        opacity: 1;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease,
                     transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .social-links.social-hidden {
-        opacity: 0 !important;
-        transform: translateY(40px) !important;
+    /* Column order: 1 (top), 2 (middle), 3 (bottom-right anchor).
+       Move 1 and 2 down+left so all three form a row ending at bottom-right.
+       36px icon + 8px gap = 44px per slot. */
+    .social-links.social-hidden .social-link:nth-child(1) {
+        transform: translate(-88px, 88px);
     }
 
-    .dots-toggle {
-        display: none;
+    .social-links.social-hidden .social-link:nth-child(2) {
+        transform: translate(-44px, 44px);
+    }
+
+    .bg-controls {
+        position: static;
+        transform: none;
+    }
+
+    .bg-switch,
+    .bg-visibility {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
     }
 
     /* Hide desktop nav-links, show hamburger */
