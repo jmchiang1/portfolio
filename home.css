@@ -17,6 +17,15 @@ body {
     color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    cursor: url('assets/icons8-3d-pointer.svg') 9 4, auto;
+}
+
+/* Hand cursor for interactive elements */
+a, button, [role="button"],
+.project-card, .layout-toggle, .bg-switch, .bg-visibility,
+.nav-link, .mobile-menu-link, .social-link, .hamburger,
+.footer-link, .layout-toggle i, .bg-switch i, .bg-visibility i {
+    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
 }
 
 /* Container — no scrolling, all managed by JS */
@@ -275,8 +284,18 @@ body {
     animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
 }
 
+/* Visual divider grouping layout-toggle from animation controls */
+.control-divider {
+    display: inline-block;
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.18);
+    margin: 0 6px;
+}
+
 .bg-switch,
-.bg-visibility {
+.bg-visibility,
+.layout-toggle {
     position: relative;
     display: flex;
     align-items: center;
@@ -293,13 +312,15 @@ body {
 }
 
 .bg-switch:hover,
-.bg-visibility:hover {
+.bg-visibility:hover,
+.layout-toggle:hover {
     background: rgba(255, 255, 255, 0.08);
 }
 
 /* Tooltip — appears below on hover */
 .bg-switch::before,
-.bg-visibility::before {
+.bg-visibility::before,
+.layout-toggle::before {
     content: attr(data-tooltip);
     position: absolute;
     top: calc(100% + 8px);
@@ -321,7 +342,8 @@ body {
 }
 
 .bg-switch:hover::before,
-.bg-visibility:hover::before {
+.bg-visibility:hover::before,
+.layout-toggle:hover::before {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
@@ -545,6 +567,77 @@ body {
 .footer-info.footer-hidden {
     opacity: 0 !important;
     transform: translateY(40px) !important;
+}
+
+/* ============================================
+   Carousel Counter — bottom center, only visible in carousel view
+   ============================================ */
+.carousel-counter {
+    position: fixed;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: 'Gabarito', sans-serif;
+    color: rgba(255, 255, 255, 0.85);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+}
+
+.carousel-counter.counter-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.counter-current {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease;
+}
+
+.counter-divider {
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 2px;
+}
+
+.counter-total {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    font-variant-numeric: tabular-nums;
+}
+
+.counter-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.02em;
+    transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.counter-name.counter-name-changing {
+    opacity: 0;
+    transform: translateY(4px);
+}
+
+/* Page exit fades the counter */
+.page-exit-active .carousel-counter {
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .footer-text {
@@ -819,6 +912,268 @@ a.project-card {
     background: rgba(255, 255, 255, 0.4);
 }
 
+.tag-affiliation {
+    font-weight: 500;
+}
+
+.title-lock {
+    font-size: 0.6em;
+    color: rgba(255, 255, 255, 0.55);
+    margin-left: 0.4em;
+    vertical-align: middle;
+}
+
+/* External-link icon (bottom-right of card) for projects that link out */
+.project-external-icon {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.3s ease, background 0.2s ease,
+                border-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card.pos-center .project-external-icon,
+body.grid-mode .project-external-icon {
+    opacity: 1;
+}
+
+.project-card.pos-center:hover .project-external-icon,
+body.grid-mode .project-card:hover .project-external-icon {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.08);
+}
+
+/* Tooltip — shown above the external icon on card hover */
+.project-external-tooltip {
+    position: absolute;
+    bottom: 64px;
+    right: 16px;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 6;
+}
+
+.project-card.pos-center:hover .project-external-tooltip,
+body.grid-mode .project-card:hover .project-external-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   Grid Mode — natural document flow: hero at top, then grid below
+   ============================================ */
+html:has(body.grid-mode),
+body.grid-mode {
+    overflow: auto;
+    height: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body.grid-mode .scroll-container {
+    overflow: visible;
+    height: auto;
+    min-height: 100dvh;
+}
+
+body.grid-mode .section {
+    position: relative;
+    height: auto;
+}
+
+body.grid-mode .section-carousel {
+    position: relative;
+    height: auto;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+body.grid-mode .carousel-viewport {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-auto-rows: 360px; */
+    gap: 16px;
+    padding: 4rem 7rem 80px;
+    height: auto;
+    align-items: stretch;
+}
+
+/* Kill the carousel pos-* dimming overlay in grid mode so all cards show clean */
+body.grid-mode .project-card::after {
+    background: transparent !important;
+}
+
+/* ============================================
+   Grid Mode — Hero text at top (standard portfolio layout)
+   ============================================ */
+body.grid-mode .section-hero {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 100px 7rem 0;
+    z-index: 1;
+    pointer-events: auto;
+    gap: 4rem;
+}
+
+body.grid-mode .hero-content,
+body.grid-mode .hero-content.hero-hidden {
+    width: 100%;
+    max-width: none;
+    margin-top: 4rem;
+    text-align: left;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto;
+}
+
+body.grid-mode .hero-heading {
+    font-size: 64px;
+    line-height: 1.15;
+    text-align: left;
+    max-width: 900px;
+}
+
+/* Force "Engineering level craft" to a second line in grid mode */
+body.grid-mode .hero-line {
+    display: block;
+}
+
+body.grid-mode .code-icon {
+    width: 22px;
+    height: 18px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+/* Footer-info sits inline below the heading, left-aligned */
+body.grid-mode .footer-info,
+body.grid-mode .footer-info.entered,
+body.grid-mode .footer-info.footer-hidden {
+    position: static !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100%;
+    margin-top: 22px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 48px;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto;
+}
+
+body.grid-mode .footer-text,
+body.grid-mode .footer-text:last-child {
+    font-size: 20px;
+    text-align: left;
+    max-width: 360px;
+}
+
+body.grid-mode .project-card {
+    /* Override carousel positioning — become flow-laid grid items */
+    position: relative;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: none;
+    transform: none;
+    pointer-events: auto;
+}
+
+/* In grid mode, cards are always visible regardless of view (standard portfolio layout) */
+body.grid-mode .project-card {
+    opacity: 1 !important;
+    pointer-events: auto;
+}
+
+/* Make sure the carousel section is interactive in grid mode even without section-active */
+body.grid-mode .section-carousel {
+    pointer-events: auto;
+    z-index: 2;
+}
+
+/* 7 cards: Nocta spans full width on top, 6 cards in 2-col rows below */
+body.grid-mode .project-card:nth-child(1) { grid-column: 1 / -1; grid-row: 1; }
+body.grid-mode .project-card:nth-child(2) { grid-column: 1 / 2; grid-row: 2; }
+body.grid-mode .project-card:nth-child(3) { grid-column: 2 / 3; grid-row: 2; }
+body.grid-mode .project-card:nth-child(4) { grid-column: 1 / 2; grid-row: 3; }
+body.grid-mode .project-card:nth-child(5) { grid-column: 2 / 3; grid-row: 3; }
+body.grid-mode .project-card:nth-child(6) { grid-column: 1 / 2; grid-row: 4; }
+body.grid-mode .project-card:nth-child(7) { grid-column: 2 / 3; grid-row: 4; }
+
+/* Hover lift on grid cards (only when grid-mode is active) */
+body.grid-mode .project-card:not(.grid-locked) {
+    cursor: pointer;
+}
+
+/* Hide the carousel counter in grid mode (per-card state doesn't apply) */
+body.grid-mode .carousel-counter {
+    opacity: 0 !important;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* The hover overlay (project-overlay) was designed for carousel — show project-tags by default in grid mode for context */
+body.grid-mode .project-card .project-tags {
+    opacity: 1;
+    transform: translateY(0);
+    font-size: 16px;
+}
+
+/* Hover effects for ALL cards in grid mode (carousel only does pos-center) */
+body.grid-mode .project-card:hover .project-image {
+    transform: scale(1.05);
+}
+
+body.grid-mode .project-card:hover .project-video {
+    opacity: 1;
+}
+
+body.grid-mode .project-card:hover .project-image.has-video {
+    opacity: 0;
+}
+
+body.grid-mode .project-card:has(.project-video):hover .project-blur {
+    display: none;
+}
+
+body.grid-mode .project-card:hover .project-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
 /* Bottom overlay container — hidden by default, revealed on hover */
 .project-overlay {
     position: absolute;
@@ -1059,6 +1414,75 @@ a.project-card {
         left: 16px;
         right: 16px;
     }
+
+    /* Grid mode on mobile — single column, hero text on top, page scrolls naturally */
+    body.grid-mode .carousel-viewport {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        grid-auto-rows: 220px;
+        padding: 24px 16px 60px;
+        gap: 16px;
+    }
+
+    body.grid-mode .project-card,
+    body.grid-mode .project-card:nth-child(1),
+    body.grid-mode .project-card:nth-child(2),
+    body.grid-mode .project-card:nth-child(3),
+    body.grid-mode .project-card:nth-child(4),
+    body.grid-mode .project-card:nth-child(5),
+    body.grid-mode .project-card:nth-child(6),
+    body.grid-mode .project-card:nth-child(7) {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    body.grid-mode .section-hero {
+        padding: 90px 16px 0;
+    }
+
+    body.grid-mode .hero-content,
+    body.grid-mode .hero-content.hero-hidden {
+        margin-top: 2.5rem;
+    }
+
+    body.grid-mode .hero-heading {
+        font-size: 26px;
+    }
+
+    body.grid-mode .footer-info,
+    body.grid-mode .footer-info.footer-hidden {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 18px;
+    }
+
+    body.grid-mode .footer-text,
+    body.grid-mode .footer-text:last-child {
+        font-size: 15px;
+        text-align: left;
+        max-width: none;
+    }
+
+    /* Counter — smaller on mobile, sits above the social-links */
+    .carousel-counter {
+        bottom: 84px;
+    }
+
+    .counter-current {
+        font-size: 18px;
+    }
+
+    .counter-divider,
+    .counter-total {
+        font-size: 14px;
+    }
+
+    .counter-name {
+        font-size: 12px;
+        margin-left: 8px;
+        padding-left: 8px;
+    }
+
 
     .footer-text {
         font-size: 16px;

@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | Jonathan Chiang</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,60 +46,69 @@
 
     <!-- About Content -->
     <main class="about-layout">
-        <!-- Top Row: Photo + Bio -->
-        <div class="about-hero about-enter" style="--delay: 0.3s">
-            <div class="about-photo-wrapper">
-                <img src="assets/headshot.png" alt="Jonathan Chiang" class="about-photo">
+        <!-- Bento Hero -->
+        <div class="bento-hero about-enter" style="--delay: 0.3s">
+            <!-- Photo card -->
+            <div class="bento-card bento-photo">
+                <img src="assets/headshot.png" alt="Jonathan Chiang">
+                <div class="bento-photo-overlay">
+                    <p class="bento-photo-name">Jonathan Chiang</p>
+                    <p class="bento-photo-role">Product Designer · Design Engineer</p>
+                </div>
             </div>
-            <div class="about-intro">
-                <p class="about-bio">Hi, I’m Jonathan, a product designer focused on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I’m especially interested in the details that make products feel seamless, from user flows and interface systems to motion, responsiveness, and overall polish. 
 
-                    <br>
-                    <br>
+            <!-- Intro card -->
+            <div class="bento-card bento-intro">
+                <p class="bento-label">About</p>
+                <p class="bento-bio">Hi, I'm Jonathan, a product designer focused on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I'm especially interested in the details that make products feel seamless — from user flows and interface systems to motion, responsiveness, and overall polish.<br><br>My background spans UX/UI design, prototyping, research, and front-end development, which allows me to think beyond static screens and design with execution in mind.</p>
+            </div>
 
-                    My background spans UX/UI design, prototyping, research, and front end development, which allows me to think beyond static screens and design with execution in mind. I enjoy working on products that sit at the intersection of technology and human behavior, and I’m always looking for ways to make digital experiences more intuitive, engaging, and meaningful.</p>
+            <!-- Now card -->
+            <div class="bento-card bento-now">
+                <p class="bento-label">Now</p>
+                <p class="bento-now-text">Designing at <span class="bento-skillcat">SkillCat</span></p>
+                <p class="bento-now-sub">Design Engineer · 2025 — Present</p>
+                <img class="bento-now-logo" src="assets/Companies/skillcat.png" alt="SkillCat">
+            </div>
+
+            <!-- Stack: design + dev skills -->
+            <div class="bento-card bento-skill bento-skill-design">
+                <p class="bento-label">Design</p>
+                <div class="bento-skill-pills">
+                    <span class="skill-pill">Figma</span>
+                    <span class="skill-pill">After Effects</span>
+                    <span class="skill-pill">Blender</span>
+                </div>
+            </div>
+
+            <div class="bento-card bento-skill bento-skill-dev">
+                <p class="bento-label">Development</p>
+                <div class="bento-skill-pills">
+                    <span class="skill-pill">HTML / CSS</span>
+                    <span class="skill-pill">JavaScript</span>
+                    <span class="skill-pill">React</span>
+                    <span class="skill-pill">Claude Code</span>
+                </div>
             </div>
         </div>
-
-                <!-- Skills & Tools -->
-                <div class="about-section about-enter" style="--delay: 0.65s">
-                    <h2 class="about-section-title">Skills & Tools</h2>
-
-                    <div class="skills-row">
-                        <div class="skills-group">
-                            <p class="skills-label">Design</p>
-                            <div class="skills-pills">
-                                <span class="skill-pill">Figma</span>
-                                <span class="skill-pill">Adobe After Effects</span>
-                                <span class="skill-pill">Blender</span>
-                            </div>
-                        </div>
-
-                        <div class="skills-group">
-                            <p class="skills-label">Development</p>
-                            <div class="skills-pills">
-                                <span class="skill-pill">HTML / CSS</span>
-                                <span class="skill-pill">JavaScript</span>
-                                <span class="skill-pill">React</span>
-                                <span class="skill-pill">Claude Code</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
         <!-- Education -->
         <div class="about-section about-enter" style="--delay: 0.5s">
             <h2 class="about-section-title">Education</h2>
             <div class="education-row">
                 <div class="education-card">
-                    <!-- <div class="education-dot"></div> -->
-                    <p class="education-degree">M.S. Communication Design</p>
-                    <p class="education-school">Parsons School of Design</p>
+                    <img class="education-logo" src="assets/Companies/parsons.png" alt="Parsons School of Design">
+                    <div class="education-text">
+                        <p class="education-degree">M.S. Communication Design</p>
+                        <p class="education-school">Parsons School of Design</p>
+                    </div>
                 </div>
                 <div class="education-card">
-                    <!-- <div class="education-dot"></div> -->
-                    <p class="education-degree">B.S. Business Administration</p>
-                    <p class="education-school">University at Buffalo</p>
+                    <img class="education-logo" src="assets/Companies/ub-logo.jpg" alt="University at Buffalo">
+                    <div class="education-text">
+                        <p class="education-degree">B.S. Business Administration</p>
+                        <p class="education-school">University at Buffalo</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,52 +117,73 @@
         <div id="experience" class="about-section about-enter" style="--delay: 0.6s">
             <h2 class="about-section-title">Experience</h2>
 
-            <div class="exp-cards">
-                <div class="exp-card">
-                    <div class="exp-info">
-                        <p class="exp-date">2025 — Present</p>
-                        <p class="exp-role">Design Engineer</p>
-                        <p class="exp-company">SkillCat</p>
-                        <p class="exp-description">Leading design and front-end development for a mobile learning platform focused on trade skills. Building UI components, prototyping interactions, and bridging the gap between design and engineering.</p>
-                    </div>
-                    <div class="exp-image">
-                        <img src="assets/Companies/skillcat.png" alt="SkillCat">
-                    </div>
-                </div>
-
-                <div class="exp-card">
-                    <div class="exp-info">
-                        <p class="exp-date">2025</p>
-                        <p class="exp-role">UX Designer</p>
-                        <p class="exp-company">ScriptChain Health</p>
-                        <p class="exp-description">Designed patient-facing dashboards and data visualization tools for a health-tech startup. Conducted user research and usability testing to simplify complex medical data workflows.</p>
-                    </div>
-                    <div class="exp-image">
-                        <img src="assets/Companies/scriptchain.png" alt="ScriptChain Health">
+            <div class="exp-list">
+                <div class="exp-row is-open">
+                    <button class="exp-row-header" aria-expanded="true">
+                        <span class="exp-year">2025 — Present</span>
+                        <span class="exp-row-main">
+                            <span class="exp-role">Design Engineer</span>
+                            <span class="exp-company">SkillCat</span>
+                        </span>
+                        <img class="exp-logo" src="assets/Companies/skillcat.png" alt="SkillCat">
+                        <i class="ph ph-caret-down exp-chevron"></i>
+                    </button>
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <p class="exp-description">Leading design and front-end development for a mobile learning platform focused on trade skills. Building UI components, prototyping interactions, and bridging the gap between design and engineering.</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="exp-card">
-                    <div class="exp-info">
-                        <p class="exp-date">2022</p>
-                        <p class="exp-role">Software Engineer</p>
-                        <p class="exp-company">JPMorgan Chase</p>
-                        <p class="exp-description">Developed internal tools and front-end features for financial applications. Collaborated with cross-functional teams to deliver scalable, production-ready code.</p>
-                    </div>
-                    <div class="exp-image">
-                        <img src="assets/Companies/chase.png" alt="JPMorgan Chase">
+                <div class="exp-row">
+                    <button class="exp-row-header" aria-expanded="false">
+                        <span class="exp-year">2025</span>
+                        <span class="exp-row-main">
+                            <span class="exp-role">UX Designer</span>
+                            <span class="exp-company">ScriptChain Health</span>
+                        </span>
+                        <img class="exp-logo" src="assets/Companies/scriptchain.png" alt="ScriptChain Health">
+                        <i class="ph ph-caret-down exp-chevron"></i>
+                    </button>
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <p class="exp-description">Designed patient-facing dashboards and data visualization tools for a health-tech startup. Conducted user research and usability testing to simplify complex medical data workflows.</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="exp-card">
-                    <div class="exp-info">
-                        <p class="exp-date">2018</p>
-                        <p class="exp-role">Marketing Analyst</p>
-                        <p class="exp-company">Omnicom Media Group</p>
-                        <p class="exp-description">Analyzed campaign performance data and consumer insights to optimize digital marketing strategies for major brand clients across multiple channels.</p>
+                <div class="exp-row">
+                    <button class="exp-row-header" aria-expanded="false">
+                        <span class="exp-year">2022</span>
+                        <span class="exp-row-main">
+                            <span class="exp-role">Software Engineer</span>
+                            <span class="exp-company">JPMorgan Chase</span>
+                        </span>
+                        <!-- <img class="exp-logo" src="assets/Companies/chase.png" alt="JPMorgan Chase"> -->
+                        <img class="exp-logo" src="assets/Companies/chase-logo.jpg" alt="JPMorgan Chase">
+                        <i class="ph ph-caret-down exp-chevron"></i>
+                    </button>
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <p class="exp-description">Developed internal tools and front-end features for financial applications. Collaborated with cross-functional teams to deliver scalable, production-ready code.</p>
+                        </div>
                     </div>
-                    <div class="exp-image">
-                        <img src="assets/Companies/omd.png" alt="Omnicom Media Group">
+                </div>
+
+                <div class="exp-row">
+                    <button class="exp-row-header" aria-expanded="false">
+                        <span class="exp-year">2018 - 2019</span>
+                        <span class="exp-row-main">
+                            <span class="exp-role">Marketing Analyst</span>
+                            <span class="exp-company">Omnicom Media Group</span>
+                        </span>
+                        <img class="exp-logo" src="assets/Companies/omd.png" alt="Omnicom Media Group">
+                        <i class="ph ph-caret-down exp-chevron"></i>
+                    </button>
+                    <div class="exp-row-body">
+                        <div class="exp-row-body-inner">
+                            <p class="exp-description">Analyzed campaign performance data and consumer insights to optimize digital marketing strategies for major brand clients across multiple channels.</p>
+                        </div>
                     </div>
                 </div>
             </div>

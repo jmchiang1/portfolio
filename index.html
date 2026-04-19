@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jonathan Chiang | UX Design + Engineering</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,10 +44,14 @@
                 <a href="about.html" class="nav-link">About</a>
             </div>
             <div class="bg-controls">
-                <button class="bg-switch" aria-label="Switch background animation" data-tooltip="Dots">
-                    <i class="ph ph-dots-nine"></i>
+                <button class="layout-toggle" aria-label="Switch to grid view" data-tooltip="Layout: Grid view">
+                    <i class="ph ph-squares-four"></i>
                 </button>
-                <button class="bg-visibility" aria-label="Hide background" data-tooltip="Hide">
+                <span class="control-divider" aria-hidden="true"></span>
+                <button class="bg-switch" aria-label="Switch background animation" data-tooltip="Background: Dots">
+                    <i class="ph ph-waveform"></i>
+                </button>
+                <button class="bg-visibility" aria-label="Hide background" data-tooltip="Hide background">
                     <i class="ph ph-eye"></i>
                 </button>
             </div>
@@ -78,10 +86,10 @@
         <section class="section section-hero" id="hero">
             <div class="hero-content">
                 <h1 class="hero-heading">
-                    User Experience Design with Engineering level craft
-                    <svg class="code-icon" width="31" height="25" viewBox="0 0 31 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <span class="hero-line">User Experience Design with</span>
+                    <span class="hero-line">Engineering level craft<svg class="code-icon" width="31" height="25" viewBox="0 0 31 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.46 8.653L3.842 12.5l4.618 3.848a1.5 1.5 0 0 1 .102 2.12 1.5 1.5 0 0 1-2.12.102L.54 13.653a1.5 1.5 0 0 1 0-2.306l6-5a1.5 1.5 0 0 1 2.103.103 1.5 1.5 0 0 1-.183 2.203Zm21.999 2.694-6-5a1.5 1.5 0 0 0-1.92 2.306l4.618 3.847-4.618 3.848a1.5 1.5 0 0 0 1.92 2.305l6-5a1.5 1.5 0 0 0 0-2.306Zm-10.447-11.257a1.5 1.5 0 0 0-1.923.897l-8 22a1.5 1.5 0 0 0 2.822 1.026l8-22a1.5 1.5 0 0 0-.899-1.923Z" fill="white"/>
-                    </svg>
+                    </svg></span>
                 </h1>
             </div>
             <footer class="footer-info">
@@ -90,7 +98,15 @@
             </footer>
         </section>
 
-        <!-- Section: Project Carousel -->
+        <!-- Carousel counter — visible only when in carousel view -->
+        <div class="carousel-counter" aria-hidden="true">
+            <span class="counter-current">01</span>
+            <span class="counter-divider">/</span>
+            <span class="counter-total">05</span>
+            <span class="counter-name">Nocta</span>
+        </div>
+
+        <!-- Section: Projects (cards rearrange between 3D carousel and grid via toggle) -->
         <section class="section section-carousel" id="projects">
             <div class="carousel-viewport">
                 <!-- Project 1 — Nocta -->
@@ -100,11 +116,13 @@
                         <img src="assets/nocta-mockup.png" alt="Nocta — CPAP therapy insights app" class="project-image">
                     </picture>
                     <div class="project-tags">
-                        <span>Product Design</span>
+                        <span class="tag-affiliation">Personal</span>
+                        <span class="tag-divider"></span>
+                        <span>0-1 Design</span>
                         <span class="tag-divider"></span>
                         <span>Health</span>
                         <span class="tag-divider"></span>
-                        <span>2024</span>
+                        <span>2025</span>
                     </div>
                     <div class="project-overlay">
                         <div class="project-blur"></div>
@@ -123,18 +141,21 @@
                         <img src="assets/scriptchain-mockup.png" alt="ScriptChain Health — patient data dashboard" class="project-image">
                     </picture>
                     <div class="project-tags">
-                        <span>Product Design</span>
+                        <span class="tag-affiliation">In-House</span>
+                        <span class="tag-divider"></span>
+                        <span>0-1 Design</span>
                         <span class="tag-divider"></span>
                         <span>Health</span>
                         <span class="tag-divider"></span>
-                        <span>2024</span>
+                        <span>2025</span>
                     </div>
                     <div class="project-overlay">
                         <div class="project-blur"></div>
                         <div class="project-overlay-gradient"></div>
                         <div class="project-info">
                             <h2 class="project-title">ScriptChain Health</h2>
-                            <p class="project-description">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long-term therapy</p>
+                            <p class="project-description">Reducing metabolic syndrome through custom diet and exercise plans, all without Nutritionists or Exercise Physiologists.
+                            </p>
                         </div>
                     </div>
                 </a>
@@ -146,7 +167,9 @@
                         <img src="assets/robinhood-mockup.png" alt="Robinhood Mirror — investment profile app" class="project-image">
                     </picture>
                     <div class="project-tags">
-                        <span>Product Design</span>
+                        <span class="tag-affiliation">Personal</span>
+                        <span class="tag-divider"></span>
+                        <span>Feature Add On</span>
                         <span class="tag-divider"></span>
                         <span>Finance</span>
                         <span class="tag-divider"></span>
@@ -169,18 +192,20 @@
                         <img src="assets/skillcat-mockup.png" alt="SkillCat — mobile learning path app" class="project-image">
                     </picture>
                     <div class="project-tags">
-                        <span>Product Design</span>
+                        <span class="tag-affiliation">In-House</span>
+                        <span class="tag-divider"></span>
+                        <span>Brand Redesign</span>
                         <span class="tag-divider"></span>
                         <span>Trade Skills</span>
                         <span class="tag-divider"></span>
-                        <span>2025</span>
+                        <span>2026</span>
                     </div>
                     <div class="project-overlay">
                         <div class="project-blur"></div>
                         <div class="project-overlay-gradient"></div>
                         <div class="project-info">
-                            <h2 class="project-title">SkillCat</h2>
-                            <p class="project-description">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long-term therapy</p>
+                            <h2 class="project-title">SkillCat <i class="ph ph-lock-simple title-lock" aria-label="Confidential — work in progress"></i></h2>
+                            <p class="project-description">Reimagining how trade professionals learn, certify, and grow on mobile — currently in active development</p>
                         </div>
                     </div>
                 </div>
@@ -193,7 +218,9 @@
                     </picture>
                     <video src="assets/Reveal-animation.mp4" class="project-video" muted loop playsinline preload="auto"></video>
                     <div class="project-tags">
-                        <span>Product Design</span>
+                        <span class="tag-affiliation">Personal</span>
+                        <span class="tag-divider"></span>
+                        <span>Product / Motion Design</span>
                         <span class="tag-divider"></span>
                         <span>AR/VR</span>
                         <span class="tag-divider"></span>
@@ -208,6 +235,55 @@
                         </div>
                     </div>
                 </a>
+
+                <!-- Project 6 — Nova Core -->
+                <a href="https://www.figma.com/deck/GsLOp0YPH8dvlu3frkEhwx/NovaCore---Skynet4o-Ai-Hackathon--Copy-?node-id=18-361&t=zM4QiM7bLTEmiT4o-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="project-card" style="--card-bg: url('assets/novacore.png')">
+                    <img src="assets/novacore.png" alt="Nova Core — NYC transit system redesign" class="project-image">
+                    <div class="project-tags">
+                        <span class="tag-affiliation">Hackathon</span>
+                        <span class="tag-divider"></span>
+                        <span>AI Design</span>
+                        <span class="tag-divider"></span>
+                        <span>Infrastructure</span>
+                        <span class="tag-divider"></span>
+                        <span>2025</span>
+                    </div>
+                    <i class="ph ph-arrow-square-out project-external-icon" aria-label="Opens in Figma"></i>
+                    <span class="project-external-tooltip">Opens in new tab</span>
+                    <div class="project-overlay">
+                        <div class="project-blur"></div>
+                        <div class="project-overlay-gradient"></div>
+                        <div class="project-info">
+                            <!-- <h2 class="project-title">Nova Core</h2> -->
+                            <p class="project-description">Reimagining the NYC transit system experience for a more intuitive, modern commute</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 7 — Mindscapes -->
+                <a href="https://www.figma.com/deck/drethUbSZNNpxI52qbfwjG/Neuronauts--Mindscapes--Copy-?node-id=1-311&t=VuChBKjQhsNzrclz-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" rel="noopener noreferrer" class="project-card" style="--card-bg: url('assets/mindscapes.png')">
+                    <img src="assets/mindscapes.png" alt="Mindscapes — relive memories through visual landscapes" class="project-image">
+                    <div class="project-tags">
+                        <span class="tag-affiliation">Hackathon</span>
+                        <span class="tag-divider"></span>
+                        <span>Product Design</span>
+                        <span class="tag-divider"></span>
+                        <span>Wellness</span>
+                        <span class="tag-divider"></span>
+                        <span>2025</span>
+                    </div>
+                    <i class="ph ph-arrow-square-out project-external-icon" aria-label="Opens in Figma"></i>
+                    <span class="project-external-tooltip">Opens in new tab</span>
+                    <div class="project-overlay">
+                        <div class="project-blur"></div>
+                        <div class="project-overlay-gradient"></div>
+                        <div class="project-info">
+                            <!-- <h2 class="project-title">Mindscapes</h2> -->
+                            <p class="project-description">An immersive tool that helps users relive and reflect on memories through generative visual landscapes</p>
+                        </div>
+                    </div>
+                </a>
+
             </div>
         </section>
     </div>

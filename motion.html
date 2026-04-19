@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motion | Jonathan Chiang</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +42,7 @@
         </div>
         <div class="bg-controls">
             <button class="bg-switch" aria-label="Switch background animation" data-tooltip="Dots">
-                <i class="ph ph-dots-nine"></i>
+                <i class="ph ph-waveform"></i>
             </button>
             <button class="bg-visibility" aria-label="Hide background" data-tooltip="Hide">
                 <i class="ph ph-eye"></i>
@@ -78,6 +82,11 @@
         <!-- Card 4 — Robinhood Trim Path -->
         <div class="project-card" data-modal="robinhood-modal" style="background: #fff">
             <video src="assets/Motion/Robinhood Trim Path.mp4" class="project-video" style="object-fit: cover" muted loop playsinline></video>
+            <div class="project-placeholder"></div>
+        </div>
+        <!-- Card 5 — ScriptChain Health Demo -->
+        <div class="project-card" data-modal="scriptchain-modal">
+            <video src="assets/Motion/Scriptchain Health Demo.mp4" class="project-video" style="object-fit: cover" muted loop playsinline></video>
             <div class="project-placeholder"></div>
         </div>
     </div>
@@ -233,6 +242,41 @@
                         <div>
                             <p class="modal-label">Timeline</p>
                             <p>Spring 2025</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ScriptChain Modal -->
+    <div class="modal-overlay" id="scriptchain-modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <div class="modal-body">
+                <p class="modal-label">ScriptChain Health Product Demo</p>
+
+                <div class="modal-video-target" data-unmute></div>
+
+                <div class="modal-meta modal-fade-in">
+                    <div class="modal-meta-overview">
+                        <p class="modal-label">Project Overview</p>
+                        <p>A product demo animation for ScriptChain Health, showcasing patient-facing dashboards and data visualization tools designed to simplify complex medical data workflows.</p>
+                    </div>
+                    <div class="modal-meta-sidebar">
+                        <div>
+                            <p class="modal-label">Tools</p>
+                            <p>Adobe After Effects</p>
+                            <p>Figma</p>
+                        </div>
+                        <div>
+                            <p class="modal-label">Timeline</p>
+                            <p>2025</p>
                         </div>
                     </div>
                 </div>

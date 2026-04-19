@@ -10,6 +10,139 @@
     var cards = Array.from(document.querySelectorAll('.project-card'));
     var totalCards = cards.length;
 
+    // Carousel counter
+    var counter = document.querySelector('.carousel-counter');
+    var counterCurrent = counter && counter.querySelector('.counter-current');
+    var counterTotal = counter && counter.querySelector('.counter-total');
+    var counterName = counter && counter.querySelector('.counter-name');
+    var cardNames = cards.map(function (c) {
+        var titleEl = c.querySelector('.project-title');
+        // strip any trailing icon text — use only the leading text node
+        return titleEl ? titleEl.firstChild.textContent.trim() : '';
+    });
+    if (counterTotal) counterTotal.textContent = String(totalCards).padStart(2, '0');
+
+    function pad2(n) { return String(n).padStart(2, '0'); }
+
+    function updateCounter() {
+        if (!counter) return;
+        counterCurrent.textContent = pad2(activeIndex + 1);
+        var newName = cardNames[activeIndex];
+        if (counterName.textContent !== newName) {
+            counterName.classList.add('counter-name-changing');
+            setTimeout(function () {
+                counterName.textContent = newName;
+                counterName.classList.remove('counter-name-changing');
+            }, 180);
+        }
+    }
+
+    function setCounterVisible(visible) {
+        if (!counter) return;
+        counter.classList.toggle('counter-visible', visible);
+    }
+
+    // Layout toggle — FLIP animate the same cards between carousel and 2-col grid
+    var layoutToggle = document.querySelector('.layout-toggle');
+    var layoutMode = 'carousel'; // 'carousel' or 'grid'
+    var FLIP_DURATION = 700;
+    var FLIP_EASING = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+    function flipCards(applyClassChange) {
+        // First — capture current positions/sizes
+        var first = cards.map(function (c) {
+            var r = c.getBoundingClientRect();
+            return { left: r.left, top: r.top, width: r.width, height: r.height };
+        });
+
+        // Apply layout change (instant)
+        applyClassChange();
+
+        // Last — read new positions/sizes after reflow
+        var last = cards.map(function (c) {
+            var r = c.getBoundingClientRect();
+            return { left: r.left, top: r.top, width: r.width, height: r.height };
+        });
+
+        // Invert + Play — animate each card from its old position to identity
+        cards.forEach(function (card, i) {
+            var f = first[i];
+            var l = last[i];
+            // Skip if card has no real layout (e.g. width 0)
+            if (l.width === 0 || l.height === 0) return;
+
+            var dx = f.left - l.left;
+            var dy = f.top - l.top;
+            var sx = f.width / l.width;
+            var sy = f.height / l.height;
+
+            // Cancel pos-* class transforms during FLIP by setting inline transform
+            card.style.transition = 'none';
+            card.style.transform = 'translate(' + dx + 'px, ' + dy + 'px) scale(' + sx + ', ' + sy + ')';
+            card.style.transformOrigin = 'top left';
+
+            // Force reflow so the inverse transform is committed before we animate
+            card.offsetHeight;
+
+            // Play
+            card.style.transition = 'transform ' + FLIP_DURATION + 'ms ' + FLIP_EASING;
+            card.style.transform = '';
+
+            // Cleanup after animation
+            (function (cardEl) {
+                setTimeout(function () {
+                    cardEl.style.transition = '';
+                    cardEl.style.transform = '';
+                    cardEl.style.transformOrigin = '';
+                }, FLIP_DURATION + 50);
+            })(card);
+        });
+    }
+
+    function setGridMode() {
+        var animate = currentView === 'carousel'; // only FLIP if cards are visible
+        var apply = function () {
+            layoutMode = 'grid';
+            document.body.classList.add('grid-mode');
+        };
+        if (animate) flipCards(apply);
+        else apply();
+
+        if (layoutToggle) {
+            layoutToggle.querySelector('i').className = 'ph ph-slideshow';
+            layoutToggle.setAttribute('data-tooltip', 'Layout: Carousel view');
+            layoutToggle.setAttribute('aria-label', 'Switch to carousel view');
+        }
+        cards.forEach(function (c) {
+            var v = c.querySelector('.project-video');
+            if (v) v.pause();
+        });
+    }
+
+    function setCarouselMode() {
+        var animate = currentView === 'carousel';
+        var apply = function () {
+            layoutMode = 'carousel';
+            document.body.classList.remove('grid-mode');
+            if (window.scrollY > 0) window.scrollTo(0, 0);
+        };
+        if (animate) flipCards(apply);
+        else apply();
+
+        if (layoutToggle) {
+            layoutToggle.querySelector('i').className = 'ph ph-squares-four';
+            layoutToggle.setAttribute('data-tooltip', 'Layout: Grid view');
+            layoutToggle.setAttribute('aria-label', 'Switch to grid view');
+        }
+    }
+
+    if (layoutToggle) {
+        layoutToggle.addEventListener('click', function () {
+            if (layoutMode === 'carousel') setGridMode();
+            else setCarouselMode();
+        });
+    }
+
     var GLOW_COLORS = ['blue', 'green', 'gold', 'orange'];
     var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-far-left', 'pos-far-right', 'pos-hero-peek'];
 
@@ -77,7 +210,7 @@
 
     function updateGlow() {
         glow.classList.remove('glow-blue', 'glow-green', 'glow-gold', 'glow-orange');
-        glow.classList.add('glow-' + GLOW_COLORS[activeIndex]);
+        glow.classList.add('glow-' + GLOW_COLORS[activeIndex % GLOW_COLORS.length]);
     }
 
     function showHero(loopForward) {
@@ -87,6 +220,7 @@
         if (socialLinks) socialLinks.classList.remove('social-hidden');
         heroSection.classList.remove('section-hidden');
         glow.classList.remove('glow-dimmed', 'glow-blue', 'glow-green', 'glow-gold', 'glow-orange');
+        setCounterVisible(false);
 
         if (loopForward) {
             positionCardsForHeroLoopForward();
@@ -110,6 +244,8 @@
         heroSection.classList.add('section-hidden');
         carouselSection.classList.add('section-active');
         glow.classList.add('glow-dimmed');
+        updateCounter();
+        setCounterVisible(true);
 
         // Cards that were on the left but need to be on the right (after a loop)
         // should silently snap to far-right first, then animate to their target position.
@@ -142,6 +278,7 @@
             activeIndex++;
             positionCards();
             updateGlow();
+            updateCounter();
         } else {
             // Last card → loop back to hero, continue left direction
             showHero(true);
@@ -153,6 +290,7 @@
             activeIndex--;
             positionCards();
             updateGlow();
+            updateCounter();
         } else {
             // First card → go back to hero, cards exit right
             showHero(false);
@@ -183,6 +321,9 @@
     var gestureTimer = null;
 
     container.addEventListener('wheel', function (e) {
+        // In grid mode: page scrolls naturally, no carousel nav
+        if (layoutMode === 'grid') return;
+
         e.preventDefault();
 
         clearTimeout(gestureTimer);
@@ -219,9 +360,10 @@
         if (!video) return;
 
         card.addEventListener('mouseenter', function () {
-            if (card.classList.contains('pos-center')) {
+            // Carousel: only pos-center plays. Grid mode: any card plays.
+            if (layoutMode === 'grid' || card.classList.contains('pos-center')) {
                 video.currentTime = 0;
-                video.play();
+                video.play().catch(function () {});
             }
         });
 
@@ -235,7 +377,10 @@
         if (card.tagName !== 'A') return;
 
         card.addEventListener('click', function (e) {
-            if (!card.classList.contains('pos-center')) return;
+            // In carousel mode only the center card navigates; in grid mode any card does
+            if (layoutMode === 'carousel' && !card.classList.contains('pos-center')) return;
+            // External links (target="_blank") just open natively — no page-exit transition
+            if (card.getAttribute('target') === '_blank') return;
             e.preventDefault();
 
             var href = card.getAttribute('href');
@@ -357,7 +502,7 @@
     var bgGrid = document.getElementById('background-grid');
     var bgAnim = 0; // 0 = dots, 1 = paths, 2 = grid
     var bgVisible = true;
-    var BG_ICONS = ['ph-dots-nine', 'ph-tornado', 'ph-diamonds-four'];
+    var BG_ICONS = ['ph-waveform', 'ph-tornado', 'ph-diamonds-four'];
     var BG_NAMES = ['Dots', 'Paths', 'Grid'];
 
     function applyBgState() {
@@ -411,6 +556,9 @@
         // Require a minimum swipe distance
         var minSwipe = 50;
         if (Math.abs(deltaY) < minSwipe && Math.abs(deltaX) < minSwipe) return;
+
+        // In grid mode: page scrolls naturally, no carousel nav
+        if (layoutMode === 'grid') return;
 
         isTransitioning = true;
         var scrollingDown = Math.abs(deltaY) >= Math.abs(deltaX) ? deltaY > 0 : deltaX > 0;

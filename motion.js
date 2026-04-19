@@ -56,7 +56,12 @@
     // Enable transitions after a frame so initial positions don't animate
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-            document.querySelector('.carousel-viewport').classList.add('carousel-ready');
+            var viewport = document.querySelector('.carousel-viewport');
+            viewport.classList.add('carousel-ready');
+            // After entrance animation completes, switch to snappier nav transitions
+            setTimeout(function () {
+                viewport.classList.add('entrance-done');
+            }, 1500);
         });
     });
 
@@ -312,7 +317,7 @@
     var bgGrid = document.getElementById('background-grid');
     var bgAnim = 0; // 0 = dots, 1 = paths, 2 = grid
     var bgVisible = true;
-    var BG_ICONS = ['ph-dots-nine', 'ph-tornado', 'ph-diamonds-four'];
+    var BG_ICONS = ['ph-waveform', 'ph-tornado', 'ph-diamonds-four'];
     var BG_NAMES = ['Dots', 'Paths', 'Grid'];
 
     function applyBgState() {

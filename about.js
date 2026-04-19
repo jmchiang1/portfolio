@@ -83,5 +83,16 @@
             });
         });
     }
+
+    // Experience rows — click to expand/collapse
+    var expRows = document.querySelectorAll('.exp-row');
+    expRows.forEach(function (row) {
+        var header = row.querySelector('.exp-row-header');
+        if (!header) return;
+        header.addEventListener('click', function () {
+            var isOpen = row.classList.toggle('is-open');
+            header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+    });
 })();
 
