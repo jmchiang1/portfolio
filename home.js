@@ -99,14 +99,115 @@
         });
     }
 
+    // FLIP a list of elements through a layout change — they smoothly translate
+    // (and scale) from their old positions to their new ones.
+    function flipElements(elements, applyFn, duration, easing) {
+        duration = duration || FLIP_DURATION;
+        easing = easing || FLIP_EASING;
+
+        var firsts = elements.map(function (el) {
+            return el.getBoundingClientRect();
+        });
+
+        applyFn();
+
+        var lasts = elements.map(function (el) {
+            return el.getBoundingClientRect();
+        });
+
+        elements.forEach(function (el, i) {
+            var f = firsts[i];
+            var l = lasts[i];
+            if (l.width === 0 || l.height === 0) return;
+            if (f.width === 0 || f.height === 0) return;
+
+            var dx = f.left - l.left;
+            var dy = f.top - l.top;
+            var sx = f.width / l.width;
+            var sy = f.height / l.height;
+
+            el.style.transition = 'none';
+            el.style.transform = 'translate(' + dx + 'px, ' + dy + 'px) scale(' + sx + ', ' + sy + ')';
+            el.style.transformOrigin = 'top left';
+
+            // Force reflow so the inverse transform is committed before we animate
+            el.offsetHeight;
+
+            el.style.transition = 'transform ' + duration + 'ms ' + easing;
+            el.style.transform = '';
+
+            (function (elRef) {
+                setTimeout(function () {
+                    elRef.style.transition = '';
+                    elRef.style.transform = '';
+                    elRef.style.transformOrigin = '';
+                }, duration + 50);
+            })(el);
+        });
+    }
+
+    // Cross-fade: fade everything out together, swap layout, then stagger fade-in.
+    // The stagger order is determined by the caller so each mode can flow naturally.
+    function crossFade(applyFn, getStaggerOrder) {
+        var FADE_OUT_MS = 220;
+        var FADE_IN_MS = 380;
+        var STAGGER_MS = 70;
+        var EASE = 'cubic-bezier(0.25, 0.1, 0.25, 1)';
+        // Preserve the cards' CSS transform transition so they still rotate
+        // smoothly into pos-* positions if user navigates during the cross-fade
+        var CARD_TRANSFORM_TRANSITION = 'transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        var allElements = [heroContent, footerInfo].concat(cards);
+
+        function transitionFor(el, opacityRule) {
+            // Cards need transform transition preserved; hero/footer just need opacity
+            return cards.indexOf(el) !== -1
+                ? opacityRule + ', ' + CARD_TRANSFORM_TRANSITION
+                : opacityRule;
+        }
+
+        // Fade everything out simultaneously (no stagger going out — keeps it snappy)
+        allElements.forEach(function (el) {
+            el.style.transition = transitionFor(el, 'opacity ' + FADE_OUT_MS + 'ms ' + EASE);
+            el.style.opacity = '0';
+        });
+
+        setTimeout(function () {
+            applyFn();
+            // Force reflow so the new layout is committed before fading back in
+            document.body.offsetHeight;
+
+            var orderedElements = getStaggerOrder
+                ? getStaggerOrder(heroContent, footerInfo, cards)
+                : allElements;
+
+            orderedElements.forEach(function (el, i) {
+                var delay = i * STAGGER_MS;
+                var opacityRule = 'opacity ' + FADE_IN_MS + 'ms ' + EASE + ' ' + delay + 'ms';
+                el.style.transition = transitionFor(el, opacityRule);
+                el.style.opacity = '1';
+            });
+
+            // Cleanup after the last element finishes its fade-in
+            var totalDuration = (orderedElements.length - 1) * STAGGER_MS + FADE_IN_MS + 50;
+            setTimeout(function () {
+                orderedElements.forEach(function (el) {
+                    el.style.transition = '';
+                    el.style.opacity = '';
+                });
+            }, totalDuration);
+        }, FADE_OUT_MS);
+    }
+
     function setGridMode() {
-        var animate = currentView === 'carousel'; // only FLIP if cards are visible
-        var apply = function () {
+        crossFade(function () {
             layoutMode = 'grid';
             document.body.classList.add('grid-mode');
-        };
-        if (animate) flipCards(apply);
-        else apply();
+            heroContent.classList.remove('hero-hidden');
+            footerInfo.classList.remove('footer-hidden');
+        }, function (hero, footer, cardsArr) {
+            // Top-to-bottom: hero → footer (sits just below hero) → cards row by row
+            return [hero, footer].concat(cardsArr);
+        });
 
         if (layoutToggle) {
             layoutToggle.querySelector('i').className = 'ph ph-slideshow';
@@ -120,14 +221,20 @@
     }
 
     function setCarouselMode() {
-        var animate = currentView === 'carousel';
-        var apply = function () {
+        if (window.scrollY > 0) window.scrollTo(0, 0);
+
+        crossFade(function () {
             layoutMode = 'carousel';
             document.body.classList.remove('grid-mode');
-            if (window.scrollY > 0) window.scrollTo(0, 0);
-        };
-        if (animate) flipCards(apply);
-        else apply();
+            if (currentView === 'carousel') {
+                heroContent.classList.add('hero-hidden');
+                footerInfo.classList.add('footer-hidden');
+            }
+        }, function (hero, footer, cardsArr) {
+            // Hero + footer are the visible elements in carousel mode — surface them
+            // first so neither feels delayed, then stagger the cards (most offscreen)
+            return [hero, footer].concat(cardsArr);
+        });
 
         if (layoutToggle) {
             layoutToggle.querySelector('i').className = 'ph ph-squares-four';
