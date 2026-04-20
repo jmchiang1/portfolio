@@ -15,6 +15,14 @@ body {
     color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    cursor: url('assets/icons8-3d-pointer.svg') 9 4, auto;
+}
+
+/* Hand cursor for interactive elements */
+a, button, [role="button"],
+.nav-link, .mobile-menu-link, .social-link, .hamburger,
+.footer-link, .exp-row-header {
+    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
 }
 
 body::before {
@@ -316,7 +324,7 @@ body::before {
     grid-area: connect;
     justify-content: space-between;
     gap: 12px;
-    cursor: pointer;
+    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
 }
 
 .bento-connect:hover {
@@ -465,7 +473,7 @@ body::before {
     padding: 1.25rem 1.5rem;
     background: none;
     border: none;
-    cursor: pointer;
+    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
     text-align: left;
     color: inherit;
     font-family: inherit;
@@ -748,7 +756,7 @@ body::before {
         padding: 8px;
         background: none;
         border: none;
-        cursor: pointer;
+        cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
         z-index: 110;
         opacity: 0;
         animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;

@@ -307,7 +307,7 @@ a, button, [role="button"],
     background: none;
     color: #fff;
     font-size: 28px;
-    cursor: pointer;
+    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
     transition: color 0.2s ease, background 0.2s ease;
 }
 
@@ -694,7 +694,7 @@ a, button, [role="button"],
 a.project-card {
     text-decoration: none;
     color: inherit;
-    cursor: pointer;
+    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
 }
 
 /* Page exit — fade out content but keep navbar visible */
@@ -938,7 +938,7 @@ a.project-card {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     z-index: 5;
     opacity: 0;
@@ -1134,7 +1134,7 @@ body.grid-mode .project-card:nth-child(7) { grid-column: 2 / 3; grid-row: 4; }
 
 /* Hover lift on grid cards (only when grid-mode is active) */
 body.grid-mode .project-card:not(.grid-locked) {
-    cursor: pointer;
+    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
 }
 
 /* Hide the carousel counter in grid mode (per-card state doesn't apply) */
@@ -1600,7 +1600,7 @@ body.grid-mode .project-card:hover .project-overlay {
         padding: 8px;
         background: none;
         border: none;
-        cursor: pointer;
+        cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
         z-index: 110;
         opacity: 0;
         animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
