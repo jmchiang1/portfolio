@@ -183,19 +183,153 @@ body::before {
 }
 
 /* ============================================
+   Rotating Hero Title — "I'm a [role]" vertical carousel
+   ============================================ */
+/* Parent flex centers the title as a block — keeps the whole heading centered
+   even as the wrapper width changes with each role */
+.about-hero-rotator {
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+    padding-bottom: 1rem;
+}
+
+.about-hero-title {
+    font-family: 'Gabarito', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.2;
+    color: #fff;
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+}
+
+/* Wrapper width is set dynamically by JS to match the CURRENT visible role.
+   The CSS transition smooths the width change between roles. */
+.rotator-wrapper {
+    display: inline-block;
+    height: 1.2em;
+    line-height: 1.2;
+    overflow: hidden;
+    vertical-align: bottom;
+    color: #0082FA;
+    transition: width 0.4s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+/* Items keep their natural content width (no stretch) so each role is
+   exactly the width of its text */
+.rotator-items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    animation: rotate-roles 12s infinite cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.rotator-item {
+    display: block;
+    height: 1.2em;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* 5 items (last duplicates the first for a seamless loop).
+   Each hold ~2s, transition ~0.4s. */
+@keyframes rotate-roles {
+    0%, 17%   { transform: translateY(0); }
+    20%, 37%  { transform: translateY(-1.2em); }
+    40%, 57%  { transform: translateY(-2.4em); }
+    60%, 77%  { transform: translateY(-3.6em); }
+    80%, 100% { transform: translateY(-4.8em); }
+}
+
+/* ============================================
+   Photo Bento — image gallery with placeholders
+   ============================================ */
+.photo-bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 180px;
+    gap: 12px;
+    grid-template-areas:
+        "p1 p1 p2 p3"
+        "p1 p1 p4 p4"
+        "p5 p5 p5 p5";
+}
+
+.photo-cell {
+    border-radius: 12px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%),
+        repeating-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.03) 0 8px,
+            transparent 8px 16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.35);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.photo-cell:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.photo-cell::after {
+    content: 'Photo';
+}
+
+/* When the cell has a real image, hide the placeholder text + pattern */
+.photo-cell:has(img) {
+    background: none;
+}
+
+.photo-cell:has(img)::after {
+    display: none;
+}
+
+.photo-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+}
+
+.photo-cell-1 { grid-area: p1; }
+.photo-cell-2 { grid-area: p2; }
+.photo-cell-3 { grid-area: p3; }
+.photo-cell-4 { grid-area: p4; }
+.photo-cell-5 { grid-area: p5; }
+
+/* ============================================
    Bento Hero
    ============================================ */
 .bento-hero {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: 1.4fr 1fr;
     grid-auto-rows: minmax(140px, auto);
     grid-template-areas:
-        "photo intro intro"
-        "photo intro intro"
-        "photo now now"
-        "design dev dev";
+        "intro skills"
+        "now now";
     gap: 12px;
     padding-top: 1rem;
+}
+
+/* Wrapper that stacks the Design + Development cards vertically next to About */
+.bento-skills-stack {
+    grid-area: skills;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: -webkit-fill-available;
 }
 
 .bento-card {
@@ -245,16 +379,6 @@ body::before {
     height: 100%;
     object-fit: cover;
     display: block;
-}
-
-.bento-photo-overlay {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1.5rem;
-    background: linear-gradient(to top, rgba(0, 0, 2, 0.9) 0%, rgba(0, 0, 2, 0.6) 60%, transparent 100%);
-    z-index: 1;
 }
 
 .bento-photo-name {
@@ -364,12 +488,8 @@ body::before {
 .bento-skill {
     gap: 14px;
     min-height: 0;
-    height: fit-content;
-    align-self: start;
+    height: -webkit-fill-available;
 }
-
-.bento-skill-design { grid-area: design; }
-.bento-skill-dev { grid-area: dev; }
 
 .bento-skill-pills {
     display: flex;
@@ -707,18 +827,12 @@ body::before {
         padding: 80px 24px 24px;
     }
 
-    /* Tablet bento — 2 cols */
+    /* Tablet bento — 2 cols (photo is now in the photo-bento above) */
     .bento-hero {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
-            "photo intro"
-            "photo intro"
-            "now now"
-            "design dev";
-    }
-
-    .bento-photo {
-        min-height: 360px;
+            "intro skills"
+            "now now";
     }
 
     .social-links {
@@ -874,6 +988,18 @@ body::before {
         display: none;
     }
 
+    /* Photo bento — 2 cols on mobile, stacks into a simpler asymmetric grid */
+    .photo-bento {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 140px;
+        gap: 10px;
+        grid-template-areas:
+            "p1 p1"
+            "p2 p3"
+            "p4 p4"
+            "p5 p5";
+    }
+
     /* Mobile menu socials — horizontal row of icon buttons below the nav links */
     .mobile-menu-socials {
         display: flex;
@@ -919,11 +1045,9 @@ body::before {
         grid-template-columns: 1fr;
         grid-auto-rows: auto;
         grid-template-areas:
-            "photo"
             "intro"
-            "now"
-            "design"
-            "dev";
+            "skills"
+            "now";
         gap: 10px;
     }
 

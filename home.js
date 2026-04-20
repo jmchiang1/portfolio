@@ -618,13 +618,16 @@
         bgGrid.classList.toggle('grid-visible', bgAnim === 2 && bgVisible);
     }
 
+    var bgStateLabel = bgSwitch && bgSwitch.querySelector('.bg-pill-state');
+    var bgVisibilityLabel = bgVisibility && bgVisibility.querySelector('.bg-pill-label');
+
     if (bgSwitch && bgVisibility && dottedSurface && bgPaths && bgGrid) {
         // Switch animation type
         bgSwitch.addEventListener('click', function () {
             bgAnim = (bgAnim + 1) % 3;
             var icon = bgSwitch.querySelector('i');
             icon.className = 'ph ' + BG_ICONS[bgAnim];
-            bgSwitch.setAttribute('data-tooltip', BG_NAMES[bgAnim]);
+            if (bgStateLabel) bgStateLabel.textContent = BG_NAMES[bgAnim];
             applyBgState();
         });
 
@@ -634,11 +637,11 @@
             var icon = bgVisibility.querySelector('i');
             if (bgVisible) {
                 icon.className = 'ph ph-eye';
-                bgVisibility.setAttribute('data-tooltip', 'Hide');
+                if (bgVisibilityLabel) bgVisibilityLabel.textContent = 'Hide';
                 bgSwitch.classList.remove('bg-hidden');
             } else {
                 icon.className = 'ph ph-eye-slash';
-                bgVisibility.setAttribute('data-tooltip', 'Show');
+                if (bgVisibilityLabel) bgVisibilityLabel.textContent = 'Show';
                 bgSwitch.classList.add('bg-hidden');
             }
             applyBgState();

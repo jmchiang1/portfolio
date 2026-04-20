@@ -58,54 +58,77 @@
 
     <!-- About Content -->
     <main class="about-layout">
-        <!-- Bento Hero -->
-        <div class="bento-hero about-enter" style="--delay: 0.3s">
-            <!-- Photo card -->
-            <div class="bento-card bento-photo">
-                <img src="assets/headshot.png" alt="Jonathan Chiang">
-                <div class="bento-photo-overlay">
-                    <p class="bento-photo-name">Jonathan Chiang</p>
-                    <p class="bento-photo-role">Product Designer · Design Engineer</p>
-                </div>
-            </div>
+        <!-- Rotating role title -->
+        <section class="about-hero-rotator about-enter" style="--delay: 0.15s">
+            <h1 class="about-hero-title">
+                I'm a
+                <span class="rotator-wrapper">
+                    <span class="rotator-items">
+                        <span class="rotator-item">Product Designer</span>
+                        <span class="rotator-item">Software Engineer</span>
+                        <span class="rotator-item">Design Engineer</span>
+                        <span class="rotator-item">Technical Product Designer</span>
+                        <span class="rotator-item">Dog Dad</span>
+                        <span class="rotator-item">Racket Sport Enthusiast</span>
+                    </span>
+                </span>
+            </h1>
+        </section>
 
+        <!-- Photo bento — images / snapshots (headshot as the featured photo) -->
+        <div class="about-section about-enter" style="--delay: 0.3s">
+            <div class="photo-bento">
+                <div class="photo-cell photo-cell-1">
+                    <img src="assets/headshot.jpeg" alt="Jonathan Chiang">
+                </div>
+                <div class="photo-cell photo-cell-2" aria-label="Photo placeholder"></div>
+                <div class="photo-cell photo-cell-3" aria-label="Photo placeholder"></div>
+                <div class="photo-cell photo-cell-4" aria-label="Photo placeholder"></div>
+                <div class="photo-cell photo-cell-5" aria-label="Photo placeholder"></div>
+            </div>
+        </div>
+
+        <!-- Bento Hero -->
+        <div class="bento-hero about-enter" style="--delay: 0.45s">
             <!-- Intro card -->
             <div class="bento-card bento-intro">
                 <p class="bento-label">About</p>
                 <p class="bento-bio">Hi, I'm Jonathan, a product designer focused on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I'm especially interested in the details that make products feel seamless — from user flows and interface systems to motion, responsiveness, and overall polish.<br><br>My background spans UX/UI design, prototyping, research, and front-end development, which allows me to think beyond static screens and design with execution in mind.</p>
             </div>
 
-            <!-- Now card -->
+            <!-- Skills stack: design + development in a flex column next to About -->
+            <div class="bento-skills-stack">
+                <div class="bento-card bento-skill bento-skill-design">
+                    <p class="bento-label">Design</p>
+                    <div class="bento-skill-pills">
+                        <span class="skill-pill">Figma</span>
+                        <span class="skill-pill">After Effects</span>
+                        <span class="skill-pill">Blender</span>
+                    </div>
+                </div>
+
+                <div class="bento-card bento-skill bento-skill-dev">
+                    <p class="bento-label">Development</p>
+                    <div class="bento-skill-pills">
+                        <span class="skill-pill">HTML / CSS</span>
+                        <span class="skill-pill">JavaScript</span>
+                        <span class="skill-pill">React</span>
+                        <span class="skill-pill">Claude Code</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Now card (below the About + Skills row, full width) -->
             <div class="bento-card bento-now">
                 <p class="bento-label">Now</p>
                 <p class="bento-now-text">Designing at <span class="bento-skillcat">SkillCat</span></p>
                 <p class="bento-now-sub">Design Engineer · 2025 — Present</p>
                 <img class="bento-now-logo" src="assets/Companies/skillcat.png" alt="SkillCat">
             </div>
-
-            <!-- Stack: design + dev skills -->
-            <div class="bento-card bento-skill bento-skill-design">
-                <p class="bento-label">Design</p>
-                <div class="bento-skill-pills">
-                    <span class="skill-pill">Figma</span>
-                    <span class="skill-pill">After Effects</span>
-                    <span class="skill-pill">Blender</span>
-                </div>
-            </div>
-
-            <div class="bento-card bento-skill bento-skill-dev">
-                <p class="bento-label">Development</p>
-                <div class="bento-skill-pills">
-                    <span class="skill-pill">HTML / CSS</span>
-                    <span class="skill-pill">JavaScript</span>
-                    <span class="skill-pill">React</span>
-                    <span class="skill-pill">Claude Code</span>
-                </div>
-            </div>
         </div>
 
         <!-- Education -->
-        <div class="about-section about-enter" style="--delay: 0.5s">
+        <div class="about-section about-enter" style="--delay: 0.55s">
             <h2 class="about-section-title">Education</h2>
             <div class="education-row">
                 <div class="education-card">

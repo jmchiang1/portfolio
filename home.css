@@ -360,6 +360,90 @@ a, button, [role="button"],
 }
 
 /* ============================================
+   Bottom-left background controls (labeled pills)
+   ============================================ */
+.bg-controls-bottom {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+    opacity: 0;
+    animation: nav-enter-logo 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+}
+
+/* Override the circular .bg-switch / .bg-visibility styling when they're
+   in the bottom-left pill container */
+.bg-controls-bottom .bg-switch,
+.bg-controls-bottom .bg-visibility {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    height: auto;
+    padding: 8px 14px;
+    border-radius: 1000px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.bg-controls-bottom .bg-switch i,
+.bg-controls-bottom .bg-visibility i {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.bg-controls-bottom .bg-switch:hover,
+.bg-controls-bottom .bg-visibility:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.bg-pill-label {
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.bg-pill-state {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Dim the animation type pill slightly when animations are hidden */
+.bg-controls-bottom .bg-switch.bg-hidden {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.bg-controls-bottom .bg-switch.bg-hidden i,
+.bg-controls-bottom .bg-switch.bg-hidden .bg-pill-state {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Suppress the tooltip-on-hover pseudo-element — pills have visible labels */
+.bg-controls-bottom .bg-switch::before,
+.bg-controls-bottom .bg-visibility::before {
+    display: none;
+}
+
+/* Fade on page exit */
+.nav-exiting ~ .scroll-container .bg-controls-bottom,
+.page-exit-active .bg-controls-bottom {
+    opacity: 0;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================
    Social Links — bottom right corner
    ============================================ */
 .social-links {
@@ -1828,6 +1912,11 @@ body.grid-mode .project-card:hover .project-overlay {
 
     /* Hide the bottom-right floating social-links on mobile (they live in the menu now) */
     .social-links {
+        display: none;
+    }
+
+    /* Hide the bottom-left bg-controls pills on mobile (hero is already dense) */
+    .bg-controls-bottom {
         display: none;
     }
 
