@@ -869,24 +869,49 @@ body::before {
         transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
-    /* Social links — sit below experience, row layout */
+    /* Hide the inline social-links on mobile — they live in the hamburger menu now */
     .social-links {
-        position: static;
-        flex-direction: row;
-        justify-content: center;
+        display: none;
+    }
+
+    /* Mobile menu socials — horizontal row of icon buttons below the nav links */
+    .mobile-menu-socials {
+        display: flex;
         gap: 16px;
-        padding: 0 24px 40px;
-        margin-top: 8px;
+        margin-top: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
     }
 
-    .social-links.social-hidden .social-link {
-        transform: none;
+    .mobile-menu.menu-open .mobile-menu-socials {
+        animation: nav-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0.25s;
     }
 
-    .social-link {
+    .mobile-menu.menu-closing .mobile-menu-socials {
+        opacity: 1;
+        transform: translateY(0);
+        animation: menu-exit 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0s;
+    }
+
+    .mobile-menu-social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 56px;
         height: 56px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        color: #fff;
         font-size: 26px;
+        text-decoration: none;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mobile-menu-social:hover {
+        border-color: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.08);
     }
 
     /* Mobile bento — single column stack */
