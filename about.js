@@ -112,6 +112,12 @@
         var ticking = false;
         var lastActiveIdx = -1;
 
+        // Gate the scroll-driven transforms until the CSS entrance animation
+        // finishes, otherwise JS inline transforms would clash with the keyframes.
+        // Entrance timing: last slide delay (0.75s) + duration (0.8s) ≈ 1550ms.
+        var entered = false;
+        var ENTER_TOTAL_MS = 1550;
+
         function clearInlineStyles() {
             track.style.transform = '';
             slides.forEach(function (s) {
@@ -144,7 +150,13 @@
             var idxFloat = progress * (N - 1);
             var center = idxFloat * step + slideW / 2;
             var tx = vw / 2 - center;
+            // Track centering always runs — no CSS animation on the track, so
+            // this positions slide 0 in the viewport center from first paint
             track.style.transform = 'translate3d(' + tx + 'px, 0, 0)';
+
+            // Per-slide scale/opacity is driven by the CSS entrance animation
+            // until it finishes, then JS takes over based on scroll position
+            if (!entered) return;
 
             // Focus the centered slide — others subtly recede
             slides.forEach(function (s, i) {
@@ -174,6 +186,27 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll);
         update();
+
+        // After the staggered entrance finishes, release CSS animation and
+        // let the scroll-driven carousel take over. Suppress the 0.15s opacity/
+        // transform transition for the handoff frame so the shift from keyframe
+        // end-state (translateY(0), opacity 1) to JS-computed (scale, opacity by
+        // distance) is instant — otherwise you see a brief shimmer/shift.
+        setTimeout(function () {
+            slides.forEach(function (s) {
+                s.style.transition = 'none';
+                s.style.animation = 'none';
+            });
+            entered = true;
+            update();
+            // Restore transition on the next frame so subsequent scroll updates
+            // animate smoothly again
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    slides.forEach(function (s) { s.style.transition = ''; });
+                });
+            });
+        }, ENTER_TOTAL_MS);
     })();
 
     // Rotating role title — typewriter effect that types + deletes each role
