@@ -4,6 +4,7 @@
     var glow = document.querySelector('.glow');
     var heroContent = document.querySelector('.hero-content');
     var footerInfo = document.querySelector('.footer-info');
+    var swipeHint = document.querySelector('.hero-swipe-hint');
     var socialLinks = document.querySelector('.social-links');
     var heroSection = document.getElementById('hero');
     var carouselSection = document.getElementById('projects');
@@ -204,6 +205,7 @@
             document.body.classList.add('grid-mode');
             heroContent.classList.remove('hero-hidden');
             footerInfo.classList.remove('footer-hidden');
+            if (swipeHint) swipeHint.classList.remove('swipe-hint-hidden');
         }, function (hero, footer, cardsArr) {
             // Top-to-bottom: hero → footer (sits just below hero) → cards row by row
             return [hero, footer].concat(cardsArr);
@@ -229,6 +231,7 @@
             if (currentView === 'carousel') {
                 heroContent.classList.add('hero-hidden');
                 footerInfo.classList.add('footer-hidden');
+                if (swipeHint) swipeHint.classList.add('swipe-hint-hidden');
             }
         }, function (hero, footer, cardsArr) {
             // Hero + footer are the visible elements in carousel mode — surface them
@@ -250,7 +253,10 @@
         });
     }
 
-    var GLOW_COLORS = ['blue', 'green', 'gold', 'orange'];
+    // Card-indexed glow colors (matches DOM card order):
+    // Nocta=blue, ScriptChain=green, Robinhood=gold, SkillCat=orange,
+    // Reveal=blue, NovaCore=violet, Mindscapes=pink
+    var GLOW_COLORS = ['blue', 'green', 'gold', 'orange', 'blue', 'violet', 'pink'];
     var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-far-left', 'pos-far-right', 'pos-hero-peek'];
 
     var currentView = 'hero'; // 'hero' or 'carousel'
@@ -316,7 +322,7 @@
     }
 
     function updateGlow() {
-        glow.classList.remove('glow-blue', 'glow-green', 'glow-gold', 'glow-orange');
+        glow.classList.remove('glow-blue', 'glow-green', 'glow-gold', 'glow-orange', 'glow-violet', 'glow-pink');
         glow.classList.add('glow-' + GLOW_COLORS[activeIndex % GLOW_COLORS.length]);
     }
 
@@ -324,6 +330,7 @@
         currentView = 'hero';
         heroContent.classList.remove('hero-hidden');
         footerInfo.classList.remove('footer-hidden');
+        if (swipeHint) swipeHint.classList.remove('swipe-hint-hidden');
         if (socialLinks) socialLinks.classList.remove('social-hidden');
         heroSection.classList.remove('section-hidden');
         glow.classList.remove('glow-dimmed', 'glow-blue', 'glow-green', 'glow-gold', 'glow-orange');
@@ -347,6 +354,7 @@
         currentView = 'carousel';
         heroContent.classList.add('hero-hidden');
         footerInfo.classList.add('footer-hidden');
+        if (swipeHint) swipeHint.classList.add('swipe-hint-hidden');
         if (socialLinks) socialLinks.classList.add('social-hidden');
         heroSection.classList.add('section-hidden');
         carouselSection.classList.add('section-active');
@@ -404,8 +412,12 @@
         }
     }
 
-    // Position cards for initial hero view
-    positionCardsForHero();
+    // Initial load: start ALL cards offscreen (including Nocta) so Nocta can
+    // animate in alongside the hero + footer entrance, instead of being pre-placed
+    cards.forEach(function (card) {
+        removePositions(card);
+        card.classList.add('pos-far-right');
+    });
 
     // After entrance animation, switch to class-driven state so transitions work
     heroContent.addEventListener('animationend', function handler() {
@@ -416,10 +428,21 @@
         footerInfo.classList.add('entered');
         footerInfo.removeEventListener('animationend', handler);
     });
-    // Enable transitions after a frame so initial positions don't animate
+    if (swipeHint) {
+        swipeHint.addEventListener('animationend', function handler() {
+            swipeHint.classList.add('entered');
+            swipeHint.removeEventListener('animationend', handler);
+        });
+    }
+    // Enable transitions after a frame, then animate Nocta in from offscreen
+    // to its hero-peek position alongside the hero content entrance
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
             carouselSection.classList.add('carousel-ready');
+            setTimeout(function () {
+                cards[0].classList.remove('pos-far-right');
+                cards[0].classList.add('pos-hero-peek');
+            }, 400);
         });
     });
 
@@ -690,4 +713,37 @@
             isTransitioning = false;
         }, TRANSITION_MS);
     }, { passive: true });
+})();
+
+// Hero name — typewriter animation on initial load
+(function () {
+    var heading = document.querySelector('.hero-heading');
+    if (!heading) return;
+
+    var fullText = (heading.textContent || '').trim();
+    if (!fullText) return;
+
+    // Preserve the name for screen readers regardless of typing state
+    heading.setAttribute('aria-label', fullText);
+    heading.innerHTML = '<span class="hero-typed"></span><span class="hero-cursor" aria-hidden="true">|</span>';
+
+    var typed = heading.querySelector('.hero-typed');
+    var START_DELAY_MS = 600;  // kicks in shortly after hero entrance begins (0.3s)
+    var CHAR_MS = 100;         // per-character speed
+
+    var cursor = heading.querySelector('.hero-cursor');
+    var i = 0;
+    function typeNext() {
+        if (i < fullText.length) {
+            typed.textContent = fullText.substring(0, i + 1);
+            i++;
+            setTimeout(typeNext, CHAR_MS);
+        } else {
+            // Typing complete — fade out the cursor after a short hold
+            setTimeout(function () {
+                if (cursor) cursor.classList.add('hero-cursor-hidden');
+            }, 500);
+        }
+    }
+    setTimeout(typeNext, START_DELAY_MS);
 })();

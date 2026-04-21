@@ -63,30 +63,40 @@
             <h1 class="about-hero-title">
                 I'm a
                 <span class="rotator-wrapper">
-                    <span class="rotator-items">
-                        <span class="rotator-item">Product Designer</span>
-                        <span class="rotator-item">Software Engineer</span>
-                        <span class="rotator-item">Design Engineer</span>
-                        <span class="rotator-item">Technical Product Designer</span>
-                        <span class="rotator-item">Dog Dad</span>
-                        <span class="rotator-item">Racket Sport Enthusiast</span>
-                    </span>
+                    <span class="rotator-text"></span><span class="rotator-cursor" aria-hidden="true">|</span>
                 </span>
             </h1>
         </section>
 
-        <!-- Photo bento — images / snapshots (headshot as the featured photo) -->
-        <div class="about-section about-enter" style="--delay: 0.3s">
-            <div class="photo-bento">
-                <div class="photo-cell photo-cell-1">
-                    <img src="assets/headshot.jpeg" alt="Jonathan Chiang">
+        <!-- Photo scroll carousel — pins while user scrolls horizontally through photos -->
+        <section class="photo-scroll-section" aria-label="Photo gallery">
+            <div class="photo-scroll-sticky">
+                <div class="photo-scroll-track">
+                    <div class="photo-slide">
+                        <img src="assets/jon-photos/headshot.jpeg" alt="Jonathan Chiang">
+                    </div>
+                    <div class="photo-slide">
+                        <img src="assets/jon-photos/dog.JPG" alt="My dog">
+                    </div>
+                    <div class="photo-slide">
+                        <img src="assets/jon-photos/fuji.jpeg" alt="Mount Fuji">
+                    </div>
+                    <div class="photo-slide">
+                        <img src="assets/jon-photos/bamboo.jpeg" alt="Bamboo forest">
+                    </div>
+                    <div class="photo-slide">
+                        <img src="assets/jon-photos/ski.jpeg" alt="Skiing">
+                    </div>
                 </div>
-                <div class="photo-cell photo-cell-2" aria-label="Photo placeholder"></div>
-                <div class="photo-cell photo-cell-3" aria-label="Photo placeholder"></div>
-                <div class="photo-cell photo-cell-4" aria-label="Photo placeholder"></div>
-                <div class="photo-cell photo-cell-5" aria-label="Photo placeholder"></div>
+                <div class="photo-scroll-dots" aria-hidden="true">
+                    <span class="photo-dot active"></span>
+                    <span class="photo-dot"></span>
+                    <span class="photo-dot"></span>
+                    <span class="photo-dot"></span>
+                    <span class="photo-dot"></span>
+                </div>
             </div>
-        </div>
+        </section>
 
         <!-- Bento Hero -->
         <div class="bento-hero about-enter" style="--delay: 0.45s">
@@ -104,6 +114,8 @@
                         <span class="skill-pill">Figma</span>
                         <span class="skill-pill">After Effects</span>
                         <span class="skill-pill">Blender</span>
+                        <span class="skill-pill">Claude Design</span>
+                        <span class="skill-pill">Google Gemini</span>
                     </div>
                 </div>
 
@@ -114,6 +126,7 @@
                         <span class="skill-pill">JavaScript</span>
                         <span class="skill-pill">React</span>
                         <span class="skill-pill">Claude Code</span>
+                        <span class="skill-pill">Cursor</span>
                     </div>
                 </div>
             </div>

@@ -95,56 +95,135 @@
         });
     });
 
-    // Rotating role title — sync wrapper width to the current role so each
-    // role is visually centered (the whole heading stays centered via parent flex)
+    // Photo scroll carousel — drive horizontal translate from page scroll position
     (function () {
-        var wrapper = document.querySelector('.rotator-wrapper');
-        var items = document.querySelectorAll('.rotator-item');
-        if (!wrapper || !items.length) return;
+        var section = document.querySelector('.photo-scroll-section');
+        if (!section) return;
+        var track = section.querySelector('.photo-scroll-track');
+        var slides = Array.prototype.slice.call(section.querySelectorAll('.photo-slide'));
+        var dots = Array.prototype.slice.call(section.querySelectorAll('.photo-dot'));
+        var N = slides.length;
+        if (!track || N === 0) return;
 
-        function measureWidths() {
-            return Array.from(items).map(function (item) {
-                return item.getBoundingClientRect().width;
+        // Reduced motion: CSS fallback takes over — skip scroll hijack math
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        var mobileMQ = window.matchMedia('(max-width: 640px)');
+        var ticking = false;
+        var lastActiveIdx = -1;
+
+        function clearInlineStyles() {
+            track.style.transform = '';
+            slides.forEach(function (s) {
+                s.style.transform = '';
+                s.style.opacity = '';
             });
+            lastActiveIdx = -1;
         }
 
-        var widths = measureWidths();
-        wrapper.style.width = widths[0] + 'px';
+        function update() {
+            ticking = false;
+            // On mobile, CSS renders photos as a bento grid — no carousel math
+            if (mobileMQ.matches) {
+                clearInlineStyles();
+                return;
+            }
+            var rect = section.getBoundingClientRect();
+            var vh = window.innerHeight;
+            var vw = window.innerWidth;
+            var scrollable = section.offsetHeight - vh;
+            if (scrollable <= 0) return;
 
-        // CSS keyframe phase → item index (holds between these timestamps):
-        //   0ms    → item 0 (Product Designer)
-        //   2400ms → item 1 (Software Engineer)      [20% of 12s]
-        //   4800ms → item 2 (Design Engineer)        [40%]
-        //   7200ms → item 3 (Technical Product…)    [60%]
-        //   9600ms → item 4 (Product Designer loop) [80%]
-        var PHASE_STARTS_MS = [0, 2400, 4800, 7200, 9600];
-        var CYCLE_MS = 12000;
+            var progress = Math.max(0, Math.min(1, -rect.top / scrollable));
 
-        var startTime = performance.now();
-        var currentPhase = 0;
+            var first = slides[0];
+            var slideW = first.offsetWidth;
+            var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+            var step = slideW + gap;
+
+            var idxFloat = progress * (N - 1);
+            var center = idxFloat * step + slideW / 2;
+            var tx = vw / 2 - center;
+            track.style.transform = 'translate3d(' + tx + 'px, 0, 0)';
+
+            // Focus the centered slide — others subtly recede
+            slides.forEach(function (s, i) {
+                var dist = Math.abs(i - idxFloat);
+                var scale = Math.max(0.9, 1 - dist * 0.08);
+                var opacity = Math.max(0.45, 1 - dist * 0.28);
+                s.style.transform = 'scale(' + scale + ')';
+                s.style.opacity = opacity;
+            });
+
+            var activeIdx = Math.round(idxFloat);
+            if (activeIdx !== lastActiveIdx) {
+                dots.forEach(function (d, i) {
+                    d.classList.toggle('active', i === activeIdx);
+                });
+                lastActiveIdx = activeIdx;
+            }
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        update();
+    })();
+
+    // Rotating role title — typewriter effect that types + deletes each role
+    (function () {
+        var textEl = document.querySelector('.rotator-text');
+        if (!textEl) return;
+
+        var WORDS = [
+            'Product Designer',
+            'Software Engineer',
+            'Design Engineer',
+            'Technical Product Designer',
+            'Creative Technologist'
+        ];
+
+        var TYPE_MS = 75;        // per-character typing speed
+        var DELETE_MS = 40;      // per-character delete speed (faster than typing)
+        var HOLD_FULL_MS = 2000; // pause when word fully typed
+        var HOLD_EMPTY_MS = 400; // pause before next word starts
+
+        var wordIdx = 0;
+        var charIdx = 0;
+        var isDeleting = false;
 
         function tick() {
-            var elapsed = (performance.now() - startTime) % CYCLE_MS;
-            var phase = 0;
-            for (var i = PHASE_STARTS_MS.length - 1; i >= 0; i--) {
-                if (elapsed >= PHASE_STARTS_MS[i]) {
-                    phase = i;
-                    break;
+            var word = WORDS[wordIdx];
+            if (isDeleting) {
+                charIdx--;
+                textEl.textContent = word.substring(0, charIdx);
+                if (charIdx === 0) {
+                    isDeleting = false;
+                    wordIdx = (wordIdx + 1) % WORDS.length;
+                    setTimeout(tick, HOLD_EMPTY_MS);
+                } else {
+                    setTimeout(tick, DELETE_MS);
+                }
+            } else {
+                charIdx++;
+                textEl.textContent = word.substring(0, charIdx);
+                if (charIdx === word.length) {
+                    isDeleting = true;
+                    setTimeout(tick, HOLD_FULL_MS);
+                } else {
+                    setTimeout(tick, TYPE_MS);
                 }
             }
-            if (phase !== currentPhase) {
-                wrapper.style.width = widths[phase] + 'px';
-                currentPhase = phase;
-            }
-            requestAnimationFrame(tick);
         }
-        requestAnimationFrame(tick);
 
-        // Re-measure on resize / font-size changes
-        window.addEventListener('resize', function () {
-            widths = measureWidths();
-            wrapper.style.width = widths[currentPhase] + 'px';
-        });
+        // Start after a brief delay to let the hero fade in
+        setTimeout(tick, 600);
     })();
 })();
 
