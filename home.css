@@ -1514,7 +1514,7 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .hero-tagline {
-        font-size: 17px;
+        font-size: 20px;
     }
 
     .footer-info {
@@ -1597,12 +1597,22 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .hero-heading {
-        font-size: 2.5rem;
+        font-size: 4.5rem;
+        line-height: 1.05;
+        text-align: center;
+        letter-spacing: 1%;
+        /* Force "Jonathan" and "Chiang" onto separate lines — the natural
+           space between them becomes the wrap point because the heading is
+           narrower than the full name at this font size */
+        /* max-width: 5ch; */
+        margin: 0 auto;
+        word-spacing: 100vw;
     }
 
     .hero-tagline {
-        font-size: 14px;
-        margin-top: 1rem;
+        font-size: 20px;
+        line-height: 1.4;
+        margin-top: 1.25rem;
         /* Drop inline-flex so the icon flows inline with the wrapped text
            and sits right next to "craft" instead of floating to the right */
         display: block;
@@ -1610,8 +1620,8 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .hero-tagline .code-icon {
-        width: 20px;
-        height: 16px;
+        width: 22px;
+        height: 18px;
         margin-left: 6px;
         vertical-align: -3px;
     }
