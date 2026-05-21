@@ -70,6 +70,7 @@
     };
 
     var build = {
+        id:         null,   // set when editing an existing card
         name:       '',
         layout:     '60',
         layoutName: '60%',
@@ -101,8 +102,7 @@
         var rows;
         if (layout === '60')        rows = LAYOUT_60;
         else if (layout === '75')   rows = LAYOUT_75;
-        else if (layout === 'tkl')  rows = LAYOUT_TKL;
-        else                        rows = LAYOUT_100;
+        else                        rows = LAYOUT_TKL;
 
         rows.forEach(function (row) {
             var rowEl = document.createElement('div');
@@ -149,7 +149,6 @@
     //   60%   = 5 rows × 15u  — no fn row, no nav, no arrows
     //   75%   = 6 rows × 16u  — fn row + 1u nav column + arrows
     //   TKL   = 6 rows × 18.5u — TKL with full nav cluster
-    //   100%  = 6 rows × 23u  — TKL + 4u numpad
 
     var LAYOUT_60 = [
         [acc('esc'), k('1'), k('2'), k('3'), k('4'), k('5'), k('6'), k('7'), k('8'), k('9'), k('0'), k('dash'), k('equal'), mod('bksp', 2)],
@@ -175,15 +174,6 @@
         [mod('caps', 1.75), k('a'), k('s'), k('d'), k('f'), k('g'), k('h'), k('j'), k('k'), k('l'), k('semi'), k('quote'), acc('enter', 2.25), gap(0.5), gap(1), gap(1), gap(1)],
         [mod('lshift', 2.25), k('z'), k('x'), k('c'), k('v'), k('b'), k('n'), k('m'), k('comma'), k('period'), k('slash'), mod('rshift', 2.75), gap(0.5), gap(1), k('up'), gap(1)],
         [mod('lctrl', 1.25), mod('lwin', 1.25), mod('lalt', 1.25), sp(), mod('ralt', 1.25), mod('rwin', 1.25), mod('menu', 1.25), mod('rctrl', 1.25), gap(0.5), k('left'), k('down'), k('right')]
-    ];
-
-    var LAYOUT_100 = [
-        [acc('esc'), gap(0.5), mod('f1'), mod('f2'), mod('f3'), mod('f4'), gap(0.5), mod('f5'), mod('f6'), mod('f7'), mod('f8'), gap(0.5), mod('f9'), mod('f10'), mod('f11'), mod('f12'), gap(1), mod('prtsc'), mod('scrlk'), mod('pause'), gap(0.5), gap(1), gap(1), gap(1), gap(1)],
-        [k('grave'), k('1'), k('2'), k('3'), k('4'), k('5'), k('6'), k('7'), k('8'), k('9'), k('0'), k('dash'), k('equal'), mod('bksp', 2), gap(0.5), mod('ins'), mod('home'), mod('pgup'), gap(0.5), mod('num'), mod('npdiv'), mod('npmul'), mod('npsub')],
-        [mod('tab', 1.5), k('q'), k('w'), k('e'), k('r'), k('t'), k('y'), k('u'), k('i'), k('o'), k('p'), k('lbracket'), k('rbracket'), mod('bslash', 1.5), gap(0.5), mod('del'), mod('end'), mod('pgdn'), gap(0.5), k('np7'), k('np8'), k('np9'), mod('npadd')],
-        [mod('caps', 1.75), k('a'), k('s'), k('d'), k('f'), k('g'), k('h'), k('j'), k('k'), k('l'), k('semi'), k('quote'), acc('enter', 2.25), gap(0.5), gap(1), gap(1), gap(1), gap(0.5), k('np4'), k('np5'), k('np6'), gap(1)],
-        [mod('lshift', 2.25), k('z'), k('x'), k('c'), k('v'), k('b'), k('n'), k('m'), k('comma'), k('period'), k('slash'), mod('rshift', 2.75), gap(0.5), gap(1), k('up'), gap(1), gap(0.5), k('np1'), k('np2'), k('np3'), acc('npenter')],
-        [mod('lctrl', 1.25), mod('lwin', 1.25), mod('lalt', 1.25), sp(), mod('ralt', 1.25), mod('rwin', 1.25), mod('menu', 1.25), mod('rctrl', 1.25), gap(0.5), k('left'), k('down'), k('right'), gap(0.5), mod('np0', 2), k('npdot'), gap(1)]
     ];
 
     // ---------- Card updaters ----------
@@ -271,9 +261,12 @@
     function saveVisitor(payload) {
         var client = getSupabase();
         if (!client) return Promise.resolve({ persisted: false });
-        return client.from('visitors').insert(payload).select().single().then(function (res) {
+        var query = build.id
+            ? client.from('visitors').update(payload).eq('id', build.id)
+            : client.from('visitors').insert(payload);
+        return query.select().single().then(function (res) {
             if (res.error) throw res.error;
-            return { persisted: true, row: res.data };
+            return { persisted: true, row: res.data, updated: !!build.id };
         });
     }
 
@@ -309,25 +302,38 @@
         if (iconEl) iconEl.className = 'ph ph-circle-notch';
 
         // Save the card locally regardless of backend success so the
-        // portfolio can greet returning visitors.
+        // portfolio can greet returning visitors. Preserve `id` if editing
+        // so the next save still hits UPDATE.
         try {
-            localStorage.setItem('jc_visitor', JSON.stringify(Object.assign({}, payload, {
-                case_key: build.caseKey,
+            var local = Object.assign({}, payload, {
+                id:         build.id || null,
+                case_key:   build.caseKey,
                 keycap_key: build.keycapKey,
                 switch_key: build.switchKey,
                 layout_key: build.layout,
-                issued_at: new Date().toISOString()
-            })));
+                issued_at:  new Date().toISOString()
+            });
+            localStorage.setItem('jc_visitor', JSON.stringify(local));
             localStorage.setItem('jc_welcomed', '1');
         } catch (e) {}
 
         saveVisitor(payload)
             .then(function (result) {
-                if (result.persisted) {
-                    setStatus('Saved. Stepping inside…', 'success');
-                } else {
-                    setStatus('Saved locally. Stepping inside…', 'success');
+                // First insert returns the row's id — stash it so future
+                // edits go through UPDATE instead of creating a duplicate.
+                if (result.persisted && result.row && result.row.id) {
+                    build.id = result.row.id;
+                    try {
+                        var saved = JSON.parse(localStorage.getItem('jc_visitor') || '{}');
+                        saved.id = result.row.id;
+                        localStorage.setItem('jc_visitor', JSON.stringify(saved));
+                    } catch (e) {}
                 }
+
+                var msg = result.persisted
+                    ? (result.updated ? 'Updated. Stepping inside…' : 'Saved. Stepping inside…')
+                    : 'Saved locally. Stepping inside…';
+                setStatus(msg, 'success');
                 exitToPortfolio();
             })
             .catch(function (err) {
@@ -357,7 +363,7 @@
 
     pickInGroup('.layout-btn', 'data-layout', function (btn) {
         build.layout = btn.getAttribute('data-layout');
-        var nameMap = { '60': '60%', '75': '75%', 'tkl': 'TKL', '100': '100%' };
+        var nameMap = { '60': '60%', '75': '75%', 'tkl': 'TKL' };
         build.layoutName = nameMap[build.layout] || build.layout;
         applyLayout();
     });
@@ -502,20 +508,82 @@
         window.addEventListener('scroll', refreshRect, { passive: true });
     })();
 
+    // ---------- Edit mode ----------
+    // If localStorage has a card with a server-side `id`, the visitor is
+    // editing their existing entry. Pull the saved selections into `build`
+    // and reflect them in the UI.
+    function loadExisting() {
+        try {
+            var raw = localStorage.getItem('jc_visitor');
+            if (!raw) return null;
+            var v = JSON.parse(raw);
+            if (!v || !v.id) return null;
+            return v;
+        } catch (e) { return null; }
+    }
+
+    function selectOption(selector, attr, value) {
+        document.querySelectorAll(selector).forEach(function (b) {
+            b.classList.toggle('active', b.getAttribute(attr) === value);
+        });
+    }
+
+    function applyExisting(v) {
+        build.id         = v.id;
+        build.serial     = v.serial || build.serial;
+        build.layout     = v.layout_key  || build.layout;
+        build.layoutName = v.layout      || build.layoutName;
+        build.caseKey    = v.case_key    || build.caseKey;
+        build.caseName   = v.case_color  || build.caseName;
+        build.switchKey  = v.switch_key  || build.switchKey;
+        build.switchName = v.switch_type || build.switchName;
+        build.keycapKey  = v.keycap_key  || build.keycapKey;
+        build.keycapName = v.keycaps     || build.keycapName;
+        build.name       = v.name        || build.name;
+
+        selectOption('.layout-btn',  'data-layout',  build.layout);
+        selectOption('[data-case]',  'data-case',    build.caseKey);
+        selectOption('[data-switch]','data-switch',  build.switchKey);
+        selectOption('[data-keycap]','data-keycap',  build.keycapKey);
+    }
+
+    function applyEditModeChrome() {
+        document.body.classList.add('welcome-editing');
+        var submitLabel = submitBtn.querySelector('span');
+        if (submitLabel) submitLabel.textContent = 'Save changes';
+        if (statusEl) {
+            statusEl.innerHTML = 'Editing your card — changes appear in the ' +
+                '<a href="visitors.html" class="welcome-fineprint-link">visitor gallery</a> right away.';
+        }
+    }
+
     // ---------- Init ----------
     function init() {
-        build.serial = generateSerial();
-        cardSerial.textContent = 'NO. ' + String(build.serial).padStart(4, '0');
-        cardDate.textContent = todayString();
+        var existing = loadExisting();
 
-        applyCase();
-        applyKeycaps();
-        applySwitch();
-        applyLayout();
-
-        var seedName = rollName();
-        nameInput.value = seedName;
-        applyName(seedName);
+        if (existing) {
+            applyExisting(existing);
+            cardSerial.textContent = 'NO. ' + String(build.serial).padStart(4, '0');
+            cardDate.textContent = todayString();
+            applyCase();
+            applyKeycaps();
+            applySwitch();
+            applyLayout();
+            nameInput.value = build.name;
+            applyName(build.name);
+            applyEditModeChrome();
+        } else {
+            build.serial = generateSerial();
+            cardSerial.textContent = 'NO. ' + String(build.serial).padStart(4, '0');
+            cardDate.textContent = todayString();
+            applyCase();
+            applyKeycaps();
+            applySwitch();
+            applyLayout();
+            var seedName = rollName();
+            nameInput.value = seedName;
+            applyName(seedName);
+        }
 
         tickClock();
         setInterval(tickClock, 1000);

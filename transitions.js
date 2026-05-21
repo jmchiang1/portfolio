@@ -20,42 +20,48 @@
     var ENTER_DURATION = 0.35;
 
     // ------------------------------------------------------------------
-    // Logo — geometric JC monogram laid out on a 7-col × 5-row grid.
+    // Logo — geometric JC monogram laid out on an 8-col × 6-row grid.
     //
-    // Each cell is 10×10 with a 2px gap (so cell-pitch is 12). The top row
-    // is a continuous bar — J's top bar, a bridge cell (col 3), and C's
-    // top bar — so the two letters read as a single connected glyph. The
-    // middle row is deliberately empty: it creates a pixelated, broken-up
-    // feel that reads as a stylized monogram rather than a perfect block
-    // letterform.
+    // Each cell is 10×10 with a 2px gap (so cell-pitch is 12). The top
+    // bar runs across cols 1–7, leaving col 0 empty so the bar feels
+    // weighted toward C. Two vertical stems at col 3 (J) and col 5 (C)
+    // descend through rows 1–4. The bottom uses scattered cells: an
+    // isolated square at (row 4, col 0), J's foot at (row 5, cols 1–2),
+    // and C's bottom at (row 5, cols 6–7). The intentionally missing
+    // squares give the monogram a pixelated, broken-up feel rather than
+    // a perfect block letterform.
     // ------------------------------------------------------------------
     var LOGO_SVG =
-        '<svg class="nav-logo-svg" width="51" height="36" viewBox="0 0 82 58"' +
+        '<svg class="nav-logo-svg" width="64" height="48" viewBox="0 0 94 70"' +
         ' style="color:#fff;display:block"' +
         ' xmlns="http://www.w3.org/2000/svg" role="img" aria-label="JC">' +
             '<style>.logo-cell{fill:currentColor;transition:fill 0.55s ease}</style>' +
-            // Row 0 — full top bar with bridge cell at col 3 connecting J and C
-            '<rect class="logo-cell" x="0"  y="0"  width="10" height="10" rx="2"/>' +
+            // Row 0 — top bar (cols 1–7; col 0 left empty)
             '<rect class="logo-cell" x="12" y="0"  width="10" height="10" rx="2"/>' +
             '<rect class="logo-cell" x="24" y="0"  width="10" height="10" rx="2"/>' +
             '<rect class="logo-cell" x="36" y="0"  width="10" height="10" rx="2"/>' +
             '<rect class="logo-cell" x="48" y="0"  width="10" height="10" rx="2"/>' +
             '<rect class="logo-cell" x="60" y="0"  width="10" height="10" rx="2"/>' +
             '<rect class="logo-cell" x="72" y="0"  width="10" height="10" rx="2"/>' +
-            // Row 1 — stems
-            '<rect class="logo-cell" x="24" y="12" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="48" y="12" width="10" height="10" rx="2"/>' +
-            // Row 2 — intentionally empty (the "missing" row)
-            // Row 3 — stems resume
-            '<rect class="logo-cell" x="24" y="36" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="48" y="36" width="10" height="10" rx="2"/>' +
-            // Row 4 — bottom bars (J hook on left, C bottom on right)
+            '<rect class="logo-cell" x="84" y="0"  width="10" height="10" rx="2"/>' +
+            // Row 1 — stems (col 3, col 5)
+            '<rect class="logo-cell" x="36" y="12" width="10" height="10" rx="2"/>' +
+            '<rect class="logo-cell" x="60" y="12" width="10" height="10" rx="2"/>' +
+            // Row 2 — stems
+            '<rect class="logo-cell" x="36" y="24" width="10" height="10" rx="2"/>' +
+            '<rect class="logo-cell" x="60" y="24" width="10" height="10" rx="2"/>' +
+            // Row 3 — stems
+            '<rect class="logo-cell" x="36" y="36" width="10" height="10" rx="2"/>' +
+            '<rect class="logo-cell" x="60" y="36" width="10" height="10" rx="2"/>' +
+            // Row 4 — stems plus isolated cell at far left (col 0)
             '<rect class="logo-cell" x="0"  y="48" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="12" y="48" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="24" y="48" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="48" y="48" width="10" height="10" rx="2"/>' +
+            '<rect class="logo-cell" x="36" y="48" width="10" height="10" rx="2"/>' +
             '<rect class="logo-cell" x="60" y="48" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="72" y="48" width="10" height="10" rx="2"/>' +
+            // Row 5 — J foot (cols 1–2) and C bottom (cols 6–7)
+            '<rect class="logo-cell" x="12" y="60" width="10" height="10" rx="2"/>' +
+            '<rect class="logo-cell" x="24" y="60" width="10" height="10" rx="2"/>' +
+            '<rect class="logo-cell" x="72" y="60" width="10" height="10" rx="2"/>' +
+            '<rect class="logo-cell" x="84" y="60" width="10" height="10" rx="2"/>' +
         '</svg>';
 
     function replaceLogo() {
@@ -74,22 +80,37 @@
         if (!cells.length) return;
 
         var FLASH_COLOR = '#66d2ff';
-        var HOLD_MS = 550;          // how long the cell stays tinted before fading back
-        var MIN_GAP_MS = 1200;      // shortest pause between flashes (keeps it sparse)
-        var MAX_GAP_MS = 2500;      // longest pause between flashes
-        var lastIdx = -1;
+        var HOLD_MS = 550;            // how long each cell stays tinted before fading back
+        var MIN_GAP_MS = 1100;        // shortest pause between batches
+        var MAX_GAP_MS = 2200;        // longest pause between batches
+        var BATCH_SIZE = 5;           // cells lit per batch (staggered, not simultaneous)
+        var STAGGER_MIN_MS = 90;      // min delay between cells within a batch — spaced wide
+        var STAGGER_MAX_MS = 180;     // enough that no two cells flash at the same moment
+        // Carry the previous batch forward so we don't immediately re-flash
+        // a cell we just dimmed — keeps the pattern feeling random.
+        var recent = [];
 
         function tick() {
-            // Avoid flashing the same cell twice in a row — keeps the pattern
-            // feeling random rather than landing on the same square repeatedly.
-            var i;
-            do { i = Math.floor(Math.random() * cells.length); }
-            while (i === lastIdx && cells.length > 1);
-            lastIdx = i;
+            var picked = [];
+            var attempts = 0;
+            // Pick distinct cells that weren't in the last batch. Bail out after
+            // 50 attempts so a tiny grid with lots of recents can't hang us.
+            while (picked.length < BATCH_SIZE && attempts < 50) {
+                var i = Math.floor(Math.random() * cells.length);
+                if (picked.indexOf(i) === -1 && recent.indexOf(i) === -1) {
+                    picked.push(i);
+                }
+                attempts++;
+            }
 
-            var cell = cells[i];
-            cell.style.fill = FLASH_COLOR;
-            setTimeout(function () { cell.style.fill = ''; }, HOLD_MS);
+            picked.forEach(function (i, order) {
+                var stagger = order * (STAGGER_MIN_MS + Math.random() * (STAGGER_MAX_MS - STAGGER_MIN_MS));
+                setTimeout(function () {
+                    cells[i].style.fill = FLASH_COLOR;
+                    setTimeout(function () { cells[i].style.fill = ''; }, HOLD_MS);
+                }, stagger);
+            });
+            recent = picked.slice();
 
             var nextGap = MIN_GAP_MS + Math.random() * (MAX_GAP_MS - MIN_GAP_MS);
             setTimeout(tick, nextGap);

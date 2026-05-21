@@ -41,7 +41,7 @@
             gap: 8px;
             margin-bottom: 18px;
             padding: 6px 14px;
-            border-radius: 1000px;
+            border-radius: 4px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             font-family: 'JetBrains Mono', monospace;
@@ -98,18 +98,147 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---- Gallery grid ---- */
+        /* ============================================
+           Peg-wall gallery — keyboards hung on a Skadis-style board,
+           details revealed on hover / tap.
+           ============================================ */
         .visitors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .visitor-card {
             position: relative;
-            padding: 22px 22px 20px;
-            border-radius: 18px;
-            overflow: hidden;
-            isolation: isolate;
+            margin-top: 8px;
+            padding: 64px 40px;
+            border-radius: 4px;
+            background-color: #e6ddd0;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.55) 0%, transparent 70%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 56'%3E%3Crect x='15' y='8' width='8' height='18' rx='3' fill='rgba(0,0,0,0.13)'/%3E%3Crect x='15' y='34' width='8' height='18' rx='3' fill='rgba(0,0,0,0.13)'/%3E%3C/svg%3E");
+            background-size: auto, 38px 56px;
+            background-position: top, 0 0;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                inset 0 0 80px rgba(0, 0, 0, 0.05),
+                0 24px 60px -30px rgba(0, 0, 0, 0.45);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 56px 32px;
+        }
+
+        .peg-tile {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* All tile containers are the same size; the keyboard inside sits
+           centered, so 60% reads as physically smaller than TKL while every
+           tile occupies an identical cell. */
+        .peg-kb-wrap {
+            position: relative;
+            width: 100%;
+            height: 124px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* The mounted keyboard — keys are perfect squares sized by --u,
+           and bigger layouts (TKL) have wider/taller boards than 60%. */
+        .peg-kb {
+            --u: 12px;
+            position: relative;
+            padding: 7px;
+            background: var(--vc-color, #1f1f24);
+            border: 1px solid color-mix(in oklab, var(--vc-color, #1f1f24) 65%, white 35%);
+            border-radius: 4px;
+            box-shadow:
+                0 10px 22px -8px rgba(0, 0, 0, 0.45),
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            transform-origin: center;
+        }
+        .peg-kb .kb-row {
+            display: flex;
+            gap: 2px;
+            height: var(--u);
+            align-items: stretch;
+        }
+        /* Keys + gaps are sized in fixed pixels (--key-units * --u) so 1u
+           keys are perfect squares with no warping. */
+        .peg-kb .kb-key,
+        .peg-kb .kb-gap {
+            flex: 0 0 calc(var(--key-units, 1) * var(--u));
+            min-width: 0;
+        }
+        .peg-kb .kb-key {
+            background: var(--vc-keycap, #e7dcc2);
+            border: 1px solid color-mix(in oklab, var(--vc-keycap, #e7dcc2) 78%, black 22%);
+            border-radius: 1.5px;
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+        }
+        .peg-kb .kb-gap { background: transparent; border: none; box-shadow: none; }
+
+        /* Hover wiggle — gentle rotate, no swap-out card. */
+        @keyframes peg-wiggle {
+            0%, 100% { transform: translateY(-3px) rotate(0deg); }
+            25%      { transform: translateY(-3px) rotate(-1.4deg); }
+            75%      { transform: translateY(-3px) rotate(1.4deg); }
+        }
+        .peg-tile:hover .peg-kb {
+            animation: peg-wiggle 1.4s ease-in-out infinite;
+            box-shadow:
+                0 16px 32px -10px rgba(0, 0, 0, 0.55),
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* Name plate underneath, etched into the wall */
+        .peg-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #2a261f;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .peg-tile.is-mine .peg-name {
+            color: #0a5fb8;
+        }
+
+        /* Visitor-details modal — opens on click; reuses the original
+           dark-gradient card design, sized to its variant. */
+        .visitor-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .visitor-modal.is-open { display: flex; }
+        .visitor-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 6, 12, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            animation: edit-fade 0.25s ease forwards;
+        }
+        .visitor-modal-card {
+            position: relative;
+            width: min(420px, 100%);
+            padding: 26px 24px 22px;
+            border-radius: 4px;
             background:
                 radial-gradient(120% 80% at 110% -10%, rgba(255, 255, 255, 0.06), transparent 55%),
                 linear-gradient(150deg,
@@ -118,127 +247,345 @@
                     color-mix(in oklab, var(--vc-color, #1f1f24) 80%, black 20%) 100%);
             border: 1px solid color-mix(in oklab, var(--vc-color, #1f1f24) 70%, white 30%);
             box-shadow:
-                0 20px 50px -25px rgba(0, 0, 0, 0.7),
+                0 40px 80px -20px rgba(0, 0, 0, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.08);
             color: var(--vc-text, #fff);
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            gap: 16px;
+            opacity: 0;
+            transform: translateY(12px) scale(0.96);
+            animation: edit-rise 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        .visitor-card:hover {
-            transform: translateY(-3px);
-            box-shadow:
-                0 30px 60px -25px rgba(0, 0, 0, 0.85),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        .visitor-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: var(--vc-text, #fff);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s ease;
         }
-        .visitor-card-head {
+        .visitor-modal-close:hover { background: rgba(255, 255, 255, 0.22); }
+
+        .visitor-modal-card .vmc-head {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-        }
-        .visitor-card-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9.5px;
-            font-weight: 500;
-            color: var(--vc-text-dim, rgba(255,255,255,0.55));
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
-        .visitor-card-serial {
+            align-items: center;
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
-            color: var(--vc-text-dim, rgba(255,255,255,0.5));
-            letter-spacing: 0.14em;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--vc-text-dim, rgba(255,255,255,0.55));
+            padding-right: 40px;
         }
-        .visitor-card-name {
+        .visitor-modal-card .vmc-tag-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .visitor-modal-card.is-mine .vmc-tag {
+            color: #66d2ff;
+            font-weight: 700;
+        }
+        .visitor-modal-card .vmc-name {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 17px;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--vc-text, #fff);
         }
-        .visitor-card-mini-kb {
+        .visitor-modal-card .vmc-kb-frame {
             background: color-mix(in oklab, var(--vc-color, #1f1f24) 65%, black 35%);
             border: 1px solid color-mix(in oklab, var(--vc-color, #1f1f24) 50%, white 12%);
-            border-radius: 6px;
-            padding: 6px;
+            border-radius: 4px;
+            padding: 10px;
             display: flex;
-            flex-direction: column;
-            gap: 2px;
+            justify-content: center;
+            width: fit-content;
         }
-        .visitor-card-mini-kb .kb-row {
-            display: flex;
-            gap: 2px;
-            height: 12px;
-            align-items: stretch;
+        .visitor-modal-card .peg-kb {
+            --u: 14px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            animation: none;
         }
-        .visitor-card-mini-kb .kb-key {
-            flex: 1 1 0;
-            min-width: 0;
-            background: var(--vc-keycap, #e7dcc2);
-            border: 1px solid color-mix(in oklab, var(--vc-keycap, #e7dcc2) 80%, black 20%);
-            border-radius: 1.5px;
-        }
-        .visitor-card-mini-kb .kb-key.kb-space { flex-grow: 6; }
-        .visitor-card-meta {
+        .visitor-modal-card .vmc-meta {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px 16px;
+            gap: 10px 18px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--vc-text-dim, rgba(255,255,255,0.6));
         }
-        .visitor-card-meta b {
+        .visitor-modal-card .vmc-meta b {
             display: block;
             font-weight: 500;
             color: var(--vc-text-dim, rgba(255,255,255,0.45));
             font-size: 9px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
-        .visitor-card-meta span {
-            font-weight: 600;
+        .visitor-modal-card .vmc-meta span {
+            font-weight: 700;
             color: var(--vc-text, #fff);
             letter-spacing: 0.04em;
             text-transform: uppercase;
         }
-        .visitor-card-foot {
+        .visitor-modal-card .vmc-foot {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 10px;
+            padding-top: 12px;
             border-top: 1px dashed color-mix(in oklab, var(--vc-text-dim, rgba(255,255,255,0.4)) 60%, transparent);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
+            font-size: 11px;
             color: var(--vc-text-dim, rgba(255,255,255,0.55));
             letter-spacing: 0.08em;
         }
+        .visitor-modal-card .vmc-edit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: var(--vc-text, #fff);
+            font-size: 11px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .visitor-modal-card .vmc-edit:hover {
+            background: rgba(255, 255, 255, 0.24);
+            transform: rotate(-10deg);
+        }
 
-        .visitors-empty {
-            text-align: center;
-            padding: 80px 20px;
+        /* ---- Edit modal ---- */
+        .edit-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .edit-modal.is-open { display: flex; }
+        .edit-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 6, 12, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            animation: edit-fade 0.25s ease forwards;
+        }
+        .edit-modal-panel {
+            position: relative;
+            width: min(560px, 100%);
+            max-height: calc(100vh - 48px);
+            overflow-y: auto;
+            border-radius: 4px;
+            padding: 32px 28px 28px;
+            background:
+                radial-gradient(120% 80% at 110% -10%, rgba(102, 210, 255, 0.08), transparent 55%),
+                linear-gradient(150deg, #0e1730 0%, #0a1024 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: translateY(12px);
+            animation: edit-rise 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes edit-fade { to { opacity: 1; } }
+        @keyframes edit-rise { to { opacity: 1; transform: translateY(0); } }
+
+        .edit-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .edit-modal-close:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+
+        .edit-modal h2 {
+            font-family: 'Gabarito', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+        .edit-modal-sub {
+            margin-top: 4px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .edit-modal-body {
+            margin-top: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .edit-field { display: flex; flex-direction: column; gap: 10px; }
+        .edit-field-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
             color: rgba(255, 255, 255, 0.5);
+        }
+
+        .edit-name-row { display: flex; gap: 8px; align-items: stretch; }
+        .edit-name-input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .edit-name-input:focus { border-color: rgba(102, 210, 255, 0.5); }
+        .edit-reroll {
+            padding: 0 14px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .edit-reroll:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+        .edit-reroll i { font-size: 16px; }
+
+        .edit-options { display: flex; flex-wrap: wrap; gap: 6px; }
+        .edit-opt {
+            padding: 7px 14px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+        .edit-opt:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+        .edit-opt.is-active {
+            background: rgba(17, 128, 249, 0.14);
+            border-color: rgba(17, 128, 249, 0.45);
+            color: #66d2ff;
+        }
+        .edit-opt-swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            background: var(--swatch, #888);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .edit-modal-foot {
+            margin-top: 22px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+        .edit-cancel, .edit-save {
+            padding: 10px 18px;
+            border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
         }
-        .visitors-empty i { display: block; font-size: 32px; margin-bottom: 12px; opacity: 0.6; }
-        .visitors-empty a { color: #66d2ff; text-decoration: none; border-bottom: 1px dashed rgba(102, 210, 255, 0.4); }
-        .visitors-error { color: #ef4444; }
+        .edit-cancel {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .edit-cancel:hover { color: #fff; background: rgba(255, 255, 255, 0.04); }
+        .edit-save {
+            background: rgba(17, 128, 249, 0.18);
+            border: 1px solid rgba(17, 128, 249, 0.45);
+            color: #66d2ff;
+        }
+        .edit-save:hover { background: rgba(17, 128, 249, 0.28); border-color: rgba(17, 128, 249, 0.6); }
+        .edit-save[disabled] { opacity: 0.5; cursor: wait; }
+        .edit-status {
+            flex: 1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.55);
+            align-self: center;
+        }
+        .edit-status.is-error { color: #ef4444; }
+        .edit-status.is-success { color: #4ade80; }
 
-        /* ---- Typing-test CTA — floating bottom-left ---- */
+        body.edit-modal-open { overflow: hidden; }
+
+        /* ---- Closing CTA — inline after the visitor grid, centered ---- */
+        .visitors-typing-cta-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: 1rem;
+            padding: 32px 0 16px;
+            text-align: center;
+            opacity: 0;
+            animation: visitors-cta-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+        }
+        .visitors-typing-cta-tagline {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+            max-width: 480px;
+        }
         .visitors-typing-cta {
-            position: fixed;
-            bottom: 40px;
-            left: 40px;
-            z-index: 50;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             padding: 12px 22px;
-            border-radius: 1000px;
+            border-radius: 4px;
             background: rgba(17, 128, 249, 0.1);
             border: 1px solid rgba(17, 128, 249, 0.3);
             font-family: 'JetBrains Mono', monospace;
@@ -250,8 +597,6 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-            opacity: 0;
-            animation: visitors-cta-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
         }
         .visitors-typing-cta:hover {
             background: rgba(17, 128, 249, 0.18);
@@ -263,10 +608,21 @@
             to { opacity: 1; }
         }
 
-        @media (max-width: 720px) {
-            .visitors-layout { padding: 140px 22px 32px; }
+        @media (max-width: 900px) {
+            .visitors-grid { grid-template-columns: repeat(2, 1fr); gap: 48px 24px; }
+            .peg-kb { --u: 11px; }
+            .peg-kb-wrap { height: 116px; }
+        }
+        @media (max-width: 540px) {
+            .visitors-layout { padding: 140px 16px 32px; }
             .visitors-hero { margin-bottom: 40px; }
-            .visitors-grid { grid-template-columns: 1fr; gap: 14px; }
+            .visitors-grid {
+                padding: 40px 22px;
+                grid-template-columns: 1fr;
+                gap: 44px 18px;
+            }
+            .peg-kb { --u: 12px; }
+            .peg-kb-wrap { height: 124px; }
         }
     </style>
 </head>
@@ -317,12 +673,71 @@
         </section>
 
         <section class="visitors-grid" id="visitorsGrid"></section>
+
+        <!-- Closing CTA — sits below the visitor grid as the natural end-of-page action -->
+        <div class="visitors-typing-cta-wrap">
+            <p class="visitors-typing-cta-tagline">Think you can beat my record of 120 WPM?</p>
+            <a href="typing.html" class="visitors-typing-cta">
+                <span>Start Typing Now</span>
+            </a>
+        </div>
     </main>
 
-    <!-- Typing test CTA — bottom right, left of social links -->
-    <a href="typing.html" class="visitors-typing-cta">
-        <span>take the typing test</span>
-    </a>
+    <!-- Visitor-details modal — opens on tile click -->
+    <div class="visitor-modal" id="visitorModal" aria-hidden="true" role="dialog" aria-label="Visitor card">
+        <div class="visitor-modal-backdrop" data-vmodal-close></div>
+        <article class="visitor-modal-card" id="visitorModalCard"></article>
+    </div>
+
+    <!-- Edit-card modal -->
+    <div class="edit-modal" id="editModal" aria-hidden="true" role="dialog" aria-label="Edit your visitor card">
+        <div class="edit-modal-backdrop" data-edit-close></div>
+        <div class="edit-modal-panel">
+            <button class="edit-modal-close" type="button" data-edit-close aria-label="Close">
+                <i class="ph ph-x"></i>
+            </button>
+            <h2>Edit your card</h2>
+            <p class="edit-modal-sub">Changes update your card live in the gallery.</p>
+
+            <div class="edit-modal-body">
+                <div class="edit-field">
+                    <span class="edit-field-label">Name</span>
+                    <div class="edit-name-row">
+                        <input type="text" class="edit-name-input" id="editName" maxlength="48" autocomplete="off" />
+                        <button type="button" class="edit-reroll" id="editReroll" aria-label="Shuffle name">
+                            <i class="ph ph-shuffle"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="edit-field">
+                    <span class="edit-field-label">Layout</span>
+                    <div class="edit-options" id="editLayouts"></div>
+                </div>
+
+                <div class="edit-field">
+                    <span class="edit-field-label">Case</span>
+                    <div class="edit-options" id="editCases"></div>
+                </div>
+
+                <div class="edit-field">
+                    <span class="edit-field-label">Switch</span>
+                    <div class="edit-options" id="editSwitches"></div>
+                </div>
+
+                <div class="edit-field">
+                    <span class="edit-field-label">Keycaps</span>
+                    <div class="edit-options" id="editKeycaps"></div>
+                </div>
+            </div>
+
+            <div class="edit-modal-foot">
+                <span class="edit-status" id="editStatus"></span>
+                <button type="button" class="edit-cancel" data-edit-close>Cancel</button>
+                <button type="button" class="edit-save" id="editSave">Save changes</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Social links — bottom right -->
     <div class="social-links">
@@ -395,24 +810,70 @@
                 { name: 'TACTILE LANTERN', layout: '75%',  case_color: 'Graphite', switch_type: 'Tactile', keycaps: 'Cream',     serial: 1038, created_at: '2026-04-12T17:24:00Z' },
                 { name: 'CHERRY ATLAS',    layout: '60%',  case_color: 'Midnight', switch_type: 'Linear',  keycaps: 'BoW',       serial: 1041, created_at: '2026-04-21T09:11:00Z' },
                 { name: 'INKY SAFFRON',    layout: 'TKL',  case_color: 'Ember',    switch_type: 'Clicky',  keycaps: 'Olivia',    serial: 1054, created_at: '2026-05-03T22:48:00Z' },
-                { name: 'FROSTED CYPHER',  layout: '100%', case_color: 'Moss',     switch_type: 'Tactile', keycaps: 'Botanical', serial: 1062, created_at: '2026-05-11T14:02:00Z' },
+                { name: 'FROSTED CYPHER',  layout: 'TKL',  case_color: 'Moss',     switch_type: 'Tactile', keycaps: 'Botanical', serial: 1062, created_at: '2026-05-11T14:02:00Z' },
                 { name: 'HOLY MARIGOLD',   layout: '75%',  case_color: 'Bone',     switch_type: 'Linear',  keycaps: 'Dolch',     serial: 1071, created_at: '2026-05-18T08:35:00Z' }
             ];
 
-            function miniKb() {
-                var rows = [14, 14, 13, 12, null];
-                return rows.map(function (count) {
-                    var keys = '';
-                    if (count === null) {
-                        keys =
-                            '<div class="kb-key"></div>'.repeat(3) +
-                            '<div class="kb-key kb-space"></div>' +
-                            '<div class="kb-key"></div>'.repeat(3);
-                    } else {
-                        keys = '<div class="kb-key"></div>'.repeat(count);
-                    }
-                    return '<div class="kb-row">' + keys + '</div>';
+            // ----- Layout-aware keyboard renderer -----
+            // Token-based mini-keyboard. Each row sums to the layout's total
+            // unit width so rows align horizontally. Flex-grow on keys/gaps
+            // makes the keyboard scale to the container's width while keeping
+            // proportions correct.
+            function kk(s) { return { type: 'key',   s: s || 1 }; }
+            function gg(s) { return { type: 'gap',   s: s || 1 }; }
+            function ss()  { return { type: 'space', s: 6.25 }; }
+
+            var LAYOUTS = {
+                '60%': {
+                    units: 15,
+                    rows: [
+                        [kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2)],
+                        [kk(1.5), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(1.5)],
+                        [kk(1.75), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.25)],
+                        [kk(2.25), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.75)],
+                        [kk(1.25), kk(1.25), kk(1.25), ss(), kk(1.25), kk(1.25), kk(1.25), kk(1.25)]
+                    ]
+                },
+                '75%': {
+                    units: 16,
+                    rows: [
+                        [kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk()],
+                        [kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2), kk()],
+                        [kk(1.5), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(1.5), kk()],
+                        [kk(1.75), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.25), kk()],
+                        [kk(2.25), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(1.75), kk(), kk()],
+                        [kk(1.25), kk(1.25), kk(1.25), ss(), kk(1.25), kk(1.25), gg(0.5), kk(), kk(), kk()]
+                    ]
+                },
+                'TKL': {
+                    units: 18.5,
+                    rows: [
+                        [kk(), gg(0.5), kk(), kk(), kk(), kk(), gg(0.5), kk(), kk(), kk(), kk(), gg(0.5), kk(), kk(), kk(), kk(), gg(1), kk(), kk(), kk()],
+                        [kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2), gg(0.5), kk(), kk(), kk()],
+                        [kk(1.5), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(1.5), gg(0.5), kk(), kk(), kk()],
+                        [kk(1.75), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.25), gg(0.5), gg(3)],
+                        [kk(2.25), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.75), gg(0.5), gg(1), kk(), gg(1)],
+                        [kk(1.25), kk(1.25), kk(1.25), ss(), kk(1.25), kk(1.25), kk(1.25), kk(1.25), gg(0.5), kk(), kk(), kk()]
+                    ]
+                }
+            };
+
+            function renderToken(t) {
+                var cls = (t.type === 'gap')
+                    ? 'kb-gap'
+                    : (t.type === 'space' ? 'kb-key kb-space' : 'kb-key');
+                return '<div class="' + cls + '" style="--key-units:' + t.s + '"></div>';
+            }
+
+            function renderKb(layoutName) {
+                var def = LAYOUTS[layoutName] || LAYOUTS['60%'];
+                return def.rows.map(function (row) {
+                    return '<div class="kb-row">' + row.map(renderToken).join('') + '</div>';
                 }).join('');
+            }
+
+            function layoutUnits(layoutName) {
+                return (LAYOUTS[layoutName] || LAYOUTS['60%']).units;
             }
 
             function fmtDate(iso) {
@@ -424,29 +885,18 @@
                        String(d.getFullYear()).slice(-2);
             }
 
-            function renderCard(v) {
+            function renderCard(v, idx) {
                 var c = CASES[v.case_color] || CASES.Graphite;
                 var keycap = KEYCAPS[v.keycaps] || KEYCAPS.Cream;
+                var mine = !!v._mine;
                 return (
-                    '<article class="visitor-card" style="--vc-color:' + c.color +
-                    ';--vc-text:' + c.text + ';--vc-text-dim:' + c.dim +
+                    '<article class="peg-tile' + (mine ? ' is-mine' : '') +
+                    '" tabindex="0" data-index="' + idx + '" style="--vc-color:' + c.color +
                     ';--vc-keycap:' + keycap + '">' +
-                        '<div class="visitor-card-head">' +
-                            '<span class="visitor-card-tag">VISITOR BUILD</span>' +
-                            '<span class="visitor-card-serial">NO. ' + String(v.serial || 0).padStart(4, '0') + '</span>' +
+                        '<div class="peg-kb-wrap">' +
+                            '<div class="peg-kb">' + renderKb(v.layout) + '</div>' +
                         '</div>' +
-                        '<h3 class="visitor-card-name">' + escapeHtml(v.name || '—') + '</h3>' +
-                        '<div class="visitor-card-mini-kb">' + miniKb() + '</div>' +
-                        '<div class="visitor-card-meta">' +
-                            '<div><b>Layout</b><span>' + escapeHtml(v.layout || '—') + '</span></div>' +
-                            '<div><b>Switch</b><span>' + escapeHtml(v.switch_type || '—') + '</span></div>' +
-                            '<div><b>Case</b><span>' + escapeHtml(v.case_color || '—') + '</span></div>' +
-                            '<div><b>Keycaps</b><span>' + escapeHtml(v.keycaps || '—') + '</span></div>' +
-                        '</div>' +
-                        '<div class="visitor-card-foot">' +
-                            '<span>ISSUED ' + fmtDate(v.created_at || v.issued_at) + '</span>' +
-                            '<span>x ' + escapeHtml(initials(v.name)) + '</span>' +
-                        '</div>' +
+                        '<div class="peg-name">' + escapeHtml(v.name || '—') + '</div>' +
                     '</article>'
                 );
             }
@@ -462,22 +912,55 @@
                 return name.split(' ').map(function (w) { return w.charAt(0); }).join('');
             }
 
-            function tryLocal() {
+            function loadOwn() {
                 try {
                     var raw = localStorage.getItem('jc_visitor');
                     if (!raw) return null;
                     var v = JSON.parse(raw);
-                    v.created_at = v.issued_at;
-                    return [v];
+                    if (!v) return null;
+                    v.created_at = v.created_at || v.issued_at;
+                    return v;
                 } catch (e) { return null; }
             }
 
-            // Real visitors render first (newest at top), seeds fill in behind
-            // them so the gallery always shows at least the seed wall.
+            // Pull the visitor's own card to the front so they always see it
+            // first. If their id matches a server row, mark that row as mine.
+            // If there's no matching server row (e.g. offline-only save), use
+            // the localStorage copy directly.
+            function hoistOwn(rows) {
+                var own = loadOwn();
+                if (!own) return rows;
+                var out = rows.slice();
+                if (own.id) {
+                    var idx = -1;
+                    for (var i = 0; i < out.length; i++) {
+                        if (out[i].id === own.id) { idx = i; break; }
+                    }
+                    if (idx !== -1) {
+                        var row = out.splice(idx, 1)[0];
+                        row._mine = true;
+                        out.unshift(row);
+                        return out;
+                    }
+                }
+                // No server-side match — prepend the local copy.
+                own._mine = true;
+                out.unshift(own);
+                return out;
+            }
+
+            // Real visitors render first (newest at top, with the viewer's own
+            // card hoisted to position 0). Seeds fill in behind them so the
+            // gallery always shows at least the seed wall.
+            // `tilesData` holds the array in render order so click handlers
+            // can look up the full visitor by its rendered index.
+            var tilesData = [];
+
             function renderAll(realRows) {
-                var all = (realRows || []).concat(SEED_VISITORS);
-                grid.innerHTML = all.map(renderCard).join('');
-                var n = all.length;
+                var hoisted = hoistOwn(realRows || []);
+                tilesData = hoisted.concat(SEED_VISITORS);
+                grid.innerHTML = tilesData.map(renderCard).join('');
+                var n = tilesData.length;
                 countEl.textContent = n + ' visitor' + (n === 1 ? '' : 's');
             }
 
@@ -485,7 +968,9 @@
                 var url = window.SUPABASE_URL;
                 var key = window.SUPABASE_ANON_KEY;
                 if (!url || !key || typeof window.supabase === 'undefined') {
-                    renderAll(tryLocal() || []);
+                    // No backend wired — hoistOwn() still prepends the local
+                    // card when present.
+                    renderAll([]);
                     return;
                 }
 
@@ -506,6 +991,331 @@
             }
 
             load();
+
+            // ============================================
+            // Edit-card modal
+            // ============================================
+            var modalEl     = document.getElementById('editModal');
+            var nameInputEl = document.getElementById('editName');
+            var rerollBtn   = document.getElementById('editReroll');
+            var layoutsEl   = document.getElementById('editLayouts');
+            var casesEl     = document.getElementById('editCases');
+            var switchesEl  = document.getElementById('editSwitches');
+            var keycapsEl   = document.getElementById('editKeycaps');
+            var saveBtn     = document.getElementById('editSave');
+            var statusEl    = document.getElementById('editStatus');
+
+            // Mirrors the option metadata in welcome.js so the modal can
+            // edit every field the welcome flow exposes.
+            var LAYOUT_OPTS = [
+                { key: '60',  name: '60%' },
+                { key: '75',  name: '75%' },
+                { key: 'tkl', name: 'TKL' }
+            ];
+            var CASE_OPTS = [
+                { key: 'graphite', name: 'Graphite', color: '#1f1f24' },
+                { key: 'midnight', name: 'Midnight', color: '#1a2747' },
+                { key: 'ember',    name: 'Ember',    color: '#c0673f' },
+                { key: 'moss',     name: 'Moss',     color: '#3a5b3f' },
+                { key: 'bone',     name: 'Bone',     color: '#e6dccb' }
+            ];
+            var SWITCH_OPTS = [
+                { key: 'linear',  name: 'Linear'  },
+                { key: 'tactile', name: 'Tactile' },
+                { key: 'clicky',  name: 'Clicky'  }
+            ];
+            var KEYCAP_OPTS = [
+                { key: 'cream',     name: 'Cream',     color: '#e7dcc2' },
+                { key: 'bow',       name: 'BoW',       color: '#13131a' },
+                { key: 'olivia',    name: 'Olivia',    color: '#e9dcd4' },
+                { key: 'botanical', name: 'Botanical', color: '#1c2a26' },
+                { key: 'dolch',     name: 'Dolch',     color: '#2a2a2e' }
+            ];
+
+            var ADJECTIVES = ['Tactile','Linear','Clicky','Lubed','Cream','Brass','Velvet','Crisp','Quiet','Thocky','Clacky','Steady','Holy','Inky','Bright','Polished','Solder','Frosted','Foamed','Marbled','Cherry','Topre','Bobo','Plate','Sprung'];
+            var NOUNS = ['Ember','Spruce','Comet','Falcon','Nimbus','Quartz','Marigold','Otter','Pollen','Drift','Echo','Lantern','Cypher','Atlas','Beacon','Glimmer','Pebble','Cricket','Aspen','Cinder','Sable','Indigo','Saffron','Onyx','Pine','Lark','Plume','Vesper'];
+
+            function rollName() {
+                var a = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
+                var n = NOUNS[Math.floor(Math.random() * NOUNS.length)];
+                return (a + ' ' + n).toUpperCase();
+            }
+
+            var editState = null;
+
+            function renderOptions(container, opts) {
+                container.innerHTML = opts.map(function (o) {
+                    var swatch = o.color
+                        ? '<span class="edit-opt-swatch" style="--swatch:' + o.color + '"></span>'
+                        : '';
+                    return '<button type="button" class="edit-opt" data-key="' + o.key +
+                           '" data-name="' + escapeHtml(o.name) + '">' +
+                                swatch + escapeHtml(o.name) +
+                           '</button>';
+                }).join('');
+            }
+
+            function highlightActive(container, key) {
+                container.querySelectorAll('.edit-opt').forEach(function (b) {
+                    b.classList.toggle('is-active', b.getAttribute('data-key') === key);
+                });
+            }
+
+            function setEditStatus(msg, kind) {
+                statusEl.textContent = msg || '';
+                statusEl.classList.remove('is-error', 'is-success');
+                if (kind === 'error')   statusEl.classList.add('is-error');
+                if (kind === 'success') statusEl.classList.add('is-success');
+            }
+
+            function openEditModal() {
+                var own = loadOwn();
+                if (!own) return;
+                editState = {
+                    id:         own.id || null,
+                    serial:     own.serial,
+                    created_at: own.created_at || own.issued_at,
+                    name:       own.name        || rollName(),
+                    layout:     own.layout_key  || '60',
+                    layoutName: own.layout      || '60%',
+                    caseKey:    own.case_key    || 'graphite',
+                    caseName:   own.case_color  || 'Graphite',
+                    switchKey:  own.switch_key  || 'tactile',
+                    switchName: own.switch_type || 'Tactile',
+                    keycapKey:  own.keycap_key  || 'cream',
+                    keycapName: own.keycaps     || 'Cream'
+                };
+
+                nameInputEl.value = editState.name;
+                renderOptions(layoutsEl,  LAYOUT_OPTS);
+                renderOptions(casesEl,    CASE_OPTS);
+                renderOptions(switchesEl, SWITCH_OPTS);
+                renderOptions(keycapsEl,  KEYCAP_OPTS);
+                highlightActive(layoutsEl,  editState.layout);
+                highlightActive(casesEl,    editState.caseKey);
+                highlightActive(switchesEl, editState.switchKey);
+                highlightActive(keycapsEl,  editState.keycapKey);
+
+                setEditStatus('');
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save changes';
+
+                modalEl.classList.add('is-open');
+                modalEl.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('edit-modal-open');
+                setTimeout(function () { nameInputEl.focus(); nameInputEl.select(); }, 50);
+            }
+
+            function closeEditModal() {
+                modalEl.classList.remove('is-open');
+                modalEl.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('edit-modal-open');
+            }
+
+            function bindPicker(container, onPick) {
+                container.addEventListener('click', function (e) {
+                    var btn = e.target.closest('.edit-opt');
+                    if (!btn || !container.contains(btn)) return;
+                    onPick(btn.getAttribute('data-key'), btn.getAttribute('data-name'));
+                    highlightActive(container, btn.getAttribute('data-key'));
+                });
+            }
+
+            bindPicker(layoutsEl, function (k, n) {
+                if (!editState) return;
+                editState.layout = k; editState.layoutName = n;
+            });
+            bindPicker(casesEl, function (k, n) {
+                if (!editState) return;
+                editState.caseKey = k; editState.caseName = n;
+            });
+            bindPicker(switchesEl, function (k, n) {
+                if (!editState) return;
+                editState.switchKey = k; editState.switchName = n;
+            });
+            bindPicker(keycapsEl, function (k, n) {
+                if (!editState) return;
+                editState.keycapKey = k; editState.keycapName = n;
+            });
+
+            nameInputEl.addEventListener('input', function () {
+                if (!editState) return;
+                editState.name = nameInputEl.value.toUpperCase();
+            });
+
+            rerollBtn.addEventListener('click', function () {
+                if (!editState) return;
+                var n = rollName();
+                nameInputEl.value = n;
+                editState.name = n;
+            });
+
+            // Backdrop / close button / cancel all share [data-edit-close]
+            modalEl.addEventListener('click', function (e) {
+                if (e.target.closest('[data-edit-close]')) closeEditModal();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modalEl.classList.contains('is-open')) closeEditModal();
+            });
+
+            saveBtn.addEventListener('click', function () {
+                if (!editState) return;
+                var name = (editState.name || '').trim().toUpperCase();
+                if (!name) {
+                    setEditStatus('Pick a name.', 'error');
+                    nameInputEl.focus();
+                    return;
+                }
+
+                var payload = {
+                    name: name,
+                    layout: editState.layoutName,
+                    case_color: editState.caseName,
+                    switch_type: editState.switchName,
+                    keycaps: editState.keycapName,
+                    serial: editState.serial
+                };
+
+                saveBtn.disabled = true;
+                saveBtn.textContent = 'Saving…';
+                setEditStatus('');
+
+                // Mirror to localStorage first so the gallery reflects changes
+                // even when Supabase is unreachable.
+                try {
+                    localStorage.setItem('jc_visitor', JSON.stringify(Object.assign({}, payload, {
+                        id:         editState.id,
+                        case_key:   editState.caseKey,
+                        keycap_key: editState.keycapKey,
+                        switch_key: editState.switchKey,
+                        layout_key: editState.layout,
+                        issued_at:  editState.created_at || new Date().toISOString(),
+                        created_at: editState.created_at
+                    })));
+                } catch (e) {}
+
+                function finishLocal(msg) {
+                    setEditStatus(msg, 'success');
+                    setTimeout(function () { closeEditModal(); load(); }, 350);
+                }
+
+                if (!editState.id) {
+                    finishLocal('Saved locally.');
+                    return;
+                }
+
+                var url = window.SUPABASE_URL;
+                var key = window.SUPABASE_ANON_KEY;
+                if (!url || !key || typeof window.supabase === 'undefined') {
+                    finishLocal('Saved locally — no backend.');
+                    return;
+                }
+
+                var client = window.supabase.createClient(url, key);
+                client.from('visitors')
+                    .update(payload)
+                    .eq('id', editState.id)
+                    .select()
+                    .single()
+                    .then(function (res) {
+                        if (res.error) throw res.error;
+                        finishLocal('Saved.');
+                    })
+                    .catch(function (err) {
+                        console.warn('[edit] supabase update failed', err);
+                        setEditStatus('Save failed — try again.', 'error');
+                        saveBtn.disabled = false;
+                        saveBtn.textContent = 'Save changes';
+                    });
+            });
+
+            // ============================================
+            // Visitor-details modal — populated on tile click with the
+            // chosen visitor's full card (dark gradient, mini-keyboard,
+            // meta grid, footer). Edit pencil lives here for owner cards.
+            // ============================================
+            var vModalEl   = document.getElementById('visitorModal');
+            var vModalCard = document.getElementById('visitorModalCard');
+
+            function openVisitorModal(v) {
+                var c = CASES[v.case_color] || CASES.Graphite;
+                var keycap = KEYCAPS[v.keycaps] || KEYCAPS.Cream;
+                var mine = !!v._mine;
+                var editBtn = mine
+                    ? '<button type="button" class="vmc-edit" data-edit-card aria-label="Edit your card"><i class="ph ph-pencil-simple"></i></button>'
+                    : '';
+
+                vModalCard.className = 'visitor-modal-card' + (mine ? ' is-mine' : '');
+                vModalCard.style.setProperty('--vc-color', c.color);
+                vModalCard.style.setProperty('--vc-text', c.text);
+                vModalCard.style.setProperty('--vc-text-dim', c.dim);
+                vModalCard.style.setProperty('--vc-keycap', keycap);
+                vModalCard.innerHTML =
+                    '<button type="button" class="visitor-modal-close" data-vmodal-close aria-label="Close">' +
+                        '<i class="ph ph-x"></i>' +
+                    '</button>' +
+                    '<div class="vmc-head">' +
+                        '<span class="vmc-tag-group">' +
+                            '<span class="vmc-tag">' + (mine ? 'YOUR BUILD' : 'VISITOR BUILD') + '</span>' +
+                            editBtn +
+                        '</span>' +
+                        '<span class="vmc-serial">NO. ' + String(v.serial || 0).padStart(4, '0') + '</span>' +
+                    '</div>' +
+                    '<h3 class="vmc-name">' + escapeHtml(v.name || '—') + '</h3>' +
+                    '<div class="vmc-kb-frame">' +
+                        '<div class="peg-kb">' + renderKb(v.layout) + '</div>' +
+                    '</div>' +
+                    '<div class="vmc-meta">' +
+                        '<div><b>Layout</b><span>' + escapeHtml(v.layout || '—') + '</span></div>' +
+                        '<div><b>Switch</b><span>' + escapeHtml(v.switch_type || '—') + '</span></div>' +
+                        '<div><b>Case</b><span>' + escapeHtml(v.case_color || '—') + '</span></div>' +
+                        '<div><b>Keycaps</b><span>' + escapeHtml(v.keycaps || '—') + '</span></div>' +
+                    '</div>' +
+                    '<div class="vmc-foot">' +
+                        '<span>ISSUED ' + fmtDate(v.created_at || v.issued_at) + '</span>' +
+                        '<span>x ' + escapeHtml(initials(v.name)) + '</span>' +
+                    '</div>';
+
+                vModalEl.classList.add('is-open');
+                vModalEl.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('edit-modal-open');
+            }
+
+            function closeVisitorModal() {
+                vModalEl.classList.remove('is-open');
+                vModalEl.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('edit-modal-open');
+            }
+
+            // Click handlers — tile opens visitor modal; pencil (inside the
+            // visitor modal) closes it and opens the edit modal.
+            grid.addEventListener('click', function (e) {
+                var tile = e.target.closest('.peg-tile');
+                if (!tile) return;
+                var idx = parseInt(tile.getAttribute('data-index'), 10);
+                if (isNaN(idx) || !tilesData[idx]) return;
+                openVisitorModal(tilesData[idx]);
+            });
+
+            // Pencil inside the visitor modal -> swap to edit modal.
+            vModalEl.addEventListener('click', function (e) {
+                if (e.target.closest('[data-edit-card]')) {
+                    e.preventDefault();
+                    closeVisitorModal();
+                    openEditModal();
+                    return;
+                }
+                if (e.target.closest('[data-vmodal-close]')) {
+                    closeVisitorModal();
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && vModalEl.classList.contains('is-open')) {
+                    closeVisitorModal();
+                }
+            });
         })();
     </script>
 </body>
