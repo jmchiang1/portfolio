@@ -576,21 +576,6 @@
         });
     }
 
-    // Background visibility toggle — grid only
-    var bgVisibility = document.querySelector('.bg-visibility');
-    var bgGrid = document.getElementById('background-grid');
-    var bgVisibilityLabel = bgVisibility && bgVisibility.querySelector('.bg-pill-label');
-
-    if (bgVisibility && bgGrid) {
-        bgVisibility.addEventListener('click', function () {
-            var hidden = bgGrid.classList.toggle('grid-hidden');
-            bgGrid.classList.toggle('grid-visible', !hidden);
-            var icon = bgVisibility.querySelector('i');
-            if (icon) icon.className = hidden ? 'ph ph-eye-slash' : 'ph ph-eye';
-            if (bgVisibilityLabel) bgVisibilityLabel.textContent = hidden ? 'Show Grid' : 'Hide Grid';
-        });
-    }
-
     // Touch support
     var touchStartY = 0;
     var touchStartX = 0;

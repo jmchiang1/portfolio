@@ -11,7 +11,7 @@ html, body {
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #06062C;
+    background: #000C19;
     color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -21,27 +21,30 @@ body {
 /* Hand cursor for interactive elements */
 a, button, [role="button"],
 .nav-link, .mobile-menu-link, .social-link, .hamburger,
-.footer-link, .exp-row-header {
+.footer-link, .exp-row-header, .hero-logo-chip {
     cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 60%, rgba(0, 120, 255, 0.35) 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 0;
-}
-
 /* ============================================
-   Dotted Surface
+   Background Grid (CSS pattern) — matches motion / vibes
    ============================================ */
-#dotted-surface {
+#background-grid {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black, transparent);
+    mask-image: radial-gradient(ellipse at center, black, transparent);
+}
+
+#background-grid.grid-visible {
+    opacity: 1;
 }
 
 /* ============================================
@@ -64,12 +67,13 @@ body::before {
     content: '';
     position: absolute;
     inset: 0;
-    bottom: -20px;
+    bottom: -40px;
     z-index: -1;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+    background: rgba(0, 12, 25, 0.5);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, rgba(0,0,0,0.4) 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 70%, rgba(0,0,0,0.4) 88%, transparent 100%);
     transition: opacity 0.4s ease;
 }
 
@@ -162,13 +166,20 @@ body::before {
    About Layout
    ============================================ */
 .about-layout {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 60px;
-    padding: 100px 80px 60px;
-    max-width: 1100px;
+    gap: 48px;
+    padding: 200px 60px 80px;
+    max-width: 1280px;
     margin: 0 auto;
     z-index: 1;
+    opacity: 0;
+    animation: about-layout-fade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
+
+@keyframes about-layout-fade {
+    to { opacity: 1; }
 }
 
 .about-section {
@@ -185,40 +196,55 @@ body::before {
 }
 
 /* ============================================
-   Rotating Hero Title — "I'm a [role]" vertical carousel
+   About Hero — title with fanned photo chips (mirrors Motion / Vibes)
    ============================================ */
-/* Parent flex centers the title as a block — keeps the whole heading centered
-   even as the wrapper width changes with each role */
-.about-hero-rotator {
-    display: flex;
-    justify-content: center;
-    padding-top: 4rem;
-    padding-bottom: 1rem;
+.about-hero {
+    margin: 0 auto 16px;
+    text-align: center;
+}
+
+.hero-title-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 28px;
+    padding: 0 60px;
+    /* Drives the chip fan-out distance — matches the title font-size */
+    --fan: 60px;
 }
 
 .about-hero-title {
     font-family: 'Gabarito', sans-serif;
-    font-weight: 700;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.2;
+    font-weight: 800;
+    font-size: 60px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     color: #fff;
-    display: flex;
-    align-items: baseline;
-    gap: 0.35em;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: about-hero-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    position: relative;
+    z-index: 1;
 }
 
-/* Wrapper holds the rotating word + blinking cursor — width shrinks/grows
-   naturally with the current word, parent flex keeps the heading centered */
+.about-hero-title-accent {
+    background: linear-gradient(135deg, #1180f9 0%, #66d2ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes about-hero-up {
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .rotator-wrapper {
     display: inline-flex;
     align-items: baseline;
-    color: #0082FA;
+    color: #66d2ff;
     white-space: nowrap;
 }
 
-.rotator-text {
-    display: inline;
-}
+.rotator-text { display: inline; }
 
 .rotator-cursor {
     display: inline-block;
@@ -230,142 +256,117 @@ body::before {
     50% { opacity: 0; }
 }
 
-/* ============================================
-   Photo Scroll Carousel — pinned horizontal scroll
-   Full-bleed: breaks out of .about-layout max-width.
-   Section height drives how far the user scrolls through photos;
-   sticky child stays pinned until horizontal progress completes.
-   ============================================ */
-.photo-scroll-section {
-    position: relative;
-    width: 100vw;
+/* Photo chips — same fan-out mechanic as Motion / Vibes, but the chips
+   show photos that fill the keycap instead of small tool logos. */
+.hero-logo-chip {
+    position: absolute;
+    top: 50%;
     left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    height: 400vh;
-    /* Negate the .about-layout flex-gap on both sides so the section butts up
-       cleanly against the hero above and the bento below */
-    margin-top: -60px;
-    margin-bottom: -60px;
-}
-
-.photo-scroll-sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    margin-top: -36px;
+    margin-left: -36px;
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
     overflow: hidden;
-}
-
-.photo-scroll-track {
-    display: flex;
-    gap: 32px;
-    height: 70vh;
-    will-change: transform;
-    padding: 0;
-}
-
-.photo-slide {
-    flex: 0 0 auto;
-    width: min(70vh, 82vw);
-    height: 100%;
-    border-radius: 24px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transform-origin: center center;
-    transition: transform 0.15s linear, opacity 0.15s linear;
-    /* Staggered entrance on page load — each slide fades + lifts in.
-       On desktop, JS removes the animation after it finishes so the
-       scroll-driven transform/opacity can take over. On mobile the bento
-       layout just keeps the final state. */
+    background: #1a1a2e;
+    box-shadow:
+        0 12px 26px -8px rgba(0, 0, 0, 0.6),
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+    z-index: 0;
     opacity: 0;
-    animation: photo-slide-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: translate(0, 0) scale(0.4) rotate(0deg);
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
 }
 
-.photo-slide:nth-child(1) { animation-delay: 0.35s; }
-.photo-slide:nth-child(2) { animation-delay: 0.45s; }
-.photo-slide:nth-child(3) { animation-delay: 0.55s; }
-.photo-slide:nth-child(4) { animation-delay: 0.65s; }
-.photo-slide:nth-child(5) { animation-delay: 0.75s; }
-
-@keyframes photo-slide-enter {
-    from {
-        opacity: 0;
-        transform: translateY(24px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.photo-slide img {
+.hero-logo-chip img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
+/* 
+.hero-logo-chip:hover {
+    border-color: rgba(17, 128, 249, 0.45);
+    box-shadow:
+        0 16px 32px -8px rgba(17, 128, 249, 0.45),
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+} */
 
-.photo-scroll-dots {
-    position: absolute;
-    bottom: 48px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 2;
+/* Resting fan-out positions live in normal rules (not animation-filled state)
+   so that :hover transitions can interpolate cleanly. The animation only owns
+   the entrance: `backwards` fill keeps the chip hidden during the delay, the
+   animation runs from `from` (center, hidden, small) to the base rule's value
+   (the fan-out position below), then releases the property back to the base
+   rule. After that, hover :transitions work normally. */
+.hero-logo-tl {
+    opacity: 1;
+    transform: translate(calc(var(--fan) * -3.4), calc(var(--fan) * -0.85)) scale(1) rotate(-12deg);
+    animation: fan-chip-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s backwards;
+}
+.hero-logo-tr {
+    opacity: 1;
+    transform: translate(calc(var(--fan) *  3.4), calc(var(--fan) * -0.85)) scale(1) rotate(10deg);
+    animation: fan-chip-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.62s backwards;
+}
+.hero-logo-ml {
+    opacity: 1;
+    transform: translate(calc(var(--fan) * -4.1), calc(var(--fan) *  0.55)) scale(1) rotate(8deg);
+    animation: fan-chip-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.69s backwards;
+}
+.hero-logo-mr {
+    opacity: 1;
+    transform: translate(calc(var(--fan) *  4.1), calc(var(--fan) *  0.55)) scale(1) rotate(-8deg);
+    animation: fan-chip-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.76s backwards;
+}
+.hero-logo-bl {
+    opacity: 1;
+    transform: translate(0, calc(var(--fan) *  1.55)) scale(1) rotate(-3deg);
+    animation: fan-chip-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.83s backwards;
 }
 
-.photo-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25);
-    transition: background 0.3s ease, width 0.3s ease;
+@keyframes fan-chip-in {
+    from {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.4) rotate(0deg);
+    }
 }
 
-.photo-dot.active {
-    background: #fff;
-    width: 28px;
-    border-radius: 4px;
-}
+/* Subtle float on hover of the whole hero wrap */
+.hero-title-wrap:hover .hero-logo-tl { transform: translate(calc(var(--fan) * -3.55), calc(var(--fan) * -0.95)) scale(1.04) rotate(-15deg); }
+.hero-title-wrap:hover .hero-logo-tr { transform: translate(calc(var(--fan) *  3.55), calc(var(--fan) * -0.95)) scale(1.04) rotate(13deg); }
+.hero-title-wrap:hover .hero-logo-ml { transform: translate(calc(var(--fan) * -4.25), calc(var(--fan) *  0.6)) scale(1.04) rotate(11deg); }
+.hero-title-wrap:hover .hero-logo-mr { transform: translate(calc(var(--fan) *  4.25), calc(var(--fan) *  0.6)) scale(1.04) rotate(-11deg); }
+.hero-title-wrap:hover .hero-logo-bl { transform: translate(0, calc(var(--fan) *  1.65)) scale(1.04) rotate(-5deg); }
 
-/* Reduced-motion fallback — simple horizontal scroll, no pinning */
-@media (prefers-reduced-motion: reduce) {
-    .photo-scroll-section {
-        height: auto;
-        width: auto;
-        left: auto;
-        right: auto;
-        margin-left: 0;
-        margin-right: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-    .photo-scroll-sticky {
-        position: static;
-        height: auto;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-    }
-    .photo-scroll-track {
-        height: 360px;
-        transform: none !important;
-    }
-    .photo-slide {
-        width: 300px;
-        scroll-snap-align: center;
-        transform: none !important;
-        opacity: 1 !important;
-        transition: none;
-    }
-    .photo-scroll-dots {
-        display: none;
-    }
+/* Per-chip hover — enlarge + straighten so the user can see the full photo.
+   Now that the entrance uses backwards fill (not forwards), no animation is
+   claiming the transform after the entrance — so transitions on :hover work
+   normally without needing !important to override an animation-filled value. */
+.hero-logo-chip.hero-logo-tl:hover {
+    transform: translate(calc(var(--fan) * -2.6), calc(var(--fan) * -0.25)) scale(4) rotate(0deg);
+    z-index: 5;
+}
+.hero-logo-chip.hero-logo-tr:hover {
+    transform: translate(calc(var(--fan) *  2.6), calc(var(--fan) * -0.25)) scale(4) rotate(0deg);
+    z-index: 5;
+}
+.hero-logo-chip.hero-logo-ml:hover {
+    transform: translate(calc(var(--fan) * -3.2), calc(var(--fan) *  0.55)) scale(4) rotate(0deg);
+    z-index: 5;
+}
+.hero-logo-chip.hero-logo-mr:hover {
+    transform: translate(calc(var(--fan) *  3.2), calc(var(--fan) *  0.55)) scale(4) rotate(0deg);
+    z-index: 5;
+}
+.hero-logo-chip.hero-logo-bl:hover {
+    transform: translate(0, calc(var(--fan) *  1.55)) scale(4) rotate(0deg);
+    z-index: 5;
 }
 
 /* ============================================
@@ -379,7 +380,6 @@ body::before {
         "intro skills"
         "now now";
     gap: 12px;
-    padding-top: 1rem;
 }
 
 .bento-intro   { grid-area: intro; }
@@ -399,7 +399,11 @@ body::before {
 .bento-card {
     position: relative;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.04);
+    background:
+        linear-gradient(to bottom, rgba(8, 8, 14, 0.45), rgba(8, 8, 14, 0.6)),
+        rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(60px) saturate(160%);
+    -webkit-backdrop-filter: blur(60px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     overflow: hidden;
@@ -411,7 +415,9 @@ body::before {
 }
 
 .bento-card:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background:
+        linear-gradient(to bottom, rgba(8, 8, 14, 0.4), rgba(8, 8, 14, 0.55)),
+        rgba(255, 255, 255, 0.04);
     border-color: rgba(255, 255, 255, 0.14);
 }
 
@@ -433,6 +439,20 @@ body::before {
 .bento-intro {
     gap: 14px;
     justify-content: flex-start;
+}
+
+/* "I'm a [rotator]" replaces the old "About" label as the card header */
+.bento-intro-title {
+    font-family: 'Gabarito', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+    flex-wrap: wrap;
 }
 
 .bento-bio {
@@ -518,12 +538,24 @@ body::before {
     min-width: 0;
     position: relative;
     padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.04);
+    background:
+        linear-gradient(to bottom, rgba(8, 8, 14, 0.45), rgba(8, 8, 14, 0.6)),
+        rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(60px) saturate(160%);
+    -webkit-backdrop-filter: blur(60px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     display: flex;
     align-items: center;
     gap: 1rem;
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.education-card:hover {
+    background:
+        linear-gradient(to bottom, rgba(8, 8, 14, 0.4), rgba(8, 8, 14, 0.55)),
+        rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .education-logo {
@@ -556,7 +588,11 @@ body::before {
    Experience — expandable list
    ============================================ */
 .exp-list {
-    background: rgba(255, 255, 255, 0.04);
+    background:
+        linear-gradient(to bottom, rgba(8, 8, 14, 0.45), rgba(8, 8, 14, 0.6)),
+        rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(60px) saturate(160%);
+    -webkit-backdrop-filter: blur(60px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     overflow: hidden;
@@ -763,10 +799,12 @@ body::before {
 .page-exit-active .about-layout,
 .page-exit-active .social-links {
     opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.page-exit-active #dotted-surface {
+.page-exit-active #background-grid {
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
@@ -790,9 +828,12 @@ body::before {
     }
 
     .about-layout {
-        gap: 48px;
-        padding: 90px 60px 40px;
+        gap: 40px;
+        padding: 180px 40px 60px;
     }
+
+    .about-hero-title { font-size: 52px; }
+    .hero-title-wrap { --fan: 52px; }
 }
 
 @media (max-width: 900px) {
@@ -815,20 +856,17 @@ body::before {
 
     .about-layout {
         gap: 32px;
-        padding: 80px 24px 24px;
+        padding: 160px 24px 40px;
     }
 
-    /* Tablet photo carousel — shorter scroll distance */
-    .photo-scroll-section {
-        height: 320vh;
-    }
-    .photo-scroll-track {
-        height: 60vh;
-        gap: 20px;
-    }
-    .photo-slide {
-        width: min(60vh, 82vw);
-        border-radius: 18px;
+    .about-hero-title { font-size: 44px; }
+    .hero-title-wrap { --fan: 44px; }
+    .hero-logo-chip {
+        width: 60px;
+        height: 60px;
+        margin-top: -30px;
+        margin-left: -30px;
+        border-radius: 12px;
     }
 
     /* Tablet bento-hero — single column stack */
@@ -997,48 +1035,22 @@ body::before {
         display: none;
     }
 
-    /* Mobile — drop the pinned carousel, show photos as a bento grid */
-    .photo-scroll-section {
-        width: auto;
-        height: auto;
-        left: auto;
-        right: auto;
-        margin: 0;
+    /* Mobile hero — smaller title + tighter chip fan */
+    .about-hero { margin-bottom: 8px; }
+    .about-hero-title { font-size: 36px; }
+    .hero-title-wrap {
+        --fan: 36px;
+        padding: 0 30px;
+        margin-bottom: 20px;
     }
-    .photo-scroll-sticky {
-        position: static;
-        display: block;
-        height: auto;
-        overflow: visible;
+    .hero-logo-chip {
+        width: 48px;
+        height: 48px;
+        margin-top: -24px;
+        margin-left: -24px;
+        border-radius: 10px;
     }
-    .photo-scroll-track {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 140px;
-        gap: 10px;
-        height: auto;
-        transform: none !important;
-        grid-template-areas:
-            "p1 p1"
-            "p1 p1"
-            "p2 p3"
-            "p4 p4"
-            "p5 p5";
-    }
-    .photo-slide {
-        width: auto;
-        height: auto;
-        border-radius: 12px;
-        transition: none;
-    }
-    .photo-slide:nth-child(1) { grid-area: p1; }
-    .photo-slide:nth-child(2) { grid-area: p2; }
-    .photo-slide:nth-child(3) { grid-area: p3; }
-    .photo-slide:nth-child(4) { grid-area: p4; }
-    .photo-slide:nth-child(5) { grid-area: p5; }
-    .photo-scroll-dots {
-        display: none;
-    }
+    .bento-intro-title { font-size: 1.25rem; }
 
     /* Mobile menu socials — horizontal row of icon buttons below the nav links */
     .mobile-menu-socials {

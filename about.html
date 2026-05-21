@@ -26,6 +26,9 @@
     </style>
 </head>
 <body>
+    <!-- Background Grid — CSS grid pattern -->
+    <div id="background-grid" class="grid-visible"></div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="nav-logo">
@@ -36,8 +39,8 @@
             <!-- <a href="#" class="nav-link">Coding</a> -->
             <a href="motion.html" class="nav-link">Motion</a>
             <a href="vibes.html" class="nav-link">Vibes</a>
-            <a href="visitors.html" class="nav-link">Visitors</a>
             <a href="#" class="nav-link active">About</a>
+            <a href="visitors.html" class="nav-link">Visitors</a>
         </div>
         <button class="hamburger" aria-label="Menu">
             <span class="hamburger-line"></span>
@@ -51,8 +54,8 @@
         <a href="/" class="mobile-menu-link">UX/UI</a>
         <a href="motion.html" class="mobile-menu-link">Motion</a>
         <a href="vibes.html" class="mobile-menu-link">Vibes</a>
-        <a href="visitors.html" class="mobile-menu-link">Visitors</a>
         <a href="#" class="mobile-menu-link active">About</a>
+        <a href="visitors.html" class="mobile-menu-link">Visitors</a>
 
         <div class="mobile-menu-socials">
             <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="LinkedIn">
@@ -69,43 +72,27 @@
 
     <!-- About Content -->
     <main class="about-layout">
-        <!-- Rotating role title -->
-        <section class="about-hero-rotator about-enter" style="--delay: 0.15s">
-            <h1 class="about-hero-title">
-                I'm a
-                <span class="rotator-wrapper">
-                    <span class="rotator-text"></span><span class="rotator-cursor" aria-hidden="true">|</span>
+        <!-- Hero — title with fanned photo chips (mirrors Motion / Vibes) -->
+        <section class="about-hero">
+            <div class="hero-title-wrap">
+                <span class="hero-logo-chip hero-photo-chip hero-logo-tl" aria-hidden="true">
+                    <img src="assets/jon-photos/headshot.jpeg" alt="" loading="lazy">
                 </span>
-            </h1>
-        </section>
-
-        <!-- Photo scroll carousel — pins while user scrolls horizontally through photos -->
-        <section class="photo-scroll-section" aria-label="Photo gallery">
-            <div class="photo-scroll-sticky">
-                <div class="photo-scroll-track">
-                    <div class="photo-slide">
-                        <img src="assets/jon-photos/headshot.jpeg" alt="Jonathan Chiang">
-                    </div>
-                    <div class="photo-slide">
-                        <img src="assets/jon-photos/dog.JPG" alt="My dog">
-                    </div>
-                    <div class="photo-slide">
-                        <img src="assets/jon-photos/fuji.jpeg" alt="Mount Fuji">
-                    </div>
-                    <div class="photo-slide">
-                        <img src="assets/jon-photos/bamboo.jpeg" alt="Bamboo forest">
-                    </div>
-                    <div class="photo-slide">
-                        <img src="assets/jon-photos/ski.jpeg" alt="Skiing">
-                    </div>
-                </div>
-                <div class="photo-scroll-dots" aria-hidden="true">
-                    <span class="photo-dot active"></span>
-                    <span class="photo-dot"></span>
-                    <span class="photo-dot"></span>
-                    <span class="photo-dot"></span>
-                    <span class="photo-dot"></span>
-                </div>
+                <span class="hero-logo-chip hero-photo-chip hero-logo-tr" aria-hidden="true">
+                    <img src="assets/jon-photos/fuji.jpeg" alt="" loading="lazy">
+                </span>
+                <span class="hero-logo-chip hero-photo-chip hero-logo-ml" aria-hidden="true">
+                    <img src="assets/jon-photos/dog.JPG" alt="" loading="lazy">
+                </span>
+                <span class="hero-logo-chip hero-photo-chip hero-logo-mr" aria-hidden="true">
+                    <img src="assets/jon-photos/bamboo.jpeg" alt="" loading="lazy">
+                </span>
+                <span class="hero-logo-chip hero-photo-chip hero-logo-bl" aria-hidden="true">
+                    <img src="assets/jon-photos/ski.jpeg" alt="" loading="lazy">
+                </span>
+                <h1 class="about-hero-title">
+                    About Me<span class="about-hero-title-accent">.</span>
+                </h1>
             </div>
         </section>
 
@@ -113,8 +100,13 @@
         <div class="bento-hero about-enter" style="--delay: 0.45s">
             <!-- Intro card -->
             <div class="bento-card bento-intro">
-                <p class="bento-label">About</p>
-                <p class="bento-bio">Hi, I'm Jonathan, a product designer focused on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I'm especially interested in the details that make products feel seamless — from user flows and interface systems to motion, responsiveness, and overall polish.<br><br>My background spans UX/UI design, prototyping, research, and front-end development, which allows me to think beyond static screens and design with execution in mind.</p>
+                <h3 class="bento-intro-title">
+                    I'm a
+                    <span class="rotator-wrapper">
+                        <span class="rotator-text"></span><span class="rotator-cursor" aria-hidden="true">|</span>
+                    </span>
+                </h3>
+                <p class="bento-bio">that's focused on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I'm especially interested in the details that make products feel seamless — from user flows and interface systems to motion, responsiveness, and overall polish.<br><br>My background spans UX/UI design, prototyping, research, and front-end development, which allows me to think beyond static screens and design with execution in mind.</p>
             </div>
 
             <!-- Skills stack: design + development in a flex column next to About -->
@@ -124,9 +116,9 @@
                     <div class="bento-skill-pills">
                         <span class="skill-pill">Figma</span>
                         <span class="skill-pill">After Effects</span>
-                        <span class="skill-pill">Blender</span>
+                        <span class="skill-pill">ChatGPT Images</span>
                         <span class="skill-pill">Claude Design</span>
-                        <span class="skill-pill">Google Gemini</span>
+                        <span class="skill-pill">Nano Banana 2</span>
                     </div>
                 </div>
 

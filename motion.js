@@ -179,20 +179,6 @@
         }
     });
 
-    // Background visibility toggle — grid only
-    var bgVisibility = document.querySelector('.bg-visibility');
-    var bgGrid = document.getElementById('background-grid');
-
-    if (bgVisibility && bgGrid) {
-        bgVisibility.addEventListener('click', function () {
-            var hidden = bgGrid.classList.toggle('grid-hidden');
-            bgGrid.classList.toggle('grid-visible', !hidden);
-            var icon = bgVisibility.querySelector('i');
-            if (icon) icon.className = hidden ? 'ph ph-eye-slash' : 'ph ph-eye';
-            bgVisibility.setAttribute('data-tooltip', hidden ? 'Show' : 'Hide');
-        });
-    }
-
     // Desktop nav-link + logo exits — handled by the shared GSAP transitions module
     if (window.PageTransitions) PageTransitions.bindNavLinks();
 
@@ -236,82 +222,4 @@
             });
         });
     }
-
-    // ============================================
-    // Easter egg — tap any hero logo chip 3 times in quick succession to
-    // reveal the hidden typing test. The "psst" hint is a cursor-following
-    // tooltip that only appears while a chip is hovered.
-    // ============================================
-    var chips = document.querySelectorAll('.hero-logo-chip');
-    var hint = document.querySelector('.hero-hint');
-    var CHIP_TARGET = 3;
-    var CHIP_RESET_MS = 1500;
-    var CHIP_BONK_MS = 180;
-    var chipState = new WeakMap();
-
-    // Cursor-following hint
-    if (hint) {
-        var hintX = 0, hintY = 0, hintVisible = false;
-        var rafPending = false;
-
-        function applyHintPosition() {
-            rafPending = false;
-            // Offset from cursor so the tooltip doesn't sit directly under it
-            hint.style.transform = 'translate(' + (hintX + 16) + 'px, ' + (hintY + 16) + 'px)';
-        }
-
-        function moveHint(e) {
-            hintX = e.clientX;
-            hintY = e.clientY;
-            if (!rafPending) {
-                rafPending = true;
-                requestAnimationFrame(applyHintPosition);
-            }
-        }
-
-        chips.forEach(function (chip) {
-            chip.addEventListener('mouseenter', function (e) {
-                hintX = e.clientX;
-                hintY = e.clientY;
-                applyHintPosition();
-                if (!hintVisible) {
-                    hint.classList.add('is-visible');
-                    hintVisible = true;
-                }
-            });
-
-            chip.addEventListener('mousemove', moveHint);
-
-            chip.addEventListener('mouseleave', function () {
-                if (hintVisible) {
-                    hint.classList.remove('is-visible');
-                    hintVisible = false;
-                }
-            });
-        });
-    }
-
-    chips.forEach(function (chip) {
-        chip.addEventListener('click', function () {
-            var s = chipState.get(chip) || { count: 0, timer: null };
-            s.count += 1;
-
-            chip.classList.remove('chip-bonk');
-            void chip.offsetWidth; // restart transition
-            chip.classList.add('chip-bonk');
-            setTimeout(function () { chip.classList.remove('chip-bonk'); }, CHIP_BONK_MS);
-
-            clearTimeout(s.timer);
-
-            if (s.count >= CHIP_TARGET) {
-                chipState.delete(chip);
-                if (window.PageTransitions) PageTransitions.exit('typing.html');
-                else window.location.href = 'typing.html';
-                return;
-            }
-
-            s.timer = setTimeout(function () { chipState.delete(chip); }, CHIP_RESET_MS);
-            chipState.set(chip, s);
-        });
-    });
 })();
