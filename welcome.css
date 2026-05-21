@@ -8,7 +8,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     background: #000C19;
     color: #fff;
     -webkit-font-smoothing: antialiased;
@@ -89,14 +89,14 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     align-items: center;
     gap: 6px;
     padding: 8px 14px;
-    border-radius: 1000px;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     color: rgba(255, 255, 255, 0.55);
     text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.06em;
@@ -151,10 +151,10 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     align-items: center;
     gap: 8px;
     padding: 5px 12px;
-    border-radius: 1000px;
+    border-radius: 8px;
     background: rgba(17, 128, 249, 0.08);
     border: 1px solid rgba(17, 128, 249, 0.2);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 10.5px;
     font-weight: 500;
     color: #5aa3ff;
@@ -168,7 +168,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 .welcome-eyebrow i { font-size: 12px; color: #66d2ff; }
 
 .welcome-title {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
     font-size: clamp(28px, 4vw, 38px);
     line-height: 1.05;
@@ -187,7 +187,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .welcome-blurb {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
     font-size: 13.5px;
     line-height: 1.55;
@@ -234,7 +234,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     padding: 5px 5px 5px 16px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1000px;
+    border-radius: 8px;
     backdrop-filter: blur(24px) saturate(140%);
     -webkit-backdrop-filter: blur(24px) saturate(140%);
     transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
@@ -248,7 +248,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .welcome-name-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 10px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.4);
@@ -270,7 +270,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     background: transparent;
     border: none;
     outline: none;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 13px;
     font-weight: 600;
     color: #fff;
@@ -293,7 +293,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     flex: 0 0 32px;
     width: 32px;
     height: 32px;
-    border-radius: 50%;
+    border-radius: 8px;
     border: none;
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(20px) saturate(140%);
@@ -322,7 +322,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 11px;
     font-weight: 500;
     color: #fff;
@@ -344,7 +344,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     position: relative;
     width: 100%;
     padding: 36px 40px 32px;
-    border-radius: 20px;
+    border-radius: 4px;
     overflow: hidden;
     background: var(--case-color, #1f1f24);
     border: 1px solid color-mix(in oklab, var(--case-color, #1f1f24) 60%, white 25%);
@@ -381,7 +381,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .build-card-logo {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
     font-size: 20px;
     letter-spacing: -0.02em;
@@ -390,7 +390,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .build-card-meta {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 9.5px;
     font-weight: 500;
     color: var(--case-text-dim, rgba(255, 255, 255, 0.55));
@@ -399,18 +399,18 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .build-card-serial {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 10px;
     font-weight: 600;
     color: var(--case-text-dim, rgba(255, 255, 255, 0.55));
     letter-spacing: 0.14em;
     padding: 3px 9px;
-    border-radius: 1000px;
+    border-radius: 8px;
     border: 1px solid color-mix(in oklab, var(--case-color, #000) 60%, white 40%);
 }
 
 .build-card-name {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 20px;
     font-weight: 700;
     color: var(--case-text, #fff);
@@ -522,7 +522,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .build-card-spec dt {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 9px;
     font-weight: 500;
     color: var(--case-text-dim, rgba(255, 255, 255, 0.5));
@@ -534,7 +534,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 12.5px;
     font-weight: 600;
     color: var(--case-text, #fff);
@@ -548,7 +548,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 .build-card-swatch {
     width: 11px;
     height: 11px;
-    border-radius: 50%;
+    border-radius: 8px;
     background: var(--swatch-color, #fff);
     border: 1px solid rgba(255, 255, 255, 0.45);
     flex-shrink: 0;
@@ -573,7 +573,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .build-card-foot-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 9.5px;
     font-weight: 500;
     color: var(--case-text-dim, rgba(255, 255, 255, 0.45));
@@ -582,7 +582,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .build-card-foot-value {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 13px;
     font-weight: 600;
     color: var(--case-text, #fff);
@@ -590,7 +590,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .build-card-foot-sig {
-    font-family: 'Gabarito', serif;
+    font-family: 'Space Grotesk', serif;
     font-size: 16px;
     font-weight: 400;
     font-style: italic;
@@ -620,7 +620,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .build-control-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 9.5px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.4);
@@ -636,7 +636,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     padding: 4px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1000px;
+    border-radius: 8px;
     backdrop-filter: blur(24px) saturate(140%);
     -webkit-backdrop-filter: blur(24px) saturate(140%);
     width: 100%;
@@ -650,8 +650,8 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     padding: 7px 8px;
     background: transparent;
     border: none;
-    border-radius: 1000px;
-    font-family: 'JetBrains Mono', monospace;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
     font-size: 11px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.55);
@@ -692,7 +692,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     position: relative;
     width: 24px;
     height: 24px;
-    border-radius: 50%;
+    border-radius: 8px;
     border: 2px solid rgba(255, 255, 255, 0.12);
     background: var(--swatch, #fff);
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
@@ -729,11 +729,11 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     justify-content: center;
     gap: 10px;
     padding: 12px 24px;
-    border-radius: 1000px;
+    border-radius: 8px;
     border: 1px solid transparent;
     background: linear-gradient(135deg, #1180f9 0%, #2b91ff 100%);
     color: #fff;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -772,7 +772,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 }
 
 .welcome-fineprint {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 11px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.45);
@@ -804,7 +804,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 10px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.35);
@@ -824,7 +824,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 .welcome-foot-dot {
     width: 6px;
     height: 6px;
-    border-radius: 50%;
+    border-radius: 8px;
     background: #4ade80;
     box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
     animation: dot-pulse 2.4s ease-in-out infinite;

@@ -34,7 +34,7 @@ const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 // ============================================
 let gameState = {
     mode: 'time', // 'time' or 'words'
-    duration: 60,
+    duration: 15,
     includePunctuation: false,
     includeNumbers: false,
     words: [],
@@ -47,7 +47,7 @@ let gameState = {
     finished: false,
     startTime: null,
     timerInterval: null,
-    timeLeft: 60
+    timeLeft: 15
 };
 
 // ============================================
@@ -61,6 +61,11 @@ const accuracyDisplay = document.getElementById('accuracy');
 const restartBtn = document.getElementById('restartBtn');
 const resultsModal = document.getElementById('resultsModal');
 const resultsRestartBtn = document.getElementById('resultsRestartBtn');
+const trophyModal = document.getElementById('trophyModal');
+const trophyRestartBtn = document.getElementById('trophyRestartBtn');
+const trophyWpm = document.getElementById('trophyWpm');
+const trophyAccuracy = document.getElementById('trophyAccuracy');
+const trophyTime = document.getElementById('trophyTime');
 const keyboard = document.getElementById('keyboard');
 
 // Results elements
@@ -305,7 +310,17 @@ function endGame() {
     resultChars.textContent = `${gameState.correctChars}/${gameState.incorrectChars}`;
     resultTime.textContent = timeSpent;
 
-    resultsModal.classList.add('show');
+    trophyWpm.textContent = finalWpm;
+    trophyAccuracy.textContent = finalAccuracy;
+    trophyTime.textContent = timeSpent;
+
+    // The secret-trophy bar is intentionally low (1 WPM) so almost any
+    // real attempt clears it — that's the joke.
+    if (finalWpm >= 1) {
+        trophyModal.classList.add('show');
+    } else {
+        resultsModal.classList.add('show');
+    }
 }
 
 function resetGame() {
@@ -331,6 +346,7 @@ function resetGame() {
     accuracyDisplay.textContent = '100';
 
     resultsModal.classList.remove('show');
+    trophyModal.classList.remove('show');
     displayWords();
     typingInput.focus();
 }
@@ -513,6 +529,7 @@ function setupEventListeners() {
 
     restartBtn.addEventListener('click', resetGame);
     resultsRestartBtn.addEventListener('click', resetGame);
+    trophyRestartBtn.addEventListener('click', resetGame);
 
     // Focus input when clicking on text display
     document.querySelector('.text-display').addEventListener('click', () => {
@@ -529,6 +546,7 @@ function setupEventListeners() {
         // Escape to close results
         if (e.key === 'Escape') {
             resultsModal.classList.remove('show');
+            trophyModal.classList.remove('show');
             resetGame();
         }
     });

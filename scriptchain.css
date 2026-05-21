@@ -90,8 +90,8 @@ a, button, [role="button"],
     align-items: center;
     justify-content: center;
     padding: 10px 24px;
-    border-radius: 1000px;
-    font-family: 'Inter', sans-serif;
+    border-radius: 8px;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
     font-size: 16px;
     color: #030b2a;
@@ -236,7 +236,7 @@ a, button, [role="button"],
    ============================================ */
 
 .project-video {
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 /* ============================================
@@ -420,13 +420,13 @@ a, button, [role="button"],
     }
 
     .mobile-menu-link {
-        font-family: 'Inter', sans-serif;
+        font-family: 'IBM Plex Sans', sans-serif;
         font-weight: 600;
         font-size: 24px;
         color: #030b2a;
         text-decoration: none;
         padding: 1rem 3rem;
-        border-radius: 1000px;
+        border-radius: 8px;
         opacity: 0;
         transform: translateY(20px);
     }
@@ -481,4 +481,13 @@ a, button, [role="button"],
     .cs-title {
         font-size: 24px;
     }
+}
+
+/* Navigation typography — Pixelify Sans for the keyboard/computer theme.
+   Appended as an override so it wins over each file's earlier .nav-link rule
+   without needing per-page edits to the original declarations. */
+.nav-link,
+.mobile-menu-link {
+    font-family: 'Space Grotesk', sans-serifns-serif;
+    letter-spacing: 0.02em;
 }

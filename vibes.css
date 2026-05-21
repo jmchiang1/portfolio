@@ -20,7 +20,7 @@ html {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     background: #000C19;
     color: #fff;
     -webkit-font-smoothing: antialiased;
@@ -92,7 +92,7 @@ a, button, [role="button"],
     left: 50%;
     width: 150vw;
     height: 150vh;
-    border-radius: 50%;
+    border-radius: 8px;
     pointer-events: none;
     z-index: 0;
     background: radial-gradient(
@@ -198,8 +198,8 @@ a, button, [role="button"],
     align-items: center;
     justify-content: center;
     padding: 10px 24px;
-    border-radius: 1000px;
-    font-family: 'Inter', sans-serif;
+    border-radius: 8px;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
     font-size: 16px;
     color: #fff;
@@ -266,7 +266,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 50%;
+    border-radius: 8px;
     border: none;
     background: none;
     color: #fff;
@@ -291,7 +291,7 @@ a, button, [role="button"],
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 12px;
     font-weight: 500;
     color: #fff;
@@ -337,7 +337,6 @@ a, button, [role="button"],
    Hero
    ============================================ */
 .vibes-hero {
-    max-width: 740px;
     margin: 0 auto 80px;
     text-align: center;
 }
@@ -347,10 +346,10 @@ a, button, [role="button"],
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    border-radius: 1000px;
+    border-radius: 8px;
     background: rgba(17, 128, 249, 0.08);
     border: 1px solid rgba(17, 128, 249, 0.2);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
     font-weight: 500;
     color: #5aa3ff;
@@ -363,7 +362,7 @@ a, button, [role="button"],
 .vibes-eyebrow-dot {
     width: 6px;
     height: 6px;
-    border-radius: 50%;
+    border-radius: 8px;
     background: #1180f9;
     box-shadow: 0 0 8px rgba(17, 128, 249, 0.8);
     animation: vibes-pulse 1.8s ease-in-out infinite;
@@ -394,7 +393,7 @@ a, button, [role="button"],
 }
 
 .vibes-hero-title {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
     font-size: 60px;
     line-height: 1.05;
@@ -416,7 +415,7 @@ a, button, [role="button"],
     margin-left: -32px;
     width: 64px;
     height: 64px;
-    border-radius: 10px;
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -506,12 +505,12 @@ a, button, [role="button"],
     align-items: center;
     gap: 8px;
     padding: 7px 14px 7px 12px;
-    border-radius: 1000px;
+    border-radius: 8px;
     background: rgba(17, 128, 249, 0.12);
     border: 1px solid rgba(17, 128, 249, 0.25);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.85);
@@ -539,10 +538,14 @@ a, button, [role="button"],
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-style: italic;
+    /* Italic slant on the trailing 's' extends past the inline-box edge —
+       padding-right gives the glyph room so it isn't clipped at the right. */
+    display: inline-block;
+    padding-right: 0.12em;
 }
 
 .vibes-hero-blurb {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
     font-size: 18px;
     line-height: 1.6;
@@ -552,6 +555,14 @@ a, button, [role="button"],
     opacity: 0;
     transform: translateY(20px);
     animation: vibes-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+/* "Computer:" prefix styled like a terminal prompt for the AI Side Quests theme */
+.vibes-hero-prompt {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    color: #66d2ff;
+    margin-right: 4px;
 }
 
 @keyframes vibes-up {
@@ -565,10 +576,10 @@ a, button, [role="button"],
     gap: 8px;
     margin-top: 20px;
     padding: 7px 14px 7px 12px;
-    border-radius: 1000px;
+    border-radius: 8px;
     background: rgba(17, 128, 249, 0.08);
     border: 1px solid rgba(17, 128, 249, 0.18);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.75);
@@ -611,7 +622,7 @@ a, button, [role="button"],
     flex-direction: column;
     background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
+    border-radius: 4px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
@@ -719,7 +730,7 @@ a, button, [role="button"],
     flex-direction: column;
     gap: 12px;
     color: rgba(255, 255, 255, 0.4);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
     pointer-events: none;
     transition: opacity 0.4s ease;
@@ -734,7 +745,7 @@ a, button, [role="button"],
     height: 28px;
     border: 2px solid rgba(255, 255, 255, 0.08);
     border-top-color: #1180f9;
-    border-radius: 50%;
+    border-radius: 8px;
     animation: vibes-spin 0.9s linear infinite;
 }
 
@@ -775,7 +786,7 @@ a, button, [role="button"],
 }
 
 .vibes-card-title {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
     font-size: 28px;
     letter-spacing: -0.01em;
@@ -784,7 +795,7 @@ a, button, [role="button"],
 }
 
 .vibes-card-year {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.4);
@@ -793,7 +804,7 @@ a, button, [role="button"],
 }
 
 .vibes-card-description {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 15px;
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.65);
@@ -813,7 +824,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 10px;
+    border-radius: 4px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.06);
     transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
@@ -854,7 +865,7 @@ a, button, [role="button"],
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 11px;
     font-weight: 500;
     color: #fff;
@@ -885,8 +896,8 @@ a, button, [role="button"],
     align-items: center;
     gap: 8px;
     padding: 10px 16px;
-    border-radius: 10px;
-    font-family: 'Inter', sans-serif;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
@@ -939,7 +950,7 @@ a, button, [role="button"],
 }
 
 .vibes-footer-text {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
     color: rgba(255, 255, 255, 0.35);
     letter-spacing: 0.02em;
@@ -965,7 +976,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 48px;
     height: 48px;
-    border-radius: 50%;
+    border-radius: 8px;
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
     font-size: 24px;
@@ -1001,7 +1012,7 @@ a, button, [role="button"],
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 12px;
     font-weight: 500;
     color: #fff;
@@ -1142,13 +1153,13 @@ a, button, [role="button"],
     }
 
     .mobile-menu-link {
-        font-family: 'Inter', sans-serif;
+        font-family: 'IBM Plex Sans', sans-serif;
         font-weight: 600;
         font-size: 24px;
         color: #fff;
         text-decoration: none;
         padding: 1rem 3rem;
-        border-radius: 1000px;
+        border-radius: 8px;
         opacity: 0;
         transform: translateY(20px);
     }
@@ -1210,7 +1221,7 @@ a, button, [role="button"],
         justify-content: center;
         width: 48px;
         height: 48px;
-        border-radius: 50%;
+        border-radius: 8px;
         border: 1.5px solid rgba(255, 255, 255, 0.4);
         color: #fff;
         font-size: 24px;
@@ -1302,7 +1313,7 @@ a, button, [role="button"],
         height: 40px;
         margin-top: -20px;
         margin-left: -20px;
-        border-radius: 10px;
+        border-radius: 4px;
     }
 
     .hero-logo-chip img {
@@ -1318,4 +1329,13 @@ a, button, [role="button"],
     .vibes-btn {
         justify-content: center;
     }
+}
+
+/* Navigation typography — Pixelify Sans for the keyboard/computer theme.
+   Appended as an override so it wins over each file's earlier .nav-link rule
+   without needing per-page edits to the original declarations. */
+.nav-link,
+.mobile-menu-link {
+    font-family: 'Space Grotesk', sans-serifns-serif;
+    letter-spacing: 0.02em;
 }

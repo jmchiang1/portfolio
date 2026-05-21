@@ -10,7 +10,7 @@ html, body {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     background: #000C19;
     color: #fff;
     -webkit-font-smoothing: antialiased;
@@ -115,8 +115,8 @@ a, button, [role="button"],
     align-items: center;
     justify-content: center;
     padding: 10px 24px;
-    border-radius: 1000px;
-    font-family: 'Inter', sans-serif;
+    border-radius: 8px;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
     font-size: 16px;
     color: #fff;
@@ -189,7 +189,7 @@ a, button, [role="button"],
 }
 
 .about-section-title {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: #fff;
@@ -213,7 +213,7 @@ a, button, [role="button"],
 }
 
 .about-hero-title {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
     font-size: 60px;
     line-height: 1.05;
@@ -266,7 +266,7 @@ a, button, [role="button"],
     margin-left: -36px;
     width: 72px;
     height: 72px;
-    border-radius: 14px;
+    border-radius: 4px;
     overflow: hidden;
     background: #1a1a2e;
     box-shadow:
@@ -405,7 +405,7 @@ a, button, [role="button"],
     backdrop-filter: blur(60px) saturate(160%);
     -webkit-backdrop-filter: blur(60px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
+    border-radius: 4px;
     overflow: hidden;
     transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
     text-decoration: none;
@@ -443,7 +443,7 @@ a, button, [role="button"],
 
 /* "I'm a [rotator]" replaces the old "About" label as the card header */
 .bento-intro-title {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: #fff;
@@ -468,7 +468,7 @@ a, button, [role="button"],
 }
 
 .bento-now-text {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: #fff;
@@ -490,7 +490,7 @@ a, button, [role="button"],
     right: 1.5rem;
     width: 48px;
     height: 48px;
-    border-radius: 8px;
+    border-radius: 4px;
     object-fit: contain;
     box-shadow: 0 4px 16px rgba(234, 88, 12, 0.25);
 }
@@ -510,7 +510,7 @@ a, button, [role="button"],
 
 .skill-pill {
     padding: 8px 16px;
-    border-radius: 1000px;
+    border-radius: 8px;
     font-size: 0.875rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.8);
@@ -561,7 +561,7 @@ a, button, [role="button"],
 .education-logo {
     width: 48px;
     height: 48px;
-    border-radius: 8px;
+    border-radius: 4px;
     object-fit: cover;
     flex-shrink: 0;
 }
@@ -594,7 +594,7 @@ a, button, [role="button"],
     backdrop-filter: blur(60px) saturate(160%);
     -webkit-backdrop-filter: blur(60px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -644,7 +644,7 @@ a, button, [role="button"],
 }
 
 .exp-role {
-    font-family: 'Gabarito', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
     color: #fff;
@@ -660,7 +660,7 @@ a, button, [role="button"],
 .exp-logo {
     width: 48px;
     height: 48px;
-    border-radius: 8px;
+    border-radius: 4px;
     object-fit: cover;
     flex-shrink: 0;
 }
@@ -734,7 +734,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 48px;
     height: 48px;
-    border-radius: 50%;
+    border-radius: 8px;
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
     font-size: 24px;
@@ -777,7 +777,7 @@ a, button, [role="button"],
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 12px;
     font-weight: 500;
     color: #fff;
@@ -866,7 +866,7 @@ a, button, [role="button"],
         height: 60px;
         margin-top: -30px;
         margin-left: -30px;
-        border-radius: 12px;
+        border-radius: 4px;
     }
 
     /* Tablet bento-hero — single column stack */
@@ -969,13 +969,13 @@ a, button, [role="button"],
     }
 
     .mobile-menu-link {
-        font-family: 'Inter', sans-serif;
+        font-family: 'IBM Plex Sans', sans-serif;
         font-weight: 600;
         font-size: 24px;
         color: #fff;
         text-decoration: none;
         padding: 1rem 3rem;
-        border-radius: 1000px;
+        border-radius: 8px;
         transition: color 0.2s ease, background 0.2s ease;
         opacity: 0;
         transform: translateY(20px);
@@ -1048,7 +1048,7 @@ a, button, [role="button"],
         height: 48px;
         margin-top: -24px;
         margin-left: -24px;
-        border-radius: 10px;
+        border-radius: 4px;
     }
     .bento-intro-title { font-size: 1.25rem; }
 
@@ -1079,7 +1079,7 @@ a, button, [role="button"],
         justify-content: center;
         width: 56px;
         height: 56px;
-        border-radius: 50%;
+        border-radius: 8px;
         border: 1.5px solid rgba(255, 255, 255, 0.35);
         color: #fff;
         font-size: 26px;
@@ -1096,7 +1096,7 @@ a, button, [role="button"],
 
     .bento-card {
         padding: 1.25rem;
-        border-radius: 12px;
+        border-radius: 4px;
     }
 
     .bento-bio {
@@ -1163,4 +1163,13 @@ a, button, [role="button"],
         padding: 0 1.25rem 1.25rem;
         font-size: 0.9rem;
     }
+}
+
+/* Navigation typography — Pixelify Sans for the keyboard/computer theme.
+   Appended as an override so it wins over each file's earlier .nav-link rule
+   without needing per-page edits to the original declarations. */
+.nav-link,
+.mobile-menu-link {
+    font-family: 'Space Grotesk', sans-serifns-serif;
+    letter-spacing: 0.02em;
 }

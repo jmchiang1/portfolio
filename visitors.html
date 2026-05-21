@@ -10,7 +10,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="motion.css">
     <link rel="stylesheet" href="welcome.css">
@@ -44,7 +44,7 @@
             border-radius: 4px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 11px;
             letter-spacing: 0.14em;
             text-transform: uppercase;
@@ -55,7 +55,7 @@
         }
         .visitors-hero-eyebrow i { font-size: 13px; color: #66d2ff; }
         .visitors-hero-title {
-            font-family: 'Gabarito', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
             font-size: clamp(40px, 6vw, 60px);
             line-height: 1.05;
@@ -72,7 +72,7 @@
             -webkit-text-fill-color: transparent;
         }
         .visitors-hero-blurb {
-            font-family: 'Inter', sans-serif;
+            font-family: 'IBM Plex Sans', sans-serif;
             font-weight: 400;
             font-size: 18px;
             line-height: 1.6;
@@ -85,7 +85,7 @@
         }
         .visitors-hero-meta {
             margin-top: 22px;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 11px;
             color: rgba(255, 255, 255, 0.45);
             letter-spacing: 0.14em;
@@ -130,6 +130,52 @@
             gap: 12px;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
+            animation: peg-drop 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        }
+        @keyframes peg-drop {
+            from { opacity: 0; transform: translateY(-22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---- Pagination controls ---- */
+        .visitors-pagination {
+            margin-top: 32px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+        .visitors-pagination.is-visible { display: flex; }
+        .vp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+        .vp-btn:hover:not([disabled]) {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .vp-btn[disabled] {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        .vp-info {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            color: rgba(255, 255, 255, 0.6);
+            min-width: 70px;
+            text-align: center;
         }
 
         /* All tile containers are the same size; the keyboard inside sits
@@ -200,7 +246,7 @@
 
         /* Name plate underneath, etched into the wall */
         .peg-name {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 10.5px;
             font-weight: 700;
             color: #2a261f;
@@ -280,7 +326,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 10px;
             letter-spacing: 0.18em;
             text-transform: uppercase;
@@ -297,7 +343,7 @@
             font-weight: 700;
         }
         .visitor-modal-card .vmc-name {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.08em;
@@ -325,7 +371,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px 18px;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 12px;
             color: var(--vc-text-dim, rgba(255,255,255,0.6));
         }
@@ -350,7 +396,7 @@
             align-items: center;
             padding-top: 12px;
             border-top: 1px dashed color-mix(in oklab, var(--vc-text-dim, rgba(255,255,255,0.4)) 60%, transparent);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 11px;
             color: var(--vc-text-dim, rgba(255,255,255,0.55));
             letter-spacing: 0.08em;
@@ -432,7 +478,7 @@
         .edit-modal-close:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
 
         .edit-modal h2 {
-            font-family: 'Gabarito', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
             font-size: 24px;
             color: #fff;
@@ -453,7 +499,7 @@
 
         .edit-field { display: flex; flex-direction: column; gap: 10px; }
         .edit-field-label {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 10px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
@@ -468,7 +514,7 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #fff;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 14px;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -495,7 +541,7 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 12px;
             letter-spacing: 0.04em;
             cursor: pointer;
@@ -527,7 +573,7 @@
         .edit-cancel, .edit-save {
             padding: 10px 18px;
             border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 13px;
             font-weight: 500;
             letter-spacing: 0.04em;
@@ -549,7 +595,7 @@
         .edit-save[disabled] { opacity: 0.5; cursor: wait; }
         .edit-status {
             flex: 1;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 11px;
             color: rgba(255, 255, 255, 0.55);
             align-self: center;
@@ -572,7 +618,7 @@
             animation: visitors-cta-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
         }
         .visitors-typing-cta-tagline {
-            font-family: 'Inter', sans-serif;
+            font-family: 'IBM Plex Sans', sans-serif;
             font-size: 15px;
             font-weight: 500;
             line-height: 1.5;
@@ -588,7 +634,7 @@
             border-radius: 4px;
             background: rgba(17, 128, 249, 0.1);
             border: 1px solid rgba(17, 128, 249, 0.3);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 13px;
             font-weight: 500;
             color: #66d2ff;
@@ -673,10 +719,11 @@
         </section>
 
         <section class="visitors-grid" id="visitorsGrid"></section>
+        <nav class="visitors-pagination" id="visitorsPagination" aria-label="Visitor pages"></nav>
 
         <!-- Closing CTA — sits below the visitor grid as the natural end-of-page action -->
         <div class="visitors-typing-cta-wrap">
-            <p class="visitors-typing-cta-tagline">Think you can beat my record of 120 WPM?</p>
+            <p class="visitors-typing-cta-tagline">Think you can beat my record of 60 WPM?</p>
             <a href="typing.html" class="visitors-typing-cta">
                 <span>Start Typing Now</span>
             </a>
@@ -802,6 +849,20 @@
 
             var grid = document.getElementById('visitorsGrid');
             var countEl = document.getElementById('visitorCount');
+            var paginationEl = document.getElementById('visitorsPagination');
+
+            // Pagination — limit tiles per page so the wall doesn't grow
+            // unbounded as visitors accumulate. Page size matches a 4-row
+            // block at 3 cols, 6-row block at 2 cols.
+            var TILES_PER_PAGE = 12;
+            var currentPage = 1;
+
+            // Current column count drives the row-by-row animation stagger.
+            function columnCount() {
+                if (window.matchMedia('(max-width: 540px)').matches) return 1;
+                if (window.matchMedia('(max-width: 900px)').matches) return 2;
+                return 3;
+            }
 
             // Persistent seed cards — always rendered alongside real visitors so
             // the gallery never feels empty. Each one uses a different combo of
@@ -885,14 +946,27 @@
                        String(d.getFullYear()).slice(-2);
             }
 
-            function renderCard(v, idx) {
+            // `tileIdx` is the visitor's index in `tilesData` (for click → modal
+            // lookup). `posInPage` is the tile's slot within the current page
+            // and drives the row-by-row drop-in stagger. When `animate` is
+            // false (resize re-render), the drop-in is suppressed.
+            function renderCard(v, tileIdx, posInPage, cols, animate) {
                 var c = CASES[v.case_color] || CASES.Graphite;
                 var keycap = KEYCAPS[v.keycaps] || KEYCAPS.Cream;
                 var mine = !!v._mine;
+                var animStyle;
+                if (animate) {
+                    var row = Math.floor(posInPage / cols);
+                    var delay = (0.18 + row * 0.16).toFixed(2);
+                    animStyle = ';animation-delay:' + delay + 's';
+                } else {
+                    animStyle = ';animation:none';
+                }
                 return (
                     '<article class="peg-tile' + (mine ? ' is-mine' : '') +
-                    '" tabindex="0" data-index="' + idx + '" style="--vc-color:' + c.color +
-                    ';--vc-keycap:' + keycap + '">' +
+                    '" tabindex="0" data-index="' + tileIdx +
+                    '" style="--vc-color:' + c.color +
+                    ';--vc-keycap:' + keycap + animStyle + '">' +
                         '<div class="peg-kb-wrap">' +
                             '<div class="peg-kb">' + renderKb(v.layout) + '</div>' +
                         '</div>' +
@@ -952,17 +1026,76 @@
             // Real visitors render first (newest at top, with the viewer's own
             // card hoisted to position 0). Seeds fill in behind them so the
             // gallery always shows at least the seed wall.
-            // `tilesData` holds the array in render order so click handlers
-            // can look up the full visitor by its rendered index.
+            // `tilesData` holds the full array in render order so click
+            // handlers can look up a visitor by its global index.
             var tilesData = [];
+
+            function pageCount() {
+                return Math.max(1, Math.ceil(tilesData.length / TILES_PER_PAGE));
+            }
+
+            function renderPage(animate) {
+                if (animate === undefined) animate = true;
+                var cols = columnCount();
+                var start = (currentPage - 1) * TILES_PER_PAGE;
+                var slice = tilesData.slice(start, start + TILES_PER_PAGE);
+                grid.innerHTML = slice.map(function (v, i) {
+                    return renderCard(v, start + i, i, cols, animate);
+                }).join('');
+                renderPagination();
+            }
+
+            function renderPagination() {
+                var total = pageCount();
+                if (total <= 1) {
+                    paginationEl.innerHTML = '';
+                    paginationEl.classList.remove('is-visible');
+                    return;
+                }
+                paginationEl.classList.add('is-visible');
+                paginationEl.innerHTML =
+                    '<button type="button" class="vp-btn" data-page-prev' +
+                        (currentPage === 1 ? ' disabled' : '') +
+                        ' aria-label="Previous page"><i class="ph ph-arrow-left"></i></button>' +
+                    '<span class="vp-info">' + currentPage + ' / ' + total + '</span>' +
+                    '<button type="button" class="vp-btn" data-page-next' +
+                        (currentPage === total ? ' disabled' : '') +
+                        ' aria-label="Next page"><i class="ph ph-arrow-right"></i></button>';
+            }
 
             function renderAll(realRows) {
                 var hoisted = hoistOwn(realRows || []);
                 tilesData = hoisted.concat(SEED_VISITORS);
-                grid.innerHTML = tilesData.map(renderCard).join('');
+                // Clamp the active page if the dataset shrank (e.g. after
+                // backend wipe), so we never land on an empty page.
+                if (currentPage > pageCount()) currentPage = pageCount();
+                renderPage();
                 var n = tilesData.length;
                 countEl.textContent = n + ' visitor' + (n === 1 ? '' : 's');
             }
+
+            // Pagination clicks — re-render current page; the new tiles
+            // animate in fresh because the DOM is replaced.
+            paginationEl.addEventListener('click', function (e) {
+                if (e.target.closest('[data-page-prev]') && currentPage > 1) {
+                    currentPage -= 1;
+                    renderPage();
+                } else if (e.target.closest('[data-page-next]') && currentPage < pageCount()) {
+                    currentPage += 1;
+                    renderPage();
+                }
+            });
+
+            // Re-render on viewport change so layout stays consistent when
+            // columns shift between breakpoints — but suppress the drop
+            // animation since the user didn't trigger this.
+            var resizeTimer = null;
+            window.addEventListener('resize', function () {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function () {
+                    if (tilesData.length) renderPage(false);
+                }, 200);
+            });
 
             function load() {
                 var url = window.SUPABASE_URL;

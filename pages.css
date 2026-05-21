@@ -33,7 +33,7 @@
     height: 56px;
     background: linear-gradient(145deg, #ffffff, #e8e8e8);
     border: none;
-    border-radius: 50%;
+    border-radius: 8px;
     text-decoration: none;
     cursor: pointer;
     box-shadow:
@@ -333,7 +333,7 @@
 .about-avatar-large {
     width: 200px;
     height: 200px;
-    border-radius: 50%;
+    border-radius: 8px;
     object-fit: cover;
     box-shadow:
         8px 8px 16px rgba(0, 0, 0, 0.1),

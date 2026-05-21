@@ -393,7 +393,7 @@ body {
 .about-avatar {
     width: 120px;
     height: 120px;
-    border-radius: 50%;
+    border-radius: 8px;
     object-fit: cover;
     border: 4px solid var(--accent-blue);
     box-shadow: var(--shadow-lg);
@@ -766,7 +766,7 @@ a.nav-btn {
     height: 56px;
     background: linear-gradient(145deg, #ffffff, #e8e8e8);
     border: none;
-    border-radius: 50%;
+    border-radius: 8px;
     cursor: pointer;
     position: relative;
     box-shadow:
@@ -1125,4 +1125,13 @@ a.nav-btn {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* Navigation typography — Pixelify Sans for the keyboard/computer theme.
+   Appended as an override so it wins over each file's earlier .nav-link rule
+   without needing per-page edits to the original declarations. */
+.nav-link,
+.mobile-menu-link {
+    font-family: 'Space Grotesk', sans-serifns-serif;
+    letter-spacing: 0.02em;
 }
