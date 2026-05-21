@@ -82,38 +82,32 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
    Skip / corner
    ============================================ */
 .welcome-skip {
-    position: fixed;
-    top: 28px;
-    right: 32px;
+    align-self: center;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 14px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: rgba(255, 255, 255, 0.55);
+    padding: 6px 10px;
+    margin-top: 2px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
     text-decoration: none;
     font-family: 'Space Mono', monospace;
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: lowercase;
-    z-index: 50;
     opacity: 0;
     transform: translateY(-6px);
     animation: welcome-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .welcome-skip i { font-size: 13px; transition: transform 0.2s ease; }
 
 .welcome-skip:hover {
     color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.18);
 }
 
 .welcome-skip:hover i { transform: translateX(2px); }
@@ -130,7 +124,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     padding: 64px 56px 40px;
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 8rem;
     align-items: center;
 }
 
@@ -170,7 +164,7 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 .welcome-title {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
-    font-size: clamp(28px, 4vw, 38px);
+    font-size: clamp(20px, 4vw, 38px);
     line-height: 1.05;
     letter-spacing: -0.03em;
     color: #fff;
@@ -210,11 +204,22 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     width: 100%;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
-    gap: 44px;
+    grid-template-rows: auto auto;
+    column-gap: 44px;
+    row-gap: 14px;
     align-items: start;
     opacity: 0;
     transform: translateY(20px);
     animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+}
+
+.welcome-stage > .build-card    { grid-column: 1; grid-row: 1; }
+.welcome-stage > .welcome-panel { grid-column: 2; grid-row: 1 / span 2; }
+.welcome-stage > .welcome-fineprint {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+    margin: 0;
 }
 
 .welcome-panel {
@@ -841,8 +846,15 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
 @media (max-width: 900px) {
     .welcome-stage {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
         max-width: 480px;
         margin: 0 auto;
+    }
+    .welcome-stage > .build-card,
+    .welcome-stage > .welcome-panel,
+    .welcome-stage > .welcome-fineprint {
+        grid-column: 1;
+        grid-row: auto;
     }
 }
 
@@ -850,11 +862,6 @@ input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
     .welcome-layout {
         padding: 56px 22px 24px;
         gap: 20px;
-    }
-
-    .welcome-skip {
-        top: 18px;
-        right: 18px;
     }
 
     .build-card {

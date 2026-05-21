@@ -43,7 +43,8 @@
         counter.classList.toggle('counter-visible', visible);
     }
 
-    // Layout toggle — FLIP animate the same cards between carousel and 2-col grid
+    // Layout toggle — FLIP animate the same cards between carousel and 2-col grid.
+    // Mobile only has the carousel view; the grid + toggle are hidden by CSS.
     var layoutToggle = document.querySelector('.layout-toggle');
     var layoutMode = 'carousel'; // 'carousel' or 'grid'
     var FLIP_DURATION = 700;

@@ -1255,7 +1255,7 @@ body.grid-mode .hero-heading {
 }
 
 body.grid-mode .hero-tagline {
-    font-size: 18px;
+    font-size: 20px;
     margin-top: 12px;
     color: rgba(255, 255, 255, 0.7);
 }
@@ -1570,7 +1570,7 @@ body.grid-mode .project-card:hover .project-overlay {
 
 @media (max-width: 640px) {
     .navbar {
-        padding: 2rem;
+        padding: 3rem;
         z-index: 110;
     }
 
@@ -1710,47 +1710,12 @@ body.grid-mode .project-card:hover .project-overlay {
         display: inline;
     }
 
-    /* Grid mode on mobile — single column, hero text on top, page scrolls naturally */
-    body.grid-mode .carousel-viewport {
-        grid-template-columns: 1fr;
-        grid-template-rows: none;
-        grid-auto-rows: 20rem;
-        padding: 1rem 16px 60px;
-        gap: 16px;
-    }
-
-    body.grid-mode .project-card,
-    body.grid-mode .project-card:nth-child(1),
-    body.grid-mode .project-card:nth-child(2),
-    body.grid-mode .project-card:nth-child(3),
-    body.grid-mode .project-card:nth-child(4),
-    body.grid-mode .project-card:nth-child(5),
-    body.grid-mode .project-card:nth-child(6),
-    body.grid-mode .project-card:nth-child(7) {
-        grid-column: 1;
-        grid-row: auto;
-    }
-
-    body.grid-mode .section-hero {
-        padding: 90px 16px 0;
-        gap: 1rem;
-    }
-
-    body.grid-mode .hero-content,
-    body.grid-mode .hero-content.hero-hidden {
-        margin-top: 2.5rem;
-    }
-
-    body.grid-mode .hero-heading {
-        font-size: 26px;
-    }
-
-    body.grid-mode .hero-tagline {
-        text-align: left;
-    }
-
-    body.grid-mode .hero-swipe-hint {
-        display: none;
+    /* Mobile is carousel-only: hide the grid/carousel toggle button and the
+       swipe-hint label. */
+    .bg-controls,
+    .layout-toggle,
+    .hero-swipe-hint {
+        display: none !important;
     }
 
     body.grid-mode .footer-info,
@@ -1861,6 +1826,13 @@ body.grid-mode .project-card:hover .project-overlay {
 
     .project-info {
         gap: 8px;
+    }
+
+    /* On external-link cards (Hackathon → Figma), keep the description clear
+       of the bottom-right external icon. Icon is 38px wide + 16px from the
+       edge, so 62px right padding gives a comfortable gutter. */
+    .project-card:has(.project-external-icon) .project-info {
+        padding-right: 62px;
     }
 
     /* Social links — animate from column to row when leaving hero */

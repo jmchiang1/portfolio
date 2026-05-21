@@ -1068,8 +1068,11 @@ a, button, [role="button"],
    ============================================ */
 @media (max-width: 768px) {
     .navbar {
-        padding: 16px 20px;
+        padding: 3rem;
         justify-content: flex-start;
+        /* Raise above the mobile-menu (z:105) so the hamburger / close X
+           stays clickable while the menu is open. */
+        z-index: 110;
     }
 
     .nav-logo {
@@ -1237,6 +1240,9 @@ a, button, [role="button"],
     /* Layout adjustments */
     .vibes-layout {
         padding: 160px 20px 40px;
+        /* Safety clip in case fanned chips/transforms try to escape the
+           viewport on narrow phones. */
+        overflow-x: clip;
     }
 
     .vibes-hero {
@@ -1282,6 +1288,8 @@ a, button, [role="button"],
 @media (max-width: 768px) {
     .hero-title-wrap {
         padding: 0 36px;
+        /* Pull the fanned chips in tighter on tablet. */
+        --fan: 48px;
     }
 
     .hero-logo-chip {
@@ -1305,7 +1313,8 @@ a, button, [role="button"],
 
     .hero-title-wrap {
         padding: 0 28px;
-        --fan: 56px;
+        /* Tightened so the fanned chips don't overflow the viewport. */
+        --fan: 36px;
     }
 
     .hero-logo-chip {
@@ -1321,13 +1330,17 @@ a, button, [role="button"],
         height: 18px;
     }
 
+    /* Live site + Code buttons sit side-by-side on mobile. */
     .vibes-card-actions {
-        flex-direction: column;
+        flex-direction: row;
         align-items: stretch;
+        flex-wrap: wrap;
     }
 
     .vibes-btn {
+        flex: 1 1 0;
         justify-content: center;
+        min-width: 0;
     }
 }
 

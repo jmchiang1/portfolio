@@ -374,9 +374,31 @@
         applyCase();
     });
 
+    var switchSounds = {
+        linear:  new Audio('assets/sounds/linear.mp3'),
+        tactile: new Audio('assets/sounds/tactile.mp3'),
+        clicky:  new Audio('assets/sounds/clicky.mp3')
+    };
+    Object.keys(switchSounds).forEach(function (k) {
+        switchSounds[k].preload = 'auto';
+        switchSounds[k].volume = 0.55;
+    });
+    // Cloning a preloaded Audio reuses the cached buffer, so overlapping
+    // plays during fast typing don't cut each other off.
+    function playSwitchSound(key) {
+        var src = switchSounds[key];
+        if (!src) return;
+        try {
+            var clone = src.cloneNode();
+            clone.volume = src.volume;
+            clone.play().catch(function () {});
+        } catch (e) {}
+    }
+
     pickInGroup('[data-switch]', 'data-switch', function (btn) {
         build.switchKey = btn.getAttribute('data-switch');
         build.switchName = btn.getAttribute('data-name');
+        playSwitchSound(build.switchKey);
         applySwitch();
     });
 
@@ -461,7 +483,10 @@
         for (var i = 0; i < nodes.length; i++) nodes[i].classList.remove('is-pressed');
     }
 
-    document.addEventListener('keydown', function (e) { pressKey(normalizeKey(e), true); }, { passive: true });
+    document.addEventListener('keydown', function (e) {
+        pressKey(normalizeKey(e), true);
+        if (!e.repeat) playSwitchSound(build.switchKey);
+    }, { passive: true });
     document.addEventListener('keyup',   function (e) { pressKey(normalizeKey(e), false); }, { passive: true });
     window.addEventListener('blur', clearPressed);
 

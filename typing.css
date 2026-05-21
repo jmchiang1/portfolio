@@ -1037,7 +1037,7 @@ a, button, [role="button"],
 
 @media (max-width: 768px) {
     .navbar {
-        padding: 16px 20px;
+        padding: 3rem;
         justify-content: flex-start;
     }
 

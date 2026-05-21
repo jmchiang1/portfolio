@@ -669,6 +669,7 @@
             }
             .peg-kb { --u: 12px; }
             .peg-kb-wrap { height: 124px; }
+            .visitors-typing-cta-wrap { display: none; }
         }
     </style>
 </head>
@@ -812,11 +813,11 @@
             if (hamburger && mobileMenu) {
                 function closeMenu() {
                     hamburger.classList.remove('is-open');
-                    mobileMenu.classList.remove('is-open');
+                    mobileMenu.classList.remove('menu-open');
                     document.body.classList.remove('menu-open');
                 }
                 hamburger.addEventListener('click', function () {
-                    var open = mobileMenu.classList.toggle('is-open');
+                    var open = mobileMenu.classList.toggle('menu-open');
                     hamburger.classList.toggle('is-open', open);
                     document.body.classList.toggle('menu-open', open);
                 });
@@ -1262,9 +1263,25 @@
                 if (!editState) return;
                 editState.caseKey = k; editState.caseName = n;
             });
+            var editSwitchSounds = {
+                linear:  new Audio('assets/sounds/linear.mp3'),
+                tactile: new Audio('assets/sounds/tactile.mp3'),
+                clicky:  new Audio('assets/sounds/clicky.mp3')
+            };
+            Object.keys(editSwitchSounds).forEach(function (k) {
+                editSwitchSounds[k].preload = 'auto';
+                editSwitchSounds[k].volume = 0.55;
+            });
+            function playEditSwitchSound(key) {
+                var s = editSwitchSounds[key];
+                if (!s) return;
+                try { s.currentTime = 0; s.play().catch(function () {}); } catch (e) {}
+            }
+
             bindPicker(switchesEl, function (k, n) {
                 if (!editState) return;
                 editState.switchKey = k; editState.switchName = n;
+                playEditSwitchSound(k);
             });
             bindPicker(keycapsEl, function (k, n) {
                 if (!editState) return;

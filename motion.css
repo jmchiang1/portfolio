@@ -1215,7 +1215,7 @@ a, button, [role="button"],
 
 @media (max-width: 640px) {
     .navbar {
-        padding: 2rem;
+        padding: 3rem;
         z-index: 110;
     }
 

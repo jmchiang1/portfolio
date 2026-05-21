@@ -1,11 +1,21 @@
 // Motion page — vibes-style grid layout
 (function () {
     var cards = Array.from(document.querySelectorAll('.motion-card'));
+    var isMobile = window.matchMedia('(max-width: 640px)').matches;
 
-    // Hover-to-play — videos only play while the user is hovering the card
+    // Hover-to-play on desktop; autoplay-muted on mobile so the grid feels
+    // alive without requiring a tap on each card.
     cards.forEach(function (card) {
         var video = card.querySelector('.project-video');
         if (!video) return;
+
+        if (isMobile) {
+            video.muted = true;
+            video.setAttribute('autoplay', '');
+            var p = video.play();
+            if (p && p.catch) p.catch(function () {});
+            return;
+        }
 
         card.addEventListener('mouseenter', function () {
             video.currentTime = 0;
@@ -131,8 +141,7 @@
         if (target) {
             var video = target.querySelector('video');
             if (video) {
-                // Pause, re-mute and remove controls before returning to card
-                video.pause();
+                // Re-mute and remove controls before returning to card
                 video.muted = true;
                 video.controls = false;
 
@@ -146,6 +155,15 @@
                     video.classList.add('project-video');
                     if (ownerOverlay) ownerFrame.insertBefore(video, ownerOverlay);
                     else ownerFrame.appendChild(video);
+                }
+
+                // Mobile: keep the grid alive — resume muted loop. Desktop:
+                // pause so the card is still until the next hover.
+                if (isMobile) {
+                    var p = video.play();
+                    if (p && p.catch) p.catch(function () {});
+                } else {
+                    video.pause();
                 }
             }
         }

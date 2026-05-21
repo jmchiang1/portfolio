@@ -878,6 +878,13 @@ a, button, [role="button"],
             "now";
     }
 
+    /* Design + Development cards size to their own content instead of
+       sharing equal flex space (which clipped design and overstretched dev). */
+    .bento-skills-stack .bento-skill {
+        flex: 0 0 auto;
+        height: auto;
+    }
+
     .social-links {
         bottom: 24px;
         right: 24px;
@@ -886,7 +893,7 @@ a, button, [role="button"],
 
 @media (max-width: 640px) {
     .navbar {
-        padding: 2rem;
+        padding: 3em;
         z-index: 110;
     }
 

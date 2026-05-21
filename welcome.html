@@ -22,18 +22,8 @@
     <div id="background-grid" class="grid-visible"></div>
     <div class="glow"></div>
 
-    <!-- Skip / back -->
-    <a href="/" class="welcome-skip" id="welcomeSkip" aria-label="Skip to portfolio">
-        <span>skip</span>
-        <i class="ph ph-arrow-right"></i>
-    </a>
-
     <main class="welcome-layout">
         <header class="welcome-hero">
-            <span class="welcome-eyebrow">
-                <!-- <i class="ph-fill ph-keyboard"></i> -->
-                <span>welcome, visitor</span>
-            </span>
             <h1 class="welcome-title">
                 Welcome to Jonathan's Portfolio,</span>
             </h1>
@@ -47,8 +37,6 @@
             <article class="build-card" id="buildCard">
                 <header class="build-card-head">
                     <div class="build-card-brand">
-                        <!-- <span class="build-card-logo">JC</span> -->
-                        <!-- <span class="build-card-meta">VISITOR BUILD</span> -->
                         <h2 class="build-card-name" id="cardName">YOUR NAME</h2>
                     </div>
                     <span class="build-card-serial" id="cardSerial">NO. 0000</span>
@@ -98,6 +86,10 @@
                     </div>
                 </footer>
             </article>
+
+            <p class="welcome-fineprint" id="welcomeStatus">
+                Your build joins the <a href="visitors.html" class="welcome-fineprint-link">visitor gallery</a>.
+            </p>
 
             <!-- Right-side panel: name + controls + CTA -->
             <aside class="welcome-panel">
@@ -173,12 +165,13 @@
 
                 <div class="welcome-cta">
                     <button class="welcome-submit" id="welcomeSubmit" type="button">
-                        <span>Enter the portfolio</span>
+                        <span>Save Keyboard</span>
                         <i class="ph ph-arrow-right"></i>
                     </button>
-                    <p class="welcome-fineprint" id="welcomeStatus">
-                        Your build joins the <a href="visitors.html" class="welcome-fineprint-link">visitor gallery</a>.
-                    </p>
+                    <a href="/" class="welcome-skip" id="welcomeSkip" aria-label="Skip to portfolio">
+                        <span>skip</span>
+                        <i class="ph ph-arrow-right"></i>
+                    </a>
                 </div>
             </aside>
         </section>
