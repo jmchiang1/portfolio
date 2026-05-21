@@ -11,7 +11,7 @@ html, body {
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #000002;
+    background: #06062C;
     color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -948,6 +948,7 @@ body::before {
     .mobile-menu.menu-open .mobile-menu-link:nth-child(1) { animation-delay: 0.1s; }
     .mobile-menu.menu-open .mobile-menu-link:nth-child(2) { animation-delay: 0.15s; }
     .mobile-menu.menu-open .mobile-menu-link:nth-child(3) { animation-delay: 0.2s; }
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(4) { animation-delay: 0.25s; }
 
     /* Close animation — links slide down + fade out, overlay fades simultaneously */
     .mobile-menu.menu-closing {
@@ -962,9 +963,10 @@ body::before {
         animation: menu-exit 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    .mobile-menu.menu-closing .mobile-menu-link:nth-child(3) { animation-delay: 0s; }
-    .mobile-menu.menu-closing .mobile-menu-link:nth-child(2) { animation-delay: 0.05s; }
-    .mobile-menu.menu-closing .mobile-menu-link:nth-child(1) { animation-delay: 0.1s; }
+    .mobile-menu.menu-closing .mobile-menu-link:nth-child(4) { animation-delay: 0s; }
+    .mobile-menu.menu-closing .mobile-menu-link:nth-child(3) { animation-delay: 0.05s; }
+    .mobile-menu.menu-closing .mobile-menu-link:nth-child(2) { animation-delay: 0.1s; }
+    .mobile-menu.menu-closing .mobile-menu-link:nth-child(1) { animation-delay: 0.15s; }
 
     @keyframes menu-exit {
         from { opacity: 1; transform: translateY(0); }

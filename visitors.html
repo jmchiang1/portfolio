@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitors · Jonathan Chiang</title>
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="welcome.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <style>
+        body { opacity: 0; }
+        .visitors-layout {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+        .visitors-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .visitors-title-block { max-width: 560px; }
+        .visitors-title {
+            font-family: 'Gabarito', sans-serif;
+            font-weight: 800;
+            font-size: clamp(36px, 5vw, 52px);
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            color: #fff;
+        }
+        .visitors-title-accent {
+            background: linear-gradient(135deg, #1180f9 0%, #66d2ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .visitors-blurb {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+        .visitors-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .visitors-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 1000px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            text-transform: lowercase;
+            transition: color 0.2s ease, background 0.2s ease;
+        }
+        .visitors-back:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+        .visitors-back i { font-size: 13px; }
+
+        .visitors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .visitor-card {
+            position: relative;
+            padding: 22px 22px 20px;
+            border-radius: 18px;
+            overflow: hidden;
+            isolation: isolate;
+            background:
+                radial-gradient(120% 80% at 110% -10%, rgba(255, 255, 255, 0.06), transparent 55%),
+                linear-gradient(150deg,
+                    color-mix(in oklab, var(--vc-color, #1f1f24) 92%, white 8%) 0%,
+                    var(--vc-color, #1f1f24) 55%,
+                    color-mix(in oklab, var(--vc-color, #1f1f24) 80%, black 20%) 100%);
+            border: 1px solid color-mix(in oklab, var(--vc-color, #1f1f24) 70%, white 30%);
+            box-shadow:
+                0 20px 50px -25px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            color: var(--vc-text, #fff);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .visitor-card:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 30px 60px -25px rgba(0, 0, 0, 0.85),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .visitor-card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .visitor-card-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 500;
+            color: var(--vc-text-dim, rgba(255,255,255,0.55));
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .visitor-card-serial {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--vc-text-dim, rgba(255,255,255,0.5));
+            letter-spacing: 0.14em;
+        }
+        .visitor-card-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--vc-text, #fff);
+        }
+        .visitor-card-mini-kb {
+            background: color-mix(in oklab, var(--vc-color, #1f1f24) 65%, black 35%);
+            border: 1px solid color-mix(in oklab, var(--vc-color, #1f1f24) 50%, white 12%);
+            border-radius: 6px;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .visitor-card-mini-kb .kb-row {
+            display: flex;
+            gap: 2px;
+            height: 12px;
+            align-items: stretch;
+        }
+        .visitor-card-mini-kb .kb-key {
+            flex: 1 1 0;
+            min-width: 0;
+            background: var(--vc-keycap, #e7dcc2);
+            border: 1px solid color-mix(in oklab, var(--vc-keycap, #e7dcc2) 80%, black 20%);
+            border-radius: 1.5px;
+        }
+        .visitor-card-mini-kb .kb-key.kb-space { flex-grow: 6; }
+        .visitor-card-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--vc-text-dim, rgba(255,255,255,0.6));
+        }
+        .visitor-card-meta b {
+            display: block;
+            font-weight: 500;
+            color: var(--vc-text-dim, rgba(255,255,255,0.45));
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+        .visitor-card-meta span {
+            font-weight: 600;
+            color: var(--vc-text, #fff);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .visitor-card-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px dashed color-mix(in oklab, var(--vc-text-dim, rgba(255,255,255,0.4)) 60%, transparent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--vc-text-dim, rgba(255,255,255,0.55));
+            letter-spacing: 0.08em;
+        }
+
+        .visitors-empty {
+            text-align: center;
+            padding: 80px 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+        .visitors-empty i { display: block; font-size: 32px; margin-bottom: 12px; opacity: 0.6; }
+        .visitors-empty a { color: #66d2ff; text-decoration: none; border-bottom: 1px dashed rgba(102, 210, 255, 0.4); }
+        .visitors-error { color: #ef4444; }
+
+        @media (max-width: 720px) {
+            .visitors-layout { padding: 60px 22px 32px; gap: 24px; }
+            .visitors-grid { grid-template-columns: 1fr; gap: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+    <div class="glow"></div>
+
+    <a href="/" class="welcome-skip">
+        <i class="ph ph-arrow-left"></i>
+        <span>portfolio</span>
+    </a>
+
+    <main class="visitors-layout">
+        <header class="visitors-header">
+            <div class="visitors-title-block">
+                <span class="welcome-eyebrow">
+                    <i class="ph-fill ph-keyboard"></i>
+                    <span>visitor gallery</span>
+                </span>
+                <h1 class="visitors-title" style="margin-top:14px">
+                    Everyone who's <span class="visitors-title-accent">stopped by.</span>
+                </h1>
+                <p class="visitors-blurb">
+                    Each card was built at the door, signed, and slipped into the wall.
+                </p>
+            </div>
+            <div class="visitors-meta">
+                <span id="visitorCount">— visitors</span>
+            </div>
+        </header>
+
+        <section class="visitors-grid" id="visitorsGrid"></section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="transitions.js"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            var CASES = {
+                Graphite: { color: '#1f1f24', text: '#ffffff', dim: 'rgba(255,255,255,0.55)' },
+                Midnight: { color: '#1a2747', text: '#ffffff', dim: 'rgba(255,255,255,0.6)'  },
+                Ember:    { color: '#c0673f', text: '#1a0d05', dim: 'rgba(26,13,5,0.6)'      },
+                Moss:     { color: '#3a5b3f', text: '#f4f1e3', dim: 'rgba(244,241,227,0.6)'  },
+                Bone:     { color: '#e6dccb', text: '#1c1a14', dim: 'rgba(28,26,20,0.55)'    }
+            };
+            var KEYCAPS = {
+                Cream:      '#e7dcc2',
+                BoW:        '#13131a',
+                Olivia:     '#e9dcd4',
+                Botanical:  '#1c2a26',
+                Dolch:      '#2a2a2e'
+            };
+
+            var grid = document.getElementById('visitorsGrid');
+            var countEl = document.getElementById('visitorCount');
+
+            function miniKb() {
+                // 5 rows of stylized keys; bottom row has a wide spacebar.
+                var rows = [14, 14, 13, 12, null];
+                return rows.map(function (count) {
+                    var keys = '';
+                    if (count === null) {
+                        keys =
+                            '<div class="kb-key"></div>'.repeat(3) +
+                            '<div class="kb-key kb-space"></div>' +
+                            '<div class="kb-key"></div>'.repeat(3);
+                    } else {
+                        keys = '<div class="kb-key"></div>'.repeat(count);
+                    }
+                    return '<div class="kb-row">' + keys + '</div>';
+                }).join('');
+            }
+
+            function fmtDate(iso) {
+                if (!iso) return '—';
+                var d = new Date(iso);
+                if (isNaN(d.valueOf())) return '—';
+                return String(d.getMonth() + 1).padStart(2, '0') + '/' +
+                       String(d.getDate()).padStart(2, '0') + '/' +
+                       String(d.getFullYear()).slice(-2);
+            }
+
+            function renderCard(v) {
+                var c = CASES[v.case_color] || CASES.Graphite;
+                var keycap = KEYCAPS[v.keycaps] || KEYCAPS.Cream;
+                return (
+                    '<article class="visitor-card" style="--vc-color:' + c.color +
+                    ';--vc-text:' + c.text + ';--vc-text-dim:' + c.dim +
+                    ';--vc-keycap:' + keycap + '">' +
+                        '<div class="visitor-card-head">' +
+                            '<span class="visitor-card-tag">VISITOR BUILD</span>' +
+                            '<span class="visitor-card-serial">NO. ' + String(v.serial || 0).padStart(4, '0') + '</span>' +
+                        '</div>' +
+                        '<h3 class="visitor-card-name">' + escapeHtml(v.name || '—') + '</h3>' +
+                        '<div class="visitor-card-mini-kb">' + miniKb() + '</div>' +
+                        '<div class="visitor-card-meta">' +
+                            '<div><b>Layout</b><span>' + escapeHtml(v.layout || '—') + '</span></div>' +
+                            '<div><b>Switch</b><span>' + escapeHtml(v.switch_type || '—') + '</span></div>' +
+                            '<div><b>Case</b><span>' + escapeHtml(v.case_color || '—') + '</span></div>' +
+                            '<div><b>Keycaps</b><span>' + escapeHtml(v.keycaps || '—') + '</span></div>' +
+                        '</div>' +
+                        '<div class="visitor-card-foot">' +
+                            '<span>ISSUED ' + fmtDate(v.created_at || v.issued_at) + '</span>' +
+                            '<span>x ' + escapeHtml(initials(v.name)) + '</span>' +
+                        '</div>' +
+                    '</article>'
+                );
+            }
+
+            function escapeHtml(s) {
+                return String(s == null ? '' : s)
+                    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            }
+
+            function initials(name) {
+                if (!name) return '__';
+                return name.split(' ').map(function (w) { return w.charAt(0); }).join('');
+            }
+
+            function renderEmpty(msg, link) {
+                grid.innerHTML =
+                    '<div class="visitors-empty" style="grid-column:1/-1">' +
+                        '<i class="ph ph-keyboard"></i>' +
+                        '<p>' + msg + '</p>' +
+                        (link ? '<p style="margin-top:8px"><a href="welcome.html">build your card →</a></p>' : '') +
+                    '</div>';
+            }
+
+            function renderError(msg) {
+                grid.innerHTML =
+                    '<div class="visitors-empty visitors-error" style="grid-column:1/-1">' +
+                        '<i class="ph ph-warning-circle"></i><p>' + msg + '</p>' +
+                    '</div>';
+            }
+
+            function tryLocal() {
+                try {
+                    var raw = localStorage.getItem('jc_visitor');
+                    if (!raw) return null;
+                    var v = JSON.parse(raw);
+                    v.created_at = v.issued_at;
+                    return [v];
+                } catch (e) { return null; }
+            }
+
+            function load() {
+                var url = window.SUPABASE_URL;
+                var key = window.SUPABASE_ANON_KEY;
+                if (!url || !key || typeof window.supabase === 'undefined') {
+                    // No backend wired yet — show local card if present
+                    var local = tryLocal();
+                    if (local && local.length) {
+                        grid.innerHTML = local.map(renderCard).join('');
+                        countEl.textContent = '1 visitor (local)';
+                    } else {
+                        renderEmpty('Visitor gallery is empty.', true);
+                        countEl.textContent = '0 visitors';
+                    }
+                    return;
+                }
+
+                var client = window.supabase.createClient(url, key);
+                client.from('visitors')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(200)
+                    .then(function (res) {
+                        if (res.error) throw res.error;
+                        var rows = res.data || [];
+                        if (!rows.length) {
+                            renderEmpty('No visitors yet — be the first.', true);
+                            countEl.textContent = '0 visitors';
+                            return;
+                        }
+                        grid.innerHTML = rows.map(renderCard).join('');
+                        countEl.textContent = rows.length + ' visitor' + (rows.length === 1 ? '' : 's');
+                    })
+                    .catch(function (err) {
+                        console.warn('[visitors] load failed', err);
+                        renderError('Could not load the gallery right now.');
+                    });
+            }
+
+            load();
+        })();
+    </script>
+</body>
+</html>

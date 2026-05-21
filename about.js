@@ -1,48 +1,7 @@
-// About page — nav exit animations
+// About page
 (function () {
-    function triggerExit(href) {
-        var navbar = document.querySelector('.navbar');
-        var navLinks = navbar.querySelectorAll('.nav-link');
-        var logoEl = navbar.querySelector('.nav-logo');
-
-        navLinks.forEach(function (link) {
-            link.style.animation = 'none';
-            link.style.opacity = '1';
-            link.style.transform = 'translateY(0)';
-        });
-
-        logoEl.style.animation = 'none';
-        logoEl.style.opacity = '1';
-
-        navbar.offsetHeight;
-
-        navbar.classList.add('nav-exiting');
-        document.body.classList.add('page-exit-active');
-
-        setTimeout(function () {
-            window.location.href = href;
-        }, 500);
-    }
-
-    // Logo click
-    var logo = document.querySelector('.nav-logo');
-    if (logo) {
-        logo.addEventListener('click', function (e) {
-            e.preventDefault();
-            triggerExit(logo.getAttribute('href'));
-        });
-    }
-
-    // Nav-links that navigate to other pages
-    var allNavLinks = document.querySelectorAll('.nav-link');
-    allNavLinks.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (!href || href === '#' || href.startsWith('#')) return;
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            triggerExit(href);
-        });
-    });
+    // Desktop nav-link + logo exits — handled by the shared GSAP transitions module
+    if (window.PageTransitions) PageTransitions.bindNavLinks();
 
     // Hamburger menu toggle (mobile)
     var hamburger = document.querySelector('.hamburger');
@@ -78,7 +37,8 @@
             link.addEventListener('click', function (e) {
                 e.preventDefault();
                 closeMenu(function () {
-                    triggerExit(href);
+                    if (window.PageTransitions) PageTransitions.exit(href);
+                    else window.location.href = href;
                 });
             });
         });
@@ -95,7 +55,10 @@
         });
     });
 
-    // Photo scroll carousel — drive horizontal translate from page scroll position
+    // Photo scroll carousel — GSAP ScrollTrigger drives a scrubbed timeline
+    // that translates the track and scales/fades each slide based on its
+    // distance from the viewport center. CSS handles the staggered entrance
+    // keyframes; once they finish the scrub takes over the scale/opacity.
     (function () {
         var section = document.querySelector('.photo-scroll-section');
         if (!section) return;
@@ -104,109 +67,93 @@
         var dots = Array.prototype.slice.call(section.querySelectorAll('.photo-dot'));
         var N = slides.length;
         if (!track || N === 0) return;
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-        // Reduced motion: CSS fallback takes over — skip scroll hijack math
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        gsap.registerPlugin(ScrollTrigger);
 
-        var mobileMQ = window.matchMedia('(max-width: 640px)');
-        var ticking = false;
-        var lastActiveIdx = -1;
-
-        // Gate the scroll-driven transforms until the CSS entrance animation
-        // finishes, otherwise JS inline transforms would clash with the keyframes.
         // Entrance timing: last slide delay (0.75s) + duration (0.8s) ≈ 1550ms.
-        var entered = false;
+        // Until this point CSS keyframes own scale/opacity; after it, scrub does.
         var ENTER_TOTAL_MS = 1550;
 
-        function clearInlineStyles() {
-            track.style.transform = '';
-            slides.forEach(function (s) {
-                s.style.transform = '';
-                s.style.opacity = '';
-            });
-            lastActiveIdx = -1;
-        }
+        // matchMedia gates the whole scroll-driven behavior to desktop +
+        // motion-allowed users. On mobile or reduced-motion the CSS fallback
+        // (bento grid / horizontal overflow) handles layout instead.
+        var mm = gsap.matchMedia();
 
-        function update() {
-            ticking = false;
-            // On mobile, CSS renders photos as a bento grid — no carousel math
-            if (mobileMQ.matches) {
-                clearInlineStyles();
-                return;
-            }
-            var rect = section.getBoundingClientRect();
-            var vh = window.innerHeight;
-            var vw = window.innerWidth;
-            var scrollable = section.offsetHeight - vh;
-            if (scrollable <= 0) return;
+        mm.add('(min-width: 641px) and (prefers-reduced-motion: no-preference)', function () {
+            var entered = false;
+            var lastActiveIdx = -1;
 
-            var progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+            function applyProgress(progress) {
+                var slideW = slides[0].offsetWidth;
+                var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+                var step = slideW + gap;
+                var vw = window.innerWidth;
 
-            var first = slides[0];
-            var slideW = first.offsetWidth;
-            var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-            var step = slideW + gap;
+                var idxFloat = progress * (N - 1);
+                var center = idxFloat * step + slideW / 2;
+                var tx = vw / 2 - center;
 
-            var idxFloat = progress * (N - 1);
-            var center = idxFloat * step + slideW / 2;
-            var tx = vw / 2 - center;
-            // Track centering always runs — no CSS animation on the track, so
-            // this positions slide 0 in the viewport center from first paint
-            track.style.transform = 'translate3d(' + tx + 'px, 0, 0)';
+                gsap.set(track, { x: tx, force3D: true });
 
-            // Per-slide scale/opacity is driven by the CSS entrance animation
-            // until it finishes, then JS takes over based on scroll position
-            if (!entered) return;
+                if (!entered) return;
 
-            // Focus the centered slide — others subtly recede
-            slides.forEach(function (s, i) {
-                var dist = Math.abs(i - idxFloat);
-                var scale = Math.max(0.9, 1 - dist * 0.08);
-                var opacity = Math.max(0.45, 1 - dist * 0.28);
-                s.style.transform = 'scale(' + scale + ')';
-                s.style.opacity = opacity;
-            });
-
-            var activeIdx = Math.round(idxFloat);
-            if (activeIdx !== lastActiveIdx) {
-                dots.forEach(function (d, i) {
-                    d.classList.toggle('active', i === activeIdx);
+                slides.forEach(function (s, i) {
+                    var dist = Math.abs(i - idxFloat);
+                    var scale = Math.max(0.9, 1 - dist * 0.08);
+                    var opacity = Math.max(0.45, 1 - dist * 0.28);
+                    gsap.set(s, { scale: scale, opacity: opacity });
                 });
-                lastActiveIdx = activeIdx;
+
+                var activeIdx = Math.round(idxFloat);
+                if (activeIdx !== lastActiveIdx) {
+                    dots.forEach(function (d, i) {
+                        d.classList.toggle('active', i === activeIdx);
+                    });
+                    lastActiveIdx = activeIdx;
+                }
             }
-        }
 
-        function onScroll() {
-            if (!ticking) {
-                requestAnimationFrame(update);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
-        update();
-
-        // After the staggered entrance finishes, release CSS animation and
-        // let the scroll-driven carousel take over. Suppress the 0.15s opacity/
-        // transform transition for the handoff frame so the shift from keyframe
-        // end-state (translateY(0), opacity 1) to JS-computed (scale, opacity by
-        // distance) is instant — otherwise you see a brief shimmer/shift.
-        setTimeout(function () {
-            slides.forEach(function (s) {
-                s.style.transition = 'none';
-                s.style.animation = 'none';
+            var st = ScrollTrigger.create({
+                trigger: section,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true,
+                onUpdate: function (self) { applyProgress(self.progress); },
+                onRefresh: function (self) { applyProgress(self.progress); }
             });
-            entered = true;
-            update();
-            // Restore transition on the next frame so subsequent scroll updates
-            // animate smoothly again
-            requestAnimationFrame(function () {
+
+            // Centre slide 0 in the viewport from first paint
+            applyProgress(0);
+
+            // Hand off scale/opacity from CSS keyframes to scrubbed scroll once
+            // the entrance finishes. Briefly suppress the slide transition so
+            // the keyframe end-state → scrub computed-state swap is instant.
+            var handoffTimer = setTimeout(function () {
+                slides.forEach(function (s) {
+                    s.style.transition = 'none';
+                    s.style.animation = 'none';
+                });
+                entered = true;
+                applyProgress(st.progress);
                 requestAnimationFrame(function () {
-                    slides.forEach(function (s) { s.style.transition = ''; });
+                    requestAnimationFrame(function () {
+                        slides.forEach(function (s) { s.style.transition = ''; });
+                    });
                 });
-            });
-        }, ENTER_TOTAL_MS);
+            }, ENTER_TOTAL_MS);
+
+            return function cleanup() {
+                clearTimeout(handoffTimer);
+                st.kill();
+                gsap.set(track, { clearProps: 'all' });
+                slides.forEach(function (s) {
+                    gsap.set(s, { clearProps: 'all' });
+                    s.style.transition = '';
+                    s.style.animation = '';
+                });
+            };
+        });
     })();
 
     // Rotating role title — typewriter effect that types + deletes each role

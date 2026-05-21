@@ -446,7 +446,15 @@
         });
     });
 
-    // Wheel event handler — one swipe gesture = one card move
+    // Wheel event handler — one swipe gesture = one card move.
+    //
+    // Two layers of debouncing keep fast swipes from piling up:
+    //   1. `gestureMovedCard`: only the first wheel event in a continuous
+    //      gesture (defined as <50ms between events) triggers a move.
+    //   2. `isTransitioning`: even across separate gestures, ignore wheel
+    //      input while the previous card transition is still in flight.
+    // Without (2), rapid flick-flick-flick would stack moves on top of an
+    // unfinished transition and the carousel could end up in a stuck state.
     var gestureMovedCard = false;
     var gestureTimer = null;
 
@@ -462,11 +470,14 @@
         }, 50);
 
         if (gestureMovedCard) return;
+        if (isTransitioning) return;
 
         var delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
         if (Math.abs(delta) < 5) return;
 
         gestureMovedCard = true;
+        isTransitioning = true;
+        setTimeout(function () { isTransitioning = false; }, TRANSITION_MS);
 
         var scrollingDown = delta > 0;
 
@@ -502,7 +513,7 @@
         });
     });
 
-    // Project card click → collapse nav into dots, fade out content, navigate
+    // Project card click → use shared GSAP exit transition
     cards.forEach(function (card) {
         if (card.tagName !== 'A') return;
 
@@ -514,66 +525,13 @@
             e.preventDefault();
 
             var href = card.getAttribute('href');
-            var navbar = document.querySelector('.navbar');
-            var navLinks = navbar.querySelectorAll('.nav-link');
-
-            // Ensure logo is fully visible (cancel any entrance animation)
-            var logo = navbar.querySelector('.nav-logo');
-            logo.style.animation = 'none';
-            logo.style.opacity = '1';
-
-            // Freeze nav-links in their current visible state
-            navLinks.forEach(function (link) {
-                link.style.animation = 'none';
-                link.style.opacity = '1';
-                link.style.transform = 'translateY(0)';
-            });
-
-            // Force reflow so inline styles apply before transition starts
-            navbar.offsetHeight;
-
-            // Animate everything out simultaneously
-            navbar.classList.add('nav-exiting');
-            container.classList.add('page-exit-active');
-
-            // Navigate after exit animation completes
-            setTimeout(function () {
-                window.location.href = href;
-            }, 500);
+            if (window.PageTransitions) PageTransitions.exit(href);
+            else window.location.href = href;
         });
     });
 
-    // Nav-links that navigate to other pages (e.g. Motion)
-    var allNavLinks = document.querySelectorAll('.nav-link');
-    allNavLinks.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (!href || href === '#' || href.startsWith('#')) return;
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            var navbar = document.querySelector('.navbar');
-            var navLinks = navbar.querySelectorAll('.nav-link');
-            var logo = navbar.querySelector('.nav-logo');
-
-            logo.style.animation = 'none';
-            logo.style.opacity = '1';
-
-            navLinks.forEach(function (l) {
-                l.style.animation = 'none';
-                l.style.opacity = '1';
-                l.style.transform = 'translateY(0)';
-            });
-
-            navbar.offsetHeight;
-
-            navbar.classList.add('nav-exiting');
-            container.classList.add('page-exit-active');
-
-            setTimeout(function () {
-                window.location.href = href;
-            }, 500);
-        });
-    });
+    // Desktop nav-link + logo exits — handled by the shared GSAP transitions module
+    if (window.PageTransitions) PageTransitions.bindNavLinks();
 
     // Hamburger menu toggle (mobile)
     var hamburger = document.querySelector('.hamburger');
@@ -610,64 +568,26 @@
 
             link.addEventListener('click', function (e) {
                 e.preventDefault();
-
                 closeMenu(function () {
-                    var navbar = document.querySelector('.navbar');
-                    navbar.classList.add('nav-exiting');
-                    container.classList.add('page-exit-active');
-
-                    setTimeout(function () {
-                        window.location.href = href;
-                    }, 500);
+                    if (window.PageTransitions) PageTransitions.exit(href);
+                    else window.location.href = href;
                 });
             });
         });
     }
 
-    // Background animation controls — switch + visibility
-    var bgSwitch = document.querySelector('.bg-switch');
+    // Background visibility toggle — grid only
     var bgVisibility = document.querySelector('.bg-visibility');
-    var dottedSurface = document.getElementById('dotted-surface');
-    var bgPaths = document.getElementById('background-paths');
     var bgGrid = document.getElementById('background-grid');
-    var bgAnim = 0; // 0 = dots, 1 = paths, 2 = grid
-    var bgVisible = true;
-    var BG_ICONS = ['ph-waveform', 'ph-tornado', 'ph-diamonds-four'];
-    var BG_NAMES = ['Dots', 'Paths', 'Grid'];
-
-    function applyBgState() {
-        dottedSurface.classList.toggle('dots-hidden', !(bgAnim === 0 && bgVisible));
-        bgPaths.classList.toggle('paths-visible', bgAnim === 1 && bgVisible);
-        bgGrid.classList.toggle('grid-visible', bgAnim === 2 && bgVisible);
-    }
-
-    var bgStateLabel = bgSwitch && bgSwitch.querySelector('.bg-pill-state');
     var bgVisibilityLabel = bgVisibility && bgVisibility.querySelector('.bg-pill-label');
 
-    if (bgSwitch && bgVisibility && dottedSurface && bgPaths && bgGrid) {
-        // Switch animation type
-        bgSwitch.addEventListener('click', function () {
-            bgAnim = (bgAnim + 1) % 3;
-            var icon = bgSwitch.querySelector('i');
-            icon.className = 'ph ' + BG_ICONS[bgAnim];
-            if (bgStateLabel) bgStateLabel.textContent = BG_NAMES[bgAnim];
-            applyBgState();
-        });
-
-        // Toggle visibility
+    if (bgVisibility && bgGrid) {
         bgVisibility.addEventListener('click', function () {
-            bgVisible = !bgVisible;
+            var hidden = bgGrid.classList.toggle('grid-hidden');
+            bgGrid.classList.toggle('grid-visible', !hidden);
             var icon = bgVisibility.querySelector('i');
-            if (bgVisible) {
-                icon.className = 'ph ph-eye';
-                if (bgVisibilityLabel) bgVisibilityLabel.textContent = 'Hide';
-                bgSwitch.classList.remove('bg-hidden');
-            } else {
-                icon.className = 'ph ph-eye-slash';
-                if (bgVisibilityLabel) bgVisibilityLabel.textContent = 'Show';
-                bgSwitch.classList.add('bg-hidden');
-            }
-            applyBgState();
+            if (icon) icon.className = hidden ? 'ph ph-eye-slash' : 'ph ph-eye';
+            if (bgVisibilityLabel) bgVisibilityLabel.textContent = hidden ? 'Show Grid' : 'Hide Grid';
         });
     }
 

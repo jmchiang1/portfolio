@@ -1,161 +1,27 @@
-// Motion page carousel — replicated from home page
+// Motion page — vibes-style grid layout
 (function () {
-    var cards = Array.from(document.querySelectorAll('.project-card'));
-    var totalCards = cards.length;
-    var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-back'];
+    var cards = Array.from(document.querySelectorAll('.motion-card'));
 
-    var activeIndex = 0;
-    var step = 0;
-    var isTransitioning = false;
-    var TRANSITION_MS = 700;
-
-    function removePositions(card) {
-        POS_CLASSES.forEach(function (cls) { card.classList.remove(cls); });
-    }
-
-    function positionCards() {
-        activeIndex = ((step % totalCards) + totalCards) % totalCards;
-
-        cards.forEach(function (card, i) {
-            removePositions(card);
-
-            // Offset: 0 = center, 1 = right, N-1 = left, others = back
-            var offset = ((i - step) % totalCards + totalCards) % totalCards;
-
-            if (offset === 0) card.classList.add('pos-center');
-            else if (offset === 1) card.classList.add('pos-right');
-            else if (offset === totalCards - 1) card.classList.add('pos-left');
-            else card.classList.add('pos-back');
-        });
-    }
-
-    function nextCard() {
-        step++;
-        positionCards();
-        updateCardVideos();
-    }
-
-    function prevCard() {
-        step--;
-        positionCards();
-        updateCardVideos();
-    }
-
-    // Preload all videos so peek cards show their first frame
+    // Hover-to-play — videos only play while the user is hovering the card
     cards.forEach(function (card) {
         var video = card.querySelector('.project-video');
         if (!video) return;
-        video.preload = 'auto';
-        video.load();
-    });
 
-    // Initial position (no transitions yet)
-    positionCards();
-    updateCardVideos();
+        card.addEventListener('mouseenter', function () {
+            video.currentTime = 0;
+            var p = video.play();
+            if (p && p.catch) p.catch(function () {});
+        });
 
-    // Enable transitions after a frame so initial positions don't animate
-    requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-            var viewport = document.querySelector('.carousel-viewport');
-            viewport.classList.add('carousel-ready');
-            // After entrance animation completes, switch to snappier nav transitions
-            setTimeout(function () {
-                viewport.classList.add('entrance-done');
-            }, 1500);
+        card.addEventListener('mouseleave', function () {
+            video.pause();
         });
     });
 
-    // Wheel navigation — one swipe gesture = one card move
-    var gestureMovedCard = false;
-    var gestureTimer = null;
-
-    document.addEventListener('wheel', function (e) {
-        if (document.querySelector('.modal-overlay.modal-open')) return;
-        e.preventDefault();
-
-        clearTimeout(gestureTimer);
-        gestureTimer = setTimeout(function () {
-            gestureMovedCard = false;
-        }, 50);
-
-        if (gestureMovedCard) return;
-
-        var delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-        if (Math.abs(delta) < 5) return;
-
-        gestureMovedCard = true;
-
-        if (delta > 0) {
-            nextCard();
-        } else {
-            prevCard();
-        }
-    }, { passive: false });
-
-    // Touch support
-    var touchStartX = 0;
-    var touchStartY = 0;
-
-    document.addEventListener('touchstart', function (e) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    document.addEventListener('touchend', function (e) {
-        if (isTransitioning) return;
-
-        var deltaX = touchStartX - e.changedTouches[0].clientX;
-        var deltaY = touchStartY - e.changedTouches[0].clientY;
-        var minSwipe = 50;
-
-        if (Math.abs(deltaX) < minSwipe && Math.abs(deltaY) < minSwipe) return;
-
-        isTransitioning = true;
-
-        if (Math.abs(deltaX) >= Math.abs(deltaY)) {
-            if (deltaX > 0) nextCard(); else prevCard();
-        } else {
-            if (deltaY > 0) nextCard(); else prevCard();
-        }
-
-        setTimeout(function () {
-            isTransitioning = false;
-        }, TRANSITION_MS);
-    }, { passive: true });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function (e) {
-        if (document.querySelector('.modal-overlay.modal-open')) return;
-        if (isTransitioning) return;
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-            isTransitioning = true;
-            nextCard();
-            setTimeout(function () { isTransitioning = false; }, TRANSITION_MS);
-        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-            isTransitioning = true;
-            prevCard();
-            setTimeout(function () { isTransitioning = false; }, TRANSITION_MS);
-        }
-    });
-
-    // Autoplay video on active (center) card, pause on others
-    function updateCardVideos() {
-        cards.forEach(function (card) {
-            var video = card.querySelector('.project-video');
-            if (!video) return;
-            if (card.classList.contains('pos-center')) {
-                var p = video.play();
-                if (p && p.catch) p.catch(function () {});
-            } else {
-                video.pause();
-            }
-        });
-    }
-
-    // Card click → animated modal open
+    // Card click → animated modal open (flying-video animation lifts the
+    // card's preview video into the modal's video target)
     cards.forEach(function (card) {
         card.addEventListener('click', function () {
-            if (!card.classList.contains('pos-center')) return;
             var modalId = card.getAttribute('data-modal');
             if (!modalId) return;
             var modal = document.getElementById(modalId);
@@ -270,12 +136,16 @@
                 video.muted = true;
                 video.controls = false;
 
-                // Find the card that owns this modal
+                // Find the card that owns this modal and put the video back
+                // inside its frame (so the overlay sits on top of it again)
                 var modalId = modal.id;
-                var ownerCard = document.querySelector('.project-card[data-modal="' + modalId + '"]');
-                if (ownerCard) {
+                var ownerCard = document.querySelector('.motion-card[data-modal="' + modalId + '"]');
+                var ownerFrame = ownerCard && ownerCard.querySelector('.motion-card-frame');
+                var ownerOverlay = ownerFrame && ownerFrame.querySelector('.motion-card-frame-overlay');
+                if (ownerFrame) {
                     video.classList.add('project-video');
-                    ownerCard.appendChild(video);
+                    if (ownerOverlay) ownerFrame.insertBefore(video, ownerOverlay);
+                    else ownerFrame.appendChild(video);
                 }
             }
         }
@@ -309,94 +179,22 @@
         }
     });
 
-    // Background animation controls — switch + visibility
-    var bgSwitch = document.querySelector('.bg-switch');
+    // Background visibility toggle — grid only
     var bgVisibility = document.querySelector('.bg-visibility');
-    var dottedSurface = document.getElementById('dotted-surface');
-    var bgPaths = document.getElementById('background-paths');
     var bgGrid = document.getElementById('background-grid');
-    var bgAnim = 0; // 0 = dots, 1 = paths, 2 = grid
-    var bgVisible = true;
-    var BG_ICONS = ['ph-waveform', 'ph-tornado', 'ph-diamonds-four'];
-    var BG_NAMES = ['Dots', 'Paths', 'Grid'];
 
-    function applyBgState() {
-        dottedSurface.classList.toggle('dots-hidden', !(bgAnim === 0 && bgVisible));
-        bgPaths.classList.toggle('paths-visible', bgAnim === 1 && bgVisible);
-        bgGrid.classList.toggle('grid-visible', bgAnim === 2 && bgVisible);
-    }
-
-    if (bgSwitch && bgVisibility && dottedSurface && bgPaths && bgGrid) {
-        // Switch animation type
-        bgSwitch.addEventListener('click', function () {
-            bgAnim = (bgAnim + 1) % 3;
-            var icon = bgSwitch.querySelector('i');
-            icon.className = 'ph ' + BG_ICONS[bgAnim];
-            bgSwitch.setAttribute('data-tooltip', BG_NAMES[bgAnim]);
-            applyBgState();
-        });
-
-        // Toggle visibility
+    if (bgVisibility && bgGrid) {
         bgVisibility.addEventListener('click', function () {
-            bgVisible = !bgVisible;
+            var hidden = bgGrid.classList.toggle('grid-hidden');
+            bgGrid.classList.toggle('grid-visible', !hidden);
             var icon = bgVisibility.querySelector('i');
-            if (bgVisible) {
-                icon.className = 'ph ph-eye';
-                bgVisibility.setAttribute('data-tooltip', 'Hide');
-                bgSwitch.classList.remove('bg-hidden');
-            } else {
-                icon.className = 'ph ph-eye-slash';
-                bgVisibility.setAttribute('data-tooltip', 'Show');
-                bgSwitch.classList.add('bg-hidden');
-            }
-            applyBgState();
+            if (icon) icon.className = hidden ? 'ph ph-eye-slash' : 'ph ph-eye';
+            bgVisibility.setAttribute('data-tooltip', hidden ? 'Show' : 'Hide');
         });
     }
 
-    // Exit animation for any link that navigates away
-    function triggerExit(href) {
-        var navbar = document.querySelector('.navbar');
-        var navLinks = navbar.querySelectorAll('.nav-link');
-        var logoEl = navbar.querySelector('.nav-logo');
-
-        navLinks.forEach(function (link) {
-            link.style.animation = 'none';
-            link.style.opacity = '1';
-            link.style.transform = 'translateY(0)';
-        });
-
-        logoEl.style.animation = 'none';
-        logoEl.style.opacity = '1';
-
-        navbar.offsetHeight;
-
-        navbar.classList.add('nav-exiting');
-        document.body.classList.add('page-exit-active');
-
-        setTimeout(function () {
-            window.location.href = href;
-        }, 500);
-    }
-
-    // Logo click
-    var logo = document.querySelector('.nav-logo');
-    if (logo) {
-        logo.addEventListener('click', function (e) {
-            e.preventDefault();
-            triggerExit(logo.getAttribute('href'));
-        });
-    }
-
-    // Nav-links that navigate to other pages
-    var allNavLinks = document.querySelectorAll('.nav-link');
-    allNavLinks.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (!href || href === '#' || href.startsWith('#')) return;
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            triggerExit(href);
-        });
-    });
+    // Desktop nav-link + logo exits — handled by the shared GSAP transitions module
+    if (window.PageTransitions) PageTransitions.bindNavLinks();
 
     // Hamburger menu toggle (mobile)
     var hamburger = document.querySelector('.hamburger');
@@ -432,9 +230,88 @@
             link.addEventListener('click', function (e) {
                 e.preventDefault();
                 closeMenu(function () {
-                    triggerExit(href);
+                    if (window.PageTransitions) PageTransitions.exit(href);
+                    else window.location.href = href;
                 });
             });
         });
     }
+
+    // ============================================
+    // Easter egg — tap any hero logo chip 3 times in quick succession to
+    // reveal the hidden typing test. The "psst" hint is a cursor-following
+    // tooltip that only appears while a chip is hovered.
+    // ============================================
+    var chips = document.querySelectorAll('.hero-logo-chip');
+    var hint = document.querySelector('.hero-hint');
+    var CHIP_TARGET = 3;
+    var CHIP_RESET_MS = 1500;
+    var CHIP_BONK_MS = 180;
+    var chipState = new WeakMap();
+
+    // Cursor-following hint
+    if (hint) {
+        var hintX = 0, hintY = 0, hintVisible = false;
+        var rafPending = false;
+
+        function applyHintPosition() {
+            rafPending = false;
+            // Offset from cursor so the tooltip doesn't sit directly under it
+            hint.style.transform = 'translate(' + (hintX + 16) + 'px, ' + (hintY + 16) + 'px)';
+        }
+
+        function moveHint(e) {
+            hintX = e.clientX;
+            hintY = e.clientY;
+            if (!rafPending) {
+                rafPending = true;
+                requestAnimationFrame(applyHintPosition);
+            }
+        }
+
+        chips.forEach(function (chip) {
+            chip.addEventListener('mouseenter', function (e) {
+                hintX = e.clientX;
+                hintY = e.clientY;
+                applyHintPosition();
+                if (!hintVisible) {
+                    hint.classList.add('is-visible');
+                    hintVisible = true;
+                }
+            });
+
+            chip.addEventListener('mousemove', moveHint);
+
+            chip.addEventListener('mouseleave', function () {
+                if (hintVisible) {
+                    hint.classList.remove('is-visible');
+                    hintVisible = false;
+                }
+            });
+        });
+    }
+
+    chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            var s = chipState.get(chip) || { count: 0, timer: null };
+            s.count += 1;
+
+            chip.classList.remove('chip-bonk');
+            void chip.offsetWidth; // restart transition
+            chip.classList.add('chip-bonk');
+            setTimeout(function () { chip.classList.remove('chip-bonk'); }, CHIP_BONK_MS);
+
+            clearTimeout(s.timer);
+
+            if (s.count >= CHIP_TARGET) {
+                chipState.delete(chip);
+                if (window.PageTransitions) PageTransitions.exit('typing.html');
+                else window.location.href = 'typing.html';
+                return;
+            }
+
+            s.timer = setTimeout(function () { chipState.delete(chip); }, CHIP_RESET_MS);
+            chipState.set(chip, s);
+        });
+    });
 })();

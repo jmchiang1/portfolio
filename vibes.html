@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibes | Jonathan Chiang</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="vibes.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <!-- Body starts hidden so GSAP's enter transition can fade it in cleanly.
+         CSS animation is a safety fallback in case GSAP fails to load — the
+         page still reveals itself instead of staying invisible. -->
+    <style>
+        body { opacity: 0; animation: jc-body-fade 0.4s ease 0.05s forwards; }
+        @keyframes jc-body-fade { to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <!-- Background Grid — CSS grid pattern -->
+    <div id="background-grid" class="grid-visible"></div>
+
+    <!-- Pulsing radial glow — entrance mirrors home page exit (scale 0 → 1) -->
+    <div class="glow"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
+        </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">UX/UI</a>
+            <a href="motion.html" class="nav-link">Motion</a>
+            <a href="#" class="nav-link active">Vibes</a>
+            <a href="about.html" class="nav-link">About</a>
+        </div>
+        <div class="bg-controls">
+            <button class="bg-visibility" aria-label="Hide background" data-tooltip="Hide">
+                <i class="ph ph-eye"></i>
+            </button>
+        </div>
+        <button class="hamburger" aria-label="Menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-menu-link">UX/UI</a>
+        <a href="motion.html" class="mobile-menu-link">Motion</a>
+        <a href="#" class="mobile-menu-link active">Vibes</a>
+        <a href="about.html" class="mobile-menu-link">About</a>
+
+        <div class="mobile-menu-socials">
+            <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="LinkedIn">
+                <i class="ph ph-linkedin-logo"></i>
+            </a>
+            <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="GitHub">
+                <i class="ph ph-github-logo"></i>
+            </a>
+            <a href="assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="Resume">
+                <i class="ph ph-read-cv-logo"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Vibes Content -->
+    <main class="vibes-layout">
+        <!-- Hero / Intro -->
+        <section class="vibes-hero">
+            <div class="hero-title-wrap">
+                <span class="hero-logo-chip hero-logo-tl" aria-hidden="true">
+                    <img src="https://api.iconify.design/logos/openai-icon.svg" alt="" loading="lazy">
+                </span>
+                <span class="hero-logo-chip hero-logo-tr" aria-hidden="true">
+                    <img src="https://cdn.simpleicons.org/claude/d97757" alt="" loading="lazy">
+                </span>
+                <span class="hero-logo-chip hero-logo-ml" aria-hidden="true">
+                    <img src="https://cdn.simpleicons.org/cursor/111111" alt="" loading="lazy">
+                </span>
+                <span class="hero-logo-chip hero-logo-mr" aria-hidden="true">
+                    <img src="https://cdn.simpleicons.org/githubcopilot/111111" alt="" loading="lazy">
+                </span>
+                <span class="hero-logo-chip hero-logo-bl" aria-hidden="true">
+                    <img src="https://cdn.simpleicons.org/vercel/111111" alt="" loading="lazy">
+                </span>
+                <span class="hero-logo-chip hero-logo-br" aria-hidden="true">
+                    <img src="https://cdn.simpleicons.org/v0/111111" alt="" loading="lazy">
+                </span>
+                <h1 class="vibes-hero-title">
+                    AI Side <span class="vibes-hero-title-accent">Quests</span>
+                </h1>
+            </div>
+        </section>
+
+        <!-- Project Grid -->
+        <section class="vibes-grid" id="vibes-grid">
+
+            <!-- Project 1 — Kotofit Facility Analyzer -->
+            <article class="vibes-card" data-live="https://sports-complex-calc.vercel.app/">
+                <div class="vibes-card-preview">
+                    <div class="vibes-card-frame">
+                        <iframe
+                            class="vibes-card-iframe"
+                            src="https://sports-complex-calc.vercel.app/"
+                            title="Kotofit Facility Analyzer — live preview"
+                            loading="lazy"
+                            sandbox="allow-scripts allow-same-origin"
+                            referrerpolicy="no-referrer"></iframe>
+                        <div class="vibes-card-frame-overlay" aria-hidden="true"></div>
+                        <div class="vibes-card-loading">
+                            <div class="vibes-card-spinner"></div>
+                            <span>Loading preview…</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vibes-card-body">
+                    <div class="vibes-card-header">
+                        <div class="vibes-card-titlewrap">
+                            <h2 class="vibes-card-title">Facility Analyzer</h2>
+                        </div>
+                        <span class="vibes-card-year">2026</span>
+                    </div>
+                    <p class="vibes-card-description">
+                        Paste a LoopNet listing and get a verdict in minutes — court capacity, NOI, payback, and risk flags. An AI-assisted underwriting tool for indoor badminton and pickleball facilities.
+                    </p>
+                    <div class="vibes-card-stack" aria-label="Built with">
+                        <span class="vibes-chip" data-label="Next.js">
+                            <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="TypeScript">
+                            <img src="https://cdn.simpleicons.org/typescript/3178c6" alt="TypeScript" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="Tailwind CSS">
+                            <img src="https://cdn.simpleicons.org/tailwindcss/06b6d4" alt="Tailwind CSS" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="shadcn/ui">
+                            <img src="https://cdn.simpleicons.org/shadcnui/ffffff" alt="shadcn/ui" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="Claude">
+                            <img src="https://cdn.simpleicons.org/claude/d97757" alt="Claude" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="ChatGPT">
+                            <img src="https://cdn.simpleicons.org/openai/ffffff" alt="ChatGPT" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="Vercel">
+                            <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="Supabase">
+                            <img src="https://cdn.simpleicons.org/supabase/3ecf8e" alt="Supabase" loading="lazy">
+                        </span>
+                    </div>
+                    <div class="vibes-card-actions">
+                        <a href="https://sports-complex-calc.vercel.app/" target="_blank" rel="noopener noreferrer" class="vibes-btn vibes-btn-primary">
+                            <span>Live site</span>
+                            <i class="ph ph-arrow-up-right"></i>
+                        </a>
+                        <a href="https://github.com/jmchiang1/Sports-Complex-Calc" target="_blank" rel="noopener noreferrer" class="vibes-btn vibes-btn-ghost" aria-label="View source on GitHub">
+                            <i class="ph-fill ph-github-logo"></i>
+                            <span>Code</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Project 2 — Kotofit Website Redesign -->
+            <article class="vibes-card" data-live="https://jmchiang1.github.io/kotofit/">
+                <div class="vibes-card-preview">
+                    <div class="vibes-card-frame vibes-card-frame-media">
+                        <video
+                            class="vibes-card-video"
+                            src="assets/Vibes/kotofit-website.mp4"
+                            muted
+                            loop
+                            playsinline
+                            autoplay
+                            preload="metadata"></video>
+                    </div>
+                </div>
+
+                <div class="vibes-card-body">
+                    <div class="vibes-card-header">
+                        <div class="vibes-card-titlewrap">
+                            <h2 class="vibes-card-title">Kotofit Sport Complex</h2>
+                        </div>
+                        <span class="vibes-card-year">2026</span>
+                    </div>
+                    <p class="vibes-card-description">
+                        A full marketing site redesign for a local fitness facility — membership, coaching, events, locations, FAQ, and a stringing service page. Shipped quickly with a clean information architecture.
+                    </p>
+                    <div class="vibes-card-stack" aria-label="Built with">
+                        <span class="vibes-chip" data-label="HTML">
+                            <img src="https://cdn.simpleicons.org/html5/e34f26" alt="HTML5" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="CSS">
+                            <img src="https://cdn.simpleicons.org/css/1572b6" alt="CSS" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="JavaScript">
+                            <img src="https://cdn.simpleicons.org/javascript/f7df1e" alt="JavaScript" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="Claude">
+                            <img src="https://cdn.simpleicons.org/claude/d97757" alt="Claude" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="ChatGPT">
+                            <img src="https://cdn.simpleicons.org/openai/ffffff" alt="ChatGPT" loading="lazy">
+                        </span>
+                        <span class="vibes-chip" data-label="Vercel">
+                            <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" loading="lazy">
+                        </span>
+                    </div>
+                    <div class="vibes-card-actions">
+                        <a href="https://jmchiang1.github.io/kotofit/" target="_blank" rel="noopener noreferrer" class="vibes-btn vibes-btn-primary">
+                            <span>Live site</span>
+                            <i class="ph ph-arrow-up-right"></i>
+                        </a>
+                        <a href="https://github.com/jmchiang1/kotofit" target="_blank" rel="noopener noreferrer" class="vibes-btn vibes-btn-ghost" aria-label="View source on GitHub">
+                            <i class="ph-fill ph-github-logo"></i>
+                            <span>Code</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Footer / sign-off -->
+        <footer class="vibes-footer">
+            <p class="vibes-footer-text">More vibes brewing — built between commits.</p>
+        </footer>
+    </main>
+
+    <!-- Social links -->
+    <div class="social-links">
+        <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn" data-tooltip="LinkedIn">
+            <i class="ph ph-linkedin-logo"></i>
+        </a>
+        <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub" data-tooltip="Github">
+            <i class="ph ph-github-logo"></i>
+        </a>
+        <a href="assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Resume" data-tooltip="Resume">
+            <i class="ph ph-read-cv-logo"></i>
+        </a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="transitions.js"></script>
+    <script src="vibes.js"></script>
+</body>
+</html>

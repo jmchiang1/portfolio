@@ -833,7 +833,7 @@ a, button, [role="button"],
 .page-transition-cover {
     position: fixed;
     inset: 0;
-    background: #000002;
+    background: #06062C;
     z-index: 99;
     pointer-events: none;
 }
@@ -861,7 +861,7 @@ a, button, [role="button"],
     content: '';
     position: fixed;
     inset: 0;
-    background: #000002;
+    background: #06062C;
     z-index: 98;
     opacity: 0;
     animation: darken-bg 0.3s ease 0.3s forwards;

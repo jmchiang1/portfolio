@@ -1,3 +1,8 @@
+/* ============================================
+   Vibes Page
+   Side-projects gallery with live iframe previews
+   ============================================ */
+
 /* Reset */
 *, *::before, *::after {
     margin: 0;
@@ -24,16 +29,14 @@ body {
     min-height: 100vh;
 }
 
-/* Hand cursor for interactive elements */
 a, button, [role="button"],
-.project-card, .layout-toggle, .bg-switch, .bg-visibility,
-.nav-link, .mobile-menu-link, .social-link, .hamburger,
-.footer-link, .modal-close, [data-modal], .hero-logo-chip {
+.vibes-card, .nav-link, .mobile-menu-link, .social-link, .hamburger,
+.bg-switch, .bg-visibility, .vibes-btn, .hero-logo-chip {
     cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
 }
 
 /* ============================================
-   Dotted Surface
+   Backgrounds (dots / paths / grid)
    ============================================ */
 #dotted-surface {
     position: fixed;
@@ -47,9 +50,6 @@ a, button, [role="button"],
     opacity: 0;
 }
 
-/* ============================================
-   Background Paths (SVG flowing curves)
-   ============================================ */
 #background-paths {
     position: fixed;
     inset: 0;
@@ -63,9 +63,6 @@ a, button, [role="button"],
     opacity: 0.1;
 }
 
-/* ============================================
-   Background Grid (CSS pattern)
-   ============================================ */
 #background-grid {
     position: fixed;
     inset: 0;
@@ -83,15 +80,6 @@ a, button, [role="button"],
 
 #background-grid.grid-visible {
     opacity: 1;
-}
-
-@keyframes path-flow {
-    from {
-        stroke-dashoffset: 0;
-    }
-    to {
-        stroke-dashoffset: 2;
-    }
 }
 
 /* ============================================
@@ -145,7 +133,7 @@ a, button, [role="button"],
 }
 
 /* ============================================
-   Navigation
+   Navigation (mirrors motion.css)
    ============================================ */
 .navbar {
     position: fixed;
@@ -159,7 +147,6 @@ a, button, [role="button"],
     padding: 20px 60px;
 }
 
-/* Progressive blur behind navbar — full blur at top, fading to none */
 .navbar::before {
     content: '';
     position: absolute;
@@ -170,7 +157,6 @@ a, button, [role="button"],
     -webkit-backdrop-filter: blur(12px);
     -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
-    transition: opacity 0.4s ease;
 }
 
 .hamburger {
@@ -230,10 +216,7 @@ a, button, [role="button"],
 .nav-link:nth-child(4) { animation-delay: 0.35s; animation-duration: 0.35s; }
 
 @keyframes nav-enter {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .nav-link:hover {
@@ -245,7 +228,7 @@ a, button, [role="button"],
     background: rgba(17, 128, 249, 0.08);
 }
 
-/* Nav exit */
+/* Nav exit (used on page transition out) */
 .nav-exiting .nav-link {
     opacity: 0 !important;
     transform: translateY(-20px) !important;
@@ -257,7 +240,7 @@ a, button, [role="button"],
 .nav-exiting .nav-link:nth-child(1) { transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.15s !important; }
 
 /* ============================================
-   Background Controls — right side of navbar
+   Background Controls (mirrors motion.css)
    ============================================ */
 .bg-controls {
     position: absolute;
@@ -285,7 +268,6 @@ a, button, [role="button"],
     background: none;
     color: #fff;
     font-size: 28px;
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
     transition: color 0.2s ease, background 0.2s ease;
 }
 
@@ -294,7 +276,6 @@ a, button, [role="button"],
     background: rgba(255, 255, 255, 0.08);
 }
 
-/* Tooltip — appears below on hover */
 .bg-switch::before,
 .bg-visibility::before {
     content: attr(data-tooltip);
@@ -323,44 +304,83 @@ a, button, [role="button"],
     transform: translateX(-50%) translateY(0);
 }
 
-/* Dimmed when animation is hidden */
 .bg-switch.bg-hidden {
     color: rgba(255, 255, 255, 0.3);
 }
 
-/* Nav exit — fade controls */
 .nav-exiting .bg-controls {
     opacity: 0 !important;
     transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* ============================================
-   Motion Layout — page wrapper (mirrors .vibes-layout)
-   Owns the page-level padding (so the navbar offset and side gutters
-   live in one place) and a single fade-in that covers all children.
+   Vibes Layout
    ============================================ */
-.motion-layout {
+.vibes-layout {
     position: relative;
     z-index: 1;
     max-width: 1280px;
     margin: 0 auto;
     padding: 200px 60px 80px;
     opacity: 0;
-    animation: motion-layout-fade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+    animation: vibes-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
 }
 
-@keyframes motion-layout-fade {
+@keyframes vibes-fade-in {
     to { opacity: 1; }
 }
 
 /* ============================================
-   Motion Hero — title with fanned tool logos
+   Hero
    ============================================ */
-.motion-hero {
+.vibes-hero {
+    max-width: 740px;
     margin: 0 auto 80px;
     text-align: center;
 }
 
+.vibes-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 1000px;
+    background: rgba(17, 128, 249, 0.08);
+    border: 1px solid rgba(17, 128, 249, 0.2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: #5aa3ff;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: vibes-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.vibes-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #1180f9;
+    box-shadow: 0 0 8px rgba(17, 128, 249, 0.8);
+    animation: vibes-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes vibes-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.vibes-eyebrow-caret {
+    margin-left: -2px;
+    animation: vibes-blink 1.1s steps(2) infinite;
+}
+
+@keyframes vibes-blink {
+    50% { opacity: 0; }
+}
+
+/* Title wrap holds the title plus the fanned AI logos */
 .hero-title-wrap {
     position: relative;
     display: inline-block;
@@ -370,43 +390,118 @@ a, button, [role="button"],
     --fan: 60px;
 }
 
-.motion-hero-title {
+.vibes-hero-title {
     font-family: 'Gabarito', sans-serif;
     font-weight: 800;
     font-size: 60px;
     line-height: 1.05;
     letter-spacing: -0.03em;
-    color: #fff;
     opacity: 0;
     transform: translateY(20px);
-    animation: motion-hero-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    animation: vibes-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
     position: relative;
     z-index: 1;
 }
 
-.motion-hero-title-accent {
-    background: linear-gradient(135deg, #1180f9 0%, #66d2ff 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.motion-hero-blurb {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 580px;
-    margin: 0 auto;
+/* Fanned logo chips — start stacked at the center of the title,
+   then fan outward to their final positions on entrance. */
+.hero-logo-chip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -32px;
+    margin-left: -32px;
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* White keycap — subtle gradient mimics light catching the top face */
+    background: linear-gradient(180deg, #ffffff 0%, #ececf0 100%);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+        /* Outer drop shadow for elevation */
+        0 10px 22px -8px rgba(0, 0, 0, 0.55),
+        0 2px 4px rgba(0, 0, 0, 0.25),
+        /* Inset top highlight + bottom shadow for the keycap face depth */
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.12);
+    /* Sit behind the title (which is z-index 1) */
+    z-index: 0;
     opacity: 0;
-    transform: translateY(20px);
-    animation: motion-hero-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    transform: translate(0, 0) scale(0.4) rotate(0deg);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
 }
 
-@keyframes motion-hero-up {
-    to { opacity: 1; transform: translateY(0); }
+.hero-logo-chip img {
+    width: 28px;
+    height: 28px;
+    display: block;
 }
+
+.hero-logo-chip:hover {
+    border-color: rgba(17, 128, 249, 0.35);
+    box-shadow:
+        0 14px 28px -8px rgba(17, 128, 249, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.hero-logo-tl { animation: fan-tl 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards; }
+.hero-logo-tr { animation: fan-tr 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+.hero-logo-ml { animation: fan-ml 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards; }
+.hero-logo-mr { animation: fan-mr 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+.hero-logo-bl { animation: fan-bl 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards; }
+.hero-logo-br { animation: fan-br 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards; }
+
+@keyframes fan-tl {
+    to {
+        opacity: 1;
+        transform: translate(calc(var(--fan) * -3.8), calc(var(--fan) * -0.7)) scale(1) rotate(-14deg);
+    }
+}
+@keyframes fan-tr {
+    to {
+        opacity: 1;
+        transform: translate(calc(var(--fan) *  3.8), calc(var(--fan) * -0.75)) scale(1) rotate(12deg);
+    }
+}
+@keyframes fan-ml {
+    to {
+        opacity: 1;
+        transform: translate(calc(var(--fan) * -4.3), calc(var(--fan) * 0.05)) scale(1) rotate(8deg);
+    }
+}
+@keyframes fan-mr {
+    to {
+        opacity: 1;
+        transform: translate(calc(var(--fan) *  4.3), calc(var(--fan) * -0.05)) scale(1) rotate(-10deg);
+    }
+}
+@keyframes fan-bl {
+    to {
+        opacity: 1;
+        transform: translate(calc(var(--fan) * -3.6), calc(var(--fan) * 0.85)) scale(1) rotate(10deg);
+    }
+}
+@keyframes fan-br {
+    to {
+        opacity: 1;
+        transform: translate(calc(var(--fan) *  3.8), calc(var(--fan) * 0.8)) scale(1) rotate(-12deg);
+    }
+}
+
+/* Subtle float on hover of the whole hero wrap */
+.hero-title-wrap:hover .hero-logo-tl { transform: translate(calc(var(--fan) * -3.85), calc(var(--fan) * -0.8)) scale(1) rotate(-18deg); }
+.hero-title-wrap:hover .hero-logo-tr { transform: translate(calc(var(--fan) *  3.85), calc(var(--fan) * -0.85)) scale(1) rotate(16deg); }
+.hero-title-wrap:hover .hero-logo-ml { transform: translate(calc(var(--fan) * -4.4), calc(var(--fan) * 0.05)) scale(1) rotate(12deg); }
+.hero-title-wrap:hover .hero-logo-mr { transform: translate(calc(var(--fan) *  4.4), calc(var(--fan) * -0.05)) scale(1) rotate(-14deg); }
+.hero-title-wrap:hover .hero-logo-bl { transform: translate(calc(var(--fan) * -3.65), calc(var(--fan) * 0.95)) scale(1) rotate(14deg); }
+.hero-title-wrap:hover .hero-logo-br { transform: translate(calc(var(--fan) *  3.85), calc(var(--fan) * 0.9)) scale(1) rotate(-16deg); }
 
 /* Easter-egg hint — cursor-following tooltip; only appears while a chip is hovered */
 .hero-hint {
@@ -435,8 +530,58 @@ a, button, [role="button"],
     will-change: transform, opacity;
 }
 
+.hero-hint i {
+    font-size: 14px;
+    color: #5aa3ff;
+}
+
 .hero-hint.is-visible {
     opacity: 1;
+}
+
+.vibes-hero-title-accent {
+    background: linear-gradient(135deg, #1180f9 0%, #66d2ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+}
+
+.vibes-hero-blurb {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 580px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: vibes-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+@keyframes vibes-up {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Easter-egg hint pill — sits just below the hero blurb */
+.hero-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 7px 14px 7px 12px;
+    border-radius: 1000px;
+    background: rgba(17, 128, 249, 0.08);
+    border: 1px solid rgba(17, 128, 249, 0.18);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: vibes-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
 }
 
 .hero-hint i {
@@ -457,97 +602,16 @@ a, button, [role="button"],
     transition: filter 0.12s ease;
 }
 
-/* Fanned tool-logo chips — start stacked at the center of the title,
-   then fan outward to their final positions on entrance. */
-.hero-logo-chip {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -32px;  /* half of height — keeps chip centered */
-    margin-left: -32px; /* half of width */
-    width: 64px;
-    height: 64px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* White keycap — subtle gradient mimics light catching the top face */
-    background: linear-gradient(180deg, #ffffff 0%, #ececf0 100%);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow:
-        0 10px 22px -8px rgba(0, 0, 0, 0.55),
-        0 2px 4px rgba(0, 0, 0, 0.25),
-        inset 0 1.5px 0 rgba(255, 255, 255, 0.9),
-        inset 0 -2px 0 rgba(0, 0, 0, 0.12);
-    /* Sit behind the title (z-index 1) */
-    z-index: 0;
-    opacity: 0;
-    transform: translate(0, 0) scale(0.4) rotate(0deg);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s ease,
-                border-color 0.4s ease;
-}
-
-.hero-logo-chip img {
-    width: 28px;
-    height: 28px;
-    display: block;
-}
-
-.hero-logo-chip:hover {
-    border-color: rgba(17, 128, 249, 0.35);
-    box-shadow:
-        0 14px 28px -8px rgba(17, 128, 249, 0.4),
-        0 2px 4px rgba(0, 0, 0, 0.2),
-        inset 0 1.5px 0 rgba(255, 255, 255, 0.9),
-        inset 0 -2px 0 rgba(0, 0, 0, 0.12);
-}
-
-.hero-logo-tl { animation: fan-tl 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards; }
-.hero-logo-tr { animation: fan-tr 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.62s forwards; }
-.hero-logo-bl { animation: fan-bl 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.69s forwards; }
-.hero-logo-br { animation: fan-br 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.76s forwards; }
-
-@keyframes fan-tl {
-    to {
-        opacity: 1;
-        transform: translate(calc(var(--fan) * -2.8), calc(var(--fan) * -0.7)) scale(1) rotate(-14deg);
-    }
-}
-@keyframes fan-tr {
-    to {
-        opacity: 1;
-        transform: translate(calc(var(--fan) *  2.8), calc(var(--fan) * -0.75)) scale(1) rotate(12deg);
-    }
-}
-@keyframes fan-bl {
-    to {
-        opacity: 1;
-        transform: translate(calc(var(--fan) * -2.7), calc(var(--fan) *  0.85)) scale(1) rotate(10deg);
-    }
-}
-@keyframes fan-br {
-    to {
-        opacity: 1;
-        transform: translate(calc(var(--fan) *  2.7), calc(var(--fan) *  0.9)) scale(1) rotate(-12deg);
-    }
-}
-
-.hero-title-wrap:hover .hero-logo-tl { transform: translate(calc(var(--fan) * -2.85), calc(var(--fan) * -0.8)) scale(1) rotate(-18deg); }
-.hero-title-wrap:hover .hero-logo-tr { transform: translate(calc(var(--fan) *  2.85), calc(var(--fan) * -0.85)) scale(1) rotate(16deg); }
-.hero-title-wrap:hover .hero-logo-bl { transform: translate(calc(var(--fan) * -2.75), calc(var(--fan) *  0.95)) scale(1) rotate(14deg); }
-.hero-title-wrap:hover .hero-logo-br { transform: translate(calc(var(--fan) *  2.75), calc(var(--fan) *  1.0)) scale(1) rotate(-16deg); }
-
 /* ============================================
-   Motion Grid — vibes-style card grid
+   Project Grid
    ============================================ */
-.motion-grid {
+.vibes-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 36px;
 }
 
-.motion-card {
+.vibes-card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -555,27 +619,21 @@ a, button, [role="button"],
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     overflow: hidden;
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+    text-decoration: none;
+    color: inherit;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
                 background 0.4s ease,
                 border-color 0.4s ease,
                 box-shadow 0.5s ease;
     opacity: 0;
     transform: translateY(28px);
-    animation: motion-card-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: vibes-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.motion-card:nth-child(1) { animation-delay: 0.6s; }
-.motion-card:nth-child(2) { animation-delay: 0.7s; }
-.motion-card:nth-child(3) { animation-delay: 0.8s; }
-.motion-card:nth-child(4) { animation-delay: 0.9s; }
-.motion-card:nth-child(5) { animation-delay: 1.0s; }
+.vibes-card:nth-child(1) { animation-delay: 0.6s; }
+.vibes-card:nth-child(2) { animation-delay: 0.7s; }
 
-@keyframes motion-card-up {
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.motion-card:hover {
+.vibes-card:hover {
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.035);
     border-color: rgba(17, 128, 249, 0.25);
@@ -583,21 +641,16 @@ a, button, [role="button"],
                 0 0 0 1px rgba(17, 128, 249, 0.05);
 }
 
-.motion-card-preview {
+/* ============================================
+   Card Preview (browser chrome + iframe)
+   ============================================ */
+.vibes-card-preview {
     position: relative;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     background: #0a0a0d;
 }
 
-/* Light-bg variant for cards whose source video has a white background */
-.motion-card-preview-light {
-    background: #fff;
-}
-.motion-card-preview-light .motion-card-frame {
-    background: #fff;
-}
-
-.motion-card-frame {
+.vibes-card-frame {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 10;
@@ -605,22 +658,49 @@ a, button, [role="button"],
     background: #0a0a0d;
 }
 
-.motion-card-frame video {
+/* Media variant — used when the card displays a video/image thumbnail instead of a live iframe */
+.vibes-card-frame-media .vibes-card-frame-overlay,
+.vibes-card-frame-media .vibes-card-loading {
+    display: none;
+}
+
+.vibes-card-video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transform: scale(1.001);
+    background: #0a0a0d;
+    transform: scale(1.001); /* avoid sub-pixel edges on hover scale */
     transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.motion-card:hover .motion-card-frame video {
+.vibes-card:hover .vibes-card-video {
     transform: scale(1.03);
 }
 
-.motion-card-frame-overlay {
+.vibes-card-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1400px;
+    height: 875px;
+    border: 0;
+    transform-origin: top left;
+    /* JS sets the scale based on container width — fallback ~0.4 */
+    transform: scale(0.4);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.vibes-card-iframe.is-loaded {
+    opacity: 1;
+}
+
+/* Subtle gradient sheen on top of iframe — softens raw site visuals */
+.vibes-card-frame-overlay {
     position: absolute;
     inset: 0;
     pointer-events: none;
@@ -631,11 +711,47 @@ a, button, [role="button"],
     transition: opacity 0.4s ease;
 }
 
-.motion-card:hover .motion-card-frame-overlay {
+.vibes-card:hover .vibes-card-frame-overlay {
     opacity: 0.4;
 }
 
-.motion-card-body {
+/* Loading state */
+.vibes-card-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.vibes-card-iframe.is-loaded ~ .vibes-card-loading {
+    opacity: 0;
+}
+
+.vibes-card-spinner {
+    width: 28px;
+    height: 28px;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-top-color: #1180f9;
+    border-radius: 50%;
+    animation: vibes-spin 0.9s linear infinite;
+}
+
+@keyframes vibes-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   Card Body
+   ============================================ */
+.vibes-card-body {
     position: relative;
     padding: 28px 28px 24px;
     display: flex;
@@ -650,21 +766,21 @@ a, button, [role="button"],
     border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.motion-card-header {
+.vibes-card-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
 }
 
-.motion-card-titlewrap {
+.vibes-card-titlewrap {
     display: flex;
     align-items: baseline;
     gap: 12px;
     min-width: 0;
 }
 
-.motion-card-title {
+.vibes-card-title {
     font-family: 'Gabarito', sans-serif;
     font-weight: 700;
     font-size: 28px;
@@ -673,7 +789,7 @@ a, button, [role="button"],
     line-height: 1.1;
 }
 
-.motion-card-year {
+.vibes-card-year {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     font-weight: 500;
@@ -682,185 +798,161 @@ a, button, [role="button"],
     flex-shrink: 0;
 }
 
-.motion-card-description {
+.vibes-card-description {
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.65);
 }
 
-@media (max-width: 1024px) {
-    .motion-layout {
-        padding: 180px 40px 60px;
-    }
-
-    .motion-grid {
-        gap: 28px;
-    }
+.vibes-card-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
 }
 
-@media (max-width: 768px) {
-    .motion-layout {
-        padding: 160px 20px 40px;
-    }
-
-    .motion-hero {
-        margin-bottom: 56px;
-    }
-
-    .motion-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .motion-card-title { font-size: 22px; }
-    .motion-card-body { padding: 22px 22px 20px; }
-}
-
-/* ============================================
-   Project Cards (3D Carousel)
-   ============================================ */
-.project-card {
-    position: absolute;
-    width: 956px;
-    max-width: 58%;
-    height: 599px;
-    max-height: 36.3vw;
-    border-radius: 8px;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateX(0) rotateY(0deg) scale(0.5);
-    z-index: 0;
-    pointer-events: none;
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
-}
-
-/* Dimming overlay */
-.project-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0);
-    z-index: 10;
-    border-radius: inherit;
-    pointer-events: none;
-}
-
-/* Enable transitions after initial positioning */
-.carousel-ready .project-card {
-    opacity: 1;
-    transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
-                opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
-                z-index 0s linear 0.2s;
-}
-
-/* After entrance — switch to snappier transitions for navigation */
-.carousel-ready.entrance-done .project-card {
-    transition: transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
-                z-index 0s linear 0.2s;
-}
-
-.carousel-ready .project-card::after {
-    transition: background 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-/* Active center card */
-.project-card.pos-center {
-    transform: translateX(0) rotateY(0deg) scale(1);
-    z-index: 4;
-    pointer-events: auto;
-}
-
-.project-card.pos-center::after {
-    background: rgba(0, 0, 0, 0);
-}
-
-/* Left peek card */
-.project-card.pos-left {
-    transform: translateX(-105%) rotateY(30deg) scale(0.75);
-    z-index: 3;
-}
-
-.project-card.pos-left::after {
-    background: rgba(0, 0, 0, 0.45);
-}
-
-/* Right peek card */
-.project-card.pos-right {
-    transform: translateX(105%) rotateY(-30deg) scale(0.75);
-    z-index: 3;
-}
-
-.project-card.pos-right::after {
-    background: rgba(0, 0, 0, 0.45);
-}
-
-/* Back card (hidden behind center) */
-.project-card.pos-back {
-    transform: translateX(0) rotateY(0deg) scale(0.5);
-    z-index: 0;
-}
-
-.project-card.pos-back::after {
-    background: rgba(0, 0, 0, 1);
-}
-
-/* Placeholder for empty cards */
-.project-placeholder {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
+.vibes-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
-/* Video on card */
-.project-video {
+.vibes-chip img {
+    width: 18px;
+    height: 18px;
+    display: block;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+}
+
+.vibes-card:hover .vibes-chip {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.vibes-chip:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.vibes-chip:hover img {
+    opacity: 1;
+}
+
+/* Tooltip — appears above on hover, like the social-links pattern */
+.vibes-chip::after {
+    content: attr(data-label);
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    /* object-fit: cover; */
-    border-radius: 8px;
-    z-index: 1;
-    background: black;
-}
-
-/* Full-height card (Clarity) — desktop only */
-.project-card.card-full-height {
-    height: 100%;
-}
-
-/* Hover: scale (center card only) */
-.project-card.pos-center:hover {
-    transform: translateX(0) rotateY(0deg) scale(1.02);
-}
-
-/* Page exit */
-.page-exit-active .motion-layout,
-.page-exit-active .social-links {
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
     opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
-                transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 5;
 }
 
-.page-exit-active #dotted-surface,
-.page-exit-active #background-paths,
-.page-exit-active #background-grid {
-    opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.page-exit-active .nav-logo {
-    opacity: 0 !important;
-    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+.vibes-chip:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 /* ============================================
-   Social Links
+   Card Actions (CTAs)
+   ============================================ */
+.vibes-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.vibes-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.vibes-btn i {
+    font-size: 16px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vibes-btn-primary {
+    background: #1180f9;
+    color: #fff;
+}
+
+.vibes-btn-primary:hover {
+    background: #2b91ff;
+}
+
+.vibes-btn-primary:hover i {
+    transform: translate(2px, -2px);
+}
+
+.vibes-btn-ghost {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.vibes-btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.vibes-footer {
+    margin-top: 80px;
+    padding: 32px 0;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    opacity: 0;
+    animation: vibes-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+}
+
+.vibes-footer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.02em;
+}
+
+/* ============================================
+   Social Links (mirrors motion.css)
    ============================================ */
 .social-links {
     position: fixed;
@@ -894,14 +986,8 @@ a, button, [role="button"],
 .social-link:nth-child(3) { animation-delay: 0.6s; animation-duration: 0.8s; }
 
 @keyframes social-enter {
-    from {
-        opacity: 0;
-        transform: translateX(16px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .social-link:hover {
@@ -910,7 +996,6 @@ a, button, [role="button"],
     background: rgba(255, 255, 255, 0.08);
 }
 
-/* Tooltip — appears to the left on hover */
 .social-link::before {
     content: attr(data-tooltip);
     position: absolute;
@@ -938,400 +1023,64 @@ a, button, [role="button"],
 }
 
 /* ============================================
-   Modal
+   Page exit (used on internal link navigation)
    ============================================ */
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.page-exit-active .vibes-layout,
+.page-exit-active .social-links {
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s ease;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.modal-overlay.modal-open {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-content {
-    position: relative;
-    width: 80%;
-    max-height: 85vh;
-    background: #fff;
-    border: none;
-    border-radius: 12px;
-    overflow-y: auto;
-    transform: translateY(30px) scale(0.96);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    scrollbar-width: none;
-}
-
-.modal-content::-webkit-scrollbar {
-    display: none;
-}
-
-.modal-overlay.modal-open .modal-content {
-    transform: translateY(0) scale(1);
-}
-
-/* When opening via card animation, snap content to final position immediately */
-.modal-overlay.modal-animated .modal-content {
-    transform: translateY(0) scale(1);
-    transition: none;
-}
-
-.modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(0, 0, 0, 0.06);
-    color: #030b2a;
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-    z-index: 10;
-}
-
-.modal-close:hover {
-    background: rgba(0, 0, 0, 0.12);
-}
-
-.modal-body {
-    padding: 50px 80px 80px;
-    font-family: 'Parkinsans', sans-serif;
-    color: #030b2a;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    line-height: 1.5;
-    font-size: 16px;
-}
-
-.modal-label {
-    color: #AA37F2;
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 0;
-}
-
-/* Non-Neon-Drift modals — black titles and labels */
-.modal-body > .modal-label:first-child:not(.modal-fade-in) {
-    color: #030b2a;
-}
-
-.modal-body > .modal-label:first-child:not(.modal-fade-in) ~ .modal-meta .modal-label {
-    color: #030b2a;
-}
-
-/* Reduce gap between title and video */
-.modal-label + .modal-video-target {
-    margin-top: -20px;
-}
-
-/* Target slot where the flying video lands */
-.modal-video-target {
-    width: 100%;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.modal-video-target video {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-    background: black;
-}
-
-.modal-video-short {
-    width: 100%;
-    background: #dde3ec;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.modal-video-short video {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-}
-
-/* Flying video — animates from card to modal */
-.flying-video {
-    position: fixed;
-    z-index: 300;
-    border-radius: 10px;
-    overflow: hidden;
-    /* Force clipping during GPU-composited animation */
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
-    mask-image: radial-gradient(white, black);
-    transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                top 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.flying-video video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    background: black;
-}
-
-/* Modal content fade-in for elements after the video */
-.modal-fade-in {
+.page-exit-active #dotted-surface,
+.page-exit-active #background-paths,
+.page-exit-active #background-grid {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.modal-overlay.modal-open .modal-fade-in.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.modal-video-short p,
-.modal-video-large p {
-    font-size: 36px;
-    font-weight: 400;
-}
-
-.modal-meta {
-    display: flex;
-    gap: 129px;
-    align-items: flex-start;
-}
-
-.modal-meta-overview {
-    flex: 1;
-    min-width: 0;
-}
-
-.modal-meta-overview p:not(.modal-label) {
-    margin-bottom: 8px;
-}
-
-.modal-meta-sidebar {
-    width: 197px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 24px;
-}
-
-.modal-meta-sidebar p:not(.modal-label) {
-    margin-bottom: 0;
-}
-
-.modal-video-large {
-    width: 100%;
-    height: 500px;
-    background: #dde3ec;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.page-exit-active .nav-logo {
+    opacity: 0 !important;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
 }
 
 /* ============================================
-   Responsive
+   Responsive — Tablet
    ============================================ */
-@media (max-width: 1200px) {
-    .navbar {
-        padding: 16px 40px;
+@media (max-width: 1024px) {
+    .vibes-layout {
+        padding: 180px 40px 60px;
     }
 
-    .nav-link {
-        padding: 8px 16px;
-        font-size: 13px;
+    .vibes-grid {
+        gap: 28px;
     }
-
 }
 
-@media (max-width: 900px) {
+/* ============================================
+   Responsive — Mobile
+   ============================================ */
+@media (max-width: 768px) {
     .navbar {
-        padding: 12px 24px;
+        padding: 16px 20px;
+        justify-content: flex-start;
     }
 
     .nav-logo {
-        left: 24px;
-    }
-
-    .bg-controls {
-        right: 24px;
-    }
-
-    .nav-link {
-        padding: 6px 12px;
-        font-size: 12px;
+        left: 20px;
     }
 
     .nav-logo img {
         height: 40px;
-    }
-
-}
-
-@media (max-width: 768px) {
-    .hero-title-wrap {
-        padding: 0 36px;
-    }
-
-    .hero-logo-chip {
-        width: 48px;
-        height: 48px;
-        margin-top: -24px;
-        margin-left: -24px;
-        border-radius: 11px;
-    }
-
-    .hero-logo-chip img {
-        width: 22px;
-        height: 22px;
-    }
-
-    .motion-hero-blurb {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 640px) {
-    .navbar {
-        padding: 2rem;
-        z-index: 110;
-    }
-
-    .motion-hero-title {
-        font-size: 52px;
-    }
-
-    .hero-title-wrap {
-        padding: 0 28px;
-        --fan: 56px;
-    }
-
-    .hero-logo-chip {
-        width: 40px;
-        height: 40px;
-        margin-top: -20px;
-        margin-left: -20px;
-        border-radius: 10px;
-    }
-
-    .hero-logo-chip img {
-        width: 18px;
-        height: 18px;
-    }
-
-    .nav-logo {
-        left: 16px;
-    }
-
-    .bg-controls {
-        position: static;
-        transform: none;
-    }
-
-    .bg-switch,
-    .bg-visibility {
-        width: 40px;
-        height: 40px;
-        font-size: 24px;
     }
 
     .nav-links {
-        display: none !important;
-    }
-
-    .nav-logo img {
-        height: 3rem;
-    }
-
-    .project-card {
-        width: 90vw;
-        max-width: 90vw;
-        height: 70vh;
-        max-height: none;
-    }
-
-    .project-card.card-full-height {
-        height: 70vh;
-    }
-
-    .project-card.pos-left {
-        transform: translateX(-85%) rotateY(20deg) scale(0.65);
-        opacity: 0.4;
-    }
-
-    .project-card.pos-right {
-        transform: translateX(85%) rotateY(-20deg) scale(0.65);
-        opacity: 0.4;
-    }
-
-    .social-links {
         display: none;
     }
 
-    /* Modal — mobile scaling */
-    .modal-content {
-        width: 95%;
-        max-height: 90vh;
-        border-radius: 10px;
-    }
-
-    .modal-body {
-        padding: 40px 20px 32px;
-        gap: 24px;
-        font-size: 14px;
-    }
-
-    .modal-label {
-        font-size: 14px;
-    }
-
-    .modal-close {
-        top: 12px;
-        right: 12px;
-        width: 32px;
-        height: 32px;
-    }
-
-    .modal-close svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .modal-meta {
-        flex-direction: column;
-        gap: 24px;
-    }
-
-    .modal-meta-sidebar {
-        width: 100%;
-    }
-
-    .modal-video-short p,
-    .modal-video-large p {
-        font-size: 20px;
-    }
-
-    .modal-label + .modal-video-target {
-        margin-top: -12px;
+    .bg-controls {
+        display: none;
     }
 
     /* Hamburger button */
@@ -1349,7 +1098,6 @@ a, button, [role="button"],
         padding: 8px;
         background: none;
         border: none;
-        cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
         z-index: 110;
         opacity: 0;
         animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
@@ -1383,7 +1131,7 @@ a, button, [role="button"],
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 2rem;
+        gap: 1.5rem;
         position: fixed;
         inset: 0;
         z-index: 105;
@@ -1420,7 +1168,6 @@ a, button, [role="button"],
     .mobile-menu.menu-open .mobile-menu-link:nth-child(3) { animation-delay: 0.2s; }
     .mobile-menu.menu-open .mobile-menu-link:nth-child(4) { animation-delay: 0.25s; }
 
-    /* Close animation — links slide down + fade out, overlay fades simultaneously */
     .mobile-menu.menu-closing {
         opacity: 0;
         pointer-events: none;
@@ -1448,9 +1195,131 @@ a, button, [role="button"],
         background: rgba(17, 128, 249, 0.08);
     }
 
-    /* Nav exit — fade hamburger */
+    .mobile-menu-socials {
+        display: flex;
+        flex-direction: row;
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .mobile-menu.menu-open .mobile-menu-socials {
+        animation: nav-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    .mobile-menu-social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.4);
+        color: #fff;
+        font-size: 24px;
+        text-decoration: none;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
     .nav-exiting .hamburger {
         opacity: 0 !important;
         transition: opacity 0.4s ease;
+    }
+
+    /* Layout adjustments */
+    .vibes-layout {
+        padding: 160px 20px 40px;
+    }
+
+    .vibes-hero {
+        margin-bottom: 56px;
+    }
+
+    .vibes-hero-blurb {
+        font-size: 16px;
+    }
+
+    .vibes-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .vibes-card:nth-child(1) {
+        grid-column: auto;
+    }
+
+    .vibes-card-body {
+        padding: 22px 22px 22px;
+        gap: 14px;
+    }
+
+    .vibes-card-title {
+        font-size: 24px;
+    }
+
+    .vibes-card-description {
+        font-size: 14px;
+    }
+
+    .browser-url {
+        font-size: 10px;
+    }
+
+    /* Social links — hide on mobile (live in burger menu) */
+    .social-links {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title-wrap {
+        padding: 0 36px;
+    }
+
+    .hero-logo-chip {
+        width: 48px;
+        height: 48px;
+        margin-top: -24px;
+        margin-left: -24px;
+        border-radius: 11px;
+    }
+
+    .hero-logo-chip img {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vibes-hero-title {
+        font-size: 52px;
+    }
+
+    .hero-title-wrap {
+        padding: 0 28px;
+        --fan: 56px;
+    }
+
+    .hero-logo-chip {
+        width: 40px;
+        height: 40px;
+        margin-top: -20px;
+        margin-left: -20px;
+        border-radius: 10px;
+    }
+
+    .hero-logo-chip img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .vibes-card-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .vibes-btn {
+        justify-content: center;
     }
 }

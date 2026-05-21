@@ -427,11 +427,12 @@ function handleKeyDown(e) {
 // Keyboard Visualization
 // ============================================
 function highlightKey(key) {
-    // Normalize key
+    // No-op when the on-screen keyboard isn't part of the current design.
+    if (!keyboard) return;
+
     let normalizedKey = key.toLowerCase();
     if (key === ' ') normalizedKey = ' ';
 
-    // Find and highlight the key
     const keyElements = keyboard.querySelectorAll('.key');
     keyElements.forEach(keyEl => {
         const keyData = keyEl.dataset.key;
@@ -534,11 +535,69 @@ function setupEventListeners() {
 }
 
 // ============================================
+// Portfolio chrome — nav, hamburger, bg controls
+// (small bootstrap that mirrors motion/vibes setup)
+// ============================================
+function setupChrome() {
+    // Smooth page transitions on nav links
+    if (window.PageTransitions) PageTransitions.bindNavLinks();
+
+    // Mobile menu (hamburger)
+    var hamburger = document.querySelector('.hamburger');
+    var mobileMenu = document.querySelector('.mobile-menu');
+    if (hamburger && mobileMenu) {
+        function closeMenu(cb) {
+            hamburger.classList.remove('is-open');
+            mobileMenu.classList.remove('menu-open');
+            mobileMenu.classList.add('menu-closing');
+            setTimeout(function () {
+                mobileMenu.classList.remove('menu-closing');
+                if (cb) cb();
+            }, 450);
+        }
+        hamburger.addEventListener('click', function () {
+            if (mobileMenu.classList.contains('menu-open')) closeMenu();
+            else {
+                mobileMenu.classList.remove('menu-closing');
+                hamburger.classList.add('is-open');
+                mobileMenu.classList.add('menu-open');
+            }
+        });
+        var mobileLinks = mobileMenu.querySelectorAll('.mobile-menu-link');
+        mobileLinks.forEach(function (link) {
+            var href = link.getAttribute('href');
+            if (!href || href === '#' || href.startsWith('#')) return;
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                closeMenu(function () {
+                    if (window.PageTransitions) PageTransitions.exit(href);
+                    else window.location.href = href;
+                });
+            });
+        });
+    }
+
+    // Background visibility toggle — grid only
+    var bgVisibility = document.querySelector('.bg-visibility');
+    var bgGrid = document.getElementById('background-grid');
+    if (!bgVisibility || !bgGrid) return;
+
+    bgVisibility.addEventListener('click', function () {
+        var hidden = bgGrid.classList.toggle('grid-hidden');
+        bgGrid.classList.toggle('grid-visible', !hidden);
+        var icon = bgVisibility.querySelector('i');
+        if (icon) icon.className = hidden ? 'ph ph-eye-slash' : 'ph ph-eye';
+        bgVisibility.setAttribute('data-tooltip', hidden ? 'Show' : 'Hide');
+    });
+}
+
+// ============================================
 // Initialize
 // ============================================
 function init() {
     setupModeButtons();
     setupEventListeners();
+    setupChrome();
     resetGame();
 }
 

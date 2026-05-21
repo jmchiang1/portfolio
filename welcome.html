@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome · Jonathan Chiang</title>
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="welcome.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <style>body { opacity: 0; }</style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+    <div class="glow"></div>
+
+    <!-- Skip / back -->
+    <a href="/" class="welcome-skip" id="welcomeSkip" aria-label="Skip to portfolio">
+        <span>skip</span>
+        <i class="ph ph-arrow-right"></i>
+    </a>
+
+    <main class="welcome-layout">
+        <header class="welcome-hero">
+            <span class="welcome-eyebrow">
+                <!-- <i class="ph-fill ph-keyboard"></i> -->
+                <span>welcome, visitor</span>
+            </span>
+            <h1 class="welcome-title">
+                Build your <span class="welcome-title-accent">keyboard.</span>
+            </h1>
+            <p class="welcome-blurb">
+                Configure a board, sign the card, and step inside.
+            </p>
+        </header>
+
+        <section class="welcome-stage">
+            <!-- The Build Card -->
+            <article class="build-card" id="buildCard">
+                <header class="build-card-head">
+                    <div class="build-card-brand">
+                        <!-- <span class="build-card-logo">JC</span> -->
+                        <!-- <span class="build-card-meta">VISITOR BUILD</span> -->
+                        <h2 class="build-card-name" id="cardName">YOUR NAME</h2>
+                    </div>
+                    <span class="build-card-serial" id="cardSerial">NO. 0000</span>
+                </header>
+
+
+                <div class="build-card-keyboard" id="cardKeyboard" aria-hidden="true">
+                    <!-- rendered by welcome.js -->
+                </div>
+
+                <dl class="build-card-spec">
+                    <div class="build-card-spec-row">
+                        <dt>LAYOUT</dt>
+                        <dd id="specLayout">60%</dd>
+                    </div>
+                    <div class="build-card-spec-row">
+                        <dt>CASE</dt>
+                        <dd>
+                            <span class="build-card-swatch" id="specCaseSwatch" aria-hidden="true"></span>
+                            <span id="specCase">Graphite</span>
+                        </dd>
+                    </div>
+                    <div class="build-card-spec-row">
+                        <dt>SWITCH</dt>
+                        <dd>
+                            <i class="ph ph-circle-half" id="specSwitchIcon" aria-hidden="true"></i>
+                            <span id="specSwitch">Tactile</span>
+                        </dd>
+                    </div>
+                    <div class="build-card-spec-row">
+                        <dt>KEYCAPS</dt>
+                        <dd>
+                            <span class="build-card-swatch" id="specKeycapSwatch" aria-hidden="true"></span>
+                            <span id="specKeycap">Cream</span>
+                        </dd>
+                    </div>
+                </dl>
+
+                <footer class="build-card-foot">
+                    <div class="build-card-foot-col">
+                        <span class="build-card-foot-label">ISSUED</span>
+                        <span class="build-card-foot-value" id="cardDate">--/--/--</span>
+                    </div>
+                    <div class="build-card-foot-col build-card-sig">
+                        <span class="build-card-foot-label">SIGNATURE</span>
+                        <span class="build-card-foot-value build-card-foot-sig" id="cardSignature">x ___________</span>
+                    </div>
+                </footer>
+            </article>
+
+            <!-- Right-side panel: name + controls + CTA -->
+            <aside class="welcome-panel">
+                <div class="welcome-name-row">
+                    <label class="welcome-name-label" for="visitorName">visitor</label>
+                    <div class="welcome-name-input-wrap">
+                        <input
+                            type="text"
+                            id="visitorName"
+                            class="welcome-name-input"
+                            autocomplete="off"
+                            autocorrect="off"
+                            autocapitalize="characters"
+                            spellcheck="false"
+                            maxlength="24"
+                            placeholder="LOADING…">
+                        <button class="welcome-reroll" id="rerollName" type="button" aria-label="Roll a new name" data-tooltip="Roll a new name">
+                            <i class="ph ph-shuffle"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="build-controls">
+                    <div class="build-control">
+                        <span class="build-control-label">layout</span>
+                        <div class="build-control-row">
+                            <button class="layout-btn active" data-layout="60" type="button"><span class="layout-btn-name">60</span><span class="layout-btn-pct">%</span></button>
+                            <button class="layout-btn" data-layout="75" type="button"><span class="layout-btn-name">75</span><span class="layout-btn-pct">%</span></button>
+                            <button class="layout-btn" data-layout="tkl" type="button"><span class="layout-btn-name">TKL</span></button>
+                            <button class="layout-btn" data-layout="100" type="button"><span class="layout-btn-name">100</span><span class="layout-btn-pct">%</span></button>
+                        </div>
+                    </div>
+
+                    <div class="build-control">
+                        <span class="build-control-label">case</span>
+                        <div class="build-control-row build-swatches">
+                            <button class="swatch-btn active" data-case="graphite" data-name="Graphite" style="--swatch:#1f1f24" type="button" aria-label="Graphite"></button>
+                            <button class="swatch-btn" data-case="midnight" data-name="Midnight" style="--swatch:#1a2747" type="button" aria-label="Midnight"></button>
+                            <button class="swatch-btn" data-case="ember" data-name="Ember" style="--swatch:#c0673f" type="button" aria-label="Ember"></button>
+                            <button class="swatch-btn" data-case="moss" data-name="Moss" style="--swatch:#3a5b3f" type="button" aria-label="Moss"></button>
+                            <button class="swatch-btn" data-case="bone" data-name="Bone" style="--swatch:#e6dccb" type="button" aria-label="Bone"></button>
+                        </div>
+                    </div>
+
+                    <div class="build-control">
+                        <span class="build-control-label">switch</span>
+                        <div class="build-control-row">
+                            <button class="switch-btn" data-switch="linear" data-name="Linear" type="button">
+                                <i class="ph ph-line-segment"></i>
+                                <span>linear</span>
+                            </button>
+                            <button class="switch-btn active" data-switch="tactile" data-name="Tactile" type="button">
+                                <i class="ph ph-circle-half"></i>
+                                <span>tactile</span>
+                            </button>
+                            <button class="switch-btn" data-switch="clicky" data-name="Clicky" type="button">
+                                <i class="ph ph-wave-sine"></i>
+                                <span>clicky</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="build-control">
+                        <span class="build-control-label">keycaps</span>
+                        <div class="build-control-row build-swatches">
+                            <button class="swatch-btn active" data-keycap="cream" data-name="Cream" style="--swatch:#e7dcc2; --legend:#1d1a14" type="button" aria-label="Cream"></button>
+                            <button class="swatch-btn" data-keycap="bow" data-name="BoW" style="--swatch:#13131a; --legend:#f3f3f3" type="button" aria-label="Black on White"></button>
+                            <button class="swatch-btn" data-keycap="olivia" data-name="Olivia" style="--swatch:#e9dcd4; --legend:#1e1e22" type="button" aria-label="Olivia"></button>
+                            <button class="swatch-btn" data-keycap="botanical" data-name="Botanical" style="--swatch:#1c2a26; --legend:#cbb88a" type="button" aria-label="Botanical"></button>
+                            <button class="swatch-btn" data-keycap="dolch" data-name="Dolch" style="--swatch:#2a2a2e; --legend:#f5d97a" type="button" aria-label="Dolch"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-cta">
+                    <button class="welcome-submit" id="welcomeSubmit" type="button">
+                        <span>Enter the portfolio</span>
+                        <i class="ph ph-arrow-right"></i>
+                    </button>
+                    <p class="welcome-fineprint" id="welcomeStatus">
+                        Your build joins the <a href="visitors.html" class="welcome-fineprint-link">visitor gallery</a>.
+                    </p>
+                </div>
+            </aside>
+        </section>
+
+        <!-- <footer class="welcome-foot">
+            <span class="welcome-foot-time" id="footTime">--:--:--</span>
+            <span class="welcome-foot-status">
+                <span class="welcome-foot-dot"></span>
+                ALL SYSTEMS OPERATIONAL
+            </span>
+        </footer> -->
+    </main>
+
+    <!-- Supabase (gracefully degrades if config missing) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="transitions.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="welcome.js"></script>
+</body>
+</html>

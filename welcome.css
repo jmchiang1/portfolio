@@ -1,0 +1,911 @@
+/* ============================================
+   Welcome — first-visit visitor card gate
+   Mechanical-keyboard themed, portfolio dark stack
+   ============================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #06062C;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: url('assets/icons8-3d-pointer.svg') 9 4, auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a, button, [role="button"],
+.layout-btn, .switch-btn, .swatch-btn,
+.welcome-skip, .welcome-submit, .welcome-reroll,
+.welcome-fineprint-link {
+    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+}
+
+input { cursor: url('assets/icons8-3d-pointer.svg') 9 4, text; }
+
+/* ============================================
+   Backgrounds — dots + grid + radial glow
+   ============================================ */
+#dotted-surface {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#dotted-surface.dots-hidden { opacity: 0; }
+
+#background-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black, transparent);
+    mask-image: radial-gradient(ellipse at center, black, transparent);
+}
+
+#background-grid.grid-visible { opacity: 1; }
+
+.glow {
+    display: none;
+}
+
+@keyframes glow-enter {
+    to { opacity: 0.85; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes glow-breathe {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 0.85; }
+}
+
+.page-exit-active .glow {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) !important;
+    animation: none !important;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+/* ============================================
+   Skip / corner
+   ============================================ */
+.welcome-skip {
+    position: fixed;
+    top: 28px;
+    right: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 1000px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(-6px);
+    animation: welcome-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.welcome-skip i { font-size: 13px; transition: transform 0.2s ease; }
+
+.welcome-skip:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.welcome-skip:hover i { transform: translateX(2px); }
+
+/* ============================================
+   Layout — viewport-fit, hero on top, two-column stage
+   ============================================ */
+.welcome-layout {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 64px 56px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    align-items: center;
+}
+
+/* ============================================
+   Hero — compact, one row of meaningful content
+   ============================================ */
+.welcome-hero {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    max-width: 640px;
+}
+
+.welcome-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border-radius: 1000px;
+    background: rgba(17, 128, 249, 0.08);
+    border: 1px solid rgba(17, 128, 249, 0.2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #5aa3ff;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: welcome-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
+
+.welcome-eyebrow i { font-size: 12px; color: #66d2ff; }
+
+.welcome-title {
+    font-family: 'Gabarito', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 38px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.welcome-title-accent {
+    background: linear-gradient(135deg, #1180f9 0%, #66d2ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome-blurb {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.55);
+    max-width: 440px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+}
+
+@keyframes welcome-up {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   Stage — card on left, control panel on right
+   ============================================ */
+.welcome-stage {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+    gap: 44px;
+    align-items: start;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+}
+
+.welcome-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* ============================================
+   Name row
+   ============================================ */
+.welcome-name-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 5px 5px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1000px;
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    width: 100%;
+}
+
+.welcome-name-row:focus-within {
+    border-color: rgba(17, 128, 249, 0.4);
+    background: rgba(17, 128, 249, 0.05);
+    box-shadow: 0 0 0 4px rgba(17, 128, 249, 0.08);
+}
+
+.welcome-name-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.welcome-name-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.welcome-name-input {
+    width: 100%;
+    flex: 1 1 auto;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 7px 0;
+}
+
+.welcome-name-input-wrap { flex: 1 1 auto; min-width: 0; }
+
+.welcome-name-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.08em;
+}
+
+.welcome-reroll {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    position: relative;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.welcome-reroll:hover {
+    background: rgba(17, 128, 249, 0.15);
+    color: #66d2ff;
+}
+
+.welcome-reroll:active { transform: rotate(180deg); }
+
+.welcome-reroll::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.welcome-reroll:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================
+   The Build Card
+   ============================================ */
+.build-card {
+    position: relative;
+    width: 100%;
+    padding: 36px 40px 32px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--case-color, #1f1f24);
+    border: 1px solid color-mix(in oklab, var(--case-color, #1f1f24) 60%, white 25%);
+    box-shadow:
+        0 30px 60px -30px rgba(0, 0, 0, 0.7),
+        0 10px 24px -12px rgba(17, 128, 249, 0.2);
+    color: var(--case-text, #fff);
+    transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.4s ease;
+}
+
+.build-card.bouncing {
+    animation: card-bounce 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes card-bounce {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.012); }
+    100% { transform: scale(1); }
+}
+
+.build-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.build-card-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.build-card-logo {
+    font-family: 'Gabarito', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--case-text, #fff);
+    opacity: 0.95;
+}
+
+.build-card-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    color: var(--case-text-dim, rgba(255, 255, 255, 0.55));
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.build-card-serial {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--case-text-dim, rgba(255, 255, 255, 0.55));
+    letter-spacing: 0.14em;
+    padding: 3px 9px;
+    border-radius: 1000px;
+    border: 1px solid color-mix(in oklab, var(--case-color, #000) 60%, white 40%);
+}
+
+.build-card-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--case-text, #fff);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    min-height: 24px;
+    line-height: 1.1;
+    transition: opacity 0.2s ease;
+}
+
+/* ============================================
+   Mini keyboard rendered on the card
+   ============================================ */
+/* Flat 2D keyboard schematic — fixed u-sizing, intrinsic width, centered.
+   --u sets the physical width of a 1u key. Keys never stretch to fill
+   the card; the keyboard scales naturally with the chosen layout. */
+.build-card-keyboard {
+    --u: 18px;
+    --kb-bg: color-mix(in oklab, var(--case-color, #1f1f24) 70%, black 30%);
+    --kb-edge: color-mix(in oklab, var(--case-color, #1f1f24) 55%, white 10%);
+    --kc-bg: var(--keycap-color, #e7dcc2);
+    --kc-edge: color-mix(in oklab, var(--keycap-color, #e7dcc2) 78%, black 22%);
+    --row-h: var(--u);
+    --kb-gap: 3px;
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 24px;
+    background: var(--kb-bg);
+    border: 1px solid var(--kb-edge);
+    border-radius: 6px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--kb-gap);
+    transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.kb-row {
+    display: flex;
+    gap: var(--kb-gap);
+    height: var(--row-h);
+    align-items: stretch;
+}
+
+.kb-key {
+    flex: 0 0 auto;
+    width: var(--u);
+    background: var(--kc-bg);
+    border: 1px solid var(--kc-edge);
+    border-radius: 2px;
+    transition: background 0.06s ease, border-color 0.06s ease, transform 0.06s ease;
+}
+
+/* Modifier keys — slightly darker, like differently-colored mod caps */
+.kb-key.kb-mod {
+    --kc-bg: color-mix(in oklab, var(--keycap-color, #e7dcc2) 72%, var(--case-color, #1f1f24) 28%);
+}
+
+/* Accent keys (esc, enter) — legend color as the cap */
+.kb-key.kb-accent {
+    --kc-bg: var(--keycap-legend, #1d1a14);
+    --kc-edge: color-mix(in oklab, var(--keycap-legend, #1d1a14) 80%, white 16%);
+}
+
+/* Pressed feedback — brand blue cap while the physical key is held down */
+.kb-key.is-pressed {
+    background: linear-gradient(135deg, #1180f9 0%, #66d2ff 100%);
+    border-color: rgba(102, 210, 255, 0.65);
+    box-shadow: 0 0 0 1px rgba(102, 210, 255, 0.35),
+                0 0 12px rgba(17, 128, 249, 0.45);
+    transform: translateY(1px);
+}
+
+.kb-key.kb-1u    { width: var(--u); }
+.kb-key.kb-1-25u { width: calc(var(--u) * 1.25); }
+.kb-key.kb-1-5u  { width: calc(var(--u) * 1.5); }
+.kb-key.kb-1-75u { width: calc(var(--u) * 1.75); }
+.kb-key.kb-2u    { width: calc(var(--u) * 2); }
+.kb-key.kb-2-25u { width: calc(var(--u) * 2.25); }
+.kb-key.kb-2-75u { width: calc(var(--u) * 2.75); }
+.kb-key.kb-space { width: calc(var(--u) * 6.25); }
+
+.kb-gap {
+    flex: 0 0 auto;
+    width: var(--u);
+    background: transparent;
+    border: none;
+    pointer-events: none;
+}
+.kb-gap.kb-0-5 { width: calc(var(--u) * 0.5); }
+
+/* ============================================
+   Spec list
+   ============================================ */
+.build-card-spec {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 28px;
+    margin-bottom: 22px;
+}
+
+.build-card-spec-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.build-card-spec dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--case-text-dim, rgba(255, 255, 255, 0.5));
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.build-card-spec dd {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--case-text, #fff);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    min-width: 0;
+}
+
+.build-card-spec dd i { font-size: 13px; }
+
+.build-card-swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--swatch-color, #fff);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    flex-shrink: 0;
+}
+
+/* ============================================
+   Foot row
+   ============================================ */
+.build-card-foot {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 24px;
+    padding-top: 18px;
+    border-top: 1px dashed color-mix(in oklab, var(--case-text-dim, rgba(255,255,255,0.4)) 60%, transparent);
+}
+
+.build-card-foot-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.build-card-foot-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    color: var(--case-text-dim, rgba(255, 255, 255, 0.45));
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.build-card-foot-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--case-text, #fff);
+    letter-spacing: 0.04em;
+}
+
+.build-card-foot-sig {
+    font-family: 'Gabarito', serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    color: var(--case-text, #fff);
+    opacity: 0.9;
+    transform: rotate(-2deg);
+    transform-origin: left;
+}
+
+/* ============================================
+   Build controls — vertical stack, full-width rows
+   ============================================ */
+.build-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.build-control {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+}
+
+.build-control-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-left: 4px;
+}
+
+.build-control-row {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1000px;
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    width: 100%;
+}
+
+.layout-btn, .switch-btn {
+    flex: 1 1 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 8px;
+    background: transparent;
+    border: none;
+    border-radius: 1000px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.04em;
+    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    justify-content: center;
+    min-width: 0;
+}
+
+.layout-btn .layout-btn-pct {
+    font-size: 9px;
+    opacity: 0.65;
+    margin-left: -2px;
+}
+
+.switch-btn i { font-size: 13px; }
+
+.layout-btn:hover,
+.switch-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.layout-btn.active,
+.switch-btn.active {
+    color: #fff;
+    background: rgba(17, 128, 249, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(17, 128, 249, 0.35);
+}
+
+/* Swatches */
+.build-swatches {
+    padding: 5px 8px;
+    justify-content: space-between;
+}
+
+.swatch-btn {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: var(--swatch, #fff);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    padding: 0;
+    flex: 0 0 24px;
+}
+
+.swatch-btn:hover {
+    transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.swatch-btn.active {
+    border-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 2px rgba(17, 128, 249, 0.45),
+                0 4px 14px -5px rgba(17, 128, 249, 0.6);
+}
+
+/* ============================================
+   CTA — Enter button + fineprint
+   ============================================ */
+.welcome-cta {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+}
+
+.welcome-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: 1000px;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, #1180f9 0%, #2b91ff 100%);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 12px 32px -10px rgba(17, 128, 249, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+    width: 100%;
+}
+
+.welcome-submit i {
+    font-size: 16px;
+    transition: transform 0.2s ease;
+}
+
+.welcome-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 40px -12px rgba(17, 128, 249, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.welcome-submit:hover i { transform: translateX(3px); }
+
+.welcome-submit:active { transform: translateY(0); }
+
+.welcome-submit[disabled] {
+    opacity: 0.55;
+    cursor: progress;
+}
+
+.welcome-submit.is-loading i {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.welcome-fineprint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+
+.welcome-fineprint-link {
+    color: #66d2ff;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(102, 210, 255, 0.35);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.welcome-fineprint-link:hover {
+    color: #fff;
+    border-bottom-color: rgba(255, 255, 255, 0.6);
+}
+
+.welcome-fineprint.is-error { color: #ef4444; }
+.welcome-fineprint.is-success { color: #4ade80; }
+
+/* ============================================
+   Bottom status bar
+   ============================================ */
+.welcome-foot {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 24px;
+    opacity: 0;
+    animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.85s forwards;
+}
+
+.welcome-foot-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.welcome-foot-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+    animation: dot-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* ============================================
+   Responsive — collapse to single column under 900px
+   ============================================ */
+@media (max-width: 900px) {
+    .welcome-stage {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 720px) {
+    .welcome-layout {
+        padding: 56px 22px 24px;
+        gap: 20px;
+    }
+
+    .welcome-skip {
+        top: 18px;
+        right: 18px;
+    }
+
+    .build-card {
+        padding: 20px 20px 18px;
+    }
+
+    .build-card-spec {
+        gap: 10px 16px;
+    }
+
+    .build-card-foot {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .welcome-foot {
+        flex-direction: column;
+        gap: 6px;
+    }
+}
+
+/* Short viewports — compress hero + shrink keyboard u-size */
+@media (max-height: 820px) {
+    .welcome-layout { padding-top: 44px; gap: 24px; }
+    .welcome-hero { gap: 8px; }
+    .welcome-title { font-size: clamp(24px, 3.5vw, 32px); }
+    .welcome-blurb { font-size: 12.5px; }
+    .build-card { padding: 26px 30px 24px; }
+    .build-card-keyboard { --u: 15px; }
+    .build-card-name { font-size: 18px; margin-bottom: 18px; }
+}
+
+@media (max-width: 720px) {
+    .build-card-keyboard { --u: 13px; --kb-gap: 2px; }
+}
+
+@media (max-width: 420px) {
+    .build-card-keyboard { --u: 11px; --kb-gap: 2px; }
+}
+
+/* ============================================
+   Exit transition
+   ============================================ */
+body.welcome-exiting .welcome-layout,
+body.welcome-exiting .welcome-skip {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.welcome-exiting .build-card {
+    transform: scale(0.95);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}

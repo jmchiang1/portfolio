@@ -17,17 +17,21 @@
     <link rel="stylesheet" href="motion.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Body starts hidden so GSAP's enter transition can fade it in cleanly.
+         CSS animation is a safety fallback in case GSAP fails to load — the
+         page still reveals itself instead of staying invisible. -->
+    <style>
+        body { opacity: 0; animation: jc-body-fade 0.4s ease 0.05s forwards; }
+        @keyframes jc-body-fade { to { opacity: 1; } }
+    </style>
 </head>
 <body>
-    <!-- Dotted Surface background -->
-    <div id="dotted-surface" data-speed="0.015"></div>
-
-    <!-- Background Paths — SVG flowing curves -->
-    <div id="background-paths"></div>
-
     <!-- Background Grid — CSS grid pattern -->
-    <div id="background-grid"></div>
+    <div id="background-grid" class="grid-visible"></div>
+
+    <!-- Pulsing radial glow — entrance mirrors home page exit (scale 0 → 1) -->
+    <div class="glow"></div>
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -38,12 +42,10 @@
             <a href="/" class="nav-link">UX/UI</a>
             <!-- <a href="#" class="nav-link">Coding</a> -->
             <a href="#" class="nav-link active">Motion</a>
+            <a href="vibes.html" class="nav-link">Vibes</a>
             <a href="about.html" class="nav-link">About</a>
         </div>
         <div class="bg-controls">
-            <button class="bg-switch" aria-label="Switch background animation" data-tooltip="Dots">
-                <i class="ph ph-waveform"></i>
-            </button>
             <button class="bg-visibility" aria-label="Hide background" data-tooltip="Hide">
                 <i class="ph ph-eye"></i>
             </button>
@@ -59,37 +61,145 @@
     <div class="mobile-menu">
         <a href="/" class="mobile-menu-link">UX/UI</a>
         <a href="#" class="mobile-menu-link active">Motion</a>
+        <a href="vibes.html" class="mobile-menu-link">Vibes</a>
         <a href="about.html" class="mobile-menu-link">About</a>
     </div>
 
-    <!-- Carousel (same structure as home page) -->
-    <div class="carousel-viewport">
+    <!-- Motion Content -->
+    <main class="motion-layout">
+        <!-- Hero / Intro -->
+        <section class="motion-hero">
+        <div class="hero-title-wrap">
+            <span class="hero-logo-chip hero-logo-tl" aria-hidden="true">
+                <img src="https://api.iconify.design/logos/adobe-after-effects.svg" alt="" loading="lazy">
+            </span>
+            <span class="hero-logo-chip hero-logo-tr" aria-hidden="true">
+                <img src="https://cdn.simpleicons.org/figma/f24e1e" alt="" loading="lazy">
+            </span>
+            <span class="hero-logo-chip hero-logo-bl" aria-hidden="true">
+                <img src="https://api.iconify.design/logos/adobe-photoshop.svg" alt="" loading="lazy">
+            </span>
+            <span class="hero-logo-chip hero-logo-br" aria-hidden="true">
+                <img src="https://cdn.simpleicons.org/blender/e87d0d" alt="" loading="lazy">
+            </span>
+            <h1 class="motion-hero-title">
+                Motion<span class="motion-hero-title-accent">.</span>
+            </h1>
+        </div>
+        <div class="hero-hint" aria-hidden="true">
+            <i class="ph ph-cursor-click"></i>
+            <span>psst — tap a logo a few times</span>
+        </div>
+    </section>
+
+    <!-- Project Grid -->
+    <section class="motion-grid">
         <!-- Card 1 — Neon Drift -->
-        <div class="project-card" data-modal="neon-drift-modal">
-            <video src="assets/Motion/Neon Drift/neon-lights-logo.mp4" class="project-video" muted loop playsinline></video>
-            <div class="project-placeholder"></div>
-        </div>
+        <article class="motion-card" data-modal="neon-drift-modal">
+            <div class="motion-card-preview">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/Neon Drift/neon-lights-logo.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">Neon Drift</h2>
+                    </div>
+                    <span class="motion-card-year">2025</span>
+                </div>
+                <p class="motion-card-description">
+                    A music festival concept for chill pop and lofi — animated identity across posters, web, and social.
+                </p>
+            </div>
+        </article>
+
         <!-- Card 2 — Clarity -->
-        <div class="project-card card-full-height" data-modal="clarity-modal">
-            <video src="assets/Motion/clarity-web.mp4" class="project-video" style="object-fit: cover" muted loop playsinline></video>
-            <div class="project-placeholder"></div>
-        </div>
+        <article class="motion-card" data-modal="clarity-modal">
+            <div class="motion-card-preview">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/clarity-web.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">Clarity</h2>
+                    </div>
+                    <span class="motion-card-year">2025</span>
+                </div>
+                <p class="motion-card-description">
+                    A generative motion music video built with Space Type Generater and After Effects.
+                </p>
+            </div>
+        </article>
+
         <!-- Card 3 — Momi -->
-        <div class="project-card" data-modal="momi-modal">
-            <video src="assets/Motion/momi logo.mp4" class="project-video" muted loop playsinline></video>
-            <div class="project-placeholder"></div>
-        </div>
+        <article class="motion-card" data-modal="momi-modal">
+            <div class="motion-card-preview">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/momi logo.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">Museum of the Moving Image</h2>
+                    </div>
+                    <span class="motion-card-year">2025</span>
+                </div>
+                <p class="motion-card-description">
+                    A logo animation for MoMI — bringing the museum's identity to life through motion and typography.
+                </p>
+            </div>
+        </article>
+
         <!-- Card 4 — Robinhood Trim Path -->
-        <div class="project-card" data-modal="robinhood-modal" style="background: #fff">
-            <video src="assets/Motion/Robinhood Trim Path.mp4" class="project-video" style="object-fit: cover" muted loop playsinline></video>
-            <div class="project-placeholder"></div>
-        </div>
+        <article class="motion-card" data-modal="robinhood-modal">
+            <div class="motion-card-preview motion-card-preview-light">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/Robinhood Trim Path.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">Robinhood Legends</h2>
+                    </div>
+                    <span class="motion-card-year">2025</span>
+                </div>
+                <p class="motion-card-description">
+                    A trim-path logo animation for Robinhood Legends — a bold, path-driven reveal.
+                </p>
+            </div>
+        </article>
+
         <!-- Card 5 — ScriptChain Health Demo -->
-        <div class="project-card" data-modal="scriptchain-modal">
-            <video src="assets/Motion/Scriptchain Health Demo.mp4" class="project-video" style="object-fit: cover" muted loop playsinline></video>
-            <div class="project-placeholder"></div>
-        </div>
-    </div>
+        <article class="motion-card" data-modal="scriptchain-modal">
+            <div class="motion-card-preview">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/Scriptchain Health Demo.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">ScriptChain Health</h2>
+                    </div>
+                    <span class="motion-card-year">2025</span>
+                </div>
+                <p class="motion-card-description">
+                    A product demo animation for ScriptChain Health — patient-facing dashboards and data viz workflows.
+                </p>
+            </div>
+        </article>
+        </section>
+    </main>
 
     <!-- Neon Drift Modal -->
     <div class="modal-overlay" id="neon-drift-modal">
@@ -297,8 +407,9 @@
         </a>
     </div>
 
-    <script src="dotted-surface.js"></script>
-    <script src="background-paths.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="transitions.js"></script>
     <script src="motion.js"></script>
 </body>
 </html>
