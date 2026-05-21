@@ -459,6 +459,49 @@
     document.addEventListener('keyup',   function (e) { pressKey(normalizeKey(e), false); }, { passive: true });
     window.addEventListener('blur', clearPressed);
 
+    // ---------- 3D Card Tilt (GSAP) ----------
+    // Tilts the visitor card toward the cursor for a subtle "physical card"
+    // feel. Skipped on touch / reduced-motion.
+    (function setupCardTilt() {
+        if (typeof gsap === 'undefined' || !cardEl) return;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        var MAX_TILT = 10;
+        var LIFT     = 14;
+        var rect     = null;
+
+        function refreshRect() { rect = cardEl.getBoundingClientRect(); }
+
+        var quickRotX = gsap.quickTo(cardEl, 'rotateX', { duration: 0.5, ease: 'power2.out' });
+        var quickRotY = gsap.quickTo(cardEl, 'rotateY', { duration: 0.5, ease: 'power2.out' });
+        var quickZ    = gsap.quickTo(cardEl, 'z',       { duration: 0.5, ease: 'power2.out' });
+
+        gsap.set(cardEl, { transformPerspective: 1000, transformOrigin: 'center center' });
+
+        cardEl.addEventListener('mouseenter', function () {
+            refreshRect();
+            quickZ(LIFT);
+        });
+
+        cardEl.addEventListener('mousemove', function (e) {
+            if (!rect) refreshRect();
+            var px = (e.clientX - rect.left) / rect.width;
+            var py = (e.clientY - rect.top)  / rect.height;
+            quickRotY((px - 0.5) * 2 * MAX_TILT);
+            quickRotX(-(py - 0.5) * 2 * MAX_TILT);
+        });
+
+        cardEl.addEventListener('mouseleave', function () {
+            gsap.to(cardEl, {
+                rotateX: 0, rotateY: 0, z: 0,
+                duration: 0.8, ease: 'power3.out', overwrite: 'auto'
+            });
+        });
+
+        window.addEventListener('resize', refreshRect);
+        window.addEventListener('scroll', refreshRect, { passive: true });
+    })();
+
     // ---------- Init ----------
     function init() {
         build.serial = generateSerial();

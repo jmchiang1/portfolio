@@ -185,6 +185,7 @@ a, button, [role="button"],
 .nav-link:nth-child(2) { animation-delay: 0.25s; animation-duration: 0.45s; }
 .nav-link:nth-child(3) { animation-delay: 0.3s; animation-duration: 0.4s; }
 .nav-link:nth-child(4) { animation-delay: 0.35s; animation-duration: 0.35s; }
+.nav-link:nth-child(5) { animation-delay: 0.4s; animation-duration: 0.3s; }
 
 @keyframes nav-enter {
     to { opacity: 1; transform: translateY(0); }
@@ -199,6 +200,7 @@ a, button, [role="button"],
     transform: translateY(-20px) !important;
 }
 
+.nav-exiting .nav-link:nth-child(5) { transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0s !important; }
 .nav-exiting .nav-link:nth-child(4) { transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0s !important; }
 .nav-exiting .nav-link:nth-child(3) { transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.05s !important; }
 .nav-exiting .nav-link:nth-child(2) { transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important; transition-delay: 0.1s !important; }
@@ -1002,6 +1004,7 @@ a, button, [role="button"],
     .mobile-menu.menu-open .mobile-menu-link:nth-child(2) { animation-delay: 0.15s; }
     .mobile-menu.menu-open .mobile-menu-link:nth-child(3) { animation-delay: 0.2s; }
     .mobile-menu.menu-open .mobile-menu-link:nth-child(4) { animation-delay: 0.25s; }
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(5) { animation-delay: 0.3s; }
 
     .mobile-menu-socials {
         display: flex;
