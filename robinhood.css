@@ -1089,3 +1089,87 @@ a, button, [role="button"],
     font-family: 'Space Grotesk', sans-serifns-serif;
     letter-spacing: 0.02em;
 }
+
+/* ============================================
+   Dark theme — match home page background (#000C19).
+   Appended as overrides so the original light-theme
+   declarations above don't need per-line edits.
+   Gold gradient labels, the #110e08 panel and the
+   green persona accent are intentionally kept.
+   ============================================ */
+body {
+    background: #000C19;
+    color: #fff;
+}
+
+/* Nav */
+.nav-link {
+    color: #fff;
+}
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Back to top */
+.back-to-top {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.back-to-top:hover {
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Headings (was #030b2a) */
+.cs-title {
+    color: #fff;
+}
+
+/* Blue feature title (was #014998) → light accent */
+.cs-feature-title {
+    color: #66d2ff;
+}
+
+/* Surfaces (was light grey #dde3ec) */
+.cs-card,
+.cs-stat-callout {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Dividers (was #030b2a) */
+.cs-divider {
+    border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile menu */
+.hamburger-line {
+    background: #fff;
+}
+.mobile-menu {
+    background: rgba(0, 12, 25, 0.95);
+}
+.mobile-menu-link {
+    color: #fff;
+}
+
+/* ===========================================================================
+   Snappier page exit — navigate ~340ms after a nav click instead of 700ms
+   (matched by the timeout in this page's .js). Re-times the exit so the
+   screen reaches the navy cover quickly; the next page opens on that navy.
+   =========================================================================== */
+.cs-exiting .case-study,
+.cs-exiting .back-to-top,
+.cs-exiting .nav-logo,
+.cs-exiting .navbar::before {
+    transition-duration: 0.28s !important;
+    transition-delay: 0s !important;
+}
+.cs-exiting::after { animation: darken-bg 0.24s ease 0.02s forwards !important; }
+.nav-exiting .nav-link:nth-child(1) { transition-duration: 0.28s !important; transition-delay: 0.05s !important; }
+.nav-exiting .nav-link:nth-child(2) { transition-duration: 0.28s !important; transition-delay: 0.04s !important; }
+.nav-exiting .nav-link:nth-child(3) { transition-duration: 0.28s !important; transition-delay: 0.03s !important; }
+.nav-exiting .nav-link:nth-child(4) { transition-duration: 0.28s !important; transition-delay: 0.02s !important; }
+.nav-exiting .nav-link:nth-child(5) { transition-duration: 0.28s !important; transition-delay: 0.01s !important; }
+.nav-exiting .nav-link:nth-child(6) { transition-duration: 0.28s !important; transition-delay: 0s !important; }

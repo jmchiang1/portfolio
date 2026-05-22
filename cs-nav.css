@@ -1,0 +1,44 @@
+/* ============================================
+   Case-study section nav — sliding active/hover pill
+   Scoped to .cs-nav-links so the site-wide nav is untouched.
+   ============================================ */
+.cs-nav-links {
+    position: relative;
+}
+
+.cs-nav-links .nav-link {
+    position: relative;
+    z-index: 1;
+}
+
+/* Single pill that glides between links. JS sets its size/position;
+   it provides the highlight for both the scroll-spy active link and the
+   hovered link, so the links themselves stay transparent. */
+.cs-nav-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    border-radius: 8px;
+    background: rgba(17, 128, 249, 0.08);
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform, width;
+}
+
+.cs-nav-indicator.ready {
+    opacity: 1;
+    transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.3s ease;
+}
+
+.cs-nav-links .nav-link.active {
+    background: transparent;
+}
+
+.cs-nav-links .nav-link:hover {
+    background: transparent;
+    color: #1180f9;
+}

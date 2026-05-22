@@ -12,26 +12,48 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=DotGothic16&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="cs-nav.css">
     <link rel="stylesheet" href="nocta.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 </head>
 <body>
-    <!-- White cover — visible from first paint to prevent flash between pages -->
     <div class="page-transition-cover"></div>
 
     <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="nav-logo">
-            <img src="assets/logo.png" alt="JC" />
+            <!-- Geometric JC monogram (the site's new logo) -->
+            <svg class="nav-logo-svg" viewBox="0 0 94 70" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="JC">
+                <rect class="logo-cell" x="12" y="0"  width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="24" y="0"  width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="36" y="0"  width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="48" y="0"  width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="60" y="0"  width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="72" y="0"  width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="84" y="0"  width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="36" y="12" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="60" y="12" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="36" y="24" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="60" y="24" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="36" y="36" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="60" y="36" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="0"  y="48" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="36" y="48" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="60" y="48" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="12" y="60" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="24" y="60" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="72" y="60" width="10" height="10" rx="2"/>
+                <rect class="logo-cell" x="84" y="60" width="10" height="10" rx="2"/>
+            </svg>
         </a>
         <div class="nav-links cs-nav-links">
             <a href="#problem" class="nav-link">Problem</a>
             <a href="#background" class="nav-link">Background</a>
             <a href="#research" class="nav-link">Research</a>
+            <a href="#design" class="nav-link">Design</a>
             <a href="#features" class="nav-link">Features</a>
-            <a href="#testing" class="nav-link">Testing</a>
             <a href="#impact" class="nav-link">Impact</a>
         </div>
         <button class="hamburger" aria-label="Menu">
@@ -48,7 +70,6 @@
         <a href="about.html" class="mobile-menu-link">About</a>
     </div>
 
-    <!-- Back to top button -->
     <a href="#top" class="back-to-top" aria-label="Back to top">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -56,370 +77,456 @@
     </a>
 
     <main id="top" class="case-study">
-        <!-- Header -->
-        <section id="problem" class="cs-header">
-            <div class="cs-header-text">
-                <p class="cs-label">Nocta | Mobile Application Concept</p>
-                <h1 class="cs-title">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long term usage</h1>
-            </div>
 
-            <div class="cs-hero-image">
-                <img src="assets/nocta-mockup.png" alt="Nocta app mockup with MacBook">
+        <!-- ===================== HERO ===================== -->
+        <section class="cs-header nx-hero">
+            <div class="nx-wrap nx-hero-inner">
+                <div class="nx-hero-copy">
+                    <p class="nx-eyebrow">Nocta <span class="nx-idx">/ AI CPAP Companion</span></p>
+                    <h1 class="nx-hero-title">A night,<br><em>narrated.</em></h1>
+                    <p class="nx-hero-sub">Nocta reads a CPAP machine's overnight data and writes one honest, plain-language story — what happened, what likely caused it, and the single next thing to try.</p>
+                    <div class="nx-hero-cta">
+                        <a href="https://nocta-teal.vercel.app/" target="_blank" rel="noopener" class="nx-btn nx-btn-peach">Try the live prototype <i class="ph ph-arrow-up-right"></i></a>
+                        <a href="#problem" class="nx-btn nx-btn-ghost">Read the case study</a>
+                    </div>
+                </div>
+                <div class="nx-hero-phones">
+                    <div class="nx-device"><video src="assets/nocta/v2/flow-fullnight.mp4" poster="assets/nocta/v2/fullnight.png" autoplay muted loop playsinline preload="metadata"></video></div>
+                    <div class="nx-device"><video src="assets/nocta/v2/flow-week.mp4" poster="assets/nocta/v2/tonight.png" autoplay muted loop playsinline preload="metadata"></video></div>
+                </div>
             </div>
+            <div class="nx-scroll-cue"><span>Scroll</span></div>
+        </section>
 
-            <div class="cs-meta-grid">
-                <div class="cs-meta-overview">
-                    <p class="cs-label">Project Overview</p>
-                    <p>Nocta is a mobile application that transforms complex CPAP data into easy to understand visuals and actionable insights for patients with sleep apnea</p>
-                </div>
-                <div class="cs-meta-role">
-                    <p class="cs-label">Role</p>
-                    <p>UX Research</p>
-                    <p>UX/UI Design</p>
-                </div>
-                <div class="cs-meta-problem">
-                    <p class="cs-label">Problem</p>
-                    <p>CPAP therapy apps are either overloaded with information or don't show enough information for sleep apnea patients, discouraging use and self treatment.</p>
-                </div>
-                <div class="cs-meta-solution">
-                    <p class="cs-label">Solution</p>
-                    <p>Create a mobile app that transforms complex CPAP data into easy to scan charts, graphs, and actionable insights</p>
-                </div>
-                <div class="cs-meta-timeline">
-                    <p class="cs-label">Timeline</p>
-                    <p>Spring 2025</p>
+        <!-- ===================== META ===================== -->
+        <section class="cs-section nx-tight">
+            <div class="nx-wrap">
+                <div class="nx-meta nx-stagger">
+                    <div class="nx-meta-item">
+                        <p class="nx-meta-k">Role</p>
+                        <p class="nx-meta-v">UX Research<br>UX/UI Design<br>Front-end Build</p>
+                    </div>
+                    <div class="nx-meta-item">
+                        <p class="nx-meta-k">Timeline</p>
+                        <p class="nx-meta-v">Concept — Spring 2025<br>Prototype — 2026</p>
+                    </div>
+                    <div class="nx-meta-item">
+                        <p class="nx-meta-k">Stack</p>
+                        <p class="nx-meta-v">React + Vite<br>Chart.js<br>OpenAI · SleepHQ</p>
+                    </div>
+                    <div class="nx-meta-item">
+                        <p class="nx-meta-k">Discipline</p>
+                        <p class="nx-meta-v">Product Design<br>AI UX &amp; Safety<br>Data Visualization</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Divider -->
-        <hr class="cs-divider">
+        <!-- ===================== PROBLEM ===================== -->
+        <section id="problem" class="cs-section">
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow"><span class="nx-idx">01</span> The Problem</p>
+                    <h2 class="nx-h2">Most people quit CPAP therapy <em>before it can help them.</em></h2>
+                    <p class="nx-lead">CPAP apps swing between two failures: they bury patients under raw charts, or they hide the data entirely behind a single green checkmark. Neither builds the <strong>confidence and curiosity</strong> that keep someone wearing an uncomfortable mask night after night — so most stop within the first month.</p>
+                </div>
+            </div>
+        </section>
 
-        <!-- Background: Sleep Apnea -->
+        <!-- ===================== BACKGROUND PRIMER ===================== -->
         <section id="background" class="cs-section">
-            <div class="cs-two-col">
-                <p class="cs-sidebar-label">Background</p>
-                <div class="cs-content">
-                    <p class="cs-subtitle">What is Sleep Apnea?</p>
-                    <p>Sleep apnea is a disorder in which breathing repeatedly stops and starts during sleep. This can cause pauses in breathing for periods of time, ranging from a few seconds to minutes, and may occur many times throughout the night.</p>
-                    <p>There are 2 main types of apnea: <strong>Central sleep apnea</strong> (CSA), and <strong>Obstructive sleep apnea</strong> (OSA).</p>
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow">A two-minute primer</p>
+                    <h2 class="nx-h2">What we're working with</h2>
+                    <p class="nx-lead">Before the design, a little context. Three things shape every decision in Nocta: the condition, the hardware that treats it, and the rule that decides whether insurance keeps paying for it.</p>
                 </div>
-            </div>
-            <div class="cs-card-row">
-                <div class="cs-card cs-card-horizontal">
-                    <div class="cs-card-text">
-                        <p class="cs-card-heading">Obstructive Sleep Apnea</p>
-                        <p>is caused by blockages in the upper airways that restricts oxygen to the body</p>
+
+                <!-- Part 1 — Sleep apnea -->
+                <div class="nx-primer">
+                    <div class="nx-primer-head">
+                        <p class="nx-primer-k">01 · The condition</p>
+                        <h3 class="nx-primer-title">What is sleep apnea?</h3>
+                        <p class="nx-primer-lead">Sleep apnea is a disorder in which breathing repeatedly stops and starts during sleep. Pauses can last from a few seconds to minutes and may happen hundreds of times a night — fragmenting sleep and starving the body of oxygen. There are two main types.</p>
                     </div>
-                    <div class="cs-card-img">
-                        <img src="assets/nocta/osa.png" alt="Obstructive Sleep Apnea diagram">
+                    <div class="nx-duo nx-stagger">
+                        <article class="nx-edu-card">
+                            <div class="nx-edu-fig"><img src="assets/nocta/osa.png" alt="Obstructive sleep apnea — a blocked upper airway"></div>
+                            <div class="nx-edu-body">
+                                <span class="nx-edu-tag">OSA</span>
+                                <h4>Obstructive sleep apnea</h4>
+                                <p>The most common form — the upper airway physically collapses or is blocked, restricting oxygen even as the body keeps trying to breathe.</p>
+                            </div>
+                        </article>
+                        <article class="nx-edu-card">
+                            <div class="nx-edu-fig"><img src="assets/nocta/csa.png" alt="Central sleep apnea — a missed signal from the brain"></div>
+                            <div class="nx-edu-body">
+                                <span class="nx-edu-tag">CSA</span>
+                                <h4>Central sleep apnea</h4>
+                                <p>Less common and harder to spot — the part of the brain that controls breathing misses a beat, so the body simply doesn't try to breathe.</p>
+                            </div>
+                        </article>
                     </div>
                 </div>
-                <div class="cs-card cs-card-horizontal">
-                    <div class="cs-card-text">
-                        <p class="cs-card-heading">Central Sleep Apnea</p>
-                        <p>occurs when the brain's area that controls your breathing doesn't work, causing you to simply not breathe.</p>
+
+                <!-- Part 2 — The CPAP machine + masks -->
+                <div class="nx-primer">
+                    <div class="nx-primer-head">
+                        <p class="nx-primer-k">02 · The device</p>
+                        <h3 class="nx-primer-title">What is a CPAP machine?</h3>
+                        <p class="nx-primer-lead">CPAP — <em>Continuous Positive Airway Pressure</em> — delivers a steady stream of pressurized air through a mask worn over the nose or mouth, splinting the airway open through the night. Pressure and timing are tuned to the patient, and the machine quietly logs every breath it delivers.</p>
                     </div>
-                    <div class="cs-card-img">
-                        <img src="assets/nocta/csa.png" alt="Central Sleep Apnea diagram">
+                    <div class="nx-gear">
+                        <div class="nx-gear-group">
+                            <p class="nx-gear-k">The machines</p>
+                            <div class="nx-gear-row is-2">
+                                <figure class="nx-gear-item">
+                                    <div class="nx-gear-img"><img src="assets/nocta/cpap-airsense11.jpg" alt="ResMed AirSense 11"></div>
+                                    <figcaption>ResMed AirSense 11</figcaption>
+                                </figure>
+                                <figure class="nx-gear-item">
+                                    <div class="nx-gear-img"><img src="assets/nocta/cpap-airsense10.jpg" alt="ResMed AirSense 10"></div>
+                                    <figcaption>ResMed AirSense 10</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="nx-gear-group">
+                            <p class="nx-gear-k">The masks — fit is everything</p>
+                            <div class="nx-gear-row is-3">
+                                <figure class="nx-gear-item">
+                                    <div class="nx-gear-img is-square"><img src="assets/nocta/mask-p30i.jpg" alt="ResMed AirFit P30i nasal pillow mask"></div>
+                                    <figcaption>AirFit P30i <span>· nasal pillow</span></figcaption>
+                                </figure>
+                                <figure class="nx-gear-item">
+                                    <div class="nx-gear-img is-square"><img src="assets/nocta/mask-f30i.jpg" alt="ResMed AirFit F30i full-face mask"></div>
+                                    <figcaption>AirFit F30i <span>· full face</span></figcaption>
+                                </figure>
+                                <figure class="nx-gear-item">
+                                    <div class="nx-gear-img is-square"><img src="assets/nocta/mask-f20.jpg" alt="ResMed AirFit F20 full-face mask"></div>
+                                    <figcaption>AirFit F20 <span>· full face</span></figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 3 — Compliance -->
+                <div class="nx-primer">
+                    <div class="nx-primer-head">
+                        <p class="nx-primer-k">03 · The stakes</p>
+                        <h3 class="nx-primer-title">And what is “compliance”?</h3>
+                        <p class="nx-primer-lead">Compliance is how consistently you use the machine as prescribed. Insurers define it with a hard threshold — and it's where most people fall off, often without realizing the clock is running.</p>
+                    </div>
+                    <div class="nx-compliance">
+                        <div class="nx-compliance-formula">
+                            <div class="nx-cf-item"><b>4h</b><span>per night</span></div>
+                            <span class="nx-cf-op">+</span>
+                            <div class="nx-cf-item"><b>70%</b><span>of nights</span></div>
+                            <span class="nx-cf-op">within</span>
+                            <div class="nx-cf-item"><b>30</b><span>days</span></div>
+                        </div>
+                        <p class="nx-compliance-warn">Miss that bar and you can lose insurance coverage entirely — paying out of pocket for the machine, the mask, and every replacement supply. The pressure to “pass” often matters more to people than the therapy itself.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Background: CPAP Machine -->
-        <section class="cs-section">
-            <div class="cs-two-col">
-                <p class="cs-sidebar-label">Background</p>
-                <div class="cs-content">
-                    <p class="cs-subtitle">What is a CPAP Machine?</p>
-                    <p>CPAP or "Continuous Positive Airway Pressure" is a machine that delivers a steady stream of pressurized oxygen through a mask worn over the nose or mouth, keeping the upper airways open during sleep and preventing breathing interruptions.</p>
-                    <p>Machine pressures and timings can be customized to either central or obstructive sleep apnea patients.</p>
-                </div>
-            </div>
-            <div class="cs-card-row">
-                <div class="cs-card cs-card-machines">
-                    <p class="cs-card-heading">Types of CPAP machines</p>
-                    <div class="cs-machines-grid">
-                        <div class="cs-machine-item">
-                            <img src="assets/nocta/cpap-airsense11.jpg" alt="ResMed Airsense 11">
-                            <span>ResMed Airsense 11</span>
-                        </div>
-                        <div class="cs-machine-item">
-                            <img src="assets/nocta/cpap-airsense10.jpg" alt="ResMed Airsense 10">
-                            <span>ResMed Airsense 10</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="cs-card cs-card-masks">
-                    <p class="cs-card-heading">Types of CPAP masks</p>
-                    <div class="cs-masks-grid">
-                        <div class="cs-mask-item">
-                            <img src="assets/nocta/mask-p30i.jpg" alt="ResMed Airfit P30i">
-                            <span>ResMed Airfit P30i</span>
-                        </div>
-                        <div class="cs-mask-item">
-                            <img src="assets/nocta/mask-f30i.jpg" alt="ResMed Airfit F30i">
-                            <span>ResMed Airfit F30i</span>
-                        </div>
-                        <div class="cs-mask-item">
-                            <img src="assets/nocta/mask-f20.jpg" alt="ResMed Airfit F20">
-                            <span>ResMed Airfit F20</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Background: Compliance -->
-        <section class="cs-section">
-            <div class="cs-two-col">
-                <p class="cs-sidebar-label">Background</p>
-                <div class="cs-content">
-                    <p class="cs-subtitle">Finally, what is "compliance"?</p>
-                    <p>Compliance refers to how consistently a person uses their CPAP machine as prescribed by their doctor. It's often defined as using the device for at least 4 hours each night on at least 70% of nights within a 30-day period.</p>
-                    <p>Failure to meet compliance can result in loss of insurance coverage and paying out-of-pocket for all equipment and maintenance supplies.</p>
-                </div>
-            </div>
-            <div class="cs-compliance-card">
-                <div class="cs-compliance-stats">
-                    <div class="cs-compliance-stat">
-                        <span class="cs-big-number">4</span>
-                        <span class="cs-stat-desc">hours per night</span>
-                    </div>
-                    <span class="cs-compliance-plus">+</span>
-                    <div class="cs-compliance-stat">
-                        <span class="cs-big-number">70%</span>
-                        <span class="cs-stat-desc">of successful nights within a 30 day window</span>
-                    </div>
-                    <span class="cs-compliance-plus">+</span>
-                    <div class="cs-compliance-stat">
-                        <span class="cs-big-number">90</span>
-                        <span class="cs-stat-desc">day total trial period</span>
-                    </div>
-                </div>
-                <p class="cs-compliance-caption">Minimum usage to meet compliance</p>
-            </div>
-        </section>
-
-        <!-- Desk Research -->
+        <!-- ===================== RESEARCH ===================== -->
         <section id="research" class="cs-section">
-            <div class="cs-two-col">
-                <p class="cs-sidebar-label cs-label">Desk Research</p>
-                <div class="cs-content">
-                    <p class="cs-subtitle">The majority of patients were not sticking with their therapy long term</p>
-                    <p>To find out more about the disorder, I did secondary research and found the following statistics from the National Library of Medicine, BMC Pulmonary Medicine, and the Journal of American Heart Association.</p>
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow"><span class="nx-idx">02</span> Desk Research</p>
+                    <h2 class="nx-h2">The numbers were bleak.</h2>
+                    <p class="nx-lead">Secondary research across the National Library of Medicine, BMC Pulmonary Medicine, and the Journal of the American Heart Association painted a clear gap between diagnosis and follow-through.</p>
                 </div>
-            </div>
-            <div class="cs-card-row cs-research-row">
-                <div class="cs-card cs-research-chart">
-                    <img src="assets/nocta/stats-chart.jpg" alt="Sleep apnea statistics chart">
-                </div>
-                <div class="cs-card cs-research-stats">
-                    <div class="cs-research-stat">
-                        <span class="cs-big-number">30</span>
-                        <span class="cs-stat-desc">million Americans are suspected of having sleep apnea</span>
+                <div class="nx-stats nx-stagger">
+                    <div class="nx-stat">
+                        <div class="nx-stat-num">30M</div>
+                        <p class="nx-stat-desc">Americans are suspected of having sleep apnea</p>
                     </div>
-                    <div class="cs-research-stat">
-                        <span class="cs-big-number">20%</span>
-                        <span class="cs-stat-desc">of cases are diagnosed in the United States</span>
+                    <div class="nx-stat">
+                        <div class="nx-stat-num">25–34%</div>
+                        <p class="nx-stat-desc">stay on CPAP therapy past the one-year mark</p>
                     </div>
-                    <div class="cs-research-stat">
-                        <span class="cs-big-number">25-34%</span>
-                        <span class="cs-stat-desc">of CPAP patients stick with therapy long term (+ 1 year)</span>
+                    <div class="nx-stat is-hot">
+                        <div class="nx-stat-num">6.8%</div>
+                        <p class="nx-stat-desc">are both diagnosed <em>and</em> stick with treatment long-term</p>
                     </div>
                 </div>
-            </div>
-            <div class="cs-card cs-callout">
-                <img src="assets/nocta/icon-bulb.svg" alt="" class="cs-callout-icon">
-                <p>Only <span class="cs-highlight-green">6.8%</span> of all people with sleep apnea are diagnosed AND stick with their treatment long term</p>
             </div>
         </section>
 
-        <!-- How Might We + Solution -->
-        <section class="cs-section cs-hmw-section">
-            <div class="cs-hmw-card">
-                <p class="cs-hmw-label">How might we</p>
-                <p class="cs-hmw-question">make CPAP data more actionable and engaging so users feel empowered rather than overwhelmed?</p>
-            </div>
-            <div class="cs-arrow-down">
-                <img src="assets/nocta/icon-arrow.svg" alt="">
-            </div>
-            <div class="cs-solution-card">
-                <p class="cs-solution-label">Solution</p>
-                <p class="cs-solution-text">Simplify CPAP data into <strong>clear</strong>, <strong>actionable insights</strong> that <strong>boost confidence</strong>, drive compliance, and <strong>support long-term success.</strong></p>
+        <!-- ===================== HMW → SOLUTION ===================== -->
+        <section class="cs-section">
+            <div class="nx-wrap nx-turn">
+                <p class="nx-eyebrow" style="justify-content:center;">The Opportunity</p>
+                <p class="nx-hmw">“How might we make CPAP data feel actionable and human — so people feel <em>guided, not graded?</em>”</p>
+                <div class="nx-solution">
+                    <p class="nx-solution-label">The Solution</p>
+                    <p class="nx-solution-text">Distill each night into <strong>one honest story</strong> — what happened, what likely caused it, and <strong>the single next thing to try</strong> — wrapped in calm charts and wearable context.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Features -->
+        <!-- ===================== DESIGN SYSTEM ===================== -->
+        <section id="design" class="cs-section">
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow"><span class="nx-idx">03</span> Design System</p>
+                    <h2 class="nx-h2">Designing for <em>2 a.m.</em></h2>
+                    <p class="nx-lead">People open Nocta in the dark, half-awake, often anxious about a number. The system leans into that — a deep-navy canvas, one warm sunrise-peach accent reserved for the AI's voice, and serif numerals that read calm rather than clinical.</p>
+                </div>
+
+                <div class="nx-ds-grid nx-stagger">
+                    <div class="nx-panel">
+                        <p class="nx-panel-k">Palette</p>
+                        <div class="nx-swatches">
+                            <span class="nx-swatch" style="background:#090d1a;color:#aab3cd;">Base</span>
+                            <span class="nx-swatch" style="background:#141a2e;color:#aab3cd;">Surface</span>
+                            <span class="nx-swatch" style="background:#7b95d8;color:#0b1020;">Metric</span>
+                            <span class="nx-swatch" style="background:#e07a6a;color:#0b1020;">Attention</span>
+                            <span class="nx-swatch" style="background:#f3a87c;color:#2a1206;">Accent</span>
+                        </div>
+                    </div>
+                    <div class="nx-panel">
+                        <p class="nx-panel-k">Typeface</p>
+                        <div class="nx-type-row">
+                            <span class="nx-type-spec-serif">Fraunces</span>
+                            <span class="nx-type-note">Display &amp; numerals — the calm, human voice</span>
+                        </div>
+                        <div class="nx-type-row">
+                            <span class="nx-type-spec-sans">Inter</span>
+                            <span class="nx-type-note">Body &amp; UI — quiet and legible</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nx-anatomy">
+                    <div>
+                        <h3 class="nx-anatomy-title">The “why-card”</h3>
+                        <p class="nx-anatomy-body">The hero component — and the whole product in miniature. Every morning it renders one of five states, from a steady night to a flagged escalation.</p>
+                        <ul class="nx-anatomy-list">
+                            <li><span class="nx-dot">01</span> A one-line verdict, in plain language</li>
+                            <li><span class="nx-dot">02</span> A sparkline carrying the shape of the night</li>
+                            <li><span class="nx-dot">03</span> Exactly one suggested next action</li>
+                            <li><span class="nx-dot">04</span> A tappable “receipts” row — the data it reasoned from</li>
+                        </ul>
+                    </div>
+                    <div class="nx-anatomy-fig"><img src="assets/nocta/v2/whycard.png" alt="The Nocta why-card component"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== FEATURES ===================== -->
         <section id="features" class="cs-section">
-            <p class="cs-sidebar-label cs-label">Features</p>
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow"><span class="nx-idx">04</span> Features</p>
+                    <h2 class="nx-h2">Five surfaces, <em>one calm story.</em></h2>
+                </div>
 
-            <!-- Feature 1: Morning Check-In -->
-            <div class="cs-feature-row">
-                <div class="cs-feature-text">
-                    <p class="cs-feature-title">Morning Check-In</p>
-                    <p>Just focusing on pure sleep numbers can only do so much, so incorporating user sentiment can increase the accuracy of the insight</p>
+                <div class="nx-feature">
+                    <div class="nx-feature-text">
+                        <p class="nx-feature-idx">01</p>
+                        <h3 class="nx-feature-title">The AI why-card</h3>
+                        <p class="nx-feature-body">Instead of a wall of charts, the first thing you see is a sentence: what last night was, in your words. It stays honest on rough nights, hedges on cause, and ends with one concrete thing to try.</p>
+                        <p class="nx-feature-body">Tap the receipts row and it shows its work — the exact metrics it reasoned from, plus a confidence label.</p>
+                    </div>
+                    <div class="nx-feature-media">
+                        <div class="nx-device"><video src="assets/nocta/v2/flow-whycard.mp4" poster="assets/nocta/v2/tonight.png" autoplay muted loop playsinline preload="metadata"></video></div>
+                    </div>
                 </div>
-                <div class="cs-card cs-feature-screens">
-                    <img src="assets/nocta/screen-checkin1.jpg" alt="Morning check-in screen 1">
-                    <img src="assets/nocta/screen-checkin2.jpg" alt="Morning check-in screen 2">
-                    <img src="assets/nocta/screen-checkin3.jpg" alt="Morning check-in screen 3">
-                </div>
-            </div>
 
-            <!-- Feature 2: Single Chart -->
-            <div class="cs-feature-row">
-                <div class="cs-feature-text">
-                    <p class="cs-feature-title">Single Chart</p>
-                    <p>The allows users to explore their breathing data in detail, with apnea events clearly marked and tappable for expanded explanations.</p>
-                    <p>Users can compare their breathing patterns against other key metrics, such as pressure, leak rate, or snoring, using a dynamic overlay feature.</p>
+                <div class="nx-feature is-reverse">
+                    <div class="nx-feature-text">
+                        <p class="nx-feature-idx">02</p>
+                        <h3 class="nx-feature-title">Tonight, at a glance</h3>
+                        <p class="nx-feature-body">Below the story sits last night's AHI against your personal baseline, scannable secondary metrics, and a timeline of the night with apnea events marked and tappable.</p>
+                        <p class="nx-feature-body">Open any night for the full breath-by-breath stack — flow, pressure, leak, and snore.</p>
+                    </div>
+                    <div class="nx-feature-media">
+                        <div class="nx-device"><video src="assets/nocta/v2/flow-tonight.mp4" poster="assets/nocta/v2/tonight-escalation.png" autoplay muted loop playsinline preload="metadata"></video></div>
+                    </div>
                 </div>
-                <div class="cs-card cs-feature-screens">
-                    <img src="assets/nocta/screen-chart1.jpg" alt="Single chart screen 1">
-                    <img src="assets/nocta/screen-chart2.jpg" alt="Single chart screen 2">
-                    <img src="assets/nocta/screen-chart3.jpg" alt="Single chart screen 3">
-                </div>
-            </div>
 
-            <!-- Feature 3: Trends -->
-            <div class="cs-feature-row">
-                <div class="cs-feature-text">
-                    <p class="cs-feature-title">Trends</p>
-                    <p>This helps users reflect on their long-term progress with customizable timeframes and a clean summary and insights.</p>
-                    <p>Users can also compare their best and worst nights, revealing what changed and why. By highlighting meaningful patterns over time, the feature supports habit-building, reinforces positive behaviors, and makes therapy feel more measurable and manageable.</p>
+                <div class="nx-feature">
+                    <div class="nx-feature-text">
+                        <p class="nx-feature-idx">03</p>
+                        <h3 class="nx-feature-title">Trends over time</h3>
+                        <p class="nx-feature-body">Zoom out to 7, 30, or 90 nights. Every chart shares one date axis, so AHI, pressure, leak, and usage line up at a glance.</p>
+                        <p class="nx-feature-body">Best- and worst-night comparisons surface what changed, and journal patterns connect what you logged to how you slept.</p>
+                    </div>
+                    <div class="nx-feature-media">
+                        <div class="nx-device"><video src="assets/nocta/v2/flow-trends.mp4" poster="assets/nocta/v2/trends.png" autoplay muted loop playsinline preload="metadata"></video></div>
+                    </div>
                 </div>
-                <div class="cs-card cs-feature-screens">
-                    <img src="assets/nocta/screen-trends1.jpg" alt="Trends screen 1">
-                    <img src="assets/nocta/screen-trends2.jpg" alt="Trends screen 2">
-                    <img src="assets/nocta/screen-trends3.jpg" alt="Trends screen 3">
+
+                <div class="nx-feature is-reverse">
+                    <div class="nx-feature-text">
+                        <p class="nx-feature-idx">04</p>
+                        <h3 class="nx-feature-title">Therapy &amp; compliance</h3>
+                        <p class="nx-feature-body">A projection bar shows where the 30-day compliance window stands without ever feeling like a grade. Equipment reminders flag a worn mask or filter.</p>
+                        <p class="nx-feature-body">One tap exports a clean, AI-free PDF to bring to the doctor.</p>
+                    </div>
+                    <div class="nx-feature-media">
+                        <div class="nx-device"><video src="assets/nocta/v2/flow-therapy.mp4" poster="assets/nocta/v2/therapy.png" autoplay muted loop playsinline preload="metadata"></video></div>
+                    </div>
+                </div>
+
+                <div class="nx-feature">
+                    <div class="nx-feature-text">
+                        <p class="nx-feature-idx">05</p>
+                        <h3 class="nx-feature-title">Connected devices</h3>
+                        <p class="nx-feature-body">Apple Watch, Oura, and Whoop layer heart rate, HRV, and sleep stages onto the same night, one card per source — each pausable per-permission without disconnecting.</p>
+                        <p class="nx-feature-body">Adding a device runs a full mock OAuth flow: authorize, sync 30 nights, done.</p>
+                    </div>
+                    <div class="nx-feature-media">
+                        <div class="nx-device"><video src="assets/nocta/v2/flow-connect-oura.mp4" poster="assets/nocta/v2/connect-oura.png" autoplay muted loop playsinline preload="metadata"></video></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- User Testing -->
-        <section id="testing" class="cs-section">
-            <div class="cs-two-col">
-                <p class="cs-sidebar-label cs-label">User Testing</p>
-                <div class="cs-content">
-                    <p class="cs-subtitle">What do real users think of this product?</p>
-                    <p>I invited back my survey and interview participants to test my mid-fidelity wireframes and got some great feedback on current/missing features and edge cases I hadn't thought of before.</p>
+        <!-- ===================== AI SAFETY RAILS ===================== -->
+        <section id="safety" class="cs-section">
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow"><span class="nx-idx">05</span> AI Safety Rails</p>
+                    <h2 class="nx-h2">An insight that <em>knows its limits.</em></h2>
+                    <p class="nx-lead">The moment an app interprets clinical data, it risks becoming a regulated medical device. Nocta's AI lives inside hard rails: every insight is typed JSON with cited data, a confidence label, and a disclaimer — and certain patterns route straight to “talk to your doctor.”</p>
                 </div>
-            </div>
-
-            <!-- Testing Insight 1 -->
-            <div class="cs-testing-row">
-                <div class="cs-testing-text">
-                    <div class="cs-testing-insight">
-                        <p class="cs-subtitle">Insight</p>
-                        <p>Users asked about CPAP compliance and health insurance participation</p>
+                <div class="nx-rails nx-stagger">
+                    <div class="nx-rail">
+                        <i class="ph ph-chat-circle-text nx-rail-icon"></i>
+                        <h3 class="nx-rail-title">Honest, not cheerful</h3>
+                        <p class="nx-rail-body">No “great job!”, no streak trophies. A bad night is named calmly and plainly.</p>
                     </div>
-                    <hr class="cs-testing-divider">
-                    <div class="cs-testing-insight">
-                        <p class="cs-feature-title">Solution</p>
-                        <p>Add a compliance / insurance participation to the onboarding flow and design a compliance tracker</p>
+                    <div class="nx-rail">
+                        <i class="ph ph-scales nx-rail-icon"></i>
+                        <h3 class="nx-rail-title">Hedged on cause</h3>
+                        <p class="nx-rail-body">“This pattern often suggests…” — never “this means” or “you have.”</p>
                     </div>
-                </div>
-                <div class="cs-card cs-testing-screen">
-                    <img src="assets/nocta/screen-testing1.jpg" alt="Compliance testing screen">
-                </div>
-            </div>
-
-            <!-- Testing Insight 2 -->
-            <div class="cs-testing-row cs-testing-row-reverse">
-                <div class="cs-card cs-testing-screen">
-                    <img src="assets/nocta/screen-testing2.jpg" alt="Wearables testing screen">
-                </div>
-                <div class="cs-testing-text">
-                    <div class="cs-testing-insight">
-                        <p class="cs-subtitle">Insight</p>
-                        <p>Patients asked about linking smart health wearables to the app for more data tracking</p>
+                    <div class="nx-rail">
+                        <i class="ph ph-prohibit nx-rail-icon"></i>
+                        <h3 class="nx-rail-title">Never diagnoses</h3>
+                        <p class="nx-rail-body">It won't name a condition or recommend a pressure change. Ever.</p>
                     </div>
-                    <hr class="cs-testing-divider">
-                    <div class="cs-testing-insight">
-                        <p class="cs-feature-title">Solution</p>
-                        <p>Add an option to link smart wearables on onboarding and display their data on the app</p>
+                    <div class="nx-rail">
+                        <i class="ph ph-first-aid nx-rail-icon"></i>
+                        <h3 class="nx-rail-title">Escalates to a doctor</h3>
+                        <p class="nx-rail-body">Central-apnea or SpO₂ patterns trip a physician-referral flag.</p>
                     </div>
-                </div>
-            </div>
-
-            <!-- Testing Insight 3 -->
-            <div class="cs-testing-row">
-                <div class="cs-testing-text">
-                    <div class="cs-testing-insight">
-                        <p class="cs-subtitle">Insight</p>
-                        <p>Many patients wanted to be able to customize the four main stats on the homepage freely</p>
-                    </div>
-                    <hr class="cs-testing-divider">
-                    <div class="cs-testing-insight">
-                        <p class="cs-feature-title">Solution</p>
-                        <p>Allow the user to edit what stats they want to see, including any smart wearable device metrics</p>
-                    </div>
-                </div>
-                <div class="cs-card cs-testing-screen">
-                    <img src="assets/nocta/screen-testing3.jpg" alt="Customization testing screen">
                 </div>
             </div>
         </section>
 
-        <!-- Final Solution -->
+        <!-- ===================== TESTING → SHIPPED ===================== -->
         <section class="cs-section">
-            <div class="cs-two-col">
-                <p class="cs-sidebar-label cs-label">Final Solution</p>
-                <div class="cs-content">
-                    <p class="cs-subtitle">A more personal way to treat sleep apnea</p>
-                    <p>By transforming complex CPAP data into scannable cards and actionable insights, Nocta helps sleep apnea patients with their CPAP therapy, encouraging continued usage and familiarity with their treatment.</p>
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow"><span class="nx-idx">06</span> Testing → Shipped</p>
+                    <h2 class="nx-h2">From feedback <em>to features.</em></h2>
+                    <p class="nx-lead">I brought survey and interview participants back to test mid-fidelity wireframes. Their three biggest asks moved from “nice idea” to shipped in the working prototype.</p>
+                </div>
+
+                <div class="nx-ship">
+                    <div class="nx-ship-media"><div class="nx-device"><img src="assets/nocta/v2/therapy.png" alt="Compliance projection on the Therapy tab"></div></div>
+                    <div class="nx-ship-text">
+                        <p class="nx-ship-k is-insight">Insight</p>
+                        <p class="nx-ship-line">Users worried about compliance and whether they'd keep their insurance coverage.</p>
+                        <hr class="nx-ship-rule">
+                        <p class="nx-ship-k is-shipped">Shipped</p>
+                        <p class="nx-ship-line is-shipped">A compliance projection on the Therapy tab — progress toward the 30-day window, framed as encouragement, never a grade.</p>
+                    </div>
+                </div>
+
+                <div class="nx-ship is-reverse">
+                    <div class="nx-ship-text">
+                        <p class="nx-ship-k is-insight">Insight</p>
+                        <p class="nx-ship-line">Patients wanted to link smart wearables for richer overnight context.</p>
+                        <hr class="nx-ship-rule">
+                        <p class="nx-ship-k is-shipped">Shipped</p>
+                        <p class="nx-ship-line is-shipped">Apple Watch, Oura, and Whoop integrations with a real connect flow and per-source body-response cards on the home screen.</p>
+                    </div>
+                    <div class="nx-ship-media"><div class="nx-device"><img src="assets/nocta/v2/you.png" alt="Connected devices in the prototype"></div></div>
+                </div>
+
+                <div class="nx-ship">
+                    <div class="nx-ship-media"><div class="nx-device"><img src="assets/nocta/v2/tonight-escalation.png" alt="Customizable home-screen metrics"></div></div>
+                    <div class="nx-ship-text">
+                        <p class="nx-ship-k is-insight">Insight</p>
+                        <p class="nx-ship-line">People wanted control over which metrics lead the home screen.</p>
+                        <hr class="nx-ship-rule">
+                        <p class="nx-ship-k is-shipped">Shipped</p>
+                        <p class="nx-ship-line is-shipped">Customizable secondary metrics — including any connected wearable's readings — surfaced right under the nightly story.</p>
+                    </div>
                 </div>
             </div>
-
-            <img src="assets/nocta/final-solution-1.png" alt="Final solution — compliance tracker, daily metrics, and in-depth charts" class="cs-final-image">
-            <img src="assets/nocta/final-solution-2.png" alt="Final solution — AI-powered sleep insights and recommendations" class="cs-final-image">
         </section>
 
-        <!-- User Impact -->
-        <section id="impact" class="cs-section">
-            <p class="cs-sidebar-label cs-label">User Impact</p>
-            <div class="cs-impact-row">
-                <div class="cs-card cs-impact-card">
-                    <i class="ph ph-question cs-impact-icon"></i>
-                    <p class="cs-impact-title">Reduce Confusion</p>
-                    <p class="cs-impact-desc">by translating raw CPAP data into personalized, plain-language insights that users can understand and act on.</p>
-                </div>
-                <div class="cs-card cs-impact-card">
-                    <i class="ph ph-thumbs-up cs-impact-icon"></i>
-                    <p class="cs-impact-title">Boosts Confidence</p>
-                    <p class="cs-impact-desc">by helping users identify what's working, what's not, and how to make adjustments.</p>
-                </div>
-                <div class="cs-card cs-impact-card">
-                    <i class="ph ph-chart-line-up cs-impact-icon"></i>
-                    <p class="cs-impact-title">Supports long term usage</p>
-                    <p class="cs-impact-desc">through gentle habit-building features that encourage consistent use over time</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Development Handoff -->
+        <!-- ===================== FINAL ===================== -->
         <section class="cs-section">
-            <div class="cs-two-col">
-                <p class="cs-sidebar-label cs-label">Development Handoff</p>
-                <div class="cs-content">
-                    <p class="cs-subtitle">A live site you can interact with!</p>
-                    <p>In addition to designing this application, I have also coded a working MVP version, linked below. Features include using my own personal CPAP data, Morning Check In, and OPENAI's API to generate sleep insights.</p>
-                    <p>Languages: HTML, CSS, JavaScript<br>Technology: OpenAI API, SleepHQ API</p>
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow">The Result</p>
+                    <h2 class="nx-h2">A more personal way to <em>treat sleep apnea.</em></h2>
                 </div>
-            </div>
-            <div class="cs-card-row">
-                <div class="cs-card cs-handoff-card">
-                    <img src="assets/nocta/icon-github.jpg" alt="GitHub" class="cs-handoff-icon">
-                    <a href="#" class="cs-handoff-btn">GitHub Repo</a>
-                </div>
-                <div class="cs-card cs-handoff-card">
-                    <img src="assets/nocta/icon-globe.svg" alt="Live site" class="cs-handoff-icon cs-handoff-icon-globe">
-                    <a href="#" class="cs-handoff-btn">Live Site</a>
+                <div class="nx-final-stage">
+                    <div class="nx-final-row">
+                        <div class="nx-device"><img src="assets/nocta/v2/tonight.png" alt="Tonight"></div>
+                        <div class="nx-device"><img src="assets/nocta/v2/trends.png" alt="Trends"></div>
+                        <div class="nx-device"><img src="assets/nocta/v2/therapy.png" alt="Therapy"></div>
+                        <div class="nx-device"><img src="assets/nocta/v2/you.png" alt="You"></div>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- ===================== IMPACT ===================== -->
+        <section id="impact" class="cs-section nx-tight">
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow"><span class="nx-idx">07</span> Impact</p>
+                    <h2 class="nx-h2">What it sets out to change</h2>
+                </div>
+                <div class="nx-impact nx-stagger">
+                    <div class="nx-impact-card">
+                        <i class="ph ph-question nx-impact-icon"></i>
+                        <h3 class="nx-impact-title">Reduce confusion</h3>
+                        <p class="nx-impact-body">by translating raw CPAP data into personalized, plain-language insights people can understand and act on.</p>
+                    </div>
+                    <div class="nx-impact-card">
+                        <i class="ph ph-thumbs-up nx-impact-icon"></i>
+                        <h3 class="nx-impact-title">Build confidence</h3>
+                        <p class="nx-impact-body">by helping users see what's working, what's not, and the one adjustment worth trying tonight.</p>
+                    </div>
+                    <div class="nx-impact-card">
+                        <i class="ph ph-chart-line-up nx-impact-icon"></i>
+                        <h3 class="nx-impact-title">Support the long haul</h3>
+                        <p class="nx-impact-body">through gentle, honest habit-building that keeps people on therapy past the month that usually breaks them.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== CTA / HANDOFF ===================== -->
+        <section class="cs-section nx-tight">
+            <div class="nx-wrap">
+                <div class="nx-cta">
+                    <p class="nx-eyebrow" style="justify-content:center;">Development Handoff</p>
+                    <h2 class="nx-h2">See it for yourself.</h2>
+                    <p class="nx-cta-sub">Beyond the design, I built a working React prototype — running on my own CPAP data, every chart rendered with Chart.js, and AI insights shipped as typed JSON ready for OpenAI's Structured Outputs and the SleepHQ API.</p>
+                    <div class="nx-cta-actions">
+                        <a href="https://nocta-teal.vercel.app/" target="_blank" rel="noopener" class="nx-btn nx-btn-peach">Live prototype <i class="ph ph-arrow-up-right"></i></a>
+                        <a href="https://github.com/jmchiang1/Nocta" target="_blank" rel="noopener" class="nx-btn nx-btn-ghost"><i class="ph ph-github-logo"></i> GitHub repo</a>
+                    </div>
+                    <p class="nx-stack-line">HTML · CSS · JavaScript (React + Vite) · Chart.js · OpenAI API · SleepHQ API</p>
+                </div>
+            </div>
+        </section>
+
     </main>
+    <script src="cs-nav.js"></script>
     <script src="nocta.js"></script>
 </body>
 </html>

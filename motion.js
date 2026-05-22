@@ -1,31 +1,18 @@
 // Motion page — vibes-style grid layout
 (function () {
     var cards = Array.from(document.querySelectorAll('.motion-card'));
-    var isMobile = window.matchMedia('(max-width: 640px)').matches;
 
-    // Hover-to-play on desktop; autoplay-muted on mobile so the grid feels
-    // alive without requiring a tap on each card.
+    // Every thumbnail autoplays muted on loop so the grid feels alive.
+    // Sound only kicks in once a card is opened into its modal (below).
     cards.forEach(function (card) {
         var video = card.querySelector('.project-video');
         if (!video) return;
 
-        if (isMobile) {
-            video.muted = true;
-            video.setAttribute('autoplay', '');
-            var p = video.play();
-            if (p && p.catch) p.catch(function () {});
-            return;
-        }
-
-        card.addEventListener('mouseenter', function () {
-            video.currentTime = 0;
-            var p = video.play();
-            if (p && p.catch) p.catch(function () {});
-        });
-
-        card.addEventListener('mouseleave', function () {
-            video.pause();
-        });
+        video.muted = true;
+        video.loop = true;
+        video.setAttribute('autoplay', '');
+        var p = video.play();
+        if (p && p.catch) p.catch(function () {});
     });
 
     // Card click → animated modal open (flying-video animation lifts the
@@ -157,14 +144,9 @@
                     else ownerFrame.appendChild(video);
                 }
 
-                // Mobile: keep the grid alive — resume muted loop. Desktop:
-                // pause so the card is still until the next hover.
-                if (isMobile) {
-                    var p = video.play();
-                    if (p && p.catch) p.catch(function () {});
-                } else {
-                    video.pause();
-                }
+                // Resume the muted loop so the thumbnail keeps playing in the grid.
+                var p = video.play();
+                if (p && p.catch) p.catch(function () {});
             }
         }
 

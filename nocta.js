@@ -9,9 +9,9 @@
     // Fade out black cover to reveal white page
     setTimeout(function () {
         if (cover) {
-            cover.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            cover.style.transition = 'opacity 0.28s cubic-bezier(0.25, 0.1, 0.25, 1)';
             cover.style.opacity = '0';
-            setTimeout(function () { cover.remove(); }, 400);
+            setTimeout(function () { cover.remove(); }, 300);
         }
     }, 50);
 })();
@@ -41,7 +41,7 @@
 
         setTimeout(function () {
             window.location.href = href;
-        }, 700);
+        }, 340);
     }
 
     // Logo click
@@ -144,5 +144,27 @@
             btn.classList.remove('visible');
         }
     }, { passive: true });
+})();
+
+// Pause off-screen videos. The page ships several autoplay/loop clips; letting
+// them all decode at once makes scrolling janky, so only the ones near the
+// viewport are kept playing.
+(function () {
+    var vids = document.querySelectorAll('video[autoplay]');
+    if (!vids.length || !('IntersectionObserver' in window)) return;
+
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            var v = entry.target;
+            if (entry.isIntersecting) {
+                var p = v.play();
+                if (p && p.catch) p.catch(function () {});
+            } else {
+                v.pause();
+            }
+        });
+    }, { rootMargin: '200px 0px' });
+
+    vids.forEach(function (v) { io.observe(v); });
 })();
 

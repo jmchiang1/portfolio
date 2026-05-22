@@ -9,9 +9,9 @@
     // Fade out black cover to reveal white page
     setTimeout(function () {
         if (cover) {
-            cover.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            cover.style.transition = 'opacity 0.28s cubic-bezier(0.25, 0.1, 0.25, 1)';
             cover.style.opacity = '0';
-            setTimeout(function () { cover.remove(); }, 400);
+            setTimeout(function () { cover.remove(); }, 300);
         }
     }, 50);
 })();
@@ -41,7 +41,7 @@
 
         setTimeout(function () {
             window.location.href = href;
-        }, 700);
+        }, 340);
     }
 
     var logo = document.querySelector('.nav-logo');
