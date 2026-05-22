@@ -1,7 +1,7 @@
 /* ===========================================================================
    NOCTA — Case Study  ·  "A night, narrated."
    Dark editorial theme that borrows the product's own world: deep-navy
-   nightfall, sunrise-peach accent, Fraunces serif display, Space Mono labels.
+   nightfall, sunrise-peach accent, Instrument Serif display, Space Mono labels.
    Shell (nav / page-transition / mobile menu / scroll-reveal) is preserved
    from the portfolio system and recoloured for dark; everything in the
    content layer uses the nx- namespace.
@@ -551,6 +551,9 @@ body::before {
     gap: 10px;
     padding: 15px 26px;
     border-radius: 8px;
+    /* transparent border so a bordered variant (.nx-btn-ghost) is the same
+       height as a borderless one (.nx-btn-peach) */
+    border: 1px solid transparent;
     font-family: var(--nx-sans);
     font-weight: 600;
     font-size: 15px;
@@ -582,6 +585,12 @@ body::before {
 .nx-btn-ghost:hover {
     border-color: var(--nx-peach);
     color: var(--nx-peach);
+}
+
+/* Final CTA: keep the two buttons a matched pair — equal width and height. */
+.nx-cta-actions .nx-btn {
+    flex: 0 1 210px;
+    justify-content: center;
 }
 
 /* hero phones */
@@ -1106,7 +1115,9 @@ body::before {
 
 .nx-solution-text strong {
     color: var(--nx-peach);
-    font-weight: 500;
+    /* Instrument Serif only ships weight 400 — bumping to 500 would force an
+       ugly synthetic bold. The peach colour already carries the emphasis. */
+    font-weight: 400;
 }
 
 /* ===========================================================================
@@ -1124,6 +1135,9 @@ body::before {
     border: 1px solid var(--nx-line);
     border-radius: 20px;
     padding: 30px;
+    /* allow the panel to shrink inside its grid column instead of being
+       forced wide by its content (was overflowing the page on mobile) */
+    min-width: 0;
 }
 
 .nx-panel-k {
@@ -1657,6 +1671,11 @@ body::before {
 
     .navbar {
         padding: 16px 22px;
+        /* nav-links are hidden on mobile, so the bar would otherwise collapse
+           to just its padding and clip the absolutely-positioned logo +
+           hamburger at the top edge. Give it real height so they sit centered,
+           clear of the screen top. */
+        min-height: 64px;
         z-index: 110;
     }
 
@@ -1664,8 +1683,9 @@ body::before {
         left: 18px;
     }
 
-    .nav-logo img {
-        height: 40px;
+    .nav-logo img,
+    .nav-logo .nav-logo-svg {
+        height: 36px;
     }
 
     .nav-links {
@@ -1715,6 +1735,18 @@ body::before {
 
     .nx-compliance-formula {
         gap: 18px;
+    }
+
+    /* Palette swatches: 5 fixed flex chips don't fit a phone width and were
+       forcing the whole page wider. Let them wrap into rows of three. */
+    .nx-swatches {
+        flex-wrap: wrap;
+    }
+
+    .nx-swatch {
+        flex: 1 1 28%;
+        min-width: 0;
+        height: 80px;
     }
 
     /* hamburger + mobile menu */
