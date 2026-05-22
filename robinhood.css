@@ -1173,3 +1173,12 @@ body {
 .nav-exiting .nav-link:nth-child(4) { transition-duration: 0.28s !important; transition-delay: 0.02s !important; }
 .nav-exiting .nav-link:nth-child(5) { transition-duration: 0.28s !important; transition-delay: 0.01s !important; }
 .nav-exiting .nav-link:nth-child(6) { transition-duration: 0.28s !important; transition-delay: 0s !important; }
+
+/* ===========================================================================
+   Personalized section-nav accent — Robinhood Mirror's gold.
+   cs-nav.css is loaded before this file (see robinhood.html), so these win
+   over its default blue. The scroll-spy pill + active/hover use the gold.
+   =========================================================================== */
+.cs-nav-indicator { background: rgba(202, 180, 121, 0.16); }
+.cs-nav-links .nav-link:hover,
+.cs-nav-links .nav-link.active { color: #cab479; }

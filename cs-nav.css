@@ -42,3 +42,12 @@
     background: transparent;
     color: #1180f9;
 }
+
+/* During the page-exit animation the nav links and logo fade out, but the
+   pill is a separate element — without this it sits there highlighting the
+   selected section for the whole exit. Fade it out quickly with the nav so
+   the selected state doesn't linger before the page switches. */
+.nav-exiting .cs-nav-indicator {
+    opacity: 0 !important;
+    transition: opacity 0.16s ease !important;
+}

@@ -540,3 +540,11 @@ body {
     transition-delay: 0s !important;
 }
 .cs-exiting::after { animation: darken-bg 0.24s ease 0.02s forwards !important; }
+
+/* ===========================================================================
+   Personalized nav accent — ScriptChain's teal.
+   The nav has a single section ("Demo"), so there's no scroll-spy pill to
+   colour here — just the teal accent on hover / active.
+   =========================================================================== */
+.nav-link:hover { color: #48a9a6; background: rgba(72, 169, 166, 0.10); }
+.nav-link.active { color: #48a9a6; background: rgba(72, 169, 166, 0.12); }
