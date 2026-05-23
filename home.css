@@ -213,21 +213,42 @@ a, button, [role="button"],
     align-items: center;
     justify-content: center;
     z-index: 100;
-    padding: 20px 60px;
+    padding: 40px 60px 60px;
 }
 
-/* Progressive blur behind navbar — full blur at top, fading to none */
+/* Progressive blur behind navbar — base layer: linear-gradient tint + light backdrop blur, fading out toward the bottom edge */
 .navbar::before {
     content: '';
     position: absolute;
     inset: 0;
     bottom: -40px;
     z-index: -1;
-    background: rgba(0, 12, 25, 0.5);
-    backdrop-filter: blur(24px) saturate(140%);
-    -webkit-backdrop-filter: blur(24px) saturate(140%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, rgba(0,0,0,0.4) 88%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 0%, black 70%, rgba(0,0,0,0.4) 88%, transparent 100%);
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 12, 25, 0.98) 0%,
+        rgba(0, 12, 25, 0.78) 25%,
+        rgba(0, 12, 25, 0.55) 50%,
+        rgba(0, 12, 25, 0.3) 75%,
+        rgba(0, 12, 25, 0) 100%
+    );
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+    transition: opacity 0.4s ease;
+}
+
+/* Progressive blur — heavier top layer that ramps off by the middle, stacking with the base for a graduated falloff */
+.navbar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    bottom: -40px;
+    z-index: -1;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 60%);
+    mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 60%);
     transition: opacity 0.4s ease;
 }
 
@@ -2096,4 +2117,99 @@ body.grid-mode .project-card:hover .project-overlay {
 .mobile-menu-link {
     font-family: 'Space Grotesk', sans-serifns-serif;
     letter-spacing: 0.02em;
+}
+
+/* ===========================================================================
+   Keyboard handoff — one-shot flourish after building on the welcome screen.
+   keyboard-handoff.js injects the EXACT visitor card snapshotted from the
+   welcome screen (full build-card: name, serial, keyboard, specs, signature)
+   at the same on-screen position, then flies it into the Visitors nav tab.
+   The rules below mirror the builder's card + keyboard CSS (welcome.css) so the
+   replayed card is pixel-identical; colours are inline on the snapshot and the
+   key unit is set inline by the script.
+   =========================================================================== */
+.kb-fly {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    will-change: transform, opacity;
+    transform-origin: center center;
+}
+
+/* ---- Card chrome ---- */
+.kb-fly .build-card {
+    position: relative;
+    width: 100%;
+    padding: 36px 40px 32px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--case-color, #1f1f24);
+    border: 1px solid color-mix(in oklab, var(--case-color, #1f1f24) 60%, white 25%);
+    box-shadow: 0 40px 80px -28px rgba(0, 0, 0, 0.8), 0 10px 24px -12px rgba(17, 128, 249, 0.2);
+    color: var(--case-text, #fff);
+}
+.kb-fly .build-card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+.kb-fly .build-card-brand { display: flex; flex-direction: column; gap: 4px; }
+.kb-fly .build-card-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--case-text, #fff); opacity: 0.95; }
+.kb-fly .build-card-meta { font-family: 'Space Mono', monospace; font-size: 9.5px; font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.55)); letter-spacing: 0.18em; text-transform: uppercase; }
+.kb-fly .build-card-serial { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 600; color: var(--case-text-dim, rgba(255,255,255,0.55)); letter-spacing: 0.14em; padding: 3px 9px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--case-color, #000) 60%, white 40%); }
+.kb-fly .build-card-name { font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; color: var(--case-text, #fff); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; min-height: 24px; line-height: 1.1; }
+.kb-fly .build-card-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; margin-bottom: 22px; }
+.kb-fly .build-card-spec-row { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.kb-fly .build-card-spec dt { font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.5)); letter-spacing: 0.18em; text-transform: uppercase; }
+.kb-fly .build-card-spec dd { display: inline-flex; align-items: center; gap: 7px; font-family: 'Space Mono', monospace; font-size: 12.5px; font-weight: 600; color: var(--case-text, #fff); letter-spacing: 0.04em; text-transform: uppercase; min-width: 0; }
+.kb-fly .build-card-spec dd i { font-size: 13px; }
+.kb-fly .build-card-swatch { width: 11px; height: 11px; border-radius: 8px; background: var(--swatch-color, #fff); border: 1px solid rgba(255,255,255,0.45); flex-shrink: 0; }
+.kb-fly .build-card-foot { display: grid; grid-template-columns: 1fr 1.6fr; gap: 24px; padding-top: 18px; border-top: 1px dashed color-mix(in oklab, var(--case-text-dim, rgba(255,255,255,0.4)) 60%, transparent); }
+.kb-fly .build-card-foot-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.kb-fly .build-card-foot-label { font-family: 'Space Mono', monospace; font-size: 9.5px; font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.45)); letter-spacing: 0.18em; text-transform: uppercase; }
+.kb-fly .build-card-foot-value { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 600; color: var(--case-text, #fff); letter-spacing: 0.04em; }
+.kb-fly .build-card-foot-sig { font-family: 'Space Grotesk', serif; font-size: 16px; font-weight: 400; font-style: italic; letter-spacing: 0.04em; color: var(--case-text, #fff); opacity: 0.9; }
+
+/* ---- Keyboard inside the card (matches welcome.css) ---- */
+.kb-fly .build-card-keyboard {
+    --u: 18px;
+    --kb-bg: color-mix(in oklab, var(--case-color, #1f1f24) 70%, black 30%);
+    --kb-edge: color-mix(in oklab, var(--case-color, #1f1f24) 55%, white 10%);
+    --kc-bg: var(--keycap-color, #e7dcc2);
+    --kc-edge: color-mix(in oklab, var(--keycap-color, #e7dcc2) 78%, black 22%);
+    --row-h: var(--u);
+    --kb-gap: 3px;
+    width: fit-content;
+    margin: 0 auto 24px;
+    background: var(--kb-bg);
+    border: 1px solid var(--kb-edge);
+    border-radius: 6px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--kb-gap);
+}
+.kb-fly .kb-row { display: flex; gap: var(--kb-gap); height: var(--row-h); align-items: stretch; }
+.kb-fly .kb-key {
+    flex: 0 0 auto;
+    width: var(--u);
+    background: var(--kc-bg);
+    border: 1px solid var(--kc-edge);
+    border-radius: 2px;
+}
+.kb-fly .kb-key.kb-mod    { --kc-bg: color-mix(in oklab, var(--keycap-color, #e7dcc2) 72%, var(--case-color, #1f1f24) 28%); }
+.kb-fly .kb-key.kb-accent { --kc-bg: var(--keycap-legend, #1d1a14); --kc-edge: color-mix(in oklab, var(--keycap-legend, #1d1a14) 80%, white 16%); }
+.kb-fly .kb-key.kb-1u    { width: var(--u); }
+.kb-fly .kb-key.kb-1-25u { width: calc(var(--u) * 1.25); }
+.kb-fly .kb-key.kb-1-5u  { width: calc(var(--u) * 1.5); }
+.kb-fly .kb-key.kb-1-75u { width: calc(var(--u) * 1.75); }
+.kb-fly .kb-key.kb-2u    { width: calc(var(--u) * 2); }
+.kb-fly .kb-key.kb-2-25u { width: calc(var(--u) * 2.25); }
+.kb-fly .kb-key.kb-2-75u { width: calc(var(--u) * 2.75); }
+.kb-fly .kb-key.kb-space { width: calc(var(--u) * 6.25); }
+.kb-fly .kb-gap { flex: 0 0 auto; width: var(--u); background: transparent; border: none; }
+.kb-fly .kb-gap.kb-0-5 { width: calc(var(--u) * 0.5); }
+
+/* The Visitors tab text glows as the card lands — driven by the Web Animations
+   API in keyboard-handoff.js (a CSS class would replace the nav's entrance
+   animation and drop its forwards opacity fill, hiding the link). */
+
+@media (prefers-reduced-motion: reduce) {
+    .kb-fly { display: none; }
 }

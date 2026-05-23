@@ -48,24 +48,24 @@
 
     // ---------- Build state ----------
     var CASES = {
-        graphite: { color: '#1f1f24', text: '#ffffff', textDim: 'rgba(255,255,255,0.55)' },
-        midnight: { color: '#1a2747', text: '#ffffff', textDim: 'rgba(255,255,255,0.6)'  },
-        ember:    { color: '#c0673f', text: '#1a0d05', textDim: 'rgba(26,13,5,0.6)'      },
-        moss:     { color: '#3a5b3f', text: '#f4f1e3', textDim: 'rgba(244,241,227,0.6)'  },
-        bone:     { color: '#e6dccb', text: '#1c1a14', textDim: 'rgba(28,26,20,0.55)'    }
+        white:    { color: '#f4f4f6', text: '#1c1c20', textDim: 'rgba(28,28,32,0.55)'   },
+        charcoal: { color: '#36383d', text: '#ffffff', textDim: 'rgba(255,255,255,0.55)' },
+        navy:     { color: '#1c2c54', text: '#ffffff', textDim: 'rgba(255,255,255,0.6)'  },
+        crimson:  { color: '#9c1f2e', text: '#ffffff', textDim: 'rgba(255,255,255,0.6)'  },
+        matcha:   { color: '#93a564', text: '#1a1e10', textDim: 'rgba(26,30,16,0.6)'      }
     };
 
     var KEYCAPS = {
-        cream:      { color: '#e7dcc2', legend: '#1d1a14' },
-        bow:        { color: '#13131a', legend: '#f3f3f3' },
-        olivia:     { color: '#e9dcd4', legend: '#1e1e22' },
-        botanical:  { color: '#1c2a26', legend: '#cbb88a' },
-        dolch:      { color: '#2a2a2e', legend: '#f5d97a' }
+        black:  { color: '#16161d', legend: '#f3f3f3' },
+        white:  { color: '#f4f4f6', legend: '#1d1a14' },
+        violet: { color: '#7c5cf2', legend: '#ffffff' },
+        yellow: { color: '#f4e21f', legend: '#1a1a10' },
+        cream:  { color: '#e7dcc2', legend: '#1d1a14' }
     };
 
     var SWITCHES = {
-        linear:  { icon: 'ph-line-segment' },
         tactile: { icon: 'ph-circle-half' },
+        linear:  { icon: 'ph-line-segment' },
         clicky:  { icon: 'ph-wave-sine'   }
     };
 
@@ -74,12 +74,12 @@
         name:       '',
         layout:     '60',
         layoutName: '60%',
-        caseKey:    'graphite',
-        caseName:   'Graphite',
+        caseKey:    'white',
+        caseName:   'White',
         switchKey:  'tactile',
         switchName: 'Tactile',
-        keycapKey:  'cream',
-        keycapName: 'Cream',
+        keycapKey:  'black',
+        keycapName: 'Black',
         serial:     0
     };
 
@@ -272,6 +272,9 @@
 
     // ---------- Submit ----------
     function setStatus(msg, kind) {
+        // The status line is optional chrome — bail if it isn't on the page so
+        // a missing element never blocks the save → navigate flow.
+        if (!statusEl) return;
         statusEl.textContent = msg;
         statusEl.classList.remove('is-error', 'is-success');
         if (kind === 'error')   statusEl.classList.add('is-error');
@@ -311,6 +314,11 @@
                 keycap_key: build.keycapKey,
                 switch_key: build.switchKey,
                 layout_key: build.layout,
+                // Stash the resolved hex colors so the home-page handoff
+                // animation can rebuild a mini keyboard without a colour map.
+                case_hex:      (CASES[build.caseKey]     || {}).color,
+                keycap_hex:    (KEYCAPS[build.keycapKey]  || {}).color,
+                keycap_legend: (KEYCAPS[build.keycapKey]  || {}).legend,
                 issued_at:  new Date().toISOString()
             });
             localStorage.setItem('jc_visitor', JSON.stringify(local));
@@ -345,6 +353,25 @@
     }
 
     function exitToPortfolio() {
+        // Snapshot the EXACT visitor card — full markup (the card's colour vars
+        // are already inline) and on-screen rect — so the home page can show the
+        // same card at the same position, then fly it into the Visitors tab.
+        // Captured before the exit transform runs.
+        try {
+            var cardNode = document.getElementById('buildCard');
+            var kbNode   = document.getElementById('cardKeyboard');
+            if (cardNode) {
+                var r   = cardNode.getBoundingClientRect();
+                var kcs = kbNode ? getComputedStyle(kbNode) : null;
+                sessionStorage.setItem('jc_kb_handoff', JSON.stringify({
+                    html:  cardNode.outerHTML,
+                    left:  r.left, top: r.top, width: r.width, height: r.height,
+                    u:     kcs ? (kcs.getPropertyValue('--u') || '').trim() : '',
+                    gap:   kcs ? (kcs.getPropertyValue('--kb-gap') || '').trim() : ''
+                }));
+            }
+        } catch (e) {}
+
         document.body.classList.add('welcome-exiting');
         setTimeout(function () { window.location.href = '/'; }, 480);
     }
@@ -576,10 +603,6 @@
         document.body.classList.add('welcome-editing');
         var submitLabel = submitBtn.querySelector('span');
         if (submitLabel) submitLabel.textContent = 'Save changes';
-        if (statusEl) {
-            statusEl.innerHTML = 'Editing your card — changes appear in the ' +
-                '<a href="visitors.html" class="welcome-fineprint-link">visitor gallery</a> right away.';
-        }
     }
 
     // ---------- Init ----------
@@ -608,6 +631,17 @@
             var seedName = rollName();
             nameInput.value = seedName;
             applyName(seedName);
+        }
+
+        // The keyboard uses width:fit-content; if it's first built before the
+        // entrance animation / web fonts settle it can cache a collapsed size
+        // (shows as a tiny square until a layout change rebuilds it). Rebuild
+        // once layout is stable so it always renders at full size on first load.
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () { buildKeyboard(build.layout); });
+        });
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function () { buildKeyboard(build.layout); });
         }
 
         tickClock();

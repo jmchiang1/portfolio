@@ -128,8 +128,8 @@ body::before {
     inset: 0;
     bottom: -20px;
     z-index: -1;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
     transition: opacity 0.4s ease;
