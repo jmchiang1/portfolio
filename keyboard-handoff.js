@@ -40,10 +40,38 @@
         ], { duration: 950, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
     }
 
+    // Little "+1" tag that pops next to the Visitors tab as the card lands,
+    // signalling one keyboard was just added to that tab. Pinned to the tab's
+    // current rect (fixed) so it never disturbs the nav layout, then removed.
+    function showPlusOne(tab, reduceMotion) {
+        if (!tab || !tab.animate) return;
+        var tr = tab.getBoundingClientRect();
+        var badge = document.createElement('div');
+        badge.className = 'kb-plus-one';
+        badge.textContent = '+1';
+        document.body.appendChild(badge);
+
+        // Sit just to the right of the "Visitors" text, vertically centered with it.
+        badge.style.left = (tr.right + 6) + 'px';
+        badge.style.top  = (tr.top + tr.height / 2 - badge.offsetHeight / 2) + 'px';
+
+        // Pop in fast, hold fully visible ~1s, then fade out (≈0.1→0.77 of 1500ms).
+        var frames = reduceMotion
+            ? [{ opacity: 0 }, { opacity: 1, offset: 0.1 }, { opacity: 1, offset: 0.77 }, { opacity: 0 }]
+            : [{ opacity: 0, transform: 'translateY(6px) scale(0.6)' },
+               { opacity: 1, transform: 'translateY(0) scale(1)', offset: 0.1 },
+               { opacity: 1, transform: 'translateY(-2px) scale(1)', offset: 0.77 },
+               { opacity: 0, transform: 'translateY(-12px) scale(0.95)' }];
+
+        var a = badge.animate(frames,
+            { duration: 1500, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' });
+        a.onfinish = function () { badge.remove(); };
+    }
+
     function run() {
         var tab = findTab();
         if (!tab) return;
-        if (reduce) { pulseTab(tab); return; }
+        if (reduce) { pulseTab(tab); showPlusOne(tab, true); return; }
 
         // Wrapper pinned exactly where the card sat on the welcome screen. The
         // card's colour vars are already inline in the snapshot HTML.
@@ -62,9 +90,9 @@
         }
         document.body.appendChild(fly);
 
-        // Appear in place (quick fade so it doesn't pop) — no movement yet.
-        fly.animate([{ opacity: 0 }, { opacity: 1 }],
-            { duration: 240, easing: 'ease-out', fill: 'both' });
+        // Appear instantly at the exact spot the welcome card occupied — no fade.
+        // The welcome card stays full-opacity through its exit, so this reads as
+        // the same card persisting across the navigation rather than popping in.
 
         // Hold so the eye registers the card, then fly the whole thing into the tab.
         setTimeout(function () {
@@ -79,8 +107,8 @@
                  { transform: 'translate(' + dx + 'px, ' + dy + 'px) scale(' + endScale + ')', opacity: 0 }],
                 { duration: 820, easing: 'cubic-bezier(0.6, 0, 0.35, 1)', fill: 'forwards' }
             );
-            // Glow the Visitors text right as the card lands in it.
-            setTimeout(function () { pulseTab(tab); }, 640);
+            // Glow the Visitors text + drop a "+1" tag right as the card lands.
+            setTimeout(function () { pulseTab(tab); showPlusOne(tab, false); }, 640);
             anim.onfinish = function () { fly.remove(); };
         }, 700);
     }

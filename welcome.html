@@ -62,12 +62,15 @@
     <canvas id="welcomeGrid" class="welcome-grid-canvas" aria-hidden="true"></canvas>
     <div class="glow"></div>
 
-    <main class="welcome-layout">
-        <a href="/" class="welcome-skip" id="welcomeSkip" aria-label="Skip to portfolio">
-            <span>Skip to Portfolio</span>
-            <i class="ph ph-arrow-right"></i>
-        </a>
+    <!-- Kept outside .welcome-layout: the layout is no longer transformed on
+         exit, but a fixed element must never live under a transformed ancestor
+         (that ancestor would become its containing block and snap it sideways). -->
+    <a href="/" class="welcome-skip" id="welcomeSkip" aria-label="Skip to portfolio">
+        <span>Skip to Portfolio</span>
+        <i class="ph ph-arrow-right"></i>
+    </a>
 
+    <main class="welcome-layout">
         <header class="welcome-hero">
             <h1 class="welcome-title">
                 Welcome to Jonathan's Portfolio,</span>

@@ -924,19 +924,18 @@ input { cursor: url('assets/cursor.cur'), text; }
 /* ============================================
    Exit transition
    ============================================ */
-body.welcome-exiting .welcome-layout,
+/* Everything except the build-card lifts away and fades. We fade the hero and
+   panel individually (rather than the whole .welcome-layout) so the card — a
+   descendant — isn't dragged down by a parent's opacity/transform. The card is
+   left completely untouched: it stays pinned in place and full-opacity so it
+   reads as the same card the home page replays at the identical coordinates. */
+body.welcome-exiting .welcome-hero,
+body.welcome-exiting .welcome-panel,
 body.welcome-exiting .welcome-skip {
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body.welcome-exiting .build-card {
-    transform: scale(0.95);
-    opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================

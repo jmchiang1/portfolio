@@ -2150,6 +2150,21 @@ body.grid-mode .project-card:hover .project-overlay {
     transform-origin: center center;
 }
 
+/* "+1" tag dropped beside the Visitors tab when a freshly built keyboard
+   lands in it. Fixed + pointer-events:none so it overlays without nudging
+   the nav. Created and removed by keyboard-handoff.js. */
+.kb-plus-one {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    white-space: nowrap;
+}
+
 /* ---- Card chrome ---- */
 .kb-fly .build-card {
     position: relative;
