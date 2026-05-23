@@ -17,7 +17,7 @@ body {
     color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    cursor: url('assets/icons8-3d-pointer.svg') 9 4, auto;
+    cursor: url('assets/cursor.cur'), auto;
 }
 
 /* Hand cursor for interactive elements */
@@ -25,7 +25,7 @@ a, button, [role="button"],
 .project-card, .layout-toggle, .bg-switch, .bg-visibility,
 .nav-link, .mobile-menu-link, .social-link, .hamburger,
 .footer-link, .layout-toggle i, .bg-switch i, .bg-visibility i {
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+    cursor: url('assets/pointer.cur'), pointer;
 }
 
 /* Container — no scrolling, all managed by JS */
@@ -340,8 +340,8 @@ a, button, [role="button"],
     border: none;
     background: none;
     color: #fff;
-    font-size: 28px;
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+    font-size: var(--text-28);
+    cursor: url('assets/pointer.cur'), pointer;
     transition: color 0.2s ease, background 0.2s ease;
 }
 
@@ -366,7 +366,7 @@ a, button, [role="button"],
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: #fff;
     white-space: nowrap;
@@ -425,7 +425,7 @@ a, button, [role="button"],
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 13px;
+    font-size: var(--text-13);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.85);
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -433,7 +433,7 @@ a, button, [role="button"],
 
 .bg-controls-bottom .bg-switch i,
 .bg-controls-bottom .bg-visibility i {
-    font-size: 18px;
+    font-size: var(--text-18);
     color: rgba(255, 255, 255, 0.9);
 }
 
@@ -500,7 +500,7 @@ a, button, [role="button"],
     border-radius: 8px;
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
-    font-size: 24px;
+    font-size: var(--text-24);
     text-decoration: none;
     transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     opacity: 0;
@@ -541,7 +541,7 @@ a, button, [role="button"],
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: #fff;
     white-space: nowrap;
@@ -570,7 +570,7 @@ a, button, [role="button"],
     border-radius: 8px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
-    font-size: 16px;
+    font-size: var(--text-16);
     color: #fff;
     text-decoration: none;
     transition: color 0.2s ease, background 0.2s ease;
@@ -642,7 +642,7 @@ a, button, [role="button"],
 .hero-heading {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
-    font-size: 88px;
+    font-size: var(--text-88);
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: #fff;
@@ -671,7 +671,7 @@ a, button, [role="button"],
 .hero-tagline {
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
-    font-size: 22px;
+    font-size: var(--text-22);
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.75);
     margin-top: 16px;
@@ -794,7 +794,7 @@ a, button, [role="button"],
 }
 
 .counter-current {
-    font-size: 24px;
+    font-size: var(--text-24);
     font-weight: 700;
     color: #fff;
     font-variant-numeric: tabular-nums;
@@ -802,14 +802,14 @@ a, button, [role="button"],
 }
 
 .counter-divider {
-    font-size: 18px;
+    font-size: var(--text-18);
     font-weight: 400;
     color: rgba(255, 255, 255, 0.3);
     margin: 0 2px;
 }
 
 .counter-total {
-    font-size: 18px;
+    font-size: var(--text-18);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.5);
     font-variant-numeric: tabular-nums;
@@ -817,7 +817,7 @@ a, button, [role="button"],
 
 .counter-name {
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 14px;
+    font-size: var(--text-14);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.6);
     margin-left: 12px;
@@ -841,7 +841,7 @@ a, button, [role="button"],
 .footer-text {
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
-    font-size: 20px;
+    font-size: var(--text-20);
     color: #fff;
     max-width: 30rem;
     line-height: 1.5;
@@ -897,7 +897,7 @@ a, button, [role="button"],
 a.project-card {
     text-decoration: none;
     color: inherit;
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+    cursor: url('assets/pointer.cur'), pointer;
 }
 
 /* Page exit — fade out content but keep navbar visible */
@@ -1128,7 +1128,7 @@ a.project-card {
     border-radius: 8px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
-    font-size: 20px;
+    font-size: var(--text-20);
     color: #fff;
     z-index: 2;
     opacity: 0;
@@ -1168,7 +1168,7 @@ a.project-card {
     justify-content: center;
     width: 38px;
     height: 38px;
-    font-size: 20px;
+    font-size: var(--text-20);
     color: #fff;
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(8px);
@@ -1205,7 +1205,7 @@ body.grid-mode .project-card:hover .project-external-icon {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 6px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: #fff;
     white-space: nowrap;
@@ -1301,14 +1301,14 @@ body.grid-mode .hero-content {
 }
 
 body.grid-mode .hero-heading {
-    font-size: 56px;
+    font-size: var(--text-56);
     line-height: 1.05;
     text-align: left;
     max-width: 900px;
 }
 
 body.grid-mode .hero-tagline {
-    font-size: 20px;
+    font-size: var(--text-20);
     margin-top: 12px;
     color: rgba(255, 255, 255, 0.7);
 }
@@ -1341,7 +1341,7 @@ body.grid-mode .footer-info.entered {
 
 body.grid-mode .footer-text,
 body.grid-mode .footer-text:last-child {
-    font-size: 20px;
+    font-size: var(--text-20);
     text-align: left;
     max-width: 30rem;
 }
@@ -1380,7 +1380,7 @@ body.grid-mode .project-card:nth-child(7) { grid-column: 2 / 3; grid-row: 4; }
 
 /* Hover lift on grid cards (only when grid-mode is active) */
 body.grid-mode .project-card:not(.grid-locked) {
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+    cursor: url('assets/pointer.cur'), pointer;
 }
 
 /* Hide the carousel counter in grid mode (per-card state doesn't apply) */
@@ -1394,7 +1394,7 @@ body.grid-mode .carousel-counter {
 body.grid-mode .project-card .project-tags {
     opacity: 1;
     transform: translateY(0);
-    font-size: 16px;
+    font-size: var(--text-16);
 }
 
 /* Hover effects for ALL cards in grid mode (carousel only does pos-center) */
@@ -1478,7 +1478,7 @@ body.grid-mode .project-card:hover .project-overlay {
 .project-title {
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 700;
-    font-size: 48px;
+    font-size: var(--text-48);
     line-height: 1.5;
     color: #fff;
 }
@@ -1486,7 +1486,7 @@ body.grid-mode .project-card:hover .project-overlay {
 .project-description {
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
-    font-size: 20px;
+    font-size: var(--text-20);
     line-height: 1.5;
     color: #fff;
 }
@@ -1494,6 +1494,20 @@ body.grid-mode .project-card:hover .project-overlay {
 /* ============================================
    Responsive
    ============================================ */
+
+/* Desktop navbar uses asymmetric vertical padding (40px top / 60px bottom),
+   which centers the in-flow .nav-links 10px higher than the absolutely-
+   positioned logo and controls (they key off the full padding box). Nudge
+   those two up by the same (60-40)/2 = 10px so the logo, nav-links, and
+   layout-toggle share one horizontal line. Below 1200px the padding is
+   symmetric, so this offset is intentionally not applied there. */
+@media (min-width: 1201px) {
+    .nav-logo,
+    .bg-controls {
+        transform: translateY(calc(-50% - 10px));
+    }
+}
+
 @media (max-width: 1200px) {
     .navbar {
         padding: 16px 40px;
@@ -1501,15 +1515,15 @@ body.grid-mode .project-card:hover .project-overlay {
 
     .nav-link {
         padding: 8px 16px;
-        font-size: 13px;
+        font-size: var(--text-13);
     }
 
     .hero-heading {
-        font-size: 72px;
+        font-size: var(--text-72);
     }
 
     .hero-tagline {
-        font-size: 20px;
+        font-size: var(--text-20);
     }
 
     .footer-info {
@@ -1522,15 +1536,15 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .project-title {
-        font-size: 40px;
+        font-size: var(--text-40);
     }
 
     .project-description {
-        font-size: 18px;
+        font-size: var(--text-18);
     }
 
     .project-tags {
-        font-size: 16px;
+        font-size: var(--text-16);
     }
 }
 
@@ -1554,7 +1568,7 @@ body.grid-mode .project-card:hover .project-overlay {
 
     .nav-link {
         padding: 6px 12px;
-        font-size: 12px;
+        font-size: var(--text-12);
     }
 
     .nav-logo img {
@@ -1566,11 +1580,11 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .hero-heading {
-        font-size: 56px;
+        font-size: var(--text-56);
     }
 
     .hero-tagline {
-        font-size: 20px;
+        font-size: var(--text-20);
     }
 
     .footer-info {
@@ -1581,7 +1595,7 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .footer-text {
-        font-size: 16px;
+        font-size: var(--text-16);
         max-width: 280px;
     }
 
@@ -1602,15 +1616,15 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .project-title {
-        font-size: 32px;
+        font-size: var(--text-32);
     }
 
     .project-description {
-        font-size: 16px;
+        font-size: var(--text-16);
     }
 
     .project-tags {
-        font-size: 14px;
+        font-size: var(--text-14);
         gap: 8px;
         padding: 6px 12px;
     }
@@ -1640,12 +1654,12 @@ body.grid-mode .project-card:hover .project-overlay {
     .social-link {
         width: 48px;
         height: 48px;
-        font-size: 22px;
+        font-size: var(--text-22);
     }
 
     .nav-link {
         padding: 1rem;
-        font-size: 12px;
+        font-size: var(--text-12);
     }
 
     .nav-logo img {
@@ -1653,7 +1667,7 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .hero-heading {
-        font-size: 4.5rem;
+        font-size: var(--text-72);
         line-height: 1.05;
         text-align: center;
         letter-spacing: 1%;
@@ -1666,7 +1680,7 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .hero-tagline {
-        font-size: 20px;
+        font-size: var(--text-20);
         line-height: 1.4;
         margin-top: 1.25rem;
         /* Drop inline-flex so the icon flows inline with the wrapped text
@@ -1698,7 +1712,7 @@ body.grid-mode .project-card:hover .project-overlay {
         left: 50%;
         margin-top: 0;
         font-family: 'IBM Plex Sans', sans-serif;
-        font-size: 12px;
+        font-size: var(--text-12);
         font-weight: 500;
         color: rgba(255, 255, 255, 0.4);
         letter-spacing: 0.02em;
@@ -1781,7 +1795,7 @@ body.grid-mode .project-card:hover .project-overlay {
 
     body.grid-mode .footer-text,
     body.grid-mode .footer-text:last-child {
-        font-size: 15px;
+        font-size: var(--text-15);
         text-align: left;
         max-width: none;
     }
@@ -1792,23 +1806,23 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .counter-current {
-        font-size: 18px;
+        font-size: var(--text-18);
     }
 
     .counter-divider,
     .counter-total {
-        font-size: 14px;
+        font-size: var(--text-14);
     }
 
     .counter-name {
-        font-size: 12px;
+        font-size: var(--text-12);
         margin-left: 8px;
         padding-left: 8px;
     }
 
 
     .footer-text {
-        font-size: 16px;
+        font-size: var(--text-16);
     }
 
     .project-card {
@@ -1829,11 +1843,11 @@ body.grid-mode .project-card:hover .project-overlay {
     }
 
     .project-title {
-        font-size: 24px;
+        font-size: var(--text-24);
     }
 
     .project-description {
-        font-size: 14px;
+        font-size: var(--text-14);
     }
 
     /* Show tags, overlay, and info by default on center card (no hover on mobile) */
@@ -1856,7 +1870,7 @@ body.grid-mode .project-card:hover .project-overlay {
 
     .project-tags,
     body.grid-mode .project-card .project-tags {
-        font-size: 12px;
+        font-size: var(--text-12);
         top: 12px;
         right: 12px;
         background-color: rgba(0, 0, 0, 0.2);
@@ -1916,7 +1930,7 @@ body.grid-mode .project-card:hover .project-overlay {
     .bg-visibility {
         width: 40px;
         height: 40px;
-        font-size: 24px;
+        font-size: var(--text-24);
     }
 
     /* Hide desktop nav-links, show hamburger */
@@ -1938,7 +1952,7 @@ body.grid-mode .project-card:hover .project-overlay {
         padding: 8px;
         background: none;
         border: none;
-        cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+        cursor: url('assets/pointer.cur'), pointer;
         z-index: 110;
         opacity: 0;
         animation: nav-enter-logo 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
@@ -1994,7 +2008,7 @@ body.grid-mode .project-card:hover .project-overlay {
     .mobile-menu-link {
         font-family: 'IBM Plex Sans', sans-serif;
         font-weight: 600;
-        font-size: 24px;
+        font-size: var(--text-24);
         color: #fff;
         text-decoration: none;
         padding: 1rem 3rem;
@@ -2078,7 +2092,7 @@ body.grid-mode .project-card:hover .project-overlay {
         border-radius: 8px;
         border: 1.5px solid rgba(255, 255, 255, 0.35);
         color: #fff;
-        font-size: 26px;
+        font-size: var(--text-24);
         text-decoration: none;
         transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
@@ -2150,21 +2164,21 @@ body.grid-mode .project-card:hover .project-overlay {
 }
 .kb-fly .build-card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
 .kb-fly .build-card-brand { display: flex; flex-direction: column; gap: 4px; }
-.kb-fly .build-card-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--case-text, #fff); opacity: 0.95; }
-.kb-fly .build-card-meta { font-family: 'Space Mono', monospace; font-size: 9.5px; font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.55)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-serial { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 600; color: var(--case-text-dim, rgba(255,255,255,0.55)); letter-spacing: 0.14em; padding: 3px 9px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--case-color, #000) 60%, white 40%); }
-.kb-fly .build-card-name { font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; color: var(--case-text, #fff); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; min-height: 24px; line-height: 1.1; }
+.kb-fly .build-card-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: var(--text-20); letter-spacing: -0.02em; color: var(--case-text, #fff); opacity: 0.95; }
+.kb-fly .build-card-meta { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.55)); letter-spacing: 0.18em; text-transform: uppercase; }
+.kb-fly .build-card-serial { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 600; color: var(--case-text-dim, rgba(255,255,255,0.55)); letter-spacing: 0.14em; padding: 3px 9px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--case-color, #000) 60%, white 40%); }
+.kb-fly .build-card-name { font-family: 'Space Mono', monospace; font-size: var(--text-20); font-weight: 700; color: var(--case-text, #fff); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; min-height: 24px; line-height: 1.1; }
 .kb-fly .build-card-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; margin-bottom: 22px; }
 .kb-fly .build-card-spec-row { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.kb-fly .build-card-spec dt { font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.5)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-spec dd { display: inline-flex; align-items: center; gap: 7px; font-family: 'Space Mono', monospace; font-size: 12.5px; font-weight: 600; color: var(--case-text, #fff); letter-spacing: 0.04em; text-transform: uppercase; min-width: 0; }
-.kb-fly .build-card-spec dd i { font-size: 13px; }
+.kb-fly .build-card-spec dt { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.5)); letter-spacing: 0.18em; text-transform: uppercase; }
+.kb-fly .build-card-spec dd { display: inline-flex; align-items: center; gap: 7px; font-family: 'Space Mono', monospace; font-size: var(--text-12); font-weight: 600; color: var(--case-text, #fff); letter-spacing: 0.04em; text-transform: uppercase; min-width: 0; }
+.kb-fly .build-card-spec dd i { font-size: var(--text-13); }
 .kb-fly .build-card-swatch { width: 11px; height: 11px; border-radius: 8px; background: var(--swatch-color, #fff); border: 1px solid rgba(255,255,255,0.45); flex-shrink: 0; }
 .kb-fly .build-card-foot { display: grid; grid-template-columns: 1fr 1.6fr; gap: 24px; padding-top: 18px; border-top: 1px dashed color-mix(in oklab, var(--case-text-dim, rgba(255,255,255,0.4)) 60%, transparent); }
 .kb-fly .build-card-foot-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.kb-fly .build-card-foot-label { font-family: 'Space Mono', monospace; font-size: 9.5px; font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.45)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-foot-value { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 600; color: var(--case-text, #fff); letter-spacing: 0.04em; }
-.kb-fly .build-card-foot-sig { font-family: 'Space Grotesk', serif; font-size: 16px; font-weight: 400; font-style: italic; letter-spacing: 0.04em; color: var(--case-text, #fff); opacity: 0.9; }
+.kb-fly .build-card-foot-label { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.45)); letter-spacing: 0.18em; text-transform: uppercase; }
+.kb-fly .build-card-foot-value { font-family: 'Space Mono', monospace; font-size: var(--text-13); font-weight: 600; color: var(--case-text, #fff); letter-spacing: 0.04em; }
+.kb-fly .build-card-foot-sig { font-family: 'Space Grotesk', serif; font-size: var(--text-16); font-weight: 400; font-style: italic; letter-spacing: 0.04em; color: var(--case-text, #fff); opacity: 0.9; }
 
 /* ---- Keyboard inside the card (matches welcome.css) ---- */
 .kb-fly .build-card-keyboard {

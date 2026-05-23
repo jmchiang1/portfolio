@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="motion.css">
     <link rel="stylesheet" href="welcome.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
@@ -45,7 +46,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             font-family: 'Space Mono', monospace;
-            font-size: 11px;
+            font-size: var(--text-11);
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.65);
@@ -53,11 +54,11 @@
             transform: translateY(20px);
             animation: visitors-hero-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
         }
-        .visitors-hero-eyebrow i { font-size: 13px; color: #66d2ff; }
+        .visitors-hero-eyebrow i { font-size: var(--text-13); color: #66d2ff; }
         .visitors-hero-title {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
-            font-size: clamp(40px, 6vw, 60px);
+            font-size: clamp(2.5rem, 6vw, 3.75rem);
             line-height: 1.05;
             letter-spacing: -0.03em;
             color: #fff;
@@ -74,7 +75,7 @@
         .visitors-hero-blurb {
             font-family: 'IBM Plex Sans', sans-serif;
             font-weight: 400;
-            font-size: 18px;
+            font-size: var(--text-18);
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.7);
             max-width: 560px;
@@ -86,7 +87,7 @@
         .visitors-hero-meta {
             margin-top: 22px;
             font-family: 'Space Mono', monospace;
-            font-size: 11px;
+            font-size: var(--text-11);
             color: rgba(255, 255, 255, 0.45);
             letter-spacing: 0.14em;
             text-transform: uppercase;
@@ -128,7 +129,7 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            cursor: pointer;
+            cursor: url('assets/pointer.cur'), pointer;
             -webkit-tap-highlight-color: transparent;
             animation: peg-drop 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
@@ -156,8 +157,8 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
-            font-size: 16px;
-            cursor: pointer;
+            font-size: var(--text-16);
+            cursor: url('assets/pointer.cur'), pointer;
             transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
         .vp-btn:hover:not([disabled]) {
@@ -171,7 +172,7 @@
         }
         .vp-info {
             font-family: 'Space Mono', monospace;
-            font-size: 12px;
+            font-size: var(--text-12);
             letter-spacing: 0.12em;
             color: rgba(255, 255, 255, 0.6);
             min-width: 70px;
@@ -247,7 +248,7 @@
         /* Name plate underneath, etched into the wall */
         .peg-name {
             font-family: 'Space Mono', monospace;
-            font-size: 10.5px;
+            font-size: var(--text-10);
             font-weight: 700;
             color: #2a261f;
             letter-spacing: 0.12em;
@@ -316,8 +317,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            font-size: 14px;
+            cursor: url('assets/pointer.cur'), pointer;
+            font-size: var(--text-14);
             transition: background 0.2s ease;
         }
         .visitor-modal-close:hover { background: rgba(255, 255, 255, 0.22); }
@@ -327,7 +328,7 @@
             justify-content: space-between;
             align-items: center;
             font-family: 'Space Mono', monospace;
-            font-size: 10px;
+            font-size: var(--text-10);
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--vc-text-dim, rgba(255,255,255,0.55));
@@ -344,7 +345,7 @@
         }
         .visitor-modal-card .vmc-name {
             font-family: 'Space Mono', monospace;
-            font-size: 20px;
+            font-size: var(--text-20);
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -372,14 +373,14 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px 18px;
             font-family: 'Space Mono', monospace;
-            font-size: 12px;
+            font-size: var(--text-12);
             color: var(--vc-text-dim, rgba(255,255,255,0.6));
         }
         .visitor-modal-card .vmc-meta b {
             display: block;
             font-weight: 500;
             color: var(--vc-text-dim, rgba(255,255,255,0.45));
-            font-size: 9px;
+            font-size: var(--text-10);
             letter-spacing: 0.16em;
             text-transform: uppercase;
             margin-bottom: 3px;
@@ -397,7 +398,7 @@
             padding-top: 12px;
             border-top: 1px dashed color-mix(in oklab, var(--vc-text-dim, rgba(255,255,255,0.4)) 60%, transparent);
             font-family: 'Space Mono', monospace;
-            font-size: 11px;
+            font-size: var(--text-11);
             color: var(--vc-text-dim, rgba(255,255,255,0.55));
             letter-spacing: 0.08em;
         }
@@ -411,8 +412,8 @@
             background: rgba(255, 255, 255, 0.14);
             border: 1px solid rgba(255, 255, 255, 0.22);
             color: var(--vc-text, #fff);
-            font-size: 11px;
-            cursor: pointer;
+            font-size: var(--text-11);
+            cursor: url('assets/pointer.cur'), pointer;
             transition: background 0.2s ease, transform 0.2s ease;
         }
         .visitor-modal-card .vmc-edit:hover {
@@ -472,7 +473,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            cursor: url('assets/pointer.cur'), pointer;
             transition: background 0.2s ease, color 0.2s ease;
         }
         .edit-modal-close:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
@@ -480,13 +481,13 @@
         .edit-modal h2 {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
-            font-size: 24px;
+            font-size: var(--text-24);
             color: #fff;
             letter-spacing: -0.02em;
         }
         .edit-modal-sub {
             margin-top: 4px;
-            font-size: 13px;
+            font-size: var(--text-13);
             color: rgba(255, 255, 255, 0.55);
         }
 
@@ -500,7 +501,7 @@
         .edit-field { display: flex; flex-direction: column; gap: 10px; }
         .edit-field-label {
             font-family: 'Space Mono', monospace;
-            font-size: 10px;
+            font-size: var(--text-10);
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.5);
@@ -515,7 +516,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #fff;
             font-family: 'Space Mono', monospace;
-            font-size: 14px;
+            font-size: var(--text-14);
             letter-spacing: 0.08em;
             text-transform: uppercase;
             outline: none;
@@ -528,11 +529,11 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
-            cursor: pointer;
+            cursor: url('assets/pointer.cur'), pointer;
             transition: background 0.2s ease, color 0.2s ease;
         }
         .edit-reroll:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
-        .edit-reroll i { font-size: 16px; }
+        .edit-reroll i { font-size: var(--text-16); }
 
         .edit-options { display: flex; flex-wrap: wrap; gap: 6px; }
         .edit-opt {
@@ -542,9 +543,9 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
             font-family: 'Space Mono', monospace;
-            font-size: 12px;
+            font-size: var(--text-12);
             letter-spacing: 0.04em;
-            cursor: pointer;
+            cursor: url('assets/pointer.cur'), pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -574,10 +575,10 @@
             padding: 10px 18px;
             border-radius: 4px;
             font-family: 'Space Mono', monospace;
-            font-size: 13px;
+            font-size: var(--text-13);
             font-weight: 500;
             letter-spacing: 0.04em;
-            cursor: pointer;
+            cursor: url('assets/pointer.cur'), pointer;
             transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
         }
         .edit-cancel {
@@ -596,7 +597,7 @@
         .edit-status {
             flex: 1;
             font-family: 'Space Mono', monospace;
-            font-size: 11px;
+            font-size: var(--text-11);
             color: rgba(255, 255, 255, 0.55);
             align-self: center;
         }
@@ -619,37 +620,40 @@
         }
         .visitors-typing-cta-tagline {
             font-family: 'IBM Plex Sans', sans-serif;
-            font-size: 15px;
+            font-size: var(--text-15);
             font-weight: 500;
             line-height: 1.5;
             color: rgba(255, 255, 255, 0.7);
             margin: 0;
             max-width: 480px;
         }
+        /* Matches the vibes page "Live site" button (.vibes-btn-primary):
+           solid blue, IBM Plex Sans, with an arrow icon that nudges on hover. */
         .visitors-typing-cta {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 22px;
+            gap: 8px;
+            padding: 10px 16px;
             border-radius: 4px;
-            background: rgba(17, 128, 249, 0.1);
-            border: 1px solid rgba(17, 128, 249, 0.3);
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            font-weight: 500;
-            color: #66d2ff;
+            background: #1180f9;
+            border: 1px solid transparent;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: var(--text-14);
+            font-weight: 600;
+            color: #fff;
             text-decoration: none;
-            letter-spacing: 0.04em;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
         }
         .visitors-typing-cta:hover {
-            background: rgba(17, 128, 249, 0.18);
-            border-color: rgba(17, 128, 249, 0.5);
-            transform: translateY(-2px);
+            background: #2b91ff;
         }
-        .visitors-typing-cta i { font-size: 16px; }
+        .visitors-typing-cta i {
+            font-size: var(--text-16);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .visitors-typing-cta:hover i {
+            transform: translate(2px, -2px);
+        }
         @keyframes visitors-cta-in {
             to { opacity: 1; }
         }
@@ -727,6 +731,7 @@
             <p class="visitors-typing-cta-tagline">Think you can beat my record of 120 WPM?</p>
             <a href="typing.html" class="visitors-typing-cta">
                 <span>Start Typing Now</span>
+                <i class="ph ph-arrow-up-right"></i>
             </a>
         </div>
     </main>

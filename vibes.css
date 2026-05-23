@@ -25,14 +25,14 @@ body {
     color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    cursor: url('assets/icons8-3d-pointer.svg') 9 4, auto;
+    cursor: url('assets/cursor.cur'), auto;
     min-height: 100vh;
 }
 
 a, button, [role="button"],
 .vibes-card, .nav-link, .mobile-menu-link, .social-link, .hamburger,
 .bg-switch, .bg-visibility, .vibes-btn {
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+    cursor: url('assets/pointer.cur'), pointer;
 }
 
 /* ============================================
@@ -224,7 +224,7 @@ a, button, [role="button"],
     border-radius: 8px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
-    font-size: 16px;
+    font-size: var(--text-16);
     color: #fff;
     text-decoration: none;
     transition: color 0.2s ease, background 0.2s ease;
@@ -293,7 +293,7 @@ a, button, [role="button"],
     border: none;
     background: none;
     color: #fff;
-    font-size: 28px;
+    font-size: var(--text-28);
     transition: color 0.2s ease, background 0.2s ease;
 }
 
@@ -315,7 +315,7 @@ a, button, [role="button"],
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: #fff;
     white-space: nowrap;
@@ -373,7 +373,7 @@ a, button, [role="button"],
     background: rgba(17, 128, 249, 0.08);
     border: 1px solid rgba(17, 128, 249, 0.2);
     font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: #5aa3ff;
     margin-bottom: 24px;
@@ -418,7 +418,7 @@ a, button, [role="button"],
 .vibes-hero-title {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
-    font-size: 60px;
+    font-size: var(--text-60);
     line-height: 1.05;
     letter-spacing: -0.03em;
     opacity: 0;
@@ -530,7 +530,7 @@ a, button, [role="button"],
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.85);
     letter-spacing: 0.01em;
@@ -543,7 +543,7 @@ a, button, [role="button"],
 }
 
 .hero-hint i {
-    font-size: 14px;
+    font-size: var(--text-14);
     color: #5aa3ff;
 }
 
@@ -566,7 +566,7 @@ a, button, [role="button"],
 .vibes-hero-blurb {
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: var(--text-18);
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.7);
     max-width: 580px;
@@ -599,7 +599,7 @@ a, button, [role="button"],
     background: rgba(17, 128, 249, 0.08);
     border: 1px solid rgba(17, 128, 249, 0.18);
     font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.75);
     letter-spacing: 0.01em;
@@ -609,7 +609,7 @@ a, button, [role="button"],
 }
 
 .hero-hint i {
-    font-size: 14px;
+    font-size: var(--text-14);
     color: #5aa3ff;
     animation: hint-pulse 1.6s ease-in-out infinite;
 }
@@ -750,7 +750,7 @@ a, button, [role="button"],
     gap: 12px;
     color: rgba(255, 255, 255, 0.4);
     font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-size: var(--text-12);
     pointer-events: none;
     transition: opacity 0.4s ease;
 }
@@ -806,7 +806,7 @@ a, button, [role="button"],
 .vibes-card-title {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 28px;
+    font-size: var(--text-28);
     letter-spacing: -0.01em;
     color: #fff;
     line-height: 1.1;
@@ -814,7 +814,7 @@ a, button, [role="button"],
 
 .vibes-card-year {
     font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.4);
     padding-top: 4px;
@@ -823,7 +823,7 @@ a, button, [role="button"],
 
 .vibes-card-description {
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 15px;
+    font-size: var(--text-15);
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.65);
 }
@@ -884,7 +884,7 @@ a, button, [role="button"],
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 11px;
+    font-size: var(--text-11);
     font-weight: 500;
     color: #fff;
     white-space: nowrap;
@@ -916,7 +916,7 @@ a, button, [role="button"],
     padding: 10px 16px;
     border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 14px;
+    font-size: var(--text-14);
     font-weight: 600;
     text-decoration: none;
     border: 1px solid transparent;
@@ -926,7 +926,7 @@ a, button, [role="button"],
 }
 
 .vibes-btn i {
-    font-size: 16px;
+    font-size: var(--text-16);
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -969,7 +969,7 @@ a, button, [role="button"],
 
 .vibes-footer-text {
     font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-size: var(--text-12);
     color: rgba(255, 255, 255, 0.35);
     letter-spacing: 0.02em;
 }
@@ -997,7 +997,7 @@ a, button, [role="button"],
     border-radius: 8px;
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
-    font-size: 24px;
+    font-size: var(--text-24);
     text-decoration: none;
     transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     opacity: 0;
@@ -1031,7 +1031,7 @@ a, button, [role="button"],
     -webkit-backdrop-filter: blur(8px);
     border-radius: 6px;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
     color: #fff;
     white-space: nowrap;
@@ -1176,7 +1176,7 @@ a, button, [role="button"],
     .mobile-menu-link {
         font-family: 'IBM Plex Sans', sans-serif;
         font-weight: 600;
-        font-size: 24px;
+        font-size: var(--text-24);
         color: #fff;
         text-decoration: none;
         padding: 1rem 3rem;
@@ -1245,7 +1245,7 @@ a, button, [role="button"],
         border-radius: 8px;
         border: 1.5px solid rgba(255, 255, 255, 0.4);
         color: #fff;
-        font-size: 24px;
+        font-size: var(--text-24);
         text-decoration: none;
         transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
@@ -1268,7 +1268,7 @@ a, button, [role="button"],
     }
 
     .vibes-hero-blurb {
-        font-size: 16px;
+        font-size: var(--text-16);
     }
 
     .vibes-grid {
@@ -1286,15 +1286,15 @@ a, button, [role="button"],
     }
 
     .vibes-card-title {
-        font-size: 24px;
+        font-size: var(--text-24);
     }
 
     .vibes-card-description {
-        font-size: 14px;
+        font-size: var(--text-14);
     }
 
     .browser-url {
-        font-size: 10px;
+        font-size: var(--text-10);
     }
 
     /* Social links — hide on mobile (live in burger menu) */
@@ -1326,7 +1326,7 @@ a, button, [role="button"],
 
 @media (max-width: 480px) {
     .vibes-hero-title {
-        font-size: 52px;
+        font-size: var(--text-52);
     }
 
     .hero-title-wrap {

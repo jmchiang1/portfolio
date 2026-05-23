@@ -35,7 +35,7 @@
     border: none;
     border-radius: 8px;
     text-decoration: none;
-    cursor: pointer;
+    cursor: url('assets/pointer.cur'), pointer;
     box-shadow:
         4px 4px 8px rgba(0, 0, 0, 0.12),
         -4px -4px 8px rgba(255, 255, 255, 1);
@@ -79,7 +79,7 @@
 }
 
 .home-btn i {
-    font-size: 1.5rem;
+    font-size: var(--text-24);
     color: var(--accent-primary);
 }
 
@@ -92,11 +92,11 @@
     border: none;
     border-radius: var(--radius-md);
     font-family: inherit;
-    font-size: 0.875rem;
+    font-size: var(--text-14);
     font-weight: 600;
     color: var(--text-primary);
     text-decoration: none;
-    cursor: pointer;
+    cursor: url('assets/pointer.cur'), pointer;
     box-shadow:
         3px 3px 6px rgba(0, 0, 0, 0.12),
         -3px -3px 6px rgba(255, 255, 255, 1);
@@ -127,11 +127,11 @@
 }
 
 .back-btn i {
-    font-size: 1.25rem;
+    font-size: var(--text-20);
 }
 
 .page-title {
-    font-size: 3rem;
+    font-size: var(--text-48);
     font-weight: 800;
     color: var(--text-primary);
     margin-bottom: var(--spacing-sm);
@@ -139,7 +139,7 @@
 }
 
 .page-subtitle {
-    font-size: 1.25rem;
+    font-size: var(--text-20);
     font-weight: 500;
     color: var(--text-secondary);
 }
@@ -169,7 +169,7 @@
     transition:
         transform var(--transition-base),
         box-shadow var(--transition-base);
-    cursor: pointer;
+    cursor: url('assets/pointer.cur'), pointer;
 }
 
 [data-theme="dark"] .project-card {
@@ -237,7 +237,7 @@
     padding: var(--spacing-sm) var(--spacing-lg);
     background: #ffffff;
     border-radius: var(--radius-full);
-    font-size: 0.875rem;
+    font-size: var(--text-14);
     font-weight: 700;
     color: var(--accent-primary);
     transform: translateY(10px);
@@ -267,7 +267,7 @@
 .tag {
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
-    font-size: 0.75rem;
+    font-size: var(--text-12);
     font-weight: 700;
     letter-spacing: 0.03em;
     text-transform: uppercase;
@@ -294,7 +294,7 @@
 }
 
 .project-name {
-    font-size: 1.25rem;
+    font-size: var(--text-20);
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: var(--spacing-sm);
@@ -302,7 +302,7 @@
 }
 
 .project-description {
-    font-size: 0.9rem;
+    font-size: var(--text-14);
     font-weight: 500;
     color: var(--text-secondary);
     line-height: 1.5;
@@ -352,14 +352,14 @@
 }
 
 .about-hero-title {
-    font-size: 2.5rem;
+    font-size: var(--text-40);
     font-weight: 800;
     color: var(--text-primary);
     margin-bottom: var(--spacing-sm);
 }
 
 .about-hero-role {
-    font-size: 1.25rem;
+    font-size: var(--text-20);
     font-weight: 600;
     color: var(--accent-blue);
     margin-bottom: var(--spacing-md);
@@ -369,12 +369,12 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    font-size: 1rem;
+    font-size: var(--text-16);
     color: var(--text-secondary);
 }
 
 .about-hero-location i {
-    font-size: 1.25rem;
+    font-size: var(--text-20);
 }
 
 .about-section {
@@ -395,7 +395,7 @@
 }
 
 .about-section-title {
-    font-size: 1.25rem;
+    font-size: var(--text-20);
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: var(--spacing-md);
@@ -409,7 +409,7 @@
 }
 
 .about-bio-text {
-    font-size: 1.1rem;
+    font-size: var(--text-18);
     line-height: 1.8;
     color: var(--text-secondary);
 }
@@ -454,12 +454,12 @@
 }
 
 .skill-item i {
-    font-size: 2rem;
+    font-size: var(--text-32);
     color: var(--accent-blue);
 }
 
 .skill-item span {
-    font-size: 0.875rem;
+    font-size: var(--text-14);
     font-weight: 600;
     color: var(--text-primary);
     text-align: center;
@@ -478,7 +478,7 @@
     padding: var(--spacing-sm) var(--spacing-lg);
     background: linear-gradient(145deg, #ffffff, #e8e8e8);
     border-radius: var(--radius-full);
-    font-size: 0.9rem;
+    font-size: var(--text-14);
     font-weight: 600;
     color: var(--text-primary);
     text-decoration: none;
@@ -511,7 +511,7 @@
 }
 
 .contact-link i {
-    font-size: 1.25rem;
+    font-size: var(--text-20);
     color: var(--accent-blue);
 }
 
@@ -525,7 +525,7 @@
     }
 
     .page-title {
-        font-size: 2.5rem;
+        font-size: var(--text-40);
     }
 
     .projects-grid {
@@ -543,7 +543,7 @@
     }
 
     .home-btn i {
-        font-size: 1.25rem;
+        font-size: var(--text-20);
     }
 
     .page-container {
@@ -552,11 +552,11 @@
     }
 
     .page-title {
-        font-size: 2rem;
+        font-size: var(--text-32);
     }
 
     .page-subtitle {
-        font-size: 1rem;
+        font-size: var(--text-16);
     }
 
     .projects-grid {
@@ -575,7 +575,7 @@
     }
 
     .about-hero-title {
-        font-size: 2rem;
+        font-size: var(--text-32);
     }
 
     .about-hero-location {
@@ -600,7 +600,7 @@
     }
 
     .home-btn i {
-        font-size: 1.125rem;
+        font-size: var(--text-18);
     }
 
     .page-container {
@@ -613,7 +613,7 @@
     }
 
     .page-title {
-        font-size: 1.75rem;
+        font-size: var(--text-28);
     }
 
     .project-info {
@@ -621,7 +621,7 @@
     }
 
     .project-name {
-        font-size: 1.1rem;
+        font-size: var(--text-18);
     }
 
     .about-section {

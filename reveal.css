@@ -22,14 +22,14 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
-    cursor: url('assets/icons8-3d-pointer.svg') 9 4, auto;
+    cursor: url('assets/cursor.cur'), auto;
 }
 
 /* Hand cursor for interactive elements */
 a, button, [role="button"],
 .nav-link, .mobile-menu-link, .social-link, .hamburger,
 .footer-link {
-    cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+    cursor: url('assets/pointer.cur'), pointer;
 }
 
 /* ============================================
@@ -125,7 +125,7 @@ a, button, [role="button"],
     border-radius: 8px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
-    font-size: 16px;
+    font-size: var(--text-16);
     color: #030b2a;
     text-decoration: none;
     transition: color 0.2s ease, background 0.2s ease;
@@ -208,20 +208,20 @@ a, button, [role="button"],
    ============================================ */
 .cs-label {
     color: #083569;
-    font-size: 16px;
+    font-size: var(--text-16);
     font-weight: 700;
 }
 
 .cs-subtitle {
     color: #083569;
-    font-size: 20px;
+    font-size: var(--text-20);
     font-weight: 700;
     margin-bottom: 0;
 }
 
 .cs-sidebar-label {
     color: #083569;
-    font-size: 16px;
+    font-size: var(--text-16);
     font-weight: 700;
     /* width: 108px; */
     flex-shrink: 0;
@@ -253,7 +253,7 @@ a, button, [role="button"],
 }
 
 .cs-title {
-    font-size: 40px;
+    font-size: var(--text-40);
     font-weight: 400;
     color: #030b2a;
     line-height: 1.5;
@@ -273,7 +273,7 @@ a, button, [role="button"],
 .cs-hero-title {
     flex: 1;
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-    font-size: 128px;
+    font-size: var(--text-128);
     font-weight: 700;
     color: #fff;
     text-align: center;
@@ -294,7 +294,7 @@ a, button, [role="button"],
     grid-template-columns: 1fr 1fr 197px;
     column-gap: 64px;
     row-gap: 40px;
-    font-size: 16px;
+    font-size: var(--text-16);
 }
 
 .cs-meta-overview {
@@ -333,7 +333,7 @@ a, button, [role="button"],
 .cs-content {
     flex: 1;
     min-width: 0;
-    font-size: 16px;
+    font-size: var(--text-16);
 }
 
 .cs-content p {
@@ -385,7 +385,7 @@ a, button, [role="button"],
     flex-direction: column;
     gap: 20px;
     color: #fff;
-    font-size: 16px;
+    font-size: var(--text-16);
     backdrop-filter: blur(8px);
 }
 
@@ -417,12 +417,12 @@ a, button, [role="button"],
     display: flex;
     flex-direction: column;
     gap: 20px;
-    font-size: 16px;
+    font-size: var(--text-16);
 }
 
 .cs-pact-heading {
     color: #083569;
-    font-size: 20px;
+    font-size: var(--text-20);
     font-weight: 500;
 }
 
@@ -482,13 +482,13 @@ a, button, [role="button"],
 
 .cs-testing-card-title {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-    font-size: 20px;
+    font-size: var(--text-20);
     font-weight: 700;
 }
 
 .cs-testing-card-desc {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-    font-size: 16px;
+    font-size: var(--text-16);
     font-weight: 400;
 }
 
@@ -504,11 +504,11 @@ a, button, [role="button"],
 .cs-feature-text {
     width: 304px;
     flex-shrink: 0;
-    font-size: 16px;
+    font-size: var(--text-16);
 }
 
 .cs-feature-title {
-    font-size: 20px;
+    font-size: var(--text-20);
     font-weight: 700;
     color: #083569;
     margin-bottom: 4px;
@@ -524,7 +524,7 @@ a, button, [role="button"],
 }
 
 .cs-feature-video p {
-    font-size: 36px;
+    font-size: var(--text-36);
     font-weight: 400;
 }
 
@@ -554,18 +554,18 @@ a, button, [role="button"],
 }
 
 .cs-impact-icon {
-    font-size: 50px;
+    font-size: var(--text-48);
     color: #083569;
 }
 
 .cs-impact-title {
-    font-size: 24px;
+    font-size: var(--text-24);
     font-weight: 700;
     letter-spacing: -0.46px;
 }
 
 .cs-impact-desc {
-    font-size: 16px;
+    font-size: var(--text-16);
     font-weight: 500;
 }
 
@@ -676,7 +676,7 @@ a, button, [role="button"],
 
     .nav-link {
         padding: 8px 16px;
-        font-size: 13px;
+        font-size: var(--text-13);
     }
 
     .cs-two-col {
@@ -688,7 +688,7 @@ a, button, [role="button"],
     }
 
     .cs-hero-title {
-        font-size: 80px;
+        font-size: var(--text-80);
     }
 
     .cs-bg-overlay {
@@ -712,7 +712,7 @@ a, button, [role="button"],
 
     .nav-link {
         padding: 6px 12px;
-        font-size: 12px;
+        font-size: var(--text-12);
     }
 
     .nav-logo img {
@@ -727,7 +727,7 @@ a, button, [role="button"],
     }
 
     .cs-title {
-        font-size: 28px;
+        font-size: var(--text-28);
     }
 
     .cs-two-col {
@@ -758,7 +758,7 @@ a, button, [role="button"],
     }
 
     .cs-hero-title {
-        font-size: 56px;
+        font-size: var(--text-56);
     }
 
     .cs-hero-logo {
@@ -843,7 +843,7 @@ a, button, [role="button"],
         padding: 8px;
         background: none;
         border: none;
-        cursor: url('assets/icons8-hand-cursor.svg') 12 3, pointer;
+        cursor: url('assets/pointer.cur'), pointer;
         z-index: 110;
     }
 
@@ -894,7 +894,7 @@ a, button, [role="button"],
     .mobile-menu-link {
         font-family: 'IBM Plex Sans', sans-serif;
         font-weight: 600;
-        font-size: 24px;
+        font-size: var(--text-24);
         color: #030b2a;
         text-decoration: none;
         padding: 1rem 3rem;
@@ -952,11 +952,11 @@ a, button, [role="button"],
     }
 
     .cs-title {
-        font-size: 24px;
+        font-size: var(--text-24);
     }
 
     .cs-hero-title {
-        font-size: 40px;
+        font-size: var(--text-40);
     }
 }
 

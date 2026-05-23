@@ -1,0 +1,47 @@
+/* ==========================================================================
+   tokens.css — shared design tokens
+   Single source of truth for the typographic scale.
+
+   All font sizes use rem so they scale with the user's root font-size
+   (browser zoom / accessibility settings). Base: 1rem = 16px.
+
+   Naming: --text-<N> where N is the px equivalent at the 16px base, e.g.
+   --text-12 == 0.75rem == 12px. Use these tokens for every font-size:
+
+       font-size: var(--text-14);
+   ========================================================================== */
+
+:root {
+    /* — small / UI & label sizes — */
+    --text-10:  0.625rem;   /* 10px */
+    --text-11:  0.6875rem;  /* 11px */
+    --text-12:  0.75rem;    /* 12px */
+    --text-13:  0.8125rem;  /* 13px */
+    --text-14:  0.875rem;   /* 14px */
+    --text-15:  0.9375rem;  /* 15px */
+
+    /* — body — */
+    --text-16:  1rem;       /* 16px (base) */
+    --text-18:  1.125rem;   /* 18px */
+    --text-20:  1.25rem;    /* 20px */
+    --text-22:  1.375rem;   /* 22px */
+
+    /* — headings — */
+    --text-24:  1.5rem;     /* 24px */
+    --text-28:  1.75rem;    /* 28px */
+    --text-32:  2rem;       /* 32px */
+    --text-36:  2.25rem;    /* 36px */
+    --text-40:  2.5rem;     /* 40px */
+    --text-44:  2.75rem;    /* 44px */
+    --text-48:  3rem;       /* 48px */
+    --text-52:  3.25rem;    /* 52px */
+
+    /* — display — */
+    --text-56:  3.5rem;     /* 56px */
+    --text-60:  3.75rem;    /* 60px */
+    --text-72:  4.5rem;     /* 72px */
+    --text-80:  5rem;       /* 80px */
+    --text-88:  5.5rem;     /* 88px */
+    --text-96:  6rem;       /* 96px */
+    --text-128: 8rem;       /* 128px */
+}

@@ -61,7 +61,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 12px;
-    font-size: 13px;
+    font-size: var(--text-13);
     font-weight: 500;
     color: #1d1d1f;
     z-index: 100;
@@ -82,7 +82,7 @@
 }
 
 .menubar-left i {
-    font-size: 16px;
+    font-size: var(--text-16);
 }
 
 .menu-item {
@@ -109,7 +109,7 @@
 }
 
 .menubar-right i {
-    font-size: 14px;
+    font-size: var(--text-14);
     opacity: 0.8;
 }
 
@@ -143,7 +143,7 @@
 }
 
 .tagline-main {
-    font-size: 3rem;
+    font-size: var(--text-48);
     font-weight: 800;
     color: #ffffff;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
@@ -152,7 +152,7 @@
 }
 
 .tagline-sub {
-    font-size: 1.25rem;
+    font-size: var(--text-20);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
@@ -209,7 +209,7 @@
 }
 
 .folder-icon > i {
-    font-size: 84px;
+    font-size: var(--text-80);
     color: #66b3ff;
     filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.22));
     transition: transform 0.2s ease;
@@ -235,7 +235,7 @@
 }
 
 .folder-badge i {
-    font-size: 18px;
+    font-size: var(--text-18);
     color: var(--accent-blue);
 }
 
@@ -245,7 +245,7 @@
 
 /* Folder Label */
 .folder-label {
-    font-size: 13px;
+    font-size: var(--text-13);
     font-weight: 600;
     color: #ffffff;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
@@ -327,7 +327,7 @@
 }
 
 .sticky-date {
-    font-size: 10px;
+    font-size: var(--text-10);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -335,7 +335,7 @@
 }
 
 .sticky-content {
-    font-size: 13px;
+    font-size: var(--text-13);
     font-weight: 500;
     color: rgba(0, 0, 0, 0.75);
     line-height: 1.5;
@@ -383,14 +383,14 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 11px;
+    font-size: var(--text-11);
     font-weight: 600;
     opacity: 0.9;
     margin-bottom: 8px;
 }
 
 .weather-location i {
-    font-size: 12px;
+    font-size: var(--text-12);
 }
 
 .weather-main {
@@ -401,12 +401,12 @@
 }
 
 .weather-icon i {
-    font-size: 48px;
+    font-size: var(--text-48);
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .weather-temp {
-    font-size: 42px;
+    font-size: var(--text-40);
     font-weight: 300;
     line-height: 1;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -415,7 +415,7 @@
 .weather-details {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 500;
 }
 
@@ -485,7 +485,7 @@
     justify-content: center;
     gap: 6px;
     margin-top: 8px;
-    font-size: 12px;
+    font-size: var(--text-12);
     font-weight: 600;
     color: #ffffff;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
@@ -493,7 +493,7 @@
 
 .photo-caption i {
     color: #ff6b6b;
-    font-size: 14px;
+    font-size: var(--text-14);
 }
 
 [data-theme="dark"] .photo-frame {
@@ -553,7 +553,7 @@
 }
 
 .dock-item i {
-    font-size: 28px;
+    font-size: var(--text-28);
     color: var(--accent-blue);
 }
 
@@ -589,11 +589,11 @@
     }
 
     .tagline-main {
-        font-size: 2.5rem;
+        font-size: var(--text-40);
     }
 
     .tagline-sub {
-        font-size: 1.1rem;
+        font-size: var(--text-18);
     }
 
     .folder-icon {
@@ -602,7 +602,7 @@
     }
 
     .folder-icon > i {
-        font-size: 72px;
+        font-size: var(--text-72);
     }
 
     .folder-badge {
@@ -612,7 +612,7 @@
     }
 
     .folder-badge i {
-        font-size: 16px;
+        font-size: var(--text-16);
     }
 
     .sticky-note {
@@ -630,11 +630,11 @@
     }
 
     .weather-icon i {
-        font-size: 40px;
+        font-size: var(--text-40);
     }
 
     .weather-temp {
-        font-size: 36px;
+        font-size: var(--text-36);
     }
 
     .photo-widget {
@@ -653,7 +653,7 @@
     }
 
     .dock-item i {
-        font-size: 24px;
+        font-size: var(--text-24);
     }
 }
 
@@ -666,11 +666,11 @@
     }
 
     .tagline-main {
-        font-size: 1.75rem;
+        font-size: var(--text-28);
     }
 
     .tagline-sub {
-        font-size: 0.9rem;
+        font-size: var(--text-14);
     }
 
     .desktop-icons {
@@ -686,7 +686,7 @@
     }
 
     .folder-icon > i {
-        font-size: 60px;
+        font-size: var(--text-60);
     }
 
     .folder-badge {
@@ -696,11 +696,11 @@
     }
 
     .folder-badge i {
-        font-size: 14px;
+        font-size: var(--text-14);
     }
 
     .folder-label {
-        font-size: 11px;
+        font-size: var(--text-11);
     }
 
     .desktop-widgets {
@@ -717,7 +717,7 @@
     }
 
     .sticky-content {
-        font-size: 11px;
+        font-size: var(--text-11);
     }
 
     .spotify-embed-wrapper {
@@ -730,19 +730,19 @@
     }
 
     .weather-location {
-        font-size: 10px;
+        font-size: var(--text-10);
     }
 
     .weather-icon i {
-        font-size: 32px;
+        font-size: var(--text-32);
     }
 
     .weather-temp {
-        font-size: 28px;
+        font-size: var(--text-28);
     }
 
     .weather-details {
-        font-size: 10px;
+        font-size: var(--text-10);
     }
 
     .photo-widget {
@@ -756,7 +756,7 @@
     }
 
     .photo-caption {
-        font-size: 10px;
+        font-size: var(--text-10);
     }
 
     .macos-dock {
@@ -770,11 +770,11 @@
     }
 
     .dock-item i {
-        font-size: 22px;
+        font-size: var(--text-22);
     }
 
     .macos-menubar {
-        font-size: 11px;
+        font-size: var(--text-11);
         height: 24px;
         padding: 0 8px;
     }
@@ -799,11 +799,11 @@
     }
 
     .tagline-main {
-        font-size: 1.5rem;
+        font-size: var(--text-24);
     }
 
     .tagline-sub {
-        font-size: 0.8rem;
+        font-size: var(--text-13);
     }
 
     .desktop-folder {
@@ -816,7 +816,7 @@
     }
 
     .folder-icon > i {
-        font-size: 48px;
+        font-size: var(--text-48);
     }
 
     .folder-badge {
@@ -826,11 +826,11 @@
     }
 
     .folder-badge i {
-        font-size: 11px;
+        font-size: var(--text-11);
     }
 
     .folder-label {
-        font-size: 10px;
+        font-size: var(--text-10);
     }
 
     .sticky-note {
@@ -840,11 +840,11 @@
     }
 
     .sticky-date {
-        font-size: 8px;
+        font-size: var(--text-10);
     }
 
     .sticky-content {
-        font-size: 10px;
+        font-size: var(--text-10);
     }
 
     .spotify-embed-wrapper {
@@ -858,20 +858,20 @@
     }
 
     .weather-location {
-        font-size: 9px;
+        font-size: var(--text-10);
         margin-bottom: 6px;
     }
 
     .weather-icon i {
-        font-size: 28px;
+        font-size: var(--text-28);
     }
 
     .weather-temp {
-        font-size: 24px;
+        font-size: var(--text-24);
     }
 
     .weather-details {
-        font-size: 9px;
+        font-size: var(--text-10);
     }
 
     .photo-widget {
@@ -885,7 +885,7 @@
     }
 
     .dock-item i {
-        font-size: 18px;
+        font-size: var(--text-18);
     }
 
     .dock-divider {
@@ -986,7 +986,7 @@
 }
 
 .window-title {
-    font-size: 14px;
+    font-size: var(--text-14);
     font-weight: 600;
     color: var(--text-primary);
     flex: 1;
@@ -1069,7 +1069,7 @@
 .tag {
     padding: 4px 10px;
     border-radius: var(--radius-full);
-    font-size: 11px;
+    font-size: var(--text-11);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -1090,14 +1090,14 @@
 }
 
 .project-name {
-    font-size: 1.1rem;
+    font-size: var(--text-18);
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 6px;
 }
 
 .project-description {
-    font-size: 0.9rem;
+    font-size: var(--text-14);
     color: var(--text-secondary);
     line-height: 1.5;
 }
@@ -1135,14 +1135,14 @@
 }
 
 .macos-window .about-name {
-    font-size: 2rem;
+    font-size: var(--text-32);
     font-weight: 800;
     color: var(--text-primary);
     margin-bottom: 4px;
 }
 
 .macos-window .about-role {
-    font-size: 1.1rem;
+    font-size: var(--text-18);
     font-weight: 500;
     color: var(--text-secondary);
 }
@@ -1153,7 +1153,7 @@
 }
 
 .macos-window .about-bio p {
-    font-size: 1rem;
+    font-size: var(--text-16);
     line-height: 1.7;
     color: var(--text-secondary);
     margin-bottom: 12px;
@@ -1171,7 +1171,7 @@
     padding: 8px 16px;
     background: var(--nav-btn-bg);
     border-radius: var(--radius-full);
-    font-size: 0.875rem;
+    font-size: var(--text-14);
     font-weight: 600;
     color: var(--text-primary);
     box-shadow: var(--shadow-sm);
@@ -1237,7 +1237,7 @@ button.dock-item {
     }
 
     .window-title {
-        font-size: 13px;
+        font-size: var(--text-13);
         margin-right: 50px;
     }
 
@@ -1255,11 +1255,11 @@ button.dock-item {
     }
 
     .project-name {
-        font-size: 1rem;
+        font-size: var(--text-16);
     }
 
     .project-description {
-        font-size: 0.85rem;
+        font-size: var(--text-14);
     }
 
     .macos-window .about-header {
@@ -1277,15 +1277,15 @@ button.dock-item {
     }
 
     .macos-window .about-name {
-        font-size: 1.5rem;
+        font-size: var(--text-24);
     }
 
     .macos-window .about-role {
-        font-size: 1rem;
+        font-size: var(--text-16);
     }
 
     .macos-window .about-bio p {
-        font-size: 0.9rem;
+        font-size: var(--text-14);
     }
 }
 
@@ -1310,7 +1310,7 @@ button.dock-item {
     }
 
     .window-title {
-        font-size: 12px;
+        font-size: var(--text-12);
         margin-right: 40px;
     }
 
@@ -1390,7 +1390,7 @@ button.dock-item {
 }
 
 .toolbar-btn i {
-    font-size: 16px;
+    font-size: var(--text-16);
 }
 
 .view-options {
@@ -1431,7 +1431,7 @@ button.dock-item {
     padding: 10px 16px;
     background: var(--surface-primary);
     border-bottom: 1px solid var(--border-color);
-    font-size: 13px;
+    font-size: var(--text-13);
 }
 
 [data-theme="dark"] .finder-path {
@@ -1469,11 +1469,11 @@ button.dock-item {
 }
 
 .path-item i {
-    font-size: 14px;
+    font-size: var(--text-14);
 }
 
 .path-separator {
-    font-size: 10px;
+    font-size: var(--text-10);
     color: var(--text-tertiary);
 }
 
@@ -1494,7 +1494,7 @@ button.dock-item {
 
     .finder-path {
         padding: 8px 12px;
-        font-size: 12px;
+        font-size: var(--text-12);
     }
 
     .path-item {
@@ -1509,7 +1509,7 @@ button.dock-item {
 @media (max-width: 480px) {
     .finder-path {
         padding: 6px 10px;
-        font-size: 11px;
+        font-size: var(--text-11);
         gap: 2px;
     }
 
@@ -1518,7 +1518,7 @@ button.dock-item {
     }
 
     .path-separator {
-        font-size: 8px;
+        font-size: var(--text-10);
     }
 
     .finder-content .projects-grid {
