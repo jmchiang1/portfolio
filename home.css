@@ -1082,35 +1082,116 @@ a.project-card {
 }
 
 /* ===========================================================================
-   Nocta card — animated thumbnail. The cycling-dates clip is a portrait phone
-   recording, so it's centered as a rounded "device" on a branded navy backdrop
-   (mirroring the case-study hero) rather than cropped to fill the landscape
-   card. Uses .nocta-video (not .project-video) so it autoplays/loops
-   continuously instead of only on hover.
+   Nocta card — animated thumbnail. The nightly-summary walkthrough plays inside
+   a CSS iPhone mockup, centered on the branded navy backdrop (mirroring the
+   case-study hero), with soft peach bokeh scattered behind and in front for
+   depth. Sizing uses container units so the device + bokeh scale with the card.
    =========================================================================== */
 .project-card--nocta {
+    container-type: size;
     background:
         radial-gradient(58% 62% at 50% 0%, rgba(243, 168, 124, 0.20), transparent 62%),
         linear-gradient(180deg, #0e1424 0%, #060912 100%);
 }
 
-.nocta-video {
+/* iPhone mockup */
+.nocta-device {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 88%;
-    width: auto;
-    max-width: 92%;
-    border-radius: 20px;
-    box-shadow: 0 36px 70px -24px rgba(0, 0, 0, 0.7),
-                0 0 0 1px rgba(255, 255, 255, 0.06);
+    height: 90cqh;
+    aspect-ratio: 430 / 932;
+    padding: 0.9cqh;
+    border-radius: 6.2cqh;
+    background: linear-gradient(150deg, #3a3f4b 0%, #15181f 42%, #0a0c11 100%);
+    box-shadow: 0 44px 72px -22px rgba(0, 0, 0, 0.82),
+                0 0 0 1px rgba(255, 255, 255, 0.07),
+                inset 0 0 0 0.2cqh rgba(255, 255, 255, 0.05);
     transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     z-index: 1;
 }
 
-.project-card--nocta.pos-center:hover .nocta-video {
+.nocta-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 5.3cqh;
+    overflow: hidden;
+    background: #060912;
+}
+
+.nocta-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Dynamic Island, sitting in the app's status-bar gap */
+.nocta-island {
+    position: absolute;
+    top: 2.4cqh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26%;
+    height: 2.7cqh;
+    background: #04060b;
+    border-radius: 1.6cqh;
+    z-index: 2;
+}
+
+.project-card--nocta.pos-center:hover .nocta-device {
     transform: translate(-50%, -50%) scale(1.04);
+}
+
+/* Peach bokeh — soft out-of-focus orbs for depth */
+.nocta-bokeh {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.nocta-bokeh--back { z-index: 0; }
+.nocta-bokeh--front { z-index: 1; }
+
+.nocta-bokeh span {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%,
+        rgba(243, 168, 124, 0.55) 0%,
+        rgba(243, 168, 124, 0.30) 40%,
+        rgba(243, 168, 124, 0) 72%);
+    /* gentle, out-of-sync pulse; --o sets each orb's peak brightness */
+    opacity: var(--o, 1);
+    animation: nocta-bokeh-pulse var(--dur, 5s) ease-in-out var(--dly, 0s) infinite;
+}
+
+@keyframes nocta-bokeh-pulse {
+    0%, 100% { transform: scale(0.9);  opacity: calc(var(--o, 1) * 0.5); }
+    50%      { transform: scale(1.12); opacity: var(--o, 1); }
+}
+
+/* back layer — crisper, mid-size, scattered around the device */
+.nocta-bokeh--back span:nth-child(1) { width: 9cqh;  height: 9cqh;  top: 12%; left: 9%;  --dur: 4.6s; --dly: -0.4s; }
+.nocta-bokeh--back span:nth-child(2) { width: 14cqh; height: 14cqh; top: 60%; left: 15%; --o: 0.85; --dur: 6.2s; --dly: -2.1s; }
+.nocta-bokeh--back span:nth-child(3) { width: 11cqh; height: 11cqh; top: 26%; left: 80%; --dur: 5.4s; --dly: -3.3s; }
+.nocta-bokeh--back span:nth-child(4) { width: 7cqh;  height: 7cqh;  top: 72%; left: 84%; --o: 0.9;  --dur: 4.1s; --dly: -1.2s; }
+.nocta-bokeh--back span:nth-child(5) { width: 5cqh;  height: 5cqh;  top: 86%; left: 42%; --dur: 3.6s; --dly: -2.7s; }
+.nocta-bokeh--back span:nth-child(6) { width: 6cqh;  height: 6cqh;  top: 8%;  left: 62%; --o: 0.8;  --dur: 5.8s; --dly: -0.9s; }
+.nocta-bokeh--back span:nth-child(7) { width: 12cqh; height: 12cqh; top: 44%; left: 91%; --o: 0.7;  --dur: 6.8s; --dly: -4.0s; }
+
+/* front layer — larger, blurred, lower opacity, kept to the corners */
+.nocta-bokeh--front span {
+    filter: blur(0.9cqh);
+}
+.nocta-bokeh--front span:nth-child(1) { width: 20cqh; height: 20cqh; top: -5%; left: 3%;  --o: 0.5;  --dur: 7.4s; --dly: -1.6s; }
+.nocta-bokeh--front span:nth-child(2) { width: 26cqh; height: 26cqh; top: 80%; left: 86%; --o: 0.42; --dur: 8.2s; --dly: -3.8s; }
+.nocta-bokeh--front span:nth-child(3) { width: 15cqh; height: 15cqh; top: 76%; left: 4%;  --o: 0.45; --dur: 6.6s; --dly: -2.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .nocta-bokeh span { animation: none; }
 }
 
 /* Tags pill (top-right) — hidden by default, revealed on hover */

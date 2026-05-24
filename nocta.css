@@ -1463,6 +1463,54 @@ body::before {
 }
 
 /* ===========================================================================
+   DESKTOP DASHBOARD SHOWCASE  (browser-framed walkthrough + still gallery)
+   =========================================================================== */
+.nx-browser {
+    margin: 0;
+    border: 1px solid var(--nx-line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--nx-panel);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+}
+
+.nx-browser-screen img,
+.nx-browser-screen video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.nx-browser-hero {
+    width: 100%;
+    margin: 0 0 60px;
+}
+
+.nx-desk-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.nx-desk-gallery figcaption {
+    padding: 16px 18px 18px;
+    font-size: var(--text-14);
+    line-height: 1.5;
+    color: var(--nx-fg-2);
+    border-top: 1px solid var(--nx-line);
+}
+
+.nx-desk-cap-k {
+    display: block;
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--nx-peach);
+    margin-bottom: 6px;
+}
+
+/* ===========================================================================
    IMPACT
    =========================================================================== */
 .nx-impact {
@@ -1719,6 +1767,11 @@ body::before {
 
     .nx-final-row .nx-device {
         width: 42%;
+    }
+
+    .nx-desk-gallery {
+        grid-template-columns: 1fr;
+        gap: 22px;
     }
 
     .nx-gear {

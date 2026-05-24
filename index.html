@@ -137,10 +137,21 @@
             <div class="carousel-viewport">
                 <!-- Project 1 — Nocta -->
                 <a href="nocta.html" class="project-card project-card--nocta" style="--card-bg: url('assets/nocta/v2/flow-week-poster.jpg')">
-                    <video class="nocta-video" autoplay loop muted playsinline preload="auto"
-                           poster="assets/nocta/v2/flow-week-poster.jpg" aria-label="Nocta app cycling through nightly summaries">
-                        <source src="assets/nocta/v2/flow-week.mp4" type="video/mp4">
-                    </video>
+                    <div class="nocta-bokeh nocta-bokeh--back" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="nocta-device">
+                        <div class="nocta-screen">
+                            <video class="nocta-video" autoplay loop muted playsinline preload="auto"
+                                   poster="assets/nocta/v2/flow-week-poster.jpg" aria-label="Nocta app cycling through nightly summaries">
+                                <source src="assets/nocta/v2/flow-week.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="nocta-island" aria-hidden="true"></span>
+                    </div>
+                    <div class="nocta-bokeh nocta-bokeh--front" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
                     <div class="project-tags">
                         <span class="tag-affiliation">Personal</span>
                         <span class="tag-divider"></span>
