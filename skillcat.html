@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- NDA gate: this case study is only reachable after the homepage password
+         modal sets the unlock flag for this session. Direct visits bounce home.
+         NOTE: client-side only — not real protection (see home.js). -->
+    <script>
+        (function () {
+            try {
+                if (sessionStorage.getItem('sk_unlocked') !== '1') {
+                    location.replace('index.html');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <title>SkillCat — Case Study | Jonathan Chiang</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="cs-nav.css">
+    <link rel="stylesheet" href="skillcat.css">
+</head>
+<body>
+    <!-- Cover — visible from first paint to prevent flash between pages -->
+    <div class="page-transition-cover"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
+        </a>
+        <div class="nav-links cs-nav-links">
+            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#learner" class="nav-link">Learner</a>
+            <a href="#dashboard" class="nav-link">Dashboard</a>
+            <a href="#craft" class="nav-link">Craft</a>
+            <a href="#specs" class="nav-link">Specs</a>
+            <a href="#reflection" class="nav-link">Reflection</a>
+        </div>
+        <button class="hamburger" aria-label="Menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-menu-link active">UX/UI</a>
+        <a href="motion.html" class="mobile-menu-link">Motion</a>
+        <a href="about.html" class="mobile-menu-link">About</a>
+    </div>
+
+    <!-- Back to top button -->
+    <a href="#top" class="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+
+    <main id="top" class="case-study">
+        <!-- ============================================================
+             Hero
+             ============================================================ -->
+        <section class="cs-header">
+            <div class="cs-hero-inner">
+                <div class="cs-header-text">
+                    <p class="cs-label">SkillCat · Online Learning</p>
+                    <h1 class="cs-title">An all-in-one <em>HVAC learning platform</em>.</h1>
+                    <p class="cs-hero-sub">One platform, two surfaces; the consumer mobile app learners use to earn a credential, and the B2B web dashboard employers use to train their teams.</p>
+                </div>
+
+                <div class="cs-hero-media">
+                    <div class="cs-hero-desktop">
+                        <video src="assets/skillcat/B2B/assign.mp4" poster="assets/skillcat/B2B/poster-assign.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                    <div class="cs-hero-phone">
+                        <video src="assets/skillcat/Complete-Task.mp4" poster="assets/skillcat/poster-complete-task.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- At a glance -->
+            <div class="sk-meta">
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">Company</p>
+                    <p class="sk-meta-value">SkillCat</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">My role</p>
+                    <p class="sk-meta-value">Design Engineer</p>
+                </div>
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">Surfaces</p>
+                    <p class="sk-meta-value">iOS / Android mobile · Desktop Web</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">Timeline</p>
+                    <p class="sk-meta-value"><span>September 2025 - Present</span></p>
+                </div>
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">What I owned</p>
+                    <p class="sk-meta-value">Desktop Screens · Design System · B2B Dashboard · Written specs &amp; handoff</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">Team Size</p>
+                    <p class="sk-meta-value"><span >Head of Design, Product Owner, &amp; Design Engineer</span></p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             Overview
+             ============================================================ -->
+        <section id="overview" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Overview</p>
+                <div class="cs-content">
+                    <p>SkillCat is a skilled-trades training platform that helps people learn trades like HVAC and earn the certifications that get them hired, and it helps employers train their teams. I worked across SkillCat's product as a product designer, contributing to both the consumer-facing app and the B2B side that companies use to manage training.</p>
+                    <p>My work spanned three connected surfaces: the mobile and desktop redesign of the learner experience, a new admin dashboard for employers, and the smaller craft details that make the product feel rewarding to use. Alongside the design, I wrote the specs that translated these decisions into something engineering could build.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             Section 1 — The Learner Redesign
+             ============================================================ -->
+        <section id="learner" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">01 · The Learner Redesign</p>
+                <h2 class="sk-section-title">The journey from <em>adding a course</em> to earning an EPA 608 certification.</h2>
+                <p class="sk-section-kicker">Mobile · the core learning journey, from enrollment to a hireable credential.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The problem</p>
+                <div class="cs-content">
+                    <p>Enrolling is the easy part, the value a learner actually came for is the credential at the end. The hard part is carrying someone all the way from picking a course, through lessons and hands-on tasks, into a proctored final exam, and out the other side holding a real, hireable EPA 608 certification, all without losing them at any step.</p>
+                </div>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">What I designed</p>
+                <div class="cs-content">
+                    <p>I assisted in designing the end-to-end learning journey as one continuous path: add a course to your plan, work through its lessons and tasks, then sit the EPA 608 Universal final exam — proctoring and identity checks included — and receive the certification. Every step is a complete set of states (in progress, complete, pass, fail, review), so progress always feels earned and the next action is never in doubt. Below, the journey broken into its five key flows.</p>
+                </div>
+            </div>
+
+            <!-- The journey, in five flows -->
+            <p class="sk-block-label">The journey, in five flows</p>
+            <div class="sk-feature-switch">
+                <!-- Left: flow selector buttons -->
+                <div class="sk-feature-list" role="tablist" aria-label="Learner journey flows">
+                    <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="flow-panel-1" id="flow-tab-1" data-flow="1">
+                        <!-- <span class="sk-feature-btn-num">Flow 01</span> -->
+                        <span class="sk-feature-btn-title">Add a course to your path</span>
+                        <span class="sk-feature-btn-desc">Browse the catalog, open a course like EPA 608 Universal, and tap Add Course — a short &ldquo;All Set&rdquo; moment confirms it's on your path.</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="flow-panel-2" id="flow-tab-2" data-flow="2">
+                        <!-- <span class="sk-feature-btn-num">Flow 02</span> -->
+                        <span class="sk-feature-btn-title">Start a lesson &amp; complete a task</span>
+                        <span class="sk-feature-btn-desc">Open a node on the path and work through a lesson — video or PDF — landing on a &ldquo;Task Complete&rdquo; win.</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="flow-panel-3" id="flow-tab-3" data-flow="3">
+                        <!-- <span class="sk-feature-btn-num">Flow 03</span> -->
+                        <span class="sk-feature-btn-title">Start the EPA 608 final exam</span>
+                        <span class="sk-feature-btn-desc">Kick off the proctored final: rules and tips, camera access, and identity verification (scan ID, face scan).</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="flow-panel-4" id="flow-tab-4" data-flow="4">
+                        <!-- <span class="sk-feature-btn-num">Flow 04</span> -->
+                        <span class="sk-feature-btn-title">Take &amp; pass the exam</span>
+                        <span class="sk-feature-btn-desc">Work through the questions — multiple choice and tool-matching — under live proctoring, then reach the pass result.</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="flow-panel-5" id="flow-tab-5" data-flow="5">
+                        <!-- <span class="sk-feature-btn-num">Flow 05</span> -->
+                        <span class="sk-feature-btn-title">Get your EPA certification card</span>
+                        <span class="sk-feature-btn-desc">Order the official EPA 608 card and set a delivery email so the credential lands in hand.</span>
+                    </button>
+                </div>
+
+                <!-- Right: phone that swaps to match the selected flow -->
+                <div class="sk-feature-stage">
+                    <div class="sk-feature-panel is-active" id="flow-panel-1" role="tabpanel" aria-labelledby="flow-tab-1" data-flow="1">
+                        <figure class="sk-video sk-video--mobile">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-add-course.jpg">
+                                    <source src="assets/skillcat/Add-Course.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Flow 01 — Add a course</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/Add-Course.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="sk-feature-panel" id="flow-panel-2" role="tabpanel" aria-labelledby="flow-tab-2" data-flow="2">
+                        <figure class="sk-video sk-video--mobile">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-complete-task.jpg">
+                                    <source src="assets/skillcat/Complete-Task.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Flow 02 — Complete a task</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/Complete-Task.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="sk-feature-panel" id="flow-panel-3" role="tabpanel" aria-labelledby="flow-tab-3" data-flow="3">
+                        <figure class="sk-video sk-video--mobile">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-start-exam.jpg">
+                                    <source src="assets/skillcat/Start-Exam.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Flow 03 — Start the EPA 608 exam</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/Start-Exam.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="sk-feature-panel" id="flow-panel-4" role="tabpanel" aria-labelledby="flow-tab-4" data-flow="4">
+                        <figure class="sk-video sk-video--mobile">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-complete-exam.jpg">
+                                    <source src="assets/skillcat/Complete-Exam.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Flow 04 — Take &amp; pass the exam</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/Complete-Exam.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="sk-feature-panel" id="flow-panel-5" role="tabpanel" aria-labelledby="flow-tab-5" data-flow="5">
+                        <figure class="sk-video sk-video--mobile">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-get-epacard.jpg">
+                                    <source src="assets/skillcat/Get-EPACard.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Flow 05 — Get your EPA card</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/Get-EPACard.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             Section 2 — The Admin Dashboard
+             ============================================================ -->
+        <section id="dashboard" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">02 · The Admin Dashboard</p>
+                <h2 class="sk-section-title">Admins weren't making a flat list of selections — they were building <em>a structured training plan</em>.</h2>
+                <!-- <p class="sk-section-kicker">Desktop · B2B training management</p> -->
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The problem</p>
+                <div class="cs-content">
+                    <p>SkillCat isn't only used by individuals, employers use it to train their teams. Admins needed to assign training courses to multiple employees and track completion. The existing flow treated everything as flat, one-off selections, which broke down against how training actually works in the real world.</p>
+                </div>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">What I designed</p>
+                <div class="cs-content">
+                    <p>I assited in designing the employer side as a full dashboard for running training across a team. Assigning courses was reframed from a flat list of selections into building a structured, sequenced plan: select employees, stack courses in the right order, and set a due date on each. Around that sit the tools admins work in day to day; a role-aware Inbox that unifies every pending approval and action, on-the-job review for grading hands-on task submissions, and a people-management view that scales well past a handful of employees. Below, the dashboard broken into its core features.</p>
+                </div>
+            </div>
+
+            <!-- The dashboard, feature by feature -->
+            <p class="sk-block-label">The dashboard, feature by feature</p>
+            <div class="sk-feature-switch sk-feature-switch--wide">
+                <!-- Top: feature tabs -->
+                <div class="sk-feature-list" role="tablist" aria-label="Admin dashboard features">
+                    <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="admin-panel-2" id="admin-tab-2" data-flow="2">
+                        <span class="sk-feature-btn-title">The Inbox</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-4" id="admin-tab-4" data-flow="4">
+                        <span class="sk-feature-btn-title">People management</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-3" id="admin-tab-3" data-flow="3">
+                        <span class="sk-feature-btn-title">On-the-job photo review</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-1" id="admin-tab-1" data-flow="1">
+                        <span class="sk-feature-btn-title">Assign courses to a user</span>
+                    </button>
+                </div>
+
+                <!-- Below: full-width capture that swaps to match the selected tab -->
+                <div class="sk-feature-stage">
+
+                    <!-- INBOX PEOPLE -->
+                    <div class="sk-feature-panel is-active" id="admin-panel-2" role="tabpanel" aria-labelledby="admin-tab-2" data-flow="2">
+                        <p class="sk-feature-desc">A role-aware, unified task system — every approval, assignment, and action an admin owns, surfaced in one place.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-inbox.jpg">
+                                    <source src="assets/skillcat/B2B/inbox.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">The Inbox — unified task system</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/B2B/inbox.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <!-- ASSIGN -->
+                    <div class="sk-feature-panel" id="admin-panel-1" role="tabpanel" aria-labelledby="admin-tab-1" data-flow="1">
+                        <p class="sk-feature-desc">Pick employees, stack courses into a sequenced plan with a due date on each row, then review and assign — the three-step plan builder in action.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-assign.jpg">
+                                    <source src="assets/skillcat/B2B/assign.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Assign courses to a user</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/B2B/assign.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <!-- OTJ FEATURE -->
+                    <div class="sk-feature-panel" id="admin-panel-3" role="tabpanel" aria-labelledby="admin-tab-3" data-flow="3">
+                        <p class="sk-feature-desc">Review and grade the photos learners submit for hands-on (OTJ) tasks — approve, score, or send it back for another attempt.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-otj.jpg">
+                                    <source src="assets/skillcat/B2B/OTJ.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">On-the-job photo review &amp; grading</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/B2B/OTJ.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <!-- PEOPLE FEATURE -->
+                    <div class="sk-feature-panel" id="admin-panel-4" role="tabpanel" aria-labelledby="admin-tab-4" data-flow="4">
+                        <p class="sk-feature-desc">Search, filter, and manage the whole team — roles, progress, and bulk actions that scale well past a handful of employees.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-people.jpg">
+                                    <source src="assets/skillcat/B2B/people.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">People management system</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/B2B/people.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             Section 4 — Specs & Handoff
+             ============================================================ -->
+        <!-- <section id="specs" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">04 · Specs &amp; Handoff</p>
+                <h2 class="sk-section-title">Design decisions only matter <em>if they ship</em>.</h2>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">In short</p>
+                <div class="cs-content">
+                    <p>Alongside the visual work, I wrote the specs that translated these flows and states into something engineering could build directly — documenting interaction states, edge cases, sequencing logic, and the rules behind features like per-course due dates and plan ordering.</p>
+                    <p>Writing specs also sharpened the design: forcing every state and rule into words surfaced gaps the happy-path mockups hid, which is exactly why the flows above were defined as complete sets of states rather than single screens.</p>
+                </div>
+            </div>
+
+            <ul class="sk-demonstrates">
+                <li>Comfort owning the full arc from concept through buildable handoff, not just static screens.</li>
+                <li>Clear written communication with engineering — the kind that prevents back-and-forth and shipped-but-wrong features.</li>
+                <li>Systems thinking: specifying the rules and states behind a flow, not only its visuals.</li>
+            </ul>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide sk-embed">
+                <div class="sk-video-frame">
+                    <img class="sk-embed-img" src="assets/skillcat/spec-sample.png" alt="Representative spec excerpt"
+                         onerror="this.style.display='none'">
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▦ Embed</span>
+                        <span class="sk-video-ph-name">5A — Spec sample (optional)</span>
+                        <span class="sk-video-ph-path">assets/skillcat/spec-sample.png</span>
+                    </div>
+                </div>
+                <figcaption class="sk-video-cap">A representative spec excerpt — states, rules, and edge cases for one of the flows above.</figcaption>
+            </figure>
+        </section> -->
+
+        <!-- ============================================================
+             Section 5 — Reflection
+             ============================================================ -->
+        <section id="reflection" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">05 · Reflection</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Reflection</p>
+                <div class="cs-content">
+                    <p>Working across SkillCat's product — consumer onboarding, B2B tooling, and specs — meant constantly shifting altitude: from the feel of a single animation frame, up to a multi-step enterprise workflow, and back down into the written rules that make it real. The throughline was the same everywhere: understand the actual job the person is trying to do, then shape the product around that rather than around the existing layout.</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">What this case study shows about how I work</p>
+            <ul class="sk-decisions">
+                <li>I reframe problems at the model level before touching layout — the admin dashboard is the clearest example.</li>
+                <li>I design complete state systems, which is what makes my work clean to build and quick to ship.</li>
+                <li>I care about craft and emotion, down to easing curves, because in a learning product those details drive whether people come back.</li>
+                <li>I can carry work from first concept all the way to engineering handoff.</li>
+            </ul>
+
+            <div class="sk-signature">
+                <p><strong>Jonathan Chiang</strong> · Product Designer · <a href="about.html">About</a> · <a href="/">More work</a></p>
+            </div>
+        </section>
+    </main>
+
+    <script src="transitions.js"></script>
+    <script src="skillcat.js"></script>
+    <script src="cs-nav.js"></script>
+</body>
+</html>

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="home.css">
     <link rel="prefetch" href="assets/nocta/hero-mockup.jpg">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
 
     <!-- Body starts hidden so GSAP's enter transition can fade it in cleanly.
          CSS animation is a safety fallback in case GSAP fails to load — the
@@ -135,6 +136,7 @@
         <!-- Section: Projects (cards rearrange between 3D carousel and grid via toggle) -->
         <section class="section section-carousel" id="projects">
             <div class="carousel-viewport">
+
                 <!-- Project 1 — Nocta -->
                 <a href="nocta.html" class="project-card project-card--nocta" style="--card-bg: url('assets/nocta/v2/flow-week-poster.jpg')">
                     <div class="nocta-bokeh nocta-bokeh--back" aria-hidden="true">
@@ -171,7 +173,43 @@
                     </div>
                 </a>
 
-                <!-- Project 2 — ScriptChain Health -->
+                <!-- Project 2 — SkillCat -->
+                <a href="skillcat.html" class="project-card project-card--skillcat" style="--card-bg: url('assets/skillcat/B2B/poster-assign.jpg')">
+                    <img class="sk-logo" src="assets/skillcat/skillcat-logo.png" alt="SkillCat logo">
+                    <div class="sk-thumb">
+                        <div class="sk-thumb-desktop">
+                            <video class="sk-thumb-video" autoplay loop muted playsinline preload="auto"
+                                   poster="assets/skillcat/B2B/poster-assign.jpg" aria-label="SkillCat admin dashboard — building a training plan">
+                                <source src="assets/skillcat/B2B/assign.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="sk-thumb-phone">
+                            <video class="sk-thumb-video" autoplay loop muted playsinline preload="auto"
+                                   poster="assets/skillcat/poster-add-course.jpg" aria-label="SkillCat learner app — adding a course">
+                                <source src="assets/skillcat/Add-Course.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag-affiliation">In-House</span>
+                        <span class="tag-divider"></span>
+                        <span>Brand Redesign</span>
+                        <span class="tag-divider"></span>
+                        <span>Trade Skills</span>
+                        <span class="tag-divider"></span>
+                        <span>2026</span>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-blur"></div>
+                        <div class="project-overlay-gradient"></div>
+                        <div class="project-info">
+                            <h2 class="project-title">SkillCat <i class="ph-bold ph-lock-simple project-lock-icon" aria-label="Under NDA — password protected"></i></h2>
+                            <p class="project-description">Reimagining how trade professionals learn, certify, and grow on mobile — currently in active development</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 3 — ScriptChain Health -->
                 <a href="scriptchain.html" class="project-card" style="--card-bg: url('assets/scriptchain-mockup.png')">
                     <picture>
                         <source media="(max-width: 640px)" srcset="assets/scriptchain-large.png">
@@ -197,7 +235,7 @@
                     </div>
                 </a>
 
-                <!-- Project 3 — Robinhood Mirror -->
+                <!-- Project 4 — Robinhood Mirror -->
                 <a href="robinhood.html" class="project-card" style="--card-bg: url('assets/robinhood-mockup.png')">
                     <picture>
                         <source media="(max-width: 640px)" srcset="assets/robinhood-large.png">
@@ -221,31 +259,6 @@
                         </div>
                     </div>
                 </a>
-
-                <!-- Project 4 — SkillCat -->
-                <div class="project-card" style="--card-bg: url('assets/skillcat-mockup.png')">
-                    <picture>
-                        <source media="(max-width: 640px)" srcset="assets/skillcat-large.png">
-                        <img src="assets/skillcat-mockup.png" alt="SkillCat — mobile learning path app" class="project-image">
-                    </picture>
-                    <div class="project-tags">
-                        <span class="tag-affiliation">In-House</span>
-                        <span class="tag-divider"></span>
-                        <span>Brand Redesign</span>
-                        <span class="tag-divider"></span>
-                        <span>Trade Skills</span>
-                        <span class="tag-divider"></span>
-                        <span>2026</span>
-                    </div>
-                    <div class="project-overlay">
-                        <div class="project-blur"></div>
-                        <div class="project-overlay-gradient"></div>
-                        <div class="project-info">
-                            <h2 class="project-title">SkillCat <i class="ph ph-lock-simple title-lock" aria-label="Confidential — work in progress"></i></h2>
-                            <p class="project-description">Reimagining how trade professionals learn, certify, and grow on mobile — currently in active development</p>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Project 5 — Reveal -->
                 <a href="reveal.html" class="project-card" style="--card-bg: url('assets/reveal-mockup.png')">
@@ -323,6 +336,23 @@
 
             </div>
         </section>
+    </div>
+
+    <!-- SkillCat case study is under NDA — password gate (see home.js) -->
+    <div class="sk-lock-modal" id="skLockModal" role="dialog" aria-modal="true" aria-labelledby="skLockTitle" aria-hidden="true">
+        <div class="sk-lock-backdrop" data-sk-lock-close></div>
+        <div class="sk-lock-panel">
+            <button class="sk-lock-close" type="button" aria-label="Close" data-sk-lock-close>
+                <i class="ph ph-x"></i>
+            </button>
+            <h2 class="sk-lock-title" id="skLockTitle">This case study is under NDA</h2>
+            <p class="sk-lock-sub">Enter the password to view the SkillCat case study.</p>
+            <form class="sk-lock-form" id="skLockForm">
+                <input class="sk-lock-input" id="skLockInput" type="password" placeholder="Password" autocomplete="off" spellcheck="false" aria-label="Password">
+                <button class="sk-lock-submit" type="submit">Unlock</button>
+            </form>
+            <p class="sk-lock-error" id="skLockError" aria-live="polite"></p>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

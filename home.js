@@ -526,10 +526,75 @@
             e.preventDefault();
 
             var href = card.getAttribute('href');
+
+            // SkillCat case study is under NDA — gate it behind the password
+            // modal unless it was already unlocked earlier this session.
+            if (card.classList.contains('project-card--skillcat') && !skLockUnlocked()) {
+                skLockOpen(href);
+                return;
+            }
+
             if (window.PageTransitions) PageTransitions.exit(href);
             else window.location.href = href;
         });
     });
+
+    // ---- SkillCat NDA password gate ----
+    var SK_LOCK_PW = 'skillcat2026';
+    var skModal  = document.getElementById('skLockModal');
+    var skForm   = document.getElementById('skLockForm');
+    var skInput  = document.getElementById('skLockInput');
+    var skError  = document.getElementById('skLockError');
+    var skPanel  = skModal && skModal.querySelector('.sk-lock-panel');
+    var skPendingHref = null;
+
+    function skLockUnlocked() {
+        try { return sessionStorage.getItem('sk_unlocked') === '1'; } catch (e) { return false; }
+    }
+    function skGo(href) {
+        if (window.PageTransitions) PageTransitions.exit(href);
+        else window.location.href = href;
+    }
+    function skLockOpen(href) {
+        skPendingHref = href;
+        if (!skModal) { skGo(href); return; }   // fail open if markup is missing
+        skError.textContent = '';
+        skInput.value = '';
+        skModal.classList.add('is-open');
+        skModal.setAttribute('aria-hidden', 'false');
+        setTimeout(function () { skInput.focus(); }, 60);
+    }
+    function skLockClose() {
+        if (!skModal) return;
+        skModal.classList.remove('is-open');
+        skModal.setAttribute('aria-hidden', 'true');
+    }
+    if (skModal) {
+        skModal.querySelectorAll('[data-sk-lock-close]').forEach(function (el) {
+            el.addEventListener('click', skLockClose);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && skModal.classList.contains('is-open')) skLockClose();
+        });
+        skForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (skInput.value.trim() === SK_LOCK_PW) {
+                try { sessionStorage.setItem('sk_unlocked', '1'); } catch (err) {}
+                var href = skPendingHref || 'skillcat.html';
+                skLockClose();
+                skGo(href);
+            } else {
+                skError.textContent = 'Incorrect password. Please try again.';
+                skInput.value = '';
+                skInput.focus();
+                if (skPanel) {
+                    skPanel.classList.remove('sk-lock-shake');
+                    void skPanel.offsetWidth;   // restart the shake animation
+                    skPanel.classList.add('sk-lock-shake');
+                }
+            }
+        });
+    }
 
     // Desktop nav-link + logo exits — handled by the shared GSAP transitions module
     if (window.PageTransitions) PageTransitions.bindNavLinks();

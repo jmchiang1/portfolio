@@ -16,7 +16,7 @@ html::-webkit-scrollbar {
 }
 
 body {
-    font-family: 'Parkinsans', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     background: #fff;
     color: #030b2a;
     -webkit-font-smoothing: antialiased;
@@ -262,6 +262,7 @@ a, button, [role="button"],
 }
 
 .cs-title {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: var(--text-40);
     font-weight: 400;
     color: #030b2a;
@@ -1086,7 +1087,7 @@ a, button, [role="button"],
    without needing per-page edits to the original declarations. */
 .nav-link,
 .mobile-menu-link {
-    font-family: 'Space Grotesk', sans-serifns-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     letter-spacing: 0.02em;
 }
 

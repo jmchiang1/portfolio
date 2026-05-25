@@ -342,33 +342,40 @@
                     ? (result.updated ? 'Updated. Stepping inside…' : 'Saved. Stepping inside…')
                     : 'Saved locally. Stepping inside…';
                 setStatus(msg, 'success');
-                exitToPortfolio();
+                exitToPortfolio(true);
             })
             .catch(function (err) {
                 // Don't block entry on a backend hiccup — keep the local card.
                 console.warn('[welcome] supabase save failed', err);
                 setStatus('Saved locally. Stepping inside…', 'success');
-                exitToPortfolio();
+                exitToPortfolio(true);
             });
     }
 
-    function exitToPortfolio() {
-        // Snapshot the EXACT visitor card — full markup (the card's colour vars
-        // are already inline) and on-screen rect — so the home page can show the
-        // same card at the same position, then fly it into the Visitors tab.
-        // Captured before the exit transform runs.
+    function exitToPortfolio(captureCard) {
+        // Only hand the card off to the home page when the visitor actually built
+        // & saved one. On skip we clear any snapshot so the home page plays no
+        // keyboard fly-in at all.
         try {
-            var cardNode = document.getElementById('buildCard');
-            var kbNode   = document.getElementById('cardKeyboard');
-            if (cardNode) {
-                var r   = cardNode.getBoundingClientRect();
-                var kcs = kbNode ? getComputedStyle(kbNode) : null;
-                sessionStorage.setItem('jc_kb_handoff', JSON.stringify({
-                    html:  cardNode.outerHTML,
-                    left:  r.left, top: r.top, width: r.width, height: r.height,
-                    u:     kcs ? (kcs.getPropertyValue('--u') || '').trim() : '',
-                    gap:   kcs ? (kcs.getPropertyValue('--kb-gap') || '').trim() : ''
-                }));
+            if (captureCard) {
+                // Snapshot the EXACT visitor card — full markup (the card's colour
+                // vars are already inline) and on-screen rect — so the home page can
+                // show the same card at the same position, then fly it into the
+                // Visitors tab. Captured before the exit transform runs.
+                var cardNode = document.getElementById('buildCard');
+                var kbNode   = document.getElementById('cardKeyboard');
+                if (cardNode) {
+                    var r   = cardNode.getBoundingClientRect();
+                    var kcs = kbNode ? getComputedStyle(kbNode) : null;
+                    sessionStorage.setItem('jc_kb_handoff', JSON.stringify({
+                        html:  cardNode.outerHTML,
+                        left:  r.left, top: r.top, width: r.width, height: r.height,
+                        u:     kcs ? (kcs.getPropertyValue('--u') || '').trim() : '',
+                        gap:   kcs ? (kcs.getPropertyValue('--kb-gap') || '').trim() : ''
+                    }));
+                }
+            } else {
+                sessionStorage.removeItem('jc_kb_handoff');
             }
         } catch (e) {}
 
@@ -458,7 +465,7 @@
         skipLink.addEventListener('click', function (e) {
             e.preventDefault();
             try { localStorage.setItem('jc_welcomed', '1'); } catch (err) {}
-            exitToPortfolio();
+            exitToPortfolio(false);
         });
     }
 

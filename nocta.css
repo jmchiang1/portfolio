@@ -1,7 +1,7 @@
 /* ===========================================================================
    NOCTA — Case Study  ·  "A night, narrated."
    Dark editorial theme that borrows the product's own world: deep-navy
-   nightfall, sunrise-peach accent, Instrument Serif display, Space Mono labels.
+   nightfall, sunrise-peach accent, Space Grotesk display, Space Mono labels.
    Shell (nav / page-transition / mobile menu / scroll-reveal) is preserved
    from the portfolio system and recoloured for dark; everything in the
    content layer uses the nx- namespace.
@@ -59,7 +59,7 @@ body {
     --nx-coral: #e58270;
     --nx-good: #7dc99a;
 
-    --nx-serif: 'Fraunces', Georgia, serif;
+    --nx-serif: 'Space Grotesk', sans-serif;
     --nx-sans: 'IBM Plex Sans', sans-serif;
     --nx-mono: 'Space Mono', monospace;
 
@@ -253,9 +253,9 @@ body::before {
     justify-content: center;
     padding: 9px 20px;
     border-radius: 8px;
-    font-family: var(--nx-mono);
+    font-family: var(--nx-sans);
     font-weight: 400;
-    font-size: var(--text-13);
+    font-size: var(--text-16);
     letter-spacing: 0.04em;
     color: var(--nx-fg-2);
     text-decoration: none;
@@ -1115,8 +1115,8 @@ body::before {
 
 .nx-solution-text strong {
     color: var(--nx-peach);
-    /* Instrument Serif only ships weight 400 — bumping to 500 would force an
-       ugly synthetic bold. The peach colour already carries the emphasis. */
+    /* Emphasis comes from the peach colour, not weight — keep it 400 so it
+       stays in step with the light heading style. */
     font-weight: 400;
 }
 
@@ -1187,7 +1187,7 @@ body::before {
 }
 
 .nx-type-spec-sans {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-36);
     font-weight: 600;
     line-height: 1.05;
