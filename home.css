@@ -1246,6 +1246,27 @@ a.project-card {
     transform: translate(-50%, -50%) scale(1.03);
 }
 
+/* ===========================================================================
+   ScriptChain card — same treatment as SkillCat (a contained desktop frame on
+   a branded backdrop), in ScriptChain's teal. Reuses the .sk-thumb frame; with
+   no phone, the desktop is truly centered and a touch larger.
+   =========================================================================== */
+.project-card--scriptchain {
+    container-type: size;
+    background:
+        radial-gradient(60% 60% at 50% 2%, rgba(126, 205, 201, 0.42), transparent 58%),
+        linear-gradient(180deg, #48a9a6 0%, #235a58 30%, #0c2422 74%, #061413 100%);
+}
+
+.project-card--scriptchain .sk-thumb {
+    top: 50%;
+    width: 72cqw;
+}
+
+.project-card--scriptchain.pos-center:hover .sk-thumb {
+    transform: translate(-50%, -50%) scale(1.03);
+}
+
 /* back layer — crisper, mid-size, scattered around the device */
 .nocta-bokeh--back span:nth-child(1) { width: 9cqh;  height: 9cqh;  top: 12%; left: 9%;  --dur: 4.6s; --dly: -0.4s; }
 .nocta-bokeh--back span:nth-child(2) { width: 14cqh; height: 14cqh; top: 60%; left: 15%; --o: 0.85; --dur: 6.2s; --dly: -2.1s; }
