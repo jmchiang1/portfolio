@@ -1198,16 +1198,16 @@ a, button, [role="button"],
     }
 
     .hero-logo-chip {
-        width: 48px;
-        height: 48px;
-        margin-top: -24px;
-        margin-left: -24px;
+        width: 56px;
+        height: 56px;
+        margin-top: -28px;
+        margin-left: -28px;
         border-radius: 11px;
     }
 
     .hero-logo-chip img {
-        width: 22px;
-        height: 22px;
+        width: 30px;
+        height: 30px;
     }
 
     .motion-hero-blurb {
@@ -1231,16 +1231,16 @@ a, button, [role="button"],
     }
 
     .hero-logo-chip {
-        width: 40px;
-        height: 40px;
-        margin-top: -20px;
-        margin-left: -20px;
+        width: 48px;
+        height: 48px;
+        margin-top: -24px;
+        margin-left: -24px;
         border-radius: 4px;
     }
 
     .hero-logo-chip img {
-        width: 18px;
-        height: 18px;
+        width: 26px;
+        height: 26px;
     }
 
     .nav-logo {
@@ -1455,6 +1455,45 @@ a, button, [role="button"],
         background: rgba(17, 128, 249, 0.08);
     }
 
+    /* Mobile menu socials — horizontal row of icon buttons below the nav links */
+    .mobile-menu-socials {
+        display: flex;
+        gap: 16px;
+        margin-top: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .mobile-menu.menu-open .mobile-menu-socials {
+        animation: nav-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0.3s;
+    }
+
+    .mobile-menu.menu-closing .mobile-menu-socials {
+        opacity: 1;
+        transform: translateY(0);
+        animation: menu-exit 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .mobile-menu-social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        border-radius: 8px;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        color: #fff;
+        font-size: var(--text-24);
+        text-decoration: none;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mobile-menu-social:hover {
+        border-color: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.08);
+    }
+
     /* Nav exit — fade hamburger */
     .nav-exiting .hamburger {
         opacity: 0 !important;
@@ -1469,4 +1508,33 @@ a, button, [role="button"],
 .mobile-menu-link {
     font-family: 'Space Grotesk', sans-serifns-serif;
     letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   Mobile navbar — standardized to match the index.html navbar exactly.
+   Appended last so it wins over this file's earlier navbar rules (logo size
+   was inconsistent and the bar height / logo position varied per page).
+   ========================================================================== */
+@media (max-width: 640px) {
+    .navbar {
+        padding: 0;
+        height: 64px;
+    }
+
+    .nav-logo {
+        left: 16px;
+        top: 22px;
+        transform: none;
+    }
+
+    .nav-logo img,
+    .nav-logo .nav-logo-svg {
+        height: 36px;
+    }
+
+    .hamburger {
+        right: 16px;
+        top: 22px;
+        transform: none;
+    }
 }

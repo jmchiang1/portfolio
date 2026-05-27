@@ -868,6 +868,9 @@ input { cursor: url('assets/cursor.cur'), text; }
         grid-template-rows: auto;
         max-width: 480px;
         margin: 0 auto;
+        /* Stacked now — add vertical breathing room between the card and the
+           controls below it. */
+        row-gap: 28px;
     }
     .welcome-stage > .build-card,
     .welcome-stage > .welcome-panel,
@@ -879,8 +882,19 @@ input { cursor: url('assets/cursor.cur'), text; }
 
 @media (max-width: 720px) {
     .welcome-layout {
-        padding: 56px 22px 24px;
+        /* Top-align so the in-flow Skip button + hero sit near the top. */
+        padding: 20px 22px 24px;
         gap: 20px;
+        justify-content: flex-start;
+    }
+
+    /* Skip button drops into the flow, centered above the hero, on mobile
+       (it's a fixed top-right pill on larger screens). */
+    .welcome-skip {
+        position: static;
+        display: flex;
+        width: fit-content;
+        margin: 16px auto 0;
     }
 
     .build-card {

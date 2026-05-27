@@ -1281,6 +1281,12 @@ a.project-card {
     transform: translate(-50%, -50%) scale(1.03);
 }
 
+/* The ScriptChain phone clip is mobile-only — on desktop the card shows just
+   the contained website capture (see the 640px breakpoint). */
+.project-card--scriptchain .sk-thumb-phone {
+    display: none;
+}
+
 /* back layer — crisper, mid-size, scattered around the device */
 .nocta-bokeh--back span:nth-child(1) { width: 9cqh;  height: 9cqh;  top: 12%; left: 9%;  --dur: 4.6s; --dly: -0.4s; }
 .nocta-bokeh--back span:nth-child(2) { width: 14cqh; height: 14cqh; top: 60%; left: 15%; --o: 0.85; --dur: 6.2s; --dly: -2.1s; }
@@ -1825,13 +1831,24 @@ body.grid-mode .project-card:hover .project-overlay {
 }
 
 @media (max-width: 640px) {
+    /* Short navbar, but keep the logo/hamburger pinned near the top (their
+       original offset) instead of vertically centered — centering in a short
+       box is what pulled them up and clipped the logo. */
     .navbar {
-        padding: 3rem;
+        padding: 0;
+        height: 64px;
         z-index: 110;
+    }
+
+    .navbar::before,
+    .navbar::after {
+        bottom: -8px;
     }
 
     .nav-logo {
         left: 16px;
+        top: 22px;
+        transform: none;
     }
 
     .social-links {
@@ -1851,8 +1868,9 @@ body.grid-mode .project-card:hover .project-overlay {
         font-size: var(--text-12);
     }
 
-    .nav-logo img {
-        height: 3rem;
+    .nav-logo img,
+    .nav-logo .nav-logo-svg {
+        height: 36px;
     }
 
     .hero-heading {
@@ -1991,7 +2009,7 @@ body.grid-mode .project-card:hover .project-overlay {
 
     /* Counter — smaller on mobile, sits above the social-links */
     .carousel-counter {
-        bottom: 84px;
+        /* bottom: 84px; */
     }
 
     .counter-current {
@@ -2019,6 +2037,40 @@ body.grid-mode .project-card:hover .project-overlay {
         max-width: 90vw;
         height: 70vh;
         aspect-ratio: auto;
+    }
+
+    /* SkillCat & ScriptChain: on mobile, drop the wide desktop capture and
+       showcase just the app clip as a centered phone — same treatment as the
+       Nocta card (a device on the branded backdrop, not a tiny wide frame). */
+    .sk-logo {
+        display: none;
+    }
+
+    .project-card--skillcat .sk-thumb-desktop,
+    .project-card--scriptchain .sk-thumb-desktop {
+        display: none;
+    }
+
+    .project-card--scriptchain .sk-thumb-phone {
+        display: block;
+    }
+
+    .project-card--skillcat .sk-thumb,
+    .project-card--scriptchain .sk-thumb {
+        top: 50%;
+        width: auto;
+    }
+
+    .project-card--skillcat .sk-thumb-phone,
+    .project-card--scriptchain .sk-thumb-phone {
+        position: static;
+        left: auto;
+        bottom: auto;
+        width: auto;
+        height: 84cqh;
+        aspect-ratio: 9 / 19.5;
+        transform: none;
+        border-radius: 5cqh;
     }
 
     .project-card.pos-left {
@@ -2134,8 +2186,8 @@ body.grid-mode .project-card:hover .project-overlay {
         gap: 5px;
         position: absolute;
         right: 16px;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 22px;
+        transform: none;
         width: 40px;
         height: 40px;
         padding: 8px;

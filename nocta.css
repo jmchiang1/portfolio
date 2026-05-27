@@ -1755,6 +1755,7 @@ body::before {
 
     .nx-device {
         width: 240px;
+        border-radius: 1.5rem;
     }
 
     .nx-hero-phones .nx-device {
@@ -1787,7 +1788,7 @@ body::before {
     }
 
     .nx-compliance-formula {
-        gap: 18px;
+        gap: 2rem;
     }
 
     /* Palette swatches: 5 fixed flex chips don't fit a phone width and were
@@ -1865,10 +1866,10 @@ body::before {
     }
 
     .mobile-menu-link {
-        font-family: var(--nx-mono);
-        font-weight: 400;
-        font-size: var(--text-22);
-        color: var(--nx-fg);
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: 600;
+        font-size: var(--text-24);
+        color: #fff;
         text-decoration: none;
         padding: 1rem 3rem;
         border-radius: 8px;
@@ -1897,6 +1898,53 @@ body::before {
 
     .mobile-menu.menu-open .mobile-menu-link:nth-child(3) {
         animation-delay: 0.2s;
+    }
+
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(4) {
+        animation-delay: 0.25s;
+    }
+
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(5) {
+        animation-delay: 0.3s;
+    }
+
+    /* Mobile menu socials — horizontal row of icon buttons below the nav links */
+    .mobile-menu-socials {
+        display: flex;
+        gap: 16px;
+        margin-top: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .mobile-menu.menu-open .mobile-menu-socials {
+        animation: mobile-nav-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0.3s;
+    }
+
+    .mobile-menu.menu-closing .mobile-menu-socials {
+        opacity: 1;
+        transform: translateY(0);
+        animation: menu-exit 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .mobile-menu-social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        border-radius: 8px;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        color: #fff;
+        font-size: var(--text-24);
+        text-decoration: none;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mobile-menu-social:hover {
+        border-color: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.08);
     }
 
     .mobile-menu.menu-closing {
@@ -1936,7 +1984,8 @@ body::before {
     }
 
     .mobile-menu-link.active {
-        color: var(--nx-peach);
+        color: #1180f9;
+        background: rgba(17, 128, 249, 0.08);
     }
 
     .nav-exiting .hamburger {
@@ -2005,4 +2054,35 @@ body::before {
 .nav-exiting .nav-link:nth-child(6) {
     transition-duration: 0.28s !important;
     transition-delay: 0s !important;
+}
+/* ==========================================================================
+   Mobile navbar — standardized to match the index.html navbar exactly.
+   Appended last so it wins over this file's earlier navbar rules (logo size
+   was inconsistent and the bar height / logo position varied per page).
+   ========================================================================== */
+@media (max-width: 640px) {
+    .navbar {
+        padding: 0;
+        height: 64px;
+    }
+
+    .nav-logo {
+        left: 16px;
+        top: 22px;
+        transform: none;
+    }
+
+    .nav-logo img,
+    .nav-logo .nav-logo-svg {
+        height: 36px;
+        /* Match index: nocta's base forces width:auto (hugs the glyph at 48px);
+           the other pages let the SVG's 64px box stand, centering the glyph. */
+        width: 64px;
+    }
+
+    .hamburger {
+        right: 16px;
+        top: 22px;
+        transform: none;
+    }
 }

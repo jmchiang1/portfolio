@@ -51,8 +51,15 @@
         badge.textContent = '+1';
         document.body.appendChild(badge);
 
-        // Sit just to the right of the "Visitors" text, vertically centered with it.
-        badge.style.left = (tr.right + 6) + 'px';
+        // Sit beside the target, vertically centered. On desktop that's just
+        // right of the "Visitors" text; on mobile the target is the hamburger
+        // (pinned to the right edge), so the badge goes to its LEFT to stay
+        // comfortably on-screen.
+        if (tab.classList && tab.classList.contains('hamburger')) {
+            badge.style.left = (tr.left - badge.offsetWidth - 6) + 'px';
+        } else {
+            badge.style.left = (tr.right + 6) + 'px';
+        }
         badge.style.top  = (tr.top + tr.height / 2 - badge.offsetHeight / 2) + 'px';
 
         // Pop in fast, hold fully visible ~1s, then fade out (≈0.1→0.77 of 1500ms).

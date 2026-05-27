@@ -990,8 +990,9 @@ a, button, [role="button"],
         display: none !important;
     }
 
-    .nav-logo img {
-        height: 3rem;
+    .nav-logo img,
+    .nav-logo .nav-logo-svg {
+        height: 36px;
     }
 
     .hamburger {
@@ -1079,6 +1080,47 @@ a, button, [role="button"],
     .mobile-menu.menu-open .mobile-menu-link:nth-child(1) { animation-delay: 0.1s; }
     .mobile-menu.menu-open .mobile-menu-link:nth-child(2) { animation-delay: 0.15s; }
     .mobile-menu.menu-open .mobile-menu-link:nth-child(3) { animation-delay: 0.2s; }
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(4) { animation-delay: 0.25s; }
+    .mobile-menu.menu-open .mobile-menu-link:nth-child(5) { animation-delay: 0.3s; }
+
+    /* Mobile menu socials — horizontal row of icon buttons below the nav links */
+    .mobile-menu-socials {
+        display: flex;
+        gap: 16px;
+        margin-top: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .mobile-menu.menu-open .mobile-menu-socials {
+        animation: mobile-nav-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0.3s;
+    }
+
+    .mobile-menu.menu-closing .mobile-menu-socials {
+        opacity: 1;
+        transform: translateY(0);
+        animation: menu-exit 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .mobile-menu-social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        border-radius: 8px;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        color: #fff;
+        font-size: var(--text-24);
+        text-decoration: none;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mobile-menu-social:hover {
+        border-color: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.08);
+    }
 
     .mobile-menu.menu-closing {
         opacity: 0;
@@ -1228,3 +1270,32 @@ body {
 .cs-nav-indicator { background: rgba(102, 210, 255, 0.14); }
 .cs-nav-links .nav-link:hover,
 .cs-nav-links .nav-link.active { color: #66d2ff; }
+
+/* ==========================================================================
+   Mobile navbar — standardized to match the index.html navbar exactly.
+   Appended last so it wins over this file's earlier navbar rules (logo size
+   was inconsistent and the bar height / logo position varied per page).
+   ========================================================================== */
+@media (max-width: 640px) {
+    .navbar {
+        padding: 0;
+        height: 64px;
+    }
+
+    .nav-logo {
+        left: 16px;
+        top: 22px;
+        transform: none;
+    }
+
+    .nav-logo img,
+    .nav-logo .nav-logo-svg {
+        height: 36px;
+    }
+
+    .hamburger {
+        right: 16px;
+        top: 22px;
+        transform: none;
+    }
+}

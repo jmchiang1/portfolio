@@ -1188,3 +1188,32 @@ a, button, [role="button"],
     font-family: 'Space Grotesk', sans-serifns-serif;
     letter-spacing: 0.02em;
 }
+
+/* ==========================================================================
+   Mobile navbar — standardized to match the index.html navbar exactly.
+   Appended last so it wins over this file's earlier navbar rules (logo size
+   was inconsistent and the bar height / logo position varied per page).
+   ========================================================================== */
+@media (max-width: 640px) {
+    .navbar {
+        padding: 0;
+        height: 64px;
+    }
+
+    .nav-logo {
+        left: 16px;
+        top: 22px;
+        transform: none;
+    }
+
+    .nav-logo img,
+    .nav-logo .nav-logo-svg {
+        height: 36px;
+    }
+
+    .hamburger {
+        right: 16px;
+        top: 22px;
+        transform: none;
+    }
+}
