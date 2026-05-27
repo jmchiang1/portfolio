@@ -352,7 +352,12 @@
             <h2 class="sk-lock-title" id="skLockTitle">This case study is under NDA</h2>
             <p class="sk-lock-sub">Enter the password to view the SkillCat case study.</p>
             <form class="sk-lock-form" id="skLockForm">
-                <input class="sk-lock-input" id="skLockInput" type="password" placeholder="Password" autocomplete="off" spellcheck="false" aria-label="Password">
+                <div class="sk-lock-field">
+                    <input class="sk-lock-input" id="skLockInput" type="password" placeholder="Password" autocomplete="off" spellcheck="false" aria-label="Password">
+                    <button class="sk-lock-eye" id="skLockEye" type="button" aria-label="Show password" aria-pressed="false">
+                        <i class="ph ph-eye"></i>
+                    </button>
+                </div>
                 <button class="sk-lock-submit" type="submit">Unlock</button>
             </form>
             <p class="sk-lock-error" id="skLockError" aria-live="polite"></p>

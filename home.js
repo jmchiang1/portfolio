@@ -546,7 +546,18 @@
     var skInput  = document.getElementById('skLockInput');
     var skError  = document.getElementById('skLockError');
     var skPanel  = skModal && skModal.querySelector('.sk-lock-panel');
+    var skEye    = document.getElementById('skLockEye');
     var skPendingHref = null;
+
+    function skSetReveal(show) {
+        if (!skInput) return;
+        skInput.type = show ? 'text' : 'password';
+        if (!skEye) return;
+        skEye.setAttribute('aria-pressed', String(show));
+        skEye.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        var icon = skEye.querySelector('i');
+        if (icon) icon.className = show ? 'ph ph-eye-slash' : 'ph ph-eye';
+    }
 
     function skLockUnlocked() {
         try { return sessionStorage.getItem('sk_unlocked') === '1'; } catch (e) { return false; }
@@ -560,6 +571,7 @@
         if (!skModal) { skGo(href); return; }   // fail open if markup is missing
         skError.textContent = '';
         skInput.value = '';
+        skSetReveal(false);
         skModal.classList.add('is-open');
         skModal.setAttribute('aria-hidden', 'false');
         setTimeout(function () { skInput.focus(); }, 60);
@@ -576,6 +588,12 @@
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && skModal.classList.contains('is-open')) skLockClose();
         });
+        if (skEye) {
+            skEye.addEventListener('click', function () {
+                skSetReveal(skInput.type === 'password');
+                skInput.focus();
+            });
+        }
         skForm.addEventListener('submit', function (e) {
             e.preventDefault();
             if (skInput.value.trim() === SK_LOCK_PW) {

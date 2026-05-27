@@ -15,17 +15,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="cs-nav.css">
     <link rel="stylesheet" href="scriptchain.css">
 </head>
 <body>
+    <!-- Cover — visible from first paint to prevent flash between pages -->
     <div class="page-transition-cover"></div>
 
+    <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="nav-logo">
             <img src="assets/logo.png" alt="JC" />
         </a>
         <div class="nav-links cs-nav-links">
-            <a href="#demo" class="nav-link">Demo</a>
+            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#patient" class="nav-link">Patient</a>
+            <a href="#clinician" class="nav-link">Clinician</a>
+            <a href="#marketing" class="nav-link">Marketing</a>
+            <a href="#reflection" class="nav-link">Reflection</a>
         </div>
         <button class="hamburger" aria-label="Menu">
             <span class="hamburger-line"></span>
@@ -41,44 +48,307 @@
         <a href="about.html" class="mobile-menu-link">About</a>
     </div>
 
+    <!-- Back to top button -->
+    <a href="#top" class="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+
     <main id="top" class="case-study">
+        <!-- ============================================================
+             Hero
+             ============================================================ -->
         <section class="cs-header">
-            <div class="cs-header-text">
-                <p class="cs-label">ScriptChain Health | Agentic AI-powered Food and Exercise as Medicine Platform</p>
-                <h1 class="cs-title">Reducing metabolic syndrome through custom diet and exercise plans, all without Nutritionists or Exercise Physiologists</h1>
+            <div class="cs-hero-inner">
+                <div class="cs-header-text">
+                    <p class="cs-label">ScriptChain Health · Agentic Care Platform</p>
+                    <h1 class="cs-title">An agentic <em>food &amp; exercise as medicine</em> platform.</h1>
+                    <p class="cs-hero-sub">One platform, four surfaces — a marketing site, a patient mobile app, a standalone clinician console, and a version embedded inside Epic — unified by a single agentic loop that turns EHR signals into doctor-signed prevention plans.</p>
+                </div>
+
+                <div class="cs-hero-media">
+                    <div class="cs-hero-desktop">
+                        <video src="assets/scriptchain/scriptchain-website.mp4" poster="assets/scriptchain/poster-scriptchain-website.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                    <div class="cs-hero-phone">
+                        <video src="assets/scriptchain/mobile-walkthrough.mp4" poster="assets/scriptchain/poster-mobile.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                </div>
             </div>
 
-            <div class="cs-meta-grid">
-                <div class="cs-meta-overview">
-                    <p class="cs-label">Job Overview</p>
-                    <p>Worked as the lead product designer at ScriptChain Health to design all screens associated with both the patient and provider dashboards for their upcoming SAAS application.</p>
+            <!-- At a glance -->
+            <div class="sk-meta">
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">Company</p>
+                    <p class="sk-meta-value">ScriptChain Health</p>
                 </div>
-                <div class="cs-meta-role">
-                    <p class="cs-label">Role</p>
-                    <p>UX Research</p>
-                    <p>UX/UI Design</p>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">My role</p>
+                    <p class="sk-meta-value">Lead Product Designer</p>
                 </div>
-                <div class="cs-meta-problem">
-                    <p class="cs-label">Problem</p>
-                    <p>The cost of a Nutritionist and Exercise Physiologists for patients with metabolic syndrome can be massive and primary care physicians don't have the capacity to monitor patient's diet and exercise.</p>
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">Surfaces</p>
+                    <p class="sk-meta-value">iOS / Android mobile · Desktop Web</p>
                 </div>
-                <div class="cs-meta-solution">
-                    <p class="cs-label">Solution</p>
-                    <p>Utilize trained agentic AI agents with EHR data to flag patients for metabolic syndrome and develop specialized diet and exercise plans for them to follow.</p>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">Timeline</p>
+                    <p class="sk-meta-value">May 2025 · September 2025</p>
                 </div>
-                <div class="cs-meta-timeline">
-                    <p class="cs-label">Timeline</p>
-                    <p>2025</p>
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">What I owned</p>
+                    <p class="sk-meta-value">All four surfaces · the design system · the agentic plan-review flow</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">Sector</p>
+                    <p class="sk-meta-value">Preventive care · Agentic AI</p>
                 </div>
             </div>
-            
-            <video id="demo" src="assets/scriptchain/Scriptchain Health Demo.mp4" class="project-video" autoplay muted playsinline></video>
+        </section>
 
-                <p class="launching">Launching in mid 2026</p>
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             Overview
+             ============================================================ -->
+        <section id="overview" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Overview</p>
+                <div class="cs-content">
+                    <p>ScriptChain brings dietitian- and exercise-physiologist-grade guidance to patients with metabolic syndrome — without the specialists. An AI agent reads a clinic's existing EHR data, flags patients trending toward metabolic syndrome, and drafts personalized, evidence-based food and movement plans for a physician to review and sign.</p>
+                    <p>I designed every surface of the platform and the single loop that connects them: the agent reads labs, meds, and vitals → flags rising risk → drafts a plan → the clinician signs → the patient lives it as a daily routine → adherence flows back to sharpen the next recommendation. Below, the product surface by surface.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             01 — The Patient App
+             ============================================================ -->
+        <section id="patient" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">01 · The Patient App</p>
+                <h2 class="sk-section-title">A daily plan patients <em>actually follow</em>.</h2>
+                <p class="sk-section-kicker">Mobile · the plan a patient lives with between visits — iOS &amp; Android.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The problem</p>
+                <div class="cs-content">
+                    <p>A plan only works if the patient sticks to it, and prevention usually dies between visits: a generic PDF, no feedback, and nothing that fits into a real day.</p>
+                </div>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">What I designed</p>
+                <div class="cs-content">
+                    <p>The plan becomes doable. Today's meals and movement, adherence rings, an always-on AI coach, and vitals synced from connected devices — plus one-tap Instacart ordering of the week's ingredients. Every action logs back into the loop, so the next recommendation gets sharper the more the patient uses it.</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">The daily loop, in three moments</p>
+            <div class="sk-feature-switch">
+                <div class="sk-feature-list" role="tablist" aria-label="Patient app moments">
+                    <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="pa-panel-1" id="pa-tab-1" data-flow="1">
+                        <span class="sk-feature-btn-title">Ask Sage, our smart coach</span>
+                        <span class="sk-feature-btn-desc">An always-on coach that answers in context — what to eat, when to move — and nudges the next best action.</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="pa-panel-2" id="pa-tab-2" data-flow="2">
+                        <span class="sk-feature-btn-title">Complete a meal</span>
+                        <span class="sk-feature-btn-desc">Check off today's meals to close the adherence ring; one tap reorders the week's ingredients through Instacart.</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="pa-panel-3" id="pa-tab-3" data-flow="3">
+                        <span class="sk-feature-btn-title">Log vitals</span>
+                        <span class="sk-feature-btn-desc">Vitals sync from connected devices — or log them by hand — so the next recommendation reflects real numbers.</span>
+                    </button>
+                </div>
+
+                <div class="sk-feature-stage">
+                    <div class="sk-feature-panel is-active" id="pa-panel-1" role="tabpanel" aria-labelledby="pa-tab-1" data-flow="1">
+                        <figure class="sk-video sk-video--mobile">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/scriptchain/poster-ai-coach.jpg">
+                                    <source src="assets/scriptchain/ai-coach.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">AI coach</span>
+                                    <span class="sk-video-ph-path">assets/scriptchain/ai-coach.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="sk-feature-panel" id="pa-panel-2" role="tabpanel" aria-labelledby="pa-tab-2" data-flow="2">
+                        <figure class="sk-video sk-video--mobile">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/scriptchain/poster-complete-meal.jpg">
+                                    <source src="assets/scriptchain/complete-meal.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Complete a meal</span>
+                                    <span class="sk-video-ph-path">assets/scriptchain/complete-meal.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="sk-feature-panel" id="pa-panel-3" role="tabpanel" aria-labelledby="pa-tab-3" data-flow="3">
+                        <figure class="sk-video sk-video--mobile">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/scriptchain/poster-log-vitals.jpg">
+                                    <source src="assets/scriptchain/log-vitals.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Log vitals</span>
+                                    <span class="sk-video-ph-path">assets/scriptchain/log-vitals.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             02 — The Clinician Console
+             ============================================================ -->
+        <section id="clinician" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">02 · The Clinician Console</p>
+                <h2 class="sk-section-title">Cohort triage and <em>one-click sign-off</em>.</h2>
+                <p class="sk-section-kicker">Web · where the physician reviews and signs — standalone, or right inside Epic.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The problem</p>
+                <div class="cs-content">
+                    <p>Physicians don't have the capacity to design and monitor diet-and-exercise plans for a whole panel. They need to see who's slipping and act in seconds — without leaving the chart they already work in.</p>
+                </div>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">What I designed</p>
+                <div class="cs-content">
+                    <p>A cohort view with risk stratification and agent-flagged patients, plus a sign-off queue where each drafted plan opens as a focused review — rationale, proposed changes, and projected impact — ready to approve or send back with structured edits. Approvals auto-code the billable activity. The same review ships in two forms:</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">Two forms, one console</p>
+            <div class="sk-feature-switch sk-feature-switch--wide">
+                <div class="sk-feature-list" role="tablist" aria-label="Clinician console surfaces">
+                    <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="cl-panel-1" id="cl-tab-1" data-flow="1">
+                        <span class="sk-feature-btn-title">Standalone console</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="cl-panel-2" id="cl-tab-2" data-flow="2">
+                        <span class="sk-feature-btn-title">Embedded in Epic</span>
+                    </button>
+                </div>
+
+                <div class="sk-feature-stage">
+                    <div class="sk-feature-panel is-active" id="cl-panel-1" role="tabpanel" aria-labelledby="cl-tab-1" data-flow="1">
+                        <p class="sk-feature-desc">The full web app: a cohort overview with risk stratification, agent-flagged patients, and a sign-off queue — each drafted plan opens as a focused, approvable review.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/scriptchain/poster-standalone.jpg">
+                                    <source src="assets/scriptchain/standalone-walkthrough.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Standalone clinician console</span>
+                                    <span class="sk-video-ph-path">assets/scriptchain/standalone-walkthrough.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="sk-feature-panel" id="cl-panel-2" role="tabpanel" aria-labelledby="cl-tab-2" data-flow="2">
+                        <p class="sk-feature-desc">The same plan review delivered as a SMART-on-FHIR app inside Epic Hyperspace — it fires a BestPractice Advisory and writes orders, the plan note, and charges back to the chart on sign.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/scriptchain/poster-embedded.jpg">
+                                    <source src="assets/scriptchain/embedded-walkthrough.mp4" type="video/mp4">
+                                </video>
+                                <div class="sk-video-ph" aria-hidden="true">
+                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                                    <span class="sk-video-ph-name">Embedded in Epic</span>
+                                    <span class="sk-video-ph-path">assets/scriptchain/embedded-walkthrough.mp4</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             03 — The Marketing Site
+             ============================================================ -->
+        <section id="marketing" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">03 · The Marketing Site</p>
+                <h2 class="sk-section-title">Making a clinical idea <em>fundable</em>.</h2>
+                <p class="sk-section-kicker">Web · the public face for health systems and investors.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">What I designed</p>
+                <div class="cs-content">
+                    <p>Agentic prevention is a new category, so the site has to make "food and exercise as medicine" legible — and show it pays for itself. A WebGL hero, a clear three-surface product story, and automated-reimbursement messaging frame prevention as revenue-positive care, turning a clinical thesis into a fundable pitch.</p>
+                </div>
+            </div>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide">
+                <div class="sk-video-frame">
+                    <video class="sk-video-el" controls playsinline preload="metadata" autoplay muted loop poster="assets/scriptchain/poster-marketing.jpg">
+                        <source src="assets/scriptchain/marketing-walkthrough.mp4" type="video/mp4">
+                    </video>
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                        <span class="sk-video-ph-name">Marketing site</span>
+                        <span class="sk-video-ph-path">assets/scriptchain/marketing-walkthrough.mp4</span>
+                    </div>
+                </div>
+            </figure>
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- ============================================================
+             Reflection
+             ============================================================ -->
+        <section id="reflection" class="cs-section">
+
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Reflection</p>
+                <div class="cs-content">
+                    <p>Designing across four surfaces meant constantly shifting altitude — from a single adherence ring on a phone, up to a physician triaging a whole panel, and into the EHR where the plan becomes orders and charges. The throughline was the loop: every surface had to read as one continuous system, so a signal in the chart and a routine in someone's day are visibly the same product.</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">What this case study shows about how I work</p>
+            <ul class="sk-decisions">
+                <li>I design systems, not screens — one agentic loop expressed consistently across web, mobile, and the EHR.</li>
+                <li>I work close to the data: risk scores, plan diffs, and reimbursement codes are first-class parts of the interface.</li>
+                <li>I can carry a surface from marketing narrative through production UI and into EHR integration.</li>
+            </ul>
+
+            <div class="sk-signature">
+                <p><strong>Jonathan Chiang</strong> · Product Designer · <a href="about.html">About</a> · <a href="/">More work</a></p>
+            </div>
         </section>
     </main>
 
     <script src="transitions.js"></script>
     <script src="scriptchain.js"></script>
+    <script src="cs-nav.js"></script>
 </body>
 </html>
