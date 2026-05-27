@@ -64,7 +64,7 @@
     max-width: 1180px;
     margin: 0 auto;
     padding: 72px 48px 104px;
-    border-top: 1px solid rgba(128, 128, 128, 0.22);
+    /* border-top: 1px solid rgba(128, 128, 128, 0.22); */
 }
 
 .cs-next-eyebrow {
@@ -121,7 +121,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 3; /* above the composition layers (device/phone/logo) */
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -170,4 +170,174 @@
         grid-template-columns: 1fr;
         gap: 16px;
     }
+}
+
+/* ── Footer cards: reuse the home-page project compositions ────────────────
+   So the "More case studies" thumbnails match the homepage exactly — Nocta's
+   phone-in-frame + bokeh, SkillCat's dual desktop+phone, ScriptChain's framed
+   desktop — rather than a flat cropped video. Copied from home.css and scoped
+   under .cs-next-card so the shared class names can't leak into per-page CSS.
+   cqh/cqw units resolve against the card (container-type: size, set below).
+   Robinhood (image) and Reveal (.cs-next-thumb video) already match home, so
+   they keep the plain full-bleed treatment. */
+
+/* Nocta — phone mockup on a branded backdrop with peach bokeh */
+.cs-next-card--nocta {
+    container-type: size;
+    background:
+        radial-gradient(58% 62% at 50% 0%, rgba(243, 168, 124, 0.20), transparent 62%),
+        linear-gradient(180deg, #0e1424 0%, #060912 100%);
+}
+.cs-next-card .nocta-device {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 90cqh;
+    aspect-ratio: 430 / 932;
+    padding: 0.9cqh;
+    border-radius: 6.2cqh;
+    background: linear-gradient(150deg, #3a3f4b 0%, #15181f 42%, #0a0c11 100%);
+    box-shadow: 0 44px 72px -22px rgba(0, 0, 0, 0.82),
+                0 0 0 1px rgba(255, 255, 255, 0.07),
+                inset 0 0 0 0.2cqh rgba(255, 255, 255, 0.05);
+    transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    z-index: 1;
+}
+.cs-next-card .nocta-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 5.3cqh;
+    overflow: hidden;
+    background: #060912;
+}
+.cs-next-card .nocta-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cs-next-card .nocta-island {
+    position: absolute;
+    top: 2.4cqh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26%;
+    height: 2.7cqh;
+    background: #04060b;
+    border-radius: 1.6cqh;
+    z-index: 2;
+}
+.cs-next-card .nocta-bokeh {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.cs-next-card .nocta-bokeh--back { z-index: 0; }
+.cs-next-card .nocta-bokeh--front { z-index: 1; }
+.cs-next-card .nocta-bokeh span {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%,
+        rgba(243, 168, 124, 0.55) 0%,
+        rgba(243, 168, 124, 0.30) 40%,
+        rgba(243, 168, 124, 0) 72%);
+    opacity: var(--o, 1);
+    animation: cs-next-bokeh-pulse var(--dur, 5s) ease-in-out var(--dly, 0s) infinite;
+}
+@keyframes cs-next-bokeh-pulse {
+    0%, 100% { transform: scale(0.9);  opacity: calc(var(--o, 1) * 0.5); }
+    50%      { transform: scale(1.12); opacity: var(--o, 1); }
+}
+.cs-next-card .nocta-bokeh--back span:nth-child(1) { width: 9cqh;  height: 9cqh;  top: 12%; left: 9%;  --dur: 4.6s; --dly: -0.4s; }
+.cs-next-card .nocta-bokeh--back span:nth-child(2) { width: 14cqh; height: 14cqh; top: 60%; left: 15%; --o: 0.85; --dur: 6.2s; --dly: -2.1s; }
+.cs-next-card .nocta-bokeh--back span:nth-child(3) { width: 11cqh; height: 11cqh; top: 26%; left: 80%; --dur: 5.4s; --dly: -3.3s; }
+.cs-next-card .nocta-bokeh--back span:nth-child(4) { width: 7cqh;  height: 7cqh;  top: 72%; left: 84%; --o: 0.9;  --dur: 4.1s; --dly: -1.2s; }
+.cs-next-card .nocta-bokeh--back span:nth-child(5) { width: 5cqh;  height: 5cqh;  top: 86%; left: 42%; --dur: 3.6s; --dly: -2.7s; }
+.cs-next-card .nocta-bokeh--back span:nth-child(6) { width: 6cqh;  height: 6cqh;  top: 8%;  left: 62%; --o: 0.8;  --dur: 5.8s; --dly: -0.9s; }
+.cs-next-card .nocta-bokeh--back span:nth-child(7) { width: 12cqh; height: 12cqh; top: 44%; left: 91%; --o: 0.7;  --dur: 6.8s; --dly: -4.0s; }
+.cs-next-card .nocta-bokeh--front span { filter: blur(0.9cqh); }
+.cs-next-card .nocta-bokeh--front span:nth-child(1) { width: 20cqh; height: 20cqh; top: -5%; left: 3%;  --o: 0.5;  --dur: 7.4s; --dly: -1.6s; }
+.cs-next-card .nocta-bokeh--front span:nth-child(2) { width: 26cqh; height: 26cqh; top: 80%; left: 86%; --o: 0.42; --dur: 8.2s; --dly: -3.8s; }
+.cs-next-card .nocta-bokeh--front span:nth-child(3) { width: 15cqh; height: 15cqh; top: 76%; left: 4%;  --o: 0.45; --dur: 6.6s; --dly: -2.4s; }
+
+/* SkillCat — dual desktop + phone on a branded orange backdrop */
+.cs-next-card--skillcat {
+    container-type: size;
+    background:
+        radial-gradient(60% 60% at 50% 2%, rgba(255, 138, 92, 0.45), transparent 58%),
+        linear-gradient(180deg, #E8552E 0%, #8a2d15 30%, #2a0f08 74%, #160a06 100%);
+}
+.cs-next-card .sk-logo {
+    position: absolute;
+    top: 7cqh;
+    left: 5cqw;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+    object-fit: cover;
+    z-index: 2;
+}
+.cs-next-card .sk-thumb {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64cqw;
+    z-index: 1;
+    transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.cs-next-card .sk-thumb-desktop {
+    width: 100%;
+    aspect-ratio: 3056 / 2080;
+    border-radius: 1.8cqh;
+    overflow: hidden;
+    background: #05101f;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 36px 60px -22px rgba(0, 0, 0, 0.82),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+.cs-next-card .sk-thumb-phone {
+    position: absolute;
+    left: -5cqw;
+    bottom: -7cqh;
+    width: 14cqw;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 2.6cqh;
+    overflow: hidden;
+    background: #05101f;
+    border: 0.7cqh solid #05060a;
+    box-shadow: 0 24px 44px -14px rgba(0, 0, 0, 0.7);
+    transform: rotate(-5deg);
+    z-index: 2;
+}
+.cs-next-card .sk-thumb-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ScriptChain — framed desktop on a branded teal backdrop (reuses .sk-thumb) */
+.cs-next-card--scriptchain {
+    container-type: size;
+    background:
+        radial-gradient(60% 60% at 50% 2%, rgba(126, 205, 201, 0.42), transparent 58%),
+        linear-gradient(180deg, #48a9a6 0%, #235a58 30%, #0c2422 74%, #061413 100%);
+}
+.cs-next-card--scriptchain .sk-thumb {
+    top: 50%;
+    width: 72cqw;
+}
+
+/* Gentle hover scale on the composed device, mirroring the home cards */
+.cs-next-card:hover .nocta-device,
+.cs-next-card:hover .sk-thumb {
+    transform: translate(-50%, -50%) scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cs-next-card .nocta-bokeh span { animation: none; }
 }

@@ -93,8 +93,6 @@
             </div>
         </section>
 
-        <!-- Divider -->
-        <hr class="cs-divider">
 
         <!-- Background -->
         <section id="background" class="cs-section">
@@ -329,18 +327,32 @@
 
     <!-- More case studies — cross-links to two other case studies -->
     <footer class="cs-next" aria-label="More case studies">
-        <p class="cs-next-eyebrow">Keep exploring</p>
         <h2 class="cs-next-heading">More case studies</h2>
         <div class="cs-next-grid">
             <a class="cs-next-card" href="reveal.html">
-                <img class="cs-next-thumb" src="assets/reveal-mockup.png" alt="Reveal case study" loading="lazy">
+                <video class="cs-next-thumb" autoplay muted loop playsinline preload="metadata" poster="assets/reveal-mockup.png" aria-label="Reveal case study">
+                    <source src="assets/Reveal-animation.mp4" type="video/mp4">
+                </video>
                 <div class="cs-next-info">
                     <span class="cs-next-tags">Motion Design · AR/VR · 2024</span>
                     <h3 class="cs-next-name">Reveal <span class="cs-next-arrow" aria-hidden="true">→</span></h3>
                 </div>
             </a>
-            <a class="cs-next-card" href="nocta.html">
-                <img class="cs-next-thumb" src="assets/nocta/v2/flow-week-poster.jpg" alt="Nocta case study" loading="lazy">
+            <a class="cs-next-card cs-next-card--nocta" href="nocta.html">
+                <div class="nocta-bokeh nocta-bokeh--back" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="nocta-device">
+                    <div class="nocta-screen">
+                        <video class="nocta-video" autoplay loop muted playsinline preload="metadata" poster="assets/nocta/v2/flow-week-poster.jpg" aria-label="Nocta app">
+                            <source src="assets/nocta/v2/flow-week.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <span class="nocta-island" aria-hidden="true"></span>
+                </div>
+                <div class="nocta-bokeh nocta-bokeh--front" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
                 <div class="cs-next-info">
                     <span class="cs-next-tags">0-1 Design · Health · 2025</span>
                     <h3 class="cs-next-name">Nocta <span class="cs-next-arrow" aria-hidden="true">→</span></h3>

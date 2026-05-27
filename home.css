@@ -1081,6 +1081,20 @@ a.project-card {
     display: none;
 }
 
+/* Reveal card — full-bleed motion thumbnail. The branded AR animation autoplays
+   by default (no static mockup, no hover gate), matching the always-on video
+   treatment of the SkillCat / ScriptChain / Nocta cards. A separate class keeps
+   it clear of the .project-video hover play/pause logic in home.js. */
+.rv-card-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    z-index: 1;
+}
+
 /* ===========================================================================
    Nocta card — animated thumbnail. The nightly-summary walkthrough plays inside
    a CSS iPhone mockup, centered on the branded navy backdrop (mirroring the

@@ -137,3 +137,77 @@
         }
     }, { passive: true });
 })();
+
+// ============================================
+// Feature switch — click a tab to swap the Solution Overview clip.
+// The active clip autoplays (muted, looping) while the switch is on screen;
+// others pause and reset. Tab / tabpanel pattern with arrow-key support.
+// Mirrors SkillCat's sk-feature-switch behavior.
+// ============================================
+(function () {
+    var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('.sk-feature-switch').forEach(function (sw) {
+        var btns = Array.prototype.slice.call(sw.querySelectorAll('.sk-feature-btn'));
+        var panels = Array.prototype.slice.call(sw.querySelectorAll('.sk-feature-panel'));
+        if (!btns.length) return;
+
+        var inView = false;
+
+        function activeVideo() {
+            var p = sw.querySelector('.sk-feature-panel.is-active');
+            return p && p.querySelector('video');
+        }
+        function playActive() {
+            if (reduceMotion || !inView) return;
+            var v = activeVideo();
+            if (!v) return;
+            v.muted = true; v.loop = true;
+            var pr = v.play();
+            if (pr && pr.catch) pr.catch(function () { /* autoplay blocked */ });
+        }
+        function activate(flow, focus) {
+            btns.forEach(function (b) {
+                var on = b.getAttribute('data-flow') === flow;
+                b.classList.toggle('is-active', on);
+                b.setAttribute('aria-selected', on ? 'true' : 'false');
+                b.tabIndex = on ? 0 : -1;
+                if (on && focus) b.focus();
+            });
+            panels.forEach(function (p) {
+                var on = p.getAttribute('data-flow') === flow;
+                p.classList.toggle('is-active', on);
+                var v = p.querySelector('video');
+                if (v && !on) { try { v.pause(); v.currentTime = 0; } catch (e) {} }
+            });
+            playActive();
+        }
+
+        btns.forEach(function (b, i) {
+            b.addEventListener('click', function () { activate(b.getAttribute('data-flow')); });
+            b.addEventListener('keydown', function (e) {
+                var dir = 0;
+                if (e.key === 'ArrowDown' || e.key === 'ArrowRight') dir = 1;
+                else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') dir = -1;
+                else return;
+                e.preventDefault();
+                var next = (i + dir + btns.length) % btns.length;
+                activate(btns[next].getAttribute('data-flow'), true);
+            });
+        });
+
+        // Only autoplay while the selector is actually on screen.
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    inView = e.isIntersecting;
+                    if (inView) playActive();
+                    else { var v = activeVideo(); if (v) { try { v.pause(); } catch (err) {} } }
+                });
+            }, { threshold: 0.25 }).observe(sw);
+        } else {
+            inView = true; playActive();
+        }
+    });
+})();

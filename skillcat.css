@@ -269,7 +269,9 @@ button,
     padding: 120px 48px 100px;
     display: flex;
     flex-direction: column;
-    gap: 88px;
+    /* Generous between-section gap (no dividers) — matches nocta's rhythm
+       (nocta uses 120px padding top + bottom on each section). */
+    gap: 240px;
 }
 
 /* Eyebrows / labels — nocta-style: Space Mono, uppercase, tracked, solid orange.

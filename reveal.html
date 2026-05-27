@@ -92,8 +92,6 @@
             </div>
         </section>
 
-        <!-- Divider -->
-        <hr class="cs-divider">
 
         <!-- Background -->
         <section id="background" class="cs-section">
@@ -259,35 +257,57 @@
         <!-- Solution Overview / Features -->
         <section id="features" class="cs-section">
             <p class="cs-sidebar-label cs-label">Solution Overview</p>
+            <p class="sk-block-label">The solution, feature by feature</p>
 
-            <!-- Feature 1 -->
-            <div class="cs-feature-row">
-                <div class="cs-feature-text">
-                    <p class="cs-feature-title">Identifying Hostile Architecture</p>
-                    <p>After the user onboards, Reveal will automatically identify any hostile architecture in the area, where the user can then interact with it.</p>
-                    <p>They can overlay a re-designed version, read up on the architecture, and understand why it's hostile in nature.</p>
+            <div class="sk-feature-switch sk-feature-switch--wide">
+                <!-- Top: feature tabs -->
+                <div class="sk-feature-list" role="tablist" aria-label="Reveal features">
+                    <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="rv-panel-1" id="rv-tab-1" data-flow="1">
+                        <span class="sk-feature-btn-title">Identify hostile architecture</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="rv-panel-2" id="rv-tab-2" data-flow="2">
+                        <span class="sk-feature-btn-title">Understand its history</span>
+                    </button>
+                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="rv-panel-3" id="rv-tab-3" data-flow="3">
+                        <span class="sk-feature-btn-title">Find it in the real world</span>
+                    </button>
                 </div>
-                <video src="assets/reveal/bench closeup trim.mp4" class="cs-hero-video" autoplay muted playsinline></video>
-            </div>
 
-            <!-- Feature 2 -->
-            <div class="cs-feature-row">
-                <div class="cs-feature-text">
-                    <p class="cs-feature-title">Understand the History of the Architecture</p>
-                    <p>Users can also view the history of the architecture throughout the years, via descriptions and images. This way, users can get a better sense of how the current design came to be.</p>
-                    <p>They can then share this location and report it to city officials with a simple form.</p>
-                </div>
-                <video src="assets/reveal/History.mp4" class="cs-hero-video" autoplay muted playsinline></video>
-            </div>
+                <!-- Below: full-width clip that swaps to match the selected tab -->
+                <div class="sk-feature-stage">
+                    <div class="sk-feature-panel is-active" id="rv-panel-1" role="tabpanel" aria-labelledby="rv-tab-1" data-flow="1">
+                        <p class="sk-feature-desc">After the user onboards, Reveal automatically identifies any hostile architecture in the area. They can overlay a re-designed version, read up on the architecture, and understand why it's hostile in nature.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" autoplay muted loop playsinline preload="metadata">
+                                    <source src="assets/reveal/bench closeup trim.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </figure>
+                    </div>
 
-            <!-- Feature 3 -->
-            <div class="cs-feature-row">
-                <div class="cs-feature-text">
-                    <p class="cs-feature-title">Find Hostile Architecture in the Real World</p>
-                    <p>Users can also go to the map and check out other identified or tagged hostile architecture in their area.</p>
-                    <p>This encourages users to explore their environment through the lens of urban design and maybe even find more examples!</p>
+                    <div class="sk-feature-panel" id="rv-panel-2" role="tabpanel" aria-labelledby="rv-tab-2" data-flow="2">
+                        <p class="sk-feature-desc">Users can view the history of the architecture throughout the years via descriptions and images, getting a better sense of how the current design came to be — then share the location and report it to city officials with a simple form.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" autoplay muted loop playsinline preload="metadata">
+                                    <source src="assets/reveal/History.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="sk-feature-panel" id="rv-panel-3" role="tabpanel" aria-labelledby="rv-tab-3" data-flow="3">
+                        <p class="sk-feature-desc">Users can head to the map and check out other identified or tagged hostile architecture nearby, which encourages them to explore their environment through the lens of urban design — and maybe even find more examples.</p>
+                        <figure class="sk-video sk-video--desktop sk-video--wide">
+                            <div class="sk-video-frame">
+                                <video class="sk-video-el" autoplay muted loop playsinline preload="metadata">
+                                    <source src="assets/reveal/Map.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </figure>
+                    </div>
                 </div>
-                <video src="assets/reveal/Map.mp4" class="cs-hero-video" autoplay muted playsinline></video>
             </div>
         </section>
 
@@ -323,18 +343,42 @@
 
     <!-- More case studies — cross-links to two other case studies -->
     <footer class="cs-next" aria-label="More case studies">
-        <p class="cs-next-eyebrow">Keep exploring</p>
         <h2 class="cs-next-heading">More case studies</h2>
         <div class="cs-next-grid">
-            <a class="cs-next-card" href="nocta.html">
-                <img class="cs-next-thumb" src="assets/nocta/v2/flow-week-poster.jpg" alt="Nocta case study" loading="lazy">
+            <a class="cs-next-card cs-next-card--nocta" href="nocta.html">
+                <div class="nocta-bokeh nocta-bokeh--back" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="nocta-device">
+                    <div class="nocta-screen">
+                        <video class="nocta-video" autoplay loop muted playsinline preload="metadata" poster="assets/nocta/v2/flow-week-poster.jpg" aria-label="Nocta app">
+                            <source src="assets/nocta/v2/flow-week.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <span class="nocta-island" aria-hidden="true"></span>
+                </div>
+                <div class="nocta-bokeh nocta-bokeh--front" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
                 <div class="cs-next-info">
                     <span class="cs-next-tags">0-1 Design · Health · 2025</span>
                     <h3 class="cs-next-name">Nocta <span class="cs-next-arrow" aria-hidden="true">→</span></h3>
                 </div>
             </a>
-            <a class="cs-next-card" href="skillcat.html">
-                <img class="cs-next-thumb" src="assets/skillcat/B2B/poster-assign.jpg" alt="SkillCat case study" loading="lazy">
+            <a class="cs-next-card cs-next-card--skillcat" href="skillcat.html">
+                <img class="sk-logo" src="assets/skillcat/skillcat-logo.png" alt="" aria-hidden="true">
+                <div class="sk-thumb">
+                    <div class="sk-thumb-desktop">
+                        <video class="sk-thumb-video" autoplay loop muted playsinline preload="metadata" poster="assets/skillcat/B2B/poster-assign.jpg" aria-label="SkillCat admin dashboard">
+                            <source src="assets/skillcat/B2B/assign.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="sk-thumb-phone">
+                        <video class="sk-thumb-video" autoplay loop muted playsinline preload="metadata" poster="assets/skillcat/poster-add-course.jpg" aria-label="SkillCat learner app">
+                            <source src="assets/skillcat/Add-Course.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
                 <div class="cs-next-info">
                     <span class="cs-next-tags">Brand Redesign · Trade Skills · 2026</span>
                     <h3 class="cs-next-name">SkillCat <span class="cs-next-arrow" aria-hidden="true">→</span></h3>

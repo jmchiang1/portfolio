@@ -265,12 +265,10 @@
                 </a>
 
                 <!-- Project 5 — Reveal -->
-                <a href="reveal.html" class="project-card" style="--card-bg: url('assets/reveal-mockup.png')">
-                    <picture>
-                        <source media="(max-width: 640px)" srcset="assets/reveal-large.png">
-                        <img src="assets/reveal-mockup.png" alt="Reveal Augmented Reality App" class="project-image has-video">
-                    </picture>
-                    <video src="assets/Reveal-animation.mp4" class="project-video" muted loop playsinline preload="auto"></video>
+                <a href="reveal.html" class="project-card project-card--reveal" style="--card-bg: url('assets/reveal-mockup.png')">
+                    <video class="rv-card-video" autoplay muted loop playsinline preload="auto" poster="assets/reveal-mockup.png" aria-label="Reveal — augmented reality concept">
+                        <source src="assets/Reveal-animation.mp4" type="video/mp4">
+                    </video>
                     <div class="project-tags">
                         <span class="tag-affiliation">Personal</span>
                         <span class="tag-divider"></span>

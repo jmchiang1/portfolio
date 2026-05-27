@@ -195,12 +195,16 @@ a, button, [role="button"],
    Case Study Layout
    ============================================ */
 .case-study {
-    max-width: 90vw;
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 120px 80px 100px;
+    /* Contained column + gutters match SkillCat (120 / 48 / 100) so the two
+       case studies share the same content width and rhythm. */
+    padding: 120px 48px 100px;
     display: flex;
     flex-direction: column;
-    gap: 100px;
+    /* Generous between-section gap (no dividers) — matches nocta's rhythm
+       (nocta uses 120px padding top + bottom on each section). */
+    gap: 240px;
 }
 
 /* ============================================
@@ -325,16 +329,19 @@ a, button, [role="button"],
 /* ============================================
    Two Column Layout
    ============================================ */
+/* Single-column reading flow (matches SkillCat): eyebrow stacked above body. */
 .cs-two-col {
     display: flex;
-    gap: 217px;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    align-items: stretch;
 }
 
 .cs-content {
     flex: 1;
     min-width: 0;
     font-size: var(--text-16);
+    max-width: 64ch;
 }
 
 .cs-content p {
@@ -351,7 +358,7 @@ a, button, [role="button"],
 .cs-section {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 36px;
 }
 
 /* ============================================
@@ -537,6 +544,157 @@ a, button, [role="button"],
 }
 
 /* ============================================
+   Feature Switch — tabbed flow selector
+   Ported from SkillCat (sk-feature-switch) with Reveal's blue accent, so the
+   Solution Overview clips swap in place instead of stacking as rows.
+   ============================================ */
+.sk-block-label {
+    font-family: 'Space Mono', monospace;
+    font-weight: 500;
+    font-size: var(--text-12);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #66d2ff;
+    margin: 0;
+}
+
+.sk-feature-switch {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 44px;
+    align-items: center;
+}
+
+.sk-feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sk-feature-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    padding: 20px 22px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    cursor: url('assets/pointer.cur'), pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.sk-feature-btn:hover {
+    border-color: rgba(102, 210, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.sk-feature-btn.is-active {
+    border-color: #66d2ff;
+    background: rgba(102, 210, 255, 0.14);
+}
+
+.sk-feature-btn:focus-visible {
+    outline: 2px solid #66d2ff;
+    outline-offset: 2px;
+}
+
+.sk-feature-btn-title {
+    font-size: var(--text-18);
+    font-weight: 600;
+}
+
+.sk-feature-btn-desc {
+    font-size: var(--text-14);
+    color: rgba(255, 255, 255, 0.62);
+    line-height: 1.5;
+}
+
+.sk-feature-btn.is-active .sk-feature-btn-desc {
+    color: rgba(255, 255, 255, 0.80);
+}
+
+.sk-feature-panel {
+    display: none;
+}
+
+.sk-feature-panel.is-active {
+    display: block;
+    animation: cs-stagger-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Wide variant — tabs across the top, full-width video below. Reveal's clips
+   are landscape, so this reads better than the narrow phone column. */
+.sk-feature-switch--wide {
+    display: block;
+}
+
+.sk-feature-switch--wide .sk-feature-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.sk-feature-switch--wide .sk-feature-btn {
+    flex: 1 1 160px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+.sk-feature-switch--wide .sk-feature-btn-title {
+    font-size: var(--text-16);
+}
+
+/* Active feature's description — sits between the tabs and the video. */
+.sk-feature-switch--wide .sk-feature-desc {
+    font-size: var(--text-16);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.62);
+    margin-bottom: 18px;
+}
+
+.sk-feature-switch--wide .sk-video--desktop .sk-video-frame {
+    aspect-ratio: 16 / 9;
+}
+
+.sk-video {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sk-video--desktop {
+    flex: 1;
+    min-width: 280px;
+}
+
+.sk-video--wide {
+    width: 100%;
+}
+
+.sk-video-frame {
+    position: relative;
+    overflow: hidden;
+    background: #05101f;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+}
+
+.sk-video-el {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: #05101f;
+}
+
+/* ============================================
    Takeaways / Impact
    ============================================ */
 .cs-impact-row {
@@ -640,6 +798,7 @@ a, button, [role="button"],
 .cs-visible .cs-lofi-row,
 .cs-visible .cs-testing-block,
 .cs-visible .cs-feature-row,
+.cs-visible .sk-feature-switch,
 .cs-visible .cs-impact-row {
     animation: cs-stagger-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
@@ -805,6 +964,11 @@ a, button, [role="button"],
 
     .cs-feature-video {
         height: 300px;
+    }
+
+    .sk-feature-switch {
+        grid-template-columns: 1fr;
+        gap: 28px;
     }
 
     .cs-impact-row {

@@ -200,7 +200,9 @@ a, button, [role="button"],
     padding: 120px 80px 100px;
     display: flex;
     flex-direction: column;
-    gap: 100px;
+    /* Generous between-section gap (no dividers) — matches nocta's rhythm
+       (nocta uses 120px padding top + bottom on each section). */
+    gap: 240px;
 }
 
 /* ============================================
