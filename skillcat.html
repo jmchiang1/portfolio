@@ -4,19 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- NDA gate: this case study is only reachable after the homepage password
-         modal sets the unlock flag for this session. Direct visits bounce home.
-         NOTE: client-side only — not real protection (see home.js). -->
-    <script>
-        (function () {
-            try {
-                if (sessionStorage.getItem('sk_unlocked') !== '1') {
-                    location.replace('index.html');
-                }
-            } catch (e) {}
-        })();
-    </script>
-
     <title>SkillCat — Case Study | Jonathan Chiang</title>
 
     <!-- Favicon -->
