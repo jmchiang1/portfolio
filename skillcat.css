@@ -313,12 +313,6 @@ button,
     display: flex;
     flex-direction: column;
     gap: 56px;
-    /* Break out of the 1180px case-study column so the hero — and its media —
-       can run wider than the rest of the page. Uses negative margins (not a
-       transform, which the scroll-reveal already owns on .cs-header) and is
-       capped to the available gutter so it never triggers horizontal scroll. */
-    margin-left: calc(-1 * min(170px, 50vw - 50% - 16px));
-    margin-right: calc(-1 * min(170px, 50vw - 50% - 16px));
 }
 
 /* Nocta-style hero: copy on the left, a device composition on the right. */
@@ -333,6 +327,12 @@ button,
        whitespace — like nocta's full-viewport hero — and "At a glance" only
        appears once you scroll past it. */
     min-height: calc(100vh - 140px);
+    /* Break out of the 1180px case-study column so the hero media runs wider
+       than the page. Lives here (not on .cs-header) so the sibling .sk-meta
+       stays aligned to the page's content padding. Capped to the available
+       gutter so it never triggers horizontal scroll. */
+    margin-left: calc(-1 * min(170px, 50vw - 50% - 16px));
+    margin-right: calc(-1 * min(170px, 50vw - 50% - 16px));
 }
 
 /* Soft, contained radial glow behind the media (SkillCat orange). */
@@ -1464,17 +1464,14 @@ button,
         gap: 56px;
     }
 
-    /* Drop the desktop breakout — align the hero with the rest of the page. */
-    .cs-header {
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    /* Hero stacks: copy on top, device composition below. */
+    /* Hero stacks: copy on top, device composition below — and drop the
+       desktop breakout so the hero aligns with the rest of the page. */
     .cs-hero-inner {
         grid-template-columns: 1fr;
         gap: 36px;
         min-height: auto;
+        margin-left: 0;
+        margin-right: 0;
     }
     .cs-hero-media {
         width: 100%;
