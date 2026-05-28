@@ -9,6 +9,10 @@
 .cs-nav-links .nav-link {
     position: relative;
     z-index: 1;
+    /* Case-study nav links — tighter, monogram-adjacent feel: Space Grotesk @ 12px.
+       Overrides each case-study page's default nav-link size (typically 16px). */
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: var(--text-12);
 }
 
 /* Single pill that glides between links. JS sets its size/position;
