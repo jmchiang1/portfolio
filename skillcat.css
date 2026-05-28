@@ -16,7 +16,7 @@
     --sk-orange-2: #ff8a5c;
     --sk-orange-soft: rgba(232, 85, 46, 0.14);
     /* Headings — the portfolio's primary display font. */
-    --sk-serif: 'Space Grotesk', sans-serif;
+    --sk-serif: 'Fira Sans', sans-serif;
 }
 
 /* Reset */
@@ -39,7 +39,7 @@ html::-webkit-scrollbar {
 }
 
 body {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'IBM Plex Mono', monospace;
     background-color: var(--sk-bg);
     /* Page-wide brand wash (Nocta-style): a soft upper-center glow over the
        dark base — behind everything, scrolling away past the hero. */
@@ -199,7 +199,7 @@ button,
     justify-content: center;
     padding: 10px 24px;
     border-radius: 8px;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'IBM Plex Mono', monospace;
     letter-spacing: 0.02em;
     font-weight: 600;
     font-size: var(--text-16);
@@ -589,11 +589,6 @@ button,
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
-.sk-thread:hover {
-    transform: translateY(-3px);
-    border-color: var(--sk-orange);
-}
-
 .sk-thread-num {
     font-family: 'Space Mono', monospace;
     font-size: var(--text-14);
@@ -844,19 +839,22 @@ button,
     aspect-ratio: 3056 / 2080;
 }
 
-/* ---- Versions variant: title + description + pill V1/V2/V3, alternating sides.
-   Phone column matches the Learner Redesign feature-switch (320px) so heights align.
-   Both columns are fixed widths and the whole row is centered in the page, so the
-   text+phone pair always sits in the middle regardless of which side the phone is on. ---- */
+/* ---- Versions variant: title + description + V tabs on one side, phone with on-screen
+   hotspot annotations on the other. Two columns, alternating sides; phone stays in place
+   and sticky-note bubbles appear on hover/focus of each dot. ---- */
 .sk-feature-switch--versions {
     grid-template-columns: 400px 320px;
     justify-content: center;
     gap: 72px;
     align-items: center;
+    /* Allow hotspot bubbles to overflow the row without being clipped. */
+    overflow: visible;
 }
 
-/* Flip the column order — info on the right, phone on the left — via explicit grid
-   placement so the markup order can stay constant. */
+/* Flip layout — info on the right, phone on the left. */
+.sk-feature-switch--versions.sk-feature-switch--reverse {
+    grid-template-columns: 320px 400px;
+}
 .sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-info {
     grid-column: 2;
     grid-row: 1;
@@ -870,8 +868,138 @@ button,
     display: flex;
     flex-direction: column;
     gap: 18px;
-    width: 400px;
+    width: 100%;
     max-width: 100%;
+}
+
+/* ============================================
+   Hotspot annotations — pulsing dots overlaid on each phone screenshot.
+   Hover or focus reveals a yellow sticky-note bubble pointing to the spot.
+   ============================================ */
+
+/* Allow notes to escape the phone frame without being clipped. */
+.sk-feature-switch--versions .sk-video--mobile {
+    position: relative;
+    overflow: visible;
+}
+.sk-feature-switch--versions .sk-feature-stage,
+.sk-feature-switch--versions .sk-feature-panel {
+    overflow: visible;
+}
+
+.sk-hotspots {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    z-index: 4;
+}
+
+/* Each hotspot positioned by inline top:N% and (optionally) left:N%. Default left is 50%
+   (phone centerline). Translate -50% on both axes so the dot's center sits on the coord. */
+.sk-hot {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    z-index: 5;
+}
+
+/* The dot — pulsing brand-orange ring. */
+.sk-hot-dot {
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    background: var(--sk-orange);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 0 rgba(232, 85, 46, 0.55);
+    cursor: url('assets/pointer.cur'), pointer;
+    transition: transform 0.18s ease;
+    animation: sk-hot-pulse 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    padding: 0;
+}
+.sk-hot-dot:hover,
+.sk-hot-dot:focus-visible {
+    transform: scale(1.18);
+    outline: none;
+}
+.sk-hot:hover .sk-hot-dot,
+.sk-hot:focus-within .sk-hot-dot {
+    animation-play-state: paused;
+    background: var(--sk-orange-2, #ff8a5c);
+}
+
+@keyframes sk-hot-pulse {
+    0%   { box-shadow: 0 0 0 0   rgba(232, 85, 46, 0.55); }
+    70%  { box-shadow: 0 0 0 14px rgba(232, 85, 46, 0);    }
+    100% { box-shadow: 0 0 0 0   rgba(232, 85, 46, 0);    }
+}
+
+/* The sticky-note bubble — hidden until the dot is hovered/focused. Sticks to the
+   side of the phone opposite the info column (default = right side, reverse = left). */
+.sk-hot-note {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(28px, -50%) scale(0.96);
+    width: 240px;
+    background: #FCE96A;
+    color: #1a1a1a;
+    padding: 12px 14px;
+    border-radius: 4px;
+    font-family: var(--sk-serif);
+    font-size: var(--text-13);
+    font-weight: 500;
+    line-height: 1.45;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 6;
+    /* Slight tape-corner accent */
+}
+.sk-hot-note::before {
+    /* connector line from the dot to the note */
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: 24px;
+    height: 1px;
+    background: rgba(252, 233, 106, 0.4);
+    transform: translateY(-0.5px);
+}
+
+/* Reverse rows — note opens to the LEFT of the dot. */
+.sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot-note {
+    left: auto;
+    right: 100%;
+    transform: translate(-28px, -50%) scale(0.96);
+}
+.sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot-note::before {
+    right: auto;
+    left: 100%;
+}
+
+/* Reveal on hover / focus / keyboard focus. */
+.sk-hot:hover .sk-hot-note,
+.sk-hot:focus-within .sk-hot-note {
+    opacity: 1;
+    transform: translate(36px, -50%) scale(1);
+}
+.sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot:hover .sk-hot-note,
+.sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot:focus-within .sk-hot-note {
+    transform: translate(-36px, -50%) scale(1);
+}
+
+.sk-hot-note em {
+    font-style: italic;
+    color: #000;
 }
 
 .sk-feature-screen-title {
@@ -1080,7 +1208,7 @@ button,
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--sk-serif);
     font-size: var(--text-13);
     font-weight: 600;
     color: #fff;
@@ -1516,6 +1644,162 @@ button,
     margin-top: 8px;
 }
 
+/* ============================================
+   Before & After — single wipe line across a fit-to-width strip of six
+   phones. The "after" row sits at the bottom; the "before" row layers on
+   top and is clipped to the left of the handle. The wipe is instant
+   (clip-path is a hard cut, no blend).
+   ============================================ */
+.sk-compare {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    /* The handle / clip both read from this; JS updates it on drag. */
+    --pos: 50%;
+}
+
+.sk-compare-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.sk-compare-row img {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid var(--sk-border);
+}
+
+/* Before row sits on top. The handle starts at the LEFT (--pos: 0) so the
+   full Before strip is visible. As --pos increases, Before is clipped from
+   the LEFT, revealing the After row underneath like a curtain pulled right. */
+.sk-compare-row--before {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 0 0 var(--pos));
+    -webkit-clip-path: inset(0 0 0 var(--pos));
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* "Before" / "After" corner tags — visual orientation while dragging. */
+.sk-compare-label {
+    position: absolute;
+    top: 12px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    z-index: 5;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+.sk-compare-label--before { left: 12px; }
+.sk-compare-label--after  { right: 12px; }
+
+/* Handle = line + knob, positioned by the --pos var. Pointer-events off
+   because the invisible range input below owns the drag. */
+.sk-compare-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.sk-compare-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background: var(--sk-orange);
+    box-shadow: 0 0 14px rgba(232, 85, 46, 0.65);
+}
+
+.sk-compare-knob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--sk-orange);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(232, 85, 46, 0.55),
+                0 0 0 4px rgba(232, 85, 46, 0.18);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.sk-compare-input:hover ~ .sk-compare-handle .sk-compare-knob,
+.sk-compare-input:focus-visible ~ .sk-compare-handle .sk-compare-knob {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 8px 22px rgba(232, 85, 46, 0.7),
+                0 0 0 6px rgba(232, 85, 46, 0.22);
+}
+
+/* Native range input layered on top — invisible but handles drag, keyboard,
+   focus. The ::-webkit-slider-thumb is wide so the entire strip is grabbable. */
+.sk-compare-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+    z-index: 11;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+}
+.sk-compare-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 44px;
+    height: 100%;
+    cursor: ew-resize;
+}
+.sk-compare-input::-moz-range-thumb {
+    width: 44px;
+    height: 100%;
+    border: none;
+    background: transparent;
+    cursor: ew-resize;
+}
+
+@media (max-width: 640px) {
+    /* Phones get tiny at 6-across on a narrow screen, but the wipe still
+       reads. Tighten gaps so they don't overwhelm the image area. */
+    .sk-compare-row {
+        gap: 6px;
+    }
+    .sk-compare-knob { width: 36px; height: 36px; }
+    .sk-compare-label {
+        top: 6px;
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+    .sk-compare-label--before { left: 6px; }
+    .sk-compare-label--after  { right: 6px; }
+}
+
 /* Three-up (or two-up) version comparison — show a single screen across
    V1 / V2 / V3 so the evolution reads at a glance. */
 .sk-evolve {
@@ -1783,21 +2067,25 @@ button,
 }
 
 /* Brand colour swatches */
+/* Equal-width grid stretching to 100% of the section. Each chip is a square
+   that scales with the column width (aspect-ratio: 1). */
 .sk-swatches {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     gap: 14px;
+    width: 100%;
 }
 
 .sk-swatch {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
 }
 
 .sk-swatch-chip {
-    width: 88px;
-    height: 88px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 10px;
     border: 1px solid var(--sk-border);
 }
@@ -1848,7 +2136,7 @@ button,
 }
 
 .sk-type-body {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: var(--text-18);
 }
 
@@ -1897,9 +2185,9 @@ button,
 }
 
 @media (max-width: 640px) {
-    .sk-swatch-chip {
-        width: 64px;
-        height: 64px;
+    /* Re-flow into 3 columns so chips don't get too tiny on narrow widths. */
+    .sk-swatches {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .sk-stat {
@@ -2484,17 +2772,14 @@ button,
         margin-right: auto;
     }
 
-    /* Versions variant: drop to single column, restore source order on reverse rows
-       so info always comes above the phone on mobile. */
+    /* Versions variant: drop to single column. Phone keeps its hotspots; the note
+       bubbles re-anchor below each dot so they don't run off-screen on narrow widths. */
     .sk-feature-switch--versions,
     .sk-feature-switch--versions.sk-feature-switch--reverse {
         grid-template-columns: 1fr;
         gap: 24px;
     }
-    .sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-info {
-        grid-column: 1;
-        grid-row: auto;
-    }
+    .sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-info,
     .sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-stage {
         grid-column: 1;
         grid-row: auto;
@@ -2507,6 +2792,31 @@ button,
     }
     .sk-feature-switch--versions .sk-feature-stage .sk-video--mobile {
         max-width: 300px;
+    }
+    /* Mobile: note bubbles open downward from the dot, full-width, no overflow off-screen. */
+    .sk-hot-note,
+    .sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot-note {
+        top: calc(100% + 12px);
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, 0) scale(0.96);
+        width: 220px;
+    }
+    .sk-hot-note::before,
+    .sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot-note::before {
+        top: auto;
+        bottom: 100%;
+        left: 50%;
+        right: auto;
+        width: 1px;
+        height: 12px;
+        transform: translateX(-0.5px);
+    }
+    .sk-hot:hover .sk-hot-note,
+    .sk-hot:focus-within .sk-hot-note,
+    .sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot:hover .sk-hot-note,
+    .sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot:focus-within .sk-hot-note {
+        transform: translate(-50%, 4px) scale(1);
     }
 }
 
@@ -2598,7 +2908,7 @@ button,
     }
 
     .mobile-menu-link {
-        font-family: 'IBM Plex Sans', sans-serif;
+        font-family: 'IBM Plex Mono', monospace;
         font-weight: 600;
         font-size: var(--text-24);
         color: #fff;

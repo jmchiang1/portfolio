@@ -390,3 +390,23 @@
         });
     });
 })();
+
+// ============================================
+// Before & After — wipe slider across the comparison strip.
+// A native <input type="range"> drives the wipe position; we just sync the
+// --pos CSS var so the clip-path and handle update together.
+// ============================================
+(function () {
+    document.querySelectorAll('.sk-compare').forEach(function (cmp) {
+        var input = cmp.querySelector('.sk-compare-input');
+        if (!input) return;
+        function update(v) {
+            cmp.style.setProperty('--pos', v + '%');
+        }
+        input.addEventListener('input', function () {
+            update(parseFloat(input.value));
+        });
+        // Initial sync — defaults to 0 so the Before strip is fully visible until drag.
+        update(parseFloat(input.value) || 0);
+    });
+})();
