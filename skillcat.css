@@ -844,6 +844,97 @@ button,
     aspect-ratio: 3056 / 2080;
 }
 
+/* ---- Versions variant: title + description + pill V1/V2/V3, alternating sides.
+   Phone column matches the Learner Redesign feature-switch (320px) so heights align.
+   Both columns are fixed widths and the whole row is centered in the page, so the
+   text+phone pair always sits in the middle regardless of which side the phone is on. ---- */
+.sk-feature-switch--versions {
+    grid-template-columns: 400px 320px;
+    justify-content: center;
+    gap: 72px;
+    align-items: center;
+}
+
+/* Flip the column order — info on the right, phone on the left — via explicit grid
+   placement so the markup order can stay constant. */
+.sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-info {
+    grid-column: 2;
+    grid-row: 1;
+}
+.sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-stage {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.sk-feature-info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 400px;
+    max-width: 100%;
+}
+
+.sk-feature-screen-title {
+    font-family: var(--sk-serif);
+    font-size: var(--text-40);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin: 0;
+}
+
+.sk-feature-screen-desc {
+    font-size: var(--text-18);
+    line-height: 1.55;
+    color: var(--sk-muted);
+    margin: 0;
+    max-width: 46ch;
+}
+
+.sk-version-tabs {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+/* Pill V1 / V2 / V3 — overrides the card-style .sk-feature-btn default. */
+.sk-version-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-14);
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    color: var(--sk-muted);
+    background: var(--sk-surface);
+    border: 1px solid var(--sk-border);
+    transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.sk-version-btn:hover {
+    color: #fff;
+    border-color: rgba(232, 85, 46, 0.5);
+    background: var(--sk-surface-2);
+}
+
+.sk-version-btn.is-active {
+    color: #fff;
+    background: var(--sk-orange);
+    border-color: var(--sk-orange);
+}
+
+/* The phone in the versions variant — sized to match the Learner Redesign phone. */
+.sk-feature-switch--versions .sk-feature-stage .sk-video--mobile {
+    width: 100%;
+    max-width: 320px;
+}
+
 .sk-feature-screens {
     margin-top: 14px;
     font-size: var(--text-12);
@@ -955,7 +1046,7 @@ button,
     letter-spacing: 0.08em;
     color: var(--sk-orange);
     border: 1px solid var(--sk-orange);
-    border-radius: 999px;
+    border-radius: 8px;
     padding: 4px 12px;
 }
 
@@ -995,7 +1086,7 @@ button,
     color: #fff;
     background: rgba(0, 0, 0, 0.55);
     border: 1px solid var(--sk-border);
-    border-radius: 999px;
+    border-radius: 8px;
     padding: 6px 12px;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -1173,7 +1264,7 @@ button,
     gap: 8px;
     font-size: var(--text-14);
     padding: 10px 16px;
-    border-radius: 999px;
+    border-radius: 8px;
     border: 1px solid var(--sk-border);
     background: var(--sk-surface);
 }
@@ -1293,6 +1384,791 @@ button,
 }
 
 /* ============================================
+   Design-process arc — framed shots, scroll strips,
+   brand swatches, type specimen, testing stats
+   ============================================ */
+
+/* Framed static board / screenshot (competitor boards, brand board, etc.) */
+.sk-shot {
+    overflow: hidden;
+    background: #05101f;
+    display: block;
+
+}
+
+.sk-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.sk-caption {
+    margin-top: 12px;
+    font-size: var(--text-14);
+    color: var(--sk-muted);
+    line-height: 1.5;
+    max-width: 72ch;
+}
+
+/* Brand-direction options — the alternates are muted, the chosen one is
+   highlighted so the pick reads at a glance. */
+.sk-brand-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.sk-brand-option {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+}
+
+.sk-brand-frame {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--sk-border);
+    background: #05101f;
+    transition: opacity 0.25s ease;
+}
+
+.sk-brand-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.sk-brand-option--muted .sk-brand-frame {
+    opacity: 0.5;
+}
+
+.sk-brand-option--muted:hover .sk-brand-frame {
+    opacity: 0.85;
+}
+
+.sk-brand-option--picked .sk-brand-frame {
+    border: 2px solid var(--sk-orange);
+    box-shadow: 0 0 0 4px rgba(232, 85, 46, 0.15),
+                0 24px 60px -28px rgba(0, 0, 0, 0.7);
+}
+
+.sk-brand-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--sk-orange);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.sk-brand-cap {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sk-faint);
+}
+
+.sk-brand-option--picked .sk-brand-cap {
+    color: var(--sk-orange-2);
+}
+
+@media (max-width: 640px) {
+    .sk-brand-options {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+}
+
+/* Horizontal scroll strip for wide rows of screens */
+/* Fit-to-width row (default): every photo shares the width with a 12px gap,
+   so all of them are visible at once — no horizontal scroll. */
+.sk-strip {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.sk-strip img {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid var(--sk-border);
+}
+
+.sk-strip-hint {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.08em;
+    color: var(--sk-faint);
+    margin-top: 8px;
+}
+
+/* Three-up (or two-up) version comparison — show a single screen across
+   V1 / V2 / V3 so the evolution reads at a glance. */
+.sk-evolve {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.sk-evolve-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.sk-evolve-row--2up {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.sk-evolve-step {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+}
+
+.sk-evolve-step img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--sk-border);
+}
+
+.sk-evolve-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sk-faint);
+}
+
+@media (max-width: 640px) {
+    .sk-evolve-row { gap: 10px; }
+}
+
+/* ============================================
+   Iteration scrubber — drag V1 → V2 → V3 and all 5 phones cross-fade
+   together. The native range input is laid over a custom track + thumb.
+   ============================================ */
+.sk-scrubber {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.sk-scrubber-control {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.sk-scrubber-stops {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 18px;
+}
+
+.sk-scrub-stop {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    background: transparent;
+    border: none;
+    color: var(--sk-faint);
+    cursor: url('assets/pointer.cur'), pointer;
+    transition: color 0.2s ease;
+    font-family: inherit;
+}
+
+.sk-scrub-stop:hover { color: var(--sk-muted); }
+
+.sk-scrub-stop.is-active { color: var(--sk-orange); }
+
+.sk-scrub-stop-num {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-14);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.sk-scrub-stop-label {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-11);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.sk-scrubber-track {
+    position: relative;
+    height: 28px;
+    touch-action: none;
+}
+
+.sk-scrubber-rail {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    right: 8px;
+    height: 3px;
+    transform: translateY(-50%);
+    background: var(--sk-border);
+    border-radius: 8px;
+}
+
+.sk-scrubber-fill {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    height: 3px;
+    transform: translateY(-50%);
+    background: var(--sk-orange);
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.sk-scrubber-tick {
+    position: absolute;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sk-bg);
+    border: 2px solid var(--sk-border);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: border-color 0.2s ease;
+}
+
+.sk-scrubber-tick.is-passed { border-color: var(--sk-orange); }
+
+.sk-scrubber-thumb {
+    position: absolute;
+    top: 50%;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--sk-orange);
+    border: 3px solid var(--sk-bg);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 14px rgba(232, 85, 46, 0.45),
+                0 0 0 1px var(--sk-orange);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Native range input layered on top — invisible, but it carries focus +
+   keyboard + drag. */
+.sk-scrubber-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    opacity: 0;
+    cursor: url('assets/pointer.cur'), grab;
+    z-index: 3;
+}
+
+.sk-scrubber-input:active { cursor: grabbing; }
+
+.sk-scrubber-input:focus-visible + .sk-scrubber-thumb,
+.sk-scrubber-input:focus-visible {
+    outline: 2px solid var(--sk-orange-2);
+    outline-offset: 4px;
+    border-radius: 8px;
+}
+
+/* 5-up row of phones; each phone has 3 stacked images (V1/V2/V3) whose
+   opacity is driven by the scrubber. */
+.sk-scrubber-phones {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.sk-scrub-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+}
+
+.sk-scrub-name {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sk-faint);
+    text-align: center;
+}
+
+.sk-scrub-phone {
+    position: relative;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--sk-border);
+    background: #05101f;
+}
+
+.sk-scrub-phone img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+}
+
+@media (max-width: 820px) {
+    .sk-scrubber-phones { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .sk-scrub-name { font-size: var(--text-11); }
+}
+
+@media (max-width: 640px) {
+    .sk-scrubber { gap: 24px; }
+    .sk-scrubber-phones { gap: 6px; }
+    .sk-scrub-name { font-size: var(--text-10); letter-spacing: 0.04em; }
+    .sk-scrub-stop-label { display: none; }
+}
+
+/* A labelled iteration step (V1 / V2 / V3 rows) */
+.sk-evo {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.sk-evo-label {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.sk-evo-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sk-orange);
+}
+
+.sk-evo-note {
+    font-size: var(--text-15);
+    color: var(--sk-muted);
+}
+
+/* Brand colour swatches */
+.sk-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.sk-swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sk-swatch-chip {
+    width: 88px;
+    height: 88px;
+    border-radius: 10px;
+    border: 1px solid var(--sk-border);
+}
+
+.sk-swatch-name {
+    font-size: var(--text-13);
+    font-weight: 600;
+}
+
+.sk-swatch-hex {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    color: var(--sk-muted);
+}
+
+/* Type specimen */
+.sk-typescale {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
+.sk-type-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 0;
+    /* border-bottom: 1px solid var(--sk-border); */
+}
+
+.sk-type-row:last-child {
+    border-bottom: none;
+}
+
+.sk-type-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sk-faint);
+}
+
+.sk-type-display {
+    font-family: var(--sk-serif);
+    font-size: var(--text-32);
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.sk-type-body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: var(--text-18);
+}
+
+.sk-type-mono {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-16);
+    letter-spacing: 0.04em;
+}
+
+/* Testing stat row */
+.sk-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.sk-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px;
+    border-radius: 12px;
+    border: 1px solid var(--sk-border);
+    background: var(--sk-surface);
+}
+
+.sk-stat-num {
+    font-family: var(--sk-serif);
+    font-size: var(--text-40);
+    font-weight: 400;
+    color: var(--sk-orange-2);
+    line-height: 1;
+}
+
+.sk-stat-label {
+    font-size: var(--text-14);
+    color: var(--sk-muted);
+    line-height: 1.4;
+}
+
+@media (max-width: 820px) {
+    .sk-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 640px) {
+    .sk-swatch-chip {
+        width: 64px;
+        height: 64px;
+    }
+
+    .sk-stat {
+        padding: 18px;
+    }
+}
+
+/* ============================================
+   Testing — per-flow result cards + heatmap evidence grid
+   ============================================ */
+.sk-flow-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.sk-flow-result {
+    /* button reset — these are clickable tabs */
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    cursor: url('assets/pointer.cur'), pointer;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px;
+    border-radius: 12px;
+    border: 1px solid var(--sk-border);
+    background: var(--sk-surface);
+    /* Inactive tabs sit slightly back so the active one reads as the focus. */
+    opacity: 0.72;
+    transition: opacity 0.18s ease, transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.sk-flow-result:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+/* Highlight the strongest and weakest flows so the eye lands on the contrast. */
+.sk-flow-result--win {
+    border-color: rgba(120, 220, 160, 0.35);
+    background: rgba(120, 220, 160, 0.06);
+}
+.sk-flow-result--weak {
+    border-color: rgba(232, 85, 46, 0.5);
+    background: var(--sk-orange-soft);
+}
+
+/* Active tab: full opacity + a soft glow that matches its flow accent. */
+.sk-flow-result.is-active {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.sk-flow-result--win.is-active {
+    box-shadow: 0 0 0 2px rgba(120, 220, 160, 0.55), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.sk-flow-result--weak.is-active {
+    box-shadow: 0 0 0 2px rgba(232, 85, 46, 0.6), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.sk-flow-result:focus-visible {
+    outline: 2px solid var(--sk-orange-2);
+    outline-offset: 2px;
+}
+
+.sk-flow-result-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sk-orange);
+    margin: 0;
+}
+.sk-flow-result--win .sk-flow-result-tag { color: #7cd9a3; }
+
+.sk-flow-result-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sk-flow-bar {
+    display: grid;
+    grid-template-columns: 64px 1fr 56px;
+    align-items: center;
+    gap: 12px;
+}
+
+.sk-flow-bar-label {
+    font-size: var(--text-12);
+    color: var(--sk-muted);
+    letter-spacing: 0.04em;
+}
+
+.sk-flow-bar-track {
+    position: relative;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.sk-flow-bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: 4px;
+    background: #7cd9a3; /* success — soft green */
+}
+
+.sk-flow-bar-fill--miss {
+    background: var(--sk-orange); /* mis-click — brand orange */
+}
+
+.sk-flow-bar-num {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-14);
+    color: #fff;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Heatmap evidence — grouped by flow, two phones per row. */
+.sk-heat-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.sk-heat-group + .sk-heat-group {
+    margin-top: 36px;
+}
+
+.sk-heat-group-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--sk-muted);
+    margin: 0;
+}
+
+.sk-heat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--sk-orange);
+    flex-shrink: 0;
+}
+.sk-heat-dot--win  { background: #7cd9a3; }
+.sk-heat-dot--miss { background: var(--sk-orange); }
+
+.sk-heat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px;
+}
+
+/* 3-up variant — for flows where the heatmap story takes three screens
+   (e.g. Flow 01: splash → goal → free trial). */
+.sk-heat-grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.sk-heat {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+}
+
+/* Frame each heatmap as a phone — same look as the iteration evolution shots. */
+.sk-heat-frame {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 32px;
+    border: 8px solid #000;
+    overflow: hidden;
+    background: #05101f;
+    margin: 0 auto;
+}
+
+.sk-heat-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.sk-heat figcaption {
+    font-size: var(--text-14);
+    line-height: 1.55;
+    color: var(--sk-muted);
+    text-align: center;
+    max-width: 38ch;
+    margin: 0 auto;
+}
+
+/* Tab-driven panel — only the active flow's content is shown. The [hidden] attribute
+   handles the no-JS / pre-script state; .is-active handles JS-driven swapping. */
+.sk-flow-panels {
+    margin-top: 12px;
+}
+.sk-flow-panel {
+    display: none;
+}
+.sk-flow-panel.is-active {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: sk-stagger-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Small "tap a flow…" hint trailing the section label. */
+.sk-hint {
+    color: var(--sk-faint);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+/* Quote wall — used when a flow has no heatmaps (Flow 01). Pulls real user feedback
+   from the Maze board into a tidy chip grid. */
+.sk-quote-wall {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.sk-quote-wall li {
+    padding: 18px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--sk-border);
+    background: var(--sk-surface);
+    font-family: var(--sk-serif);
+    font-size: var(--text-18);
+    line-height: 1.4;
+    color: #fff;
+}
+
+@media (max-width: 820px) {
+    .sk-flow-results {
+        grid-template-columns: 1fr;
+    }
+    .sk-heat-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    .sk-heat-frame {
+        max-width: 260px;
+    }
+    .sk-quote-wall {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
    Page entrance & exit
    ============================================ */
 .page-transition-cover {
@@ -1360,6 +2236,16 @@ button,
 .cs-visible .sk-steps,
 .cs-visible .sk-phases,
 .cs-visible .sk-metrics,
+.cs-visible .sk-shot,
+.cs-visible .sk-strip,
+.cs-visible .sk-stats,
+.cs-visible .sk-swatches,
+.cs-visible .sk-typescale,
+.cs-visible .sk-evo,
+.cs-visible .sk-evolve,
+.cs-visible .sk-scrubber,
+.cs-visible .sk-flow-results,
+.cs-visible .sk-heat-group,
 .cs-visible .sk-meta {
     animation: sk-stagger-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
@@ -1420,6 +2306,16 @@ button,
     .cs-visible .sk-steps,
     .cs-visible .sk-phases,
     .cs-visible .sk-metrics,
+    .cs-visible .sk-shot,
+    .cs-visible .sk-strip,
+    .cs-visible .sk-stats,
+    .cs-visible .sk-swatches,
+    .cs-visible .sk-typescale,
+    .cs-visible .sk-evo,
+    .cs-visible .sk-evolve,
+    .cs-visible .sk-scrubber,
+    .cs-visible .sk-flow-results,
+    .cs-visible .sk-heat-group,
     .cs-visible .sk-meta {
         animation: none;
     }
@@ -1472,6 +2368,7 @@ button,
         margin-left: 0;
         margin-right: 0;
     }
+
     .cs-hero-media {
         width: 100%;
         max-width: 560px;
@@ -1586,9 +2483,35 @@ button,
         margin-left: auto;
         margin-right: auto;
     }
+
+    /* Versions variant: drop to single column, restore source order on reverse rows
+       so info always comes above the phone on mobile. */
+    .sk-feature-switch--versions,
+    .sk-feature-switch--versions.sk-feature-switch--reverse {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-info {
+        grid-column: 1;
+        grid-row: auto;
+    }
+    .sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-stage {
+        grid-column: 1;
+        grid-row: auto;
+    }
+    .sk-feature-screen-title {
+        font-size: var(--text-28);
+    }
+    .sk-feature-screen-desc {
+        font-size: var(--text-16);
+    }
+    .sk-feature-switch--versions .sk-feature-stage .sk-video--mobile {
+        max-width: 300px;
+    }
 }
 
 @media (max-width: 640px) {
+
     /* Keep the overlapping phone inside the content gutter. */
     .cs-hero-phone {
         left: 6px;
@@ -1790,6 +2713,7 @@ button,
 .cs-nav-links .nav-link.active {
     color: var(--sk-orange-2);
 }
+
 /* ==========================================================================
    Mobile navbar — standardized to match the index.html navbar exactly.
    Appended last so it wins over this file's earlier navbar rules (logo size

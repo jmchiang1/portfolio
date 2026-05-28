@@ -258,3 +258,135 @@
         }
     });
 })();
+
+// ============================================
+// Iteration scrubber — drag V1 → V2 → V3 and all 5 phones cross-fade
+// together. Drives a native range input (for keyboard + drag) and tweens
+// to a stop when a stop button is clicked.
+// ============================================
+(function () {
+    var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('.sk-scrubber').forEach(function (scrub) {
+        var input = scrub.querySelector('.sk-scrubber-input');
+        var thumb = scrub.querySelector('.sk-scrubber-thumb');
+        var fill  = scrub.querySelector('.sk-scrubber-fill');
+        var ticks = scrub.querySelectorAll('.sk-scrubber-tick');
+        var stops = scrub.querySelectorAll('.sk-scrub-stop');
+        var phones = scrub.querySelectorAll('.sk-scrub-phone');
+        if (!input || !phones.length) return;
+
+        var stopCount = stops.length || 3;
+        var max = stopCount - 1;
+
+        function update(t) {
+            if (t < 0) t = 0; else if (t > max) t = max;
+            var pct = (t / max) * 100;
+            if (thumb) thumb.style.left = pct + '%';
+            if (fill) fill.style.width = pct + '%';
+
+            // Each version's opacity peaks at its stop and falls off linearly
+            // toward its neighbours (1 at its own stop, 0 at the adjacent ones).
+            phones.forEach(function (p) {
+                var imgs = p.querySelectorAll('img');
+                imgs.forEach(function (img, i) {
+                    img.style.opacity = Math.max(0, 1 - Math.abs(t - i));
+                });
+            });
+
+            // Stop label: the nearest one is "active"
+            var nearest = Math.round(t);
+            stops.forEach(function (s, i) {
+                s.classList.toggle('is-active', i === nearest);
+            });
+            ticks.forEach(function (tk, i) {
+                tk.classList.toggle('is-passed', t >= i - 0.001);
+            });
+        }
+
+        function placeTicks() {
+            ticks.forEach(function (tk, i) {
+                tk.style.left = ((i / max) * 100) + '%';
+            });
+        }
+
+        input.addEventListener('input', function () {
+            update(parseFloat(input.value));
+        });
+
+        function tweenTo(target) {
+            var from = parseFloat(input.value);
+            if (reduceMotion) { input.value = target; update(target); return; }
+            var dur = 450, start = performance.now();
+            function step(now) {
+                var k = Math.min(1, (now - start) / dur);
+                var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+                var v = from + (target - from) * e;
+                input.value = v;
+                update(v);
+                if (k < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        stops.forEach(function (s, i) {
+            s.addEventListener('click', function () { tweenTo(i); });
+        });
+
+        placeTicks();
+        update(parseFloat(input.value) || 0);
+    });
+})();
+
+// ============================================
+// Testing — per-flow tabs.
+// The 3 flow-result cards in #testing act as a tablist; clicking one swaps the
+// .sk-flow-panel below. Arrow keys move between tabs (with wrap). Uses the same
+// data-flow scoping pattern as sk-feature-switch, but the cards aren't .sk-feature-btn
+// so they need their own tiny activator.
+// ============================================
+(function () {
+    var list = document.querySelector('#testing .sk-flow-results[role="tablist"]');
+    if (!list) return;
+
+    var tabs = Array.prototype.slice.call(list.querySelectorAll('.sk-flow-result[role="tab"]'));
+    var panels = Array.prototype.slice.call(
+        document.querySelectorAll('#testing .sk-flow-panels .sk-flow-panel[role="tabpanel"]')
+    );
+    if (!tabs.length || !panels.length) return;
+
+    function activate(flow, focus) {
+        tabs.forEach(function (t) {
+            var on = t.getAttribute('data-flow') === flow;
+            t.classList.toggle('is-active', on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+            t.tabIndex = on ? 0 : -1;
+            if (on && focus) t.focus();
+        });
+        panels.forEach(function (p) {
+            var on = p.getAttribute('data-flow') === flow;
+            p.classList.toggle('is-active', on);
+            // [hidden] mirrors .is-active so AT users get the same view as sighted users.
+            if (on) p.removeAttribute('hidden');
+            else p.setAttribute('hidden', '');
+        });
+    }
+
+    tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () {
+            activate(tab.getAttribute('data-flow'));
+        });
+        tab.addEventListener('keydown', function (e) {
+            var dir = 0;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') dir = 1;
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') dir = -1;
+            else if (e.key === 'Home') { activate(tabs[0].getAttribute('data-flow'), true); e.preventDefault(); return; }
+            else if (e.key === 'End') { activate(tabs[tabs.length - 1].getAttribute('data-flow'), true); e.preventDefault(); return; }
+            else return;
+            e.preventDefault();
+            var next = (i + dir + tabs.length) % tabs.length;
+            activate(tabs[next].getAttribute('data-flow'), true);
+        });
+    });
+})();
