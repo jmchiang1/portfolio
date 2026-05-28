@@ -51,6 +51,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
     cursor: url('assets/cursor.cur'), auto;
+    /* Clip any horizontal overflow at the body — protects against absolutely-
+       positioned children (e.g. hotspot note bubbles near the phone edge)
+       pushing the page wider than the viewport on mobile. `clip` preserves
+       sticky positioning where `hidden` would break it. */
+    overflow-x: clip;
 }
 
 a,
@@ -226,11 +231,11 @@ button,
    ============================================ */
 .back-to-top {
     position: fixed;
-    bottom: 40px;
-    right: 40px;
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
+    bottom: 36px;
+    right: 36px;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -2680,12 +2685,7 @@ button,
         font-size: var(--text-12);
     }
 
-    .back-to-top {
-        bottom: 24px;
-        right: 24px;
-        width: 40px;
-        height: 40px;
-    }
+    /* Back-to-top: keep nocta's 46×46 / bottom:36 / right:36 across breakpoints. */
 
     .cs-two-col {
         gap: 12px;
@@ -2793,14 +2793,16 @@ button,
     .sk-feature-switch--versions .sk-feature-stage .sk-video--mobile {
         max-width: 300px;
     }
-    /* Mobile: note bubbles open downward from the dot, full-width, no overflow off-screen. */
+    /* Mobile: note bubbles open downward from the dot. Cap width to a fraction
+       of the viewport so notes near the right edge of a phone don't push past
+       the screen. body { overflow-x: clip } catches anything that still slips. */
     .sk-hot-note,
     .sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot-note {
         top: calc(100% + 12px);
         left: 50%;
         right: auto;
         transform: translate(-50%, 0) scale(0.96);
-        width: 220px;
+        width: min(180px, calc(100vw - 48px));
     }
     .sk-hot-note::before,
     .sk-feature-switch--versions.sk-feature-switch--reverse .sk-hot-note::before {
@@ -3050,5 +3052,43 @@ button,
         right: 16px;
         top: 22px;
         transform: none;
+    }
+}
+
+/* ==========================================================================
+   SkillCat — final mobile-only adjustments (appended last so they win).
+   ========================================================================== */
+@media (max-width: 640px) {
+    /* Per-flow result row: keep the three flow cards side-by-side on mobile
+       so the comparison still reads as a row. Strip the "Success" / "Mis-click"
+       text labels — the colored bars + percentages carry the meaning. */
+    .sk-flow-results {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    .sk-flow-results .sk-flow-result {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 14px 12px;
+        gap: 12px;
+    }
+    .sk-flow-result-tag {
+        font-size: 10px;
+        letter-spacing: 0.08em;
+    }
+    .sk-flow-result-bars {
+        gap: 8px;
+    }
+    /* Bars become a 2-column grid (track | number) instead of label | track | number. */
+    .sk-flow-bar {
+        grid-template-columns: 1fr 44px;
+        gap: 8px;
+    }
+    .sk-flow-bar-label {
+        display: none;
+    }
+    .sk-flow-bar-num {
+        font-size: 11px;
     }
 }
