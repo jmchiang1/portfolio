@@ -100,7 +100,13 @@
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    }, {
+        // Trigger as soon as ANY part of the next section is within 240px of
+        // the bottom of the viewport — sections finish fading in *before*
+        // the reader's eye reaches them, so no blank gap between sections.
+        threshold: 0,
+        rootMargin: '0px 0px 240px 0px',
+    });
 
     sections.forEach(function (section, i) {
         if (i === 0) return;

@@ -297,12 +297,12 @@
                 </div>
             </div>
 
-            <p class="sk-block-label">Voice</p>
+            <!-- <p class="sk-block-label">Voice</p>
             <div class="sk-steps">
                 <div class="sk-step"><p class="sk-step-num">01</p><p class="sk-step-title">Practical &amp; direct</p><p class="sk-step-desc">Say the next thing to do, plainly. No fluff between the learner and the goal.</p></div>
                 <div class="sk-step"><p class="sk-step-num">02</p><p class="sk-step-title">Speaks the trade</p><p class="sk-step-desc">Uses the field's own language so it reads as built by people who get it.</p></div>
                 <div class="sk-step"><p class="sk-step-num">03</p><p class="sk-step-title">Encouraging, not childish</p><p class="sk-step-desc">Celebrates real progress toward a paycheck — without cartoon mascots.</p></div>
-            </div>
+            </div> -->
         </section>
 
 
@@ -662,23 +662,23 @@
             </div>
 
             <!-- Per-flow tabs: each card is a tab. Click one to swap the heatmap panel below.
-                 Default: Flow 02 (the success case) so a first-time visitor sees clean clicks first. -->
+                 Default: Flow 01 (Create Account) so the case study reads in flow order. -->
             <div class="sk-flow-results" role="tablist" aria-label="Testing flows">
-                <button type="button" class="sk-flow-result" role="tab" data-flow="1" aria-selected="false" aria-controls="flow-panel-1" id="flow-tab-1" tabindex="-1">
+                <button type="button" class="sk-flow-result is-active" role="tab" data-flow="1" aria-selected="true" aria-controls="flow-panel-1" id="flow-tab-1" tabindex="0">
                     <p class="sk-flow-result-tag">Flow 01 · Create Account</p>
                     <div class="sk-flow-result-bars">
                         <div class="sk-flow-bar"><span class="sk-flow-bar-label">Success</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill" style="width:71.4%"></div></div><span class="sk-flow-bar-num">71.4%</span></div>
                         <div class="sk-flow-bar"><span class="sk-flow-bar-label">Mis-click</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill sk-flow-bar-fill--miss" style="width:26.6%"></div></div><span class="sk-flow-bar-num">26.6%</span></div>
                     </div>
                 </button>
-                <button type="button" class="sk-flow-result sk-flow-result--win is-active" role="tab" data-flow="2" aria-selected="true" aria-controls="flow-panel-2" id="flow-tab-2" tabindex="0">
+                <button type="button" class="sk-flow-result" role="tab" data-flow="2" aria-selected="false" aria-controls="flow-panel-2" id="flow-tab-2" tabindex="-1">
                     <p class="sk-flow-result-tag">Flow 02 · Start Course</p>
                     <div class="sk-flow-result-bars">
                         <div class="sk-flow-bar"><span class="sk-flow-bar-label">Success</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill" style="width:100%"></div></div><span class="sk-flow-bar-num">100%</span></div>
                         <div class="sk-flow-bar"><span class="sk-flow-bar-label">Mis-click</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill sk-flow-bar-fill--miss" style="width:78%"></div></div><span class="sk-flow-bar-num">78%</span></div>
                     </div>
                 </button>
-                <button type="button" class="sk-flow-result sk-flow-result--weak" role="tab" data-flow="3" aria-selected="false" aria-controls="flow-panel-3" id="flow-tab-3" tabindex="-1">
+                <button type="button" class="sk-flow-result" role="tab" data-flow="3" aria-selected="false" aria-controls="flow-panel-3" id="flow-tab-3" tabindex="-1">
                     <p class="sk-flow-result-tag">Flow 03 · Edit Path</p>
                     <div class="sk-flow-result-bars">
                         <div class="sk-flow-bar"><span class="sk-flow-bar-label">Success</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill" style="width:33.3%"></div></div><span class="sk-flow-bar-num">33.3%</span></div>
@@ -693,7 +693,7 @@
                 <!-- Flow 01: three heatmaps tracing the registration journey —
                      splash → onboarding question → free trial. Clicks land on the
                      intended CTA at each step. -->
-                <div class="sk-flow-panel" role="tabpanel" id="flow-panel-1" aria-labelledby="flow-tab-1" data-flow="1" hidden>
+                <div class="sk-flow-panel is-active" role="tabpanel" id="flow-panel-1" aria-labelledby="flow-tab-1" data-flow="1">
                     <div class="sk-heat-grid sk-heat-grid--3">
                         <figure class="sk-heat">
                             <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow1-splash.png" alt="Splash heatmap — clicks land on Get Started" loading="lazy"></div>
@@ -711,7 +711,7 @@
                 </div>
 
                 <!-- Flow 02 (default visible): success heatmaps -->
-                <div class="sk-flow-panel is-active" role="tabpanel" id="flow-panel-2" aria-labelledby="flow-tab-2" data-flow="2">
+                <div class="sk-flow-panel" role="tabpanel" id="flow-panel-2" aria-labelledby="flow-tab-2" data-flow="2" hidden>
                     <div class="sk-heat-grid">
                         <figure class="sk-heat">
                             <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow2-home-success.png" alt="Home heatmap — clicks land on the Start Learning card" loading="lazy"></div>
@@ -782,7 +782,6 @@
             </div> -->
 
             <!-- The journey, in five flows -->
-            <p class="sk-block-label">The journey, in five flows</p>
             <div class="sk-feature-switch">
                 <!-- Left: flow selector buttons -->
                 <div class="sk-feature-list" role="tablist" aria-label="Learner journey flows">
@@ -1048,36 +1047,9 @@
         </section> -->
 
         <!-- ============================================================
-             Section 5 — Reflection
-             ============================================================ -->
-        <section id="reflection" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">08 · Reflection</p>
-            </div>
-
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>Working across consumer onboarding, B2B tooling, and specs meant constantly shifting altitude — from a single animation frame, up to an enterprise workflow, back down to the written rules that make it real. The throughline: understand the job the person is actually trying to do, then shape the product around that.</p>
-                </div>
-            </div>
-
-            <p class="sk-block-label">What this case study shows about how I work</p>
-            <ul class="sk-decisions">
-                <li>I reframe problems at the model level before touching layout — the admin dashboard is the clearest example.</li>
-                <li>I design complete state systems, which is what makes my work clean to build and quick to ship.</li>
-                <li>I care about craft and emotion, down to easing curves, because in a learning product those details drive whether people come back.</li>
-                <li>I can carry work from first concept all the way to engineering handoff.</li>
-            </ul>
-
-            <!-- <div class="sk-signature">
-                <p><strong>Jonathan Chiang</strong> · Product Designer · <a href="about.html">About</a> · <a href="/">More work</a></p>
-            </div> -->
-        </section>
-
-
-        <!-- ============================================================
              Before & After — drag a single line across six screens to wipe
-             between the original SkillCat app and the redesign.
+             between the original SkillCat app and the redesign. Sits before
+             Reflection so the case study still closes on personal takeaway.
              ============================================================ -->
         <section id="comparison" class="cs-section">
             <div class="sk-section-head">
@@ -1125,6 +1097,30 @@
                      Starts at 0 so the full Before strip is visible until the user drags. -->
                 <input type="range" min="0" max="100" value="0" step="0.1" class="sk-compare-input" aria-label="Drag right to reveal the redesign">
             </figure>
+        </section>
+
+
+        <!-- ============================================================
+             09 — Reflection (closes the case study)
+             ============================================================ -->
+        <section id="reflection" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">09 · Reflection</p>
+            </div>
+
+            <div class="cs-two-col">
+                <div class="cs-content">
+                    <p>Working across consumer onboarding, B2B tooling, and specs meant constantly shifting altitude — from a single animation frame, up to an enterprise workflow, back down to the written rules that make it real. The throughline: understand the job the person is actually trying to do, then shape the product around that.</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">What this case study shows about how I work</p>
+            <ul class="sk-decisions">
+                <li>I reframe problems at the model level before touching layout — the admin dashboard is the clearest example.</li>
+                <li>I design complete state systems, which is what makes my work clean to build and quick to ship.</li>
+                <li>I care about craft and emotion, down to easing curves, because in a learning product those details drive whether people come back.</li>
+                <li>I can carry work from first concept all the way to engineering handoff.</li>
+            </ul>
         </section>
 
     </main>

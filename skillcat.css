@@ -2225,8 +2225,8 @@ button,
     border-radius: 12px;
     border: 1px solid var(--sk-border);
     background: var(--sk-surface);
-    /* Inactive tabs sit slightly back so the active one reads as the focus. */
-    opacity: 0.72;
+    /* Inactive tabs sit visibly back so the active one reads as the focus. */
+    opacity: 0.55;
     transition: opacity 0.18s ease, transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
 }
 
@@ -2235,27 +2235,15 @@ button,
     transform: translateY(-1px);
 }
 
-/* Highlight the strongest and weakest flows so the eye lands on the contrast. */
-.sk-flow-result--win {
-    border-color: rgba(120, 220, 160, 0.35);
-    background: rgba(120, 220, 160, 0.06);
-}
-.sk-flow-result--weak {
-    border-color: rgba(232, 85, 46, 0.5);
-    background: var(--sk-orange-soft);
-}
-
-/* Active tab: full opacity + a soft glow that matches its flow accent. */
+/* Active tab — matches the .sk-feature-btn (Learner flow) selection pattern:
+   orange border + orange-soft fill. All cards look identical when inactive;
+   the active one pops via the orange ring. */
 .sk-flow-result.is-active {
     opacity: 1;
-    transform: translateY(-1px);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-.sk-flow-result--win.is-active {
-    box-shadow: 0 0 0 2px rgba(120, 220, 160, 0.55), 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-.sk-flow-result--weak.is-active {
-    box-shadow: 0 0 0 2px rgba(232, 85, 46, 0.6), 0 8px 24px rgba(0, 0, 0, 0.35);
+    transform: translateY(-2px);
+    border-color: var(--sk-orange);
+    background: var(--sk-orange-soft);
+    box-shadow: 0 0 0 2px var(--sk-orange), 0 10px 28px rgba(0, 0, 0, 0.45);
 }
 
 .sk-flow-result:focus-visible {
@@ -2271,7 +2259,6 @@ button,
     color: var(--sk-orange);
     margin: 0;
 }
-.sk-flow-result--win .sk-flow-result-tag { color: #7cd9a3; }
 
 .sk-flow-result-bars {
     display: flex;
@@ -2500,14 +2487,16 @@ button,
     }
 }
 
-/* Scroll reveal */
+/* Scroll reveal — short fade, small lift. Pairs with a generous "trigger
+   early" rootMargin in skillcat.js so sections are fully in by the time the
+   reader's eye reaches them. */
 .cs-section,
 .cs-header,
 .cs-divider {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(24px);
+    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cs-section.cs-visible,

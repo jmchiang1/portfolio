@@ -635,8 +635,8 @@
     heading.innerHTML = '<span class="hero-typed"></span><span class="hero-cursor" aria-hidden="true">|</span>';
 
     var typed = heading.querySelector('.hero-typed');
-    var START_DELAY_MS = 600;  // kicks in shortly after hero entrance begins (0.3s)
-    var CHAR_MS = 100;         // per-character speed
+    var START_DELAY_MS = 300;  // kicks in just as the hero entrance starts
+    var CHAR_MS = 35;          // per-character speed — fast typewriter feel
 
     var cursor = heading.querySelector('.hero-cursor');
     var i = 0;
@@ -646,10 +646,10 @@
             i++;
             setTimeout(typeNext, CHAR_MS);
         } else {
-            // Typing complete — fade out the cursor after a short hold
+            // Typing complete — brief hold so the user reads the cursor blink, then fade.
             setTimeout(function () {
                 if (cursor) cursor.classList.add('hero-cursor-hidden');
-            }, 500);
+            }, 280);
         }
     }
     setTimeout(typeNext, START_DELAY_MS);
