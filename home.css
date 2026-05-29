@@ -2413,34 +2413,34 @@ body.grid-mode .project-card:hover .project-overlay {
     padding: 36px 40px 32px;
     border-radius: 4px;
     overflow: hidden;
-    background: var(--case-color, #1f1f24);
-    border: 1px solid color-mix(in oklab, var(--case-color, #1f1f24) 60%, white 25%);
+    background: var(--case-color, #f4f4f6);
+    border: 1px solid color-mix(in oklab, var(--case-color, #f4f4f6) 60%, white 25%);
     box-shadow: 0 40px 80px -28px rgba(0, 0, 0, 0.8), 0 10px 24px -12px rgba(17, 128, 249, 0.2);
-    color: var(--case-text, #fff);
+    color: var(--case-text, #1c1c20);
 }
 .kb-fly .build-card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
 .kb-fly .build-card-brand { display: flex; flex-direction: column; gap: 4px; }
-.kb-fly .build-card-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: var(--text-20); letter-spacing: -0.02em; color: var(--case-text, #fff); opacity: 0.95; }
-.kb-fly .build-card-meta { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.55)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-serial { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 600; color: var(--case-text-dim, rgba(255,255,255,0.55)); letter-spacing: 0.14em; padding: 3px 9px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--case-color, #000) 60%, white 40%); }
-.kb-fly .build-card-name { font-family: 'Space Mono', monospace; font-size: var(--text-20); font-weight: 700; color: var(--case-text, #fff); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; min-height: 24px; line-height: 1.1; }
+.kb-fly .build-card-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: var(--text-20); letter-spacing: -0.02em; color: var(--case-text, #1c1c20); opacity: 0.95; }
+.kb-fly .build-card-meta { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(28,28,32,0.55)); letter-spacing: 0.18em; text-transform: uppercase; }
+.kb-fly .build-card-serial { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 600; color: var(--case-text-dim, rgba(28,28,32,0.55)); letter-spacing: 0.14em; padding: 3px 9px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--case-color, #f4f4f6) 60%, white 40%); }
+.kb-fly .build-card-name { font-family: 'Space Mono', monospace; font-size: var(--text-20); font-weight: 700; color: var(--case-text, #1c1c20); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; min-height: 24px; line-height: 1.1; }
 .kb-fly .build-card-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; margin-bottom: 22px; }
 .kb-fly .build-card-spec-row { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .kb-fly .build-card-spec dt { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.5)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-spec dd { display: inline-flex; align-items: center; gap: 7px; font-family: 'Space Mono', monospace; font-size: var(--text-12); font-weight: 600; color: var(--case-text, #fff); letter-spacing: 0.04em; text-transform: uppercase; min-width: 0; }
+.kb-fly .build-card-spec dd { display: inline-flex; align-items: center; gap: 7px; font-family: 'Space Mono', monospace; font-size: var(--text-12); font-weight: 600; color: var(--case-text, #1c1c20); letter-spacing: 0.04em; text-transform: uppercase; min-width: 0; }
 .kb-fly .build-card-spec dd i { font-size: var(--text-13); }
 .kb-fly .build-card-swatch { width: 11px; height: 11px; border-radius: 8px; background: var(--swatch-color, #fff); border: 1px solid rgba(255,255,255,0.45); flex-shrink: 0; }
 .kb-fly .build-card-foot { display: grid; grid-template-columns: 1fr 1.6fr; gap: 24px; padding-top: 18px; border-top: 1px dashed color-mix(in oklab, var(--case-text-dim, rgba(255,255,255,0.4)) 60%, transparent); }
 .kb-fly .build-card-foot-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .kb-fly .build-card-foot-label { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.45)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-foot-value { font-family: 'Space Mono', monospace; font-size: var(--text-13); font-weight: 600; color: var(--case-text, #fff); letter-spacing: 0.04em; }
-.kb-fly .build-card-foot-sig { font-family: 'Space Grotesk', serif; font-size: var(--text-16); font-weight: 400; font-style: italic; letter-spacing: 0.04em; color: var(--case-text, #fff); opacity: 0.9; }
+.kb-fly .build-card-foot-value { font-family: 'Space Mono', monospace; font-size: var(--text-13); font-weight: 600; color: var(--case-text, #1c1c20); letter-spacing: 0.04em; }
+.kb-fly .build-card-foot-sig { font-family: 'Space Grotesk', serif; font-size: var(--text-16); font-weight: 400; font-style: italic; letter-spacing: 0.04em; color: var(--case-text, #1c1c20); opacity: 0.9; }
 
 /* ---- Keyboard inside the card (matches welcome.css) ---- */
 .kb-fly .build-card-keyboard {
     --u: 18px;
-    --kb-bg: color-mix(in oklab, var(--case-color, #1f1f24) 70%, black 30%);
-    --kb-edge: color-mix(in oklab, var(--case-color, #1f1f24) 55%, white 10%);
+    --kb-bg: color-mix(in oklab, var(--case-color, #f4f4f6) 70%, black 30%);
+    --kb-edge: color-mix(in oklab, var(--case-color, #f4f4f6) 55%, white 10%);
     --kc-bg: var(--keycap-color, #e7dcc2);
     --kc-edge: color-mix(in oklab, var(--keycap-color, #e7dcc2) 78%, black 22%);
     --row-h: var(--u);
@@ -2463,7 +2463,7 @@ body.grid-mode .project-card:hover .project-overlay {
     border: 1px solid var(--kc-edge);
     border-radius: 2px;
 }
-.kb-fly .kb-key.kb-mod    { --kc-bg: color-mix(in oklab, var(--keycap-color, #e7dcc2) 72%, var(--case-color, #1f1f24) 28%); }
+.kb-fly .kb-key.kb-mod    { --kc-bg: color-mix(in oklab, var(--keycap-color, #e7dcc2) 72%, var(--case-color, #f4f4f6) 28%); }
 .kb-fly .kb-key.kb-accent { --kc-bg: var(--keycap-legend, #1d1a14); --kc-edge: color-mix(in oklab, var(--keycap-legend, #1d1a14) 80%, white 16%); }
 .kb-fly .kb-key.kb-1u    { width: var(--u); }
 .kb-fly .kb-key.kb-1-25u { width: calc(var(--u) * 1.25); }

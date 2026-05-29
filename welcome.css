@@ -376,12 +376,12 @@ input { cursor: url('assets/cursor.cur'), text; }
     padding: 36px 40px 32px;
     border-radius: 4px;
     overflow: hidden;
-    background: var(--case-color, #1f1f24);
-    border: 1px solid color-mix(in oklab, var(--case-color, #1f1f24) 60%, white 25%);
+    background: var(--case-color, #f4f4f6);
+    border: 1px solid color-mix(in oklab, var(--case-color, #f4f4f6) 60%, white 25%);
     box-shadow:
         0 30px 60px -30px rgba(0, 0, 0, 0.7),
         0 10px 24px -12px rgba(17, 128, 249, 0.2);
-    color: var(--case-text, #fff);
+    color: var(--case-text, #1c1c20);
     transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
     transform-style: preserve-3d;
     will-change: transform;
@@ -415,7 +415,7 @@ input { cursor: url('assets/cursor.cur'), text; }
     font-weight: 800;
     font-size: var(--text-20);
     letter-spacing: -0.02em;
-    color: var(--case-text, #fff);
+    color: var(--case-text, #1c1c20);
     opacity: 0.95;
 }
 
@@ -436,14 +436,14 @@ input { cursor: url('assets/cursor.cur'), text; }
     letter-spacing: 0.14em;
     padding: 3px 9px;
     border-radius: 8px;
-    border: 1px solid color-mix(in oklab, var(--case-color, #000) 60%, white 40%);
+    border: 1px solid color-mix(in oklab, var(--case-color, #f4f4f6) 60%, white 40%);
 }
 
 .build-card-name {
     font-family: 'Space Mono', monospace;
     font-size: var(--text-20);
     font-weight: 700;
-    color: var(--case-text, #fff);
+    color: var(--case-text, #1c1c20);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-bottom: 24px;
@@ -460,8 +460,8 @@ input { cursor: url('assets/cursor.cur'), text; }
    the card; the keyboard scales naturally with the chosen layout. */
 .build-card-keyboard {
     --u: 18px;
-    --kb-bg: color-mix(in oklab, var(--case-color, #1f1f24) 70%, black 30%);
-    --kb-edge: color-mix(in oklab, var(--case-color, #1f1f24) 55%, white 10%);
+    --kb-bg: color-mix(in oklab, var(--case-color, #f4f4f6) 70%, black 30%);
+    --kb-edge: color-mix(in oklab, var(--case-color, #f4f4f6) 55%, white 10%);
     --kc-bg: var(--keycap-color, #e7dcc2);
     --kc-edge: color-mix(in oklab, var(--keycap-color, #e7dcc2) 78%, black 22%);
     --row-h: var(--u);
@@ -498,7 +498,7 @@ input { cursor: url('assets/cursor.cur'), text; }
 
 /* Modifier keys — slightly darker, like differently-colored mod caps */
 .kb-key.kb-mod {
-    --kc-bg: color-mix(in oklab, var(--keycap-color, #e7dcc2) 72%, var(--case-color, #1f1f24) 28%);
+    --kc-bg: color-mix(in oklab, var(--keycap-color, #e7dcc2) 72%, var(--case-color, #f4f4f6) 28%);
 }
 
 /* Accent keys (esc, enter) — legend color as the cap */
@@ -567,7 +567,7 @@ input { cursor: url('assets/cursor.cur'), text; }
     font-family: 'Space Mono', monospace;
     font-size: var(--text-12);
     font-weight: 600;
-    color: var(--case-text, #fff);
+    color: var(--case-text, #1c1c20);
     letter-spacing: 0.04em;
     text-transform: uppercase;
     min-width: 0;
@@ -615,7 +615,7 @@ input { cursor: url('assets/cursor.cur'), text; }
     font-family: 'Space Mono', monospace;
     font-size: var(--text-13);
     font-weight: 600;
-    color: var(--case-text, #fff);
+    color: var(--case-text, #1c1c20);
     letter-spacing: 0.04em;
 }
 
@@ -625,7 +625,7 @@ input { cursor: url('assets/cursor.cur'), text; }
     font-weight: 400;
     font-style: italic;
     letter-spacing: 0.04em;
-    color: var(--case-text, #fff);
+    color: var(--case-text, #1c1c20);
     opacity: 0.9;
     transform: rotate(-2deg);
     transform-origin: left;

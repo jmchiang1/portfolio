@@ -83,98 +83,26 @@
         serial:     0
     };
 
-    // ---------- Mini-keyboard generators ----------
-    // Each row is a flex container; keys get fixed widths (via --u)
-    // so the keyboard sizes naturally to its layout rather than
-    // stretching to fill the card.
-    //
-    // Tokens are objects produced by the helpers below.
-    function k(name, size)   { return { k: name, s: size || 1 }; }
-    function mod(name, size) { return { k: name, s: size || 1, mod: true }; }
-    function acc(name, size) { return { k: name, s: size || 1, accent: true }; }
-    function sp(name)        { return { k: name || 'space', s: 6.25, space: true }; }
-    function gap(size)       { return { gap: true, s: size || 1 }; }
+    // ---------- Mini-keyboard generator ----------
+    // Layouts, token builders, and the per-key renderer all live in
+    // keyboard-layouts.js so this page, the home handoff replay, and the
+    // visitors gallery render the exact same keyboard from the same data.
+    var KB = window.KbLayouts;
 
     function buildKeyboard(layout) {
         cardKeyboard.setAttribute('data-layout', layout);
         cardKeyboard.innerHTML = '';
 
-        var rows;
-        if (layout === '60')        rows = LAYOUT_60;
-        else if (layout === '75')   rows = LAYOUT_75;
-        else                        rows = LAYOUT_TKL;
-
-        rows.forEach(function (row) {
+        var def = KB.LAYOUTS[layout] || KB.LAYOUTS['60'];
+        def.rows.forEach(function (row) {
             var rowEl = document.createElement('div');
             rowEl.className = 'kb-row';
             row.forEach(function (tok) {
-                rowEl.appendChild(renderKey(tok));
+                rowEl.appendChild(KB.renderKeyDom(tok));
             });
             cardKeyboard.appendChild(rowEl);
         });
     }
-
-    function renderKey(tok) {
-        var el = document.createElement('div');
-
-        if (tok.gap) {
-            el.className = 'kb-gap ' + sizeToClass(tok.s);
-            return el;
-        }
-
-        var cls = 'kb-key';
-        if (tok.space)  cls += ' kb-space';
-        else            cls += ' ' + sizeToClass(tok.s);
-        if (tok.mod)    cls += ' kb-mod';
-        if (tok.accent) cls += ' kb-accent';
-        el.className = cls;
-        if (tok.k) el.setAttribute('data-key', tok.k);
-        return el;
-    }
-
-    function sizeToClass(n) {
-        if (n === 0.5)       return 'kb-0-5';
-        if (n === 1.25)      return 'kb-1-25u';
-        if (n === 1.5)       return 'kb-1-5u';
-        if (n === 1.75)      return 'kb-1-75u';
-        if (n === 2)         return 'kb-2u';
-        if (n === 2.25)      return 'kb-2-25u';
-        if (n === 2.75)      return 'kb-2-75u';
-        return 'kb-1u';
-    }
-
-    // Each layout below maps a real key code to every cap so the
-    // physical keyboard can light up the matching cap on press.
-    //
-    //   60%   = 5 rows × 15u  — no fn row, no nav, no arrows
-    //   75%   = 6 rows × 16u  — fn row + 1u nav column + arrows
-    //   TKL   = 6 rows × 18.5u — TKL with full nav cluster
-
-    var LAYOUT_60 = [
-        [acc('esc'), k('1'), k('2'), k('3'), k('4'), k('5'), k('6'), k('7'), k('8'), k('9'), k('0'), k('dash'), k('equal'), mod('bksp', 2)],
-        [mod('tab', 1.5), k('q'), k('w'), k('e'), k('r'), k('t'), k('y'), k('u'), k('i'), k('o'), k('p'), k('lbracket'), k('rbracket'), mod('bslash', 1.5)],
-        [mod('caps', 1.75), k('a'), k('s'), k('d'), k('f'), k('g'), k('h'), k('j'), k('k'), k('l'), k('semi'), k('quote'), acc('enter', 2.25)],
-        [mod('lshift', 2.25), k('z'), k('x'), k('c'), k('v'), k('b'), k('n'), k('m'), k('comma'), k('period'), k('slash'), mod('rshift', 2.75)],
-        [mod('lctrl', 1.25), mod('lwin', 1.25), mod('lalt', 1.25), sp(), mod('ralt', 1.25), mod('rwin', 1.25), mod('menu', 1.25), mod('rctrl', 1.25)]
-    ];
-
-    var LAYOUT_75 = [
-        [acc('esc'), mod('f1'), mod('f2'), mod('f3'), mod('f4'), mod('f5'), mod('f6'), mod('f7'), mod('f8'), mod('f9'), mod('f10'), mod('f11'), mod('f12'), mod('del'), mod('home'), mod('end')],
-        [k('grave'), k('1'), k('2'), k('3'), k('4'), k('5'), k('6'), k('7'), k('8'), k('9'), k('0'), k('dash'), k('equal'), mod('bksp', 2), mod('pgup')],
-        [mod('tab', 1.5), k('q'), k('w'), k('e'), k('r'), k('t'), k('y'), k('u'), k('i'), k('o'), k('p'), k('lbracket'), k('rbracket'), mod('bslash', 1.5), mod('pgdn')],
-        [mod('caps', 1.75), k('a'), k('s'), k('d'), k('f'), k('g'), k('h'), k('j'), k('k'), k('l'), k('semi'), k('quote'), acc('enter', 2.25), mod('home')],
-        [mod('lshift', 2.25), k('z'), k('x'), k('c'), k('v'), k('b'), k('n'), k('m'), k('comma'), k('period'), k('slash'), mod('rshift', 1.75), k('up'), mod('end')],
-        [mod('lctrl', 1.25), mod('lwin', 1.25), mod('lalt', 1.25), sp(), mod('ralt', 1.25), mod('fn', 1.25), gap(0.5), k('left'), k('down'), k('right')]
-    ];
-
-    var LAYOUT_TKL = [
-        [acc('esc'), gap(0.5), mod('f1'), mod('f2'), mod('f3'), mod('f4'), gap(0.5), mod('f5'), mod('f6'), mod('f7'), mod('f8'), gap(0.5), mod('f9'), mod('f10'), mod('f11'), mod('f12'), gap(1), mod('prtsc'), mod('scrlk'), mod('pause')],
-        [k('grave'), k('1'), k('2'), k('3'), k('4'), k('5'), k('6'), k('7'), k('8'), k('9'), k('0'), k('dash'), k('equal'), mod('bksp', 2), gap(0.5), mod('ins'), mod('home'), mod('pgup')],
-        [mod('tab', 1.5), k('q'), k('w'), k('e'), k('r'), k('t'), k('y'), k('u'), k('i'), k('o'), k('p'), k('lbracket'), k('rbracket'), mod('bslash', 1.5), gap(0.5), mod('del'), mod('end'), mod('pgdn')],
-        [mod('caps', 1.75), k('a'), k('s'), k('d'), k('f'), k('g'), k('h'), k('j'), k('k'), k('l'), k('semi'), k('quote'), acc('enter', 2.25), gap(0.5), gap(1), gap(1), gap(1)],
-        [mod('lshift', 2.25), k('z'), k('x'), k('c'), k('v'), k('b'), k('n'), k('m'), k('comma'), k('period'), k('slash'), mod('rshift', 2.75), gap(0.5), gap(1), k('up'), gap(1)],
-        [mod('lctrl', 1.25), mod('lwin', 1.25), mod('lalt', 1.25), sp(), mod('ralt', 1.25), mod('rwin', 1.25), mod('menu', 1.25), mod('rctrl', 1.25), gap(0.5), k('left'), k('down'), k('right')]
-    ];
 
     // ---------- Card updaters ----------
     function applyCase() {

@@ -216,18 +216,35 @@
             height: var(--u);
             align-items: stretch;
         }
-        /* Keys + gaps are sized in fixed pixels (--key-units * --u) so 1u
-           keys are perfect squares with no warping. */
+        /* Keys + gaps sized by discrete classes (kb-1u, kb-1-25u, …) emitted
+           by keyboard-layouts.js — same classes welcome.html uses, so the
+           saved keyboard matches what the visitor built. */
         .peg-kb .kb-key,
-        .peg-kb .kb-gap {
-            flex: 0 0 calc(var(--key-units, 1) * var(--u));
-            min-width: 0;
-        }
+        .peg-kb .kb-gap   { flex: 0 0 auto; min-width: 0; }
+        .peg-kb .kb-1u    { width: var(--u); }
+        .peg-kb .kb-1-25u { width: calc(var(--u) * 1.25); }
+        .peg-kb .kb-1-5u  { width: calc(var(--u) * 1.5); }
+        .peg-kb .kb-1-75u { width: calc(var(--u) * 1.75); }
+        .peg-kb .kb-2u    { width: calc(var(--u) * 2); }
+        .peg-kb .kb-2-25u { width: calc(var(--u) * 2.25); }
+        .peg-kb .kb-2-75u { width: calc(var(--u) * 2.75); }
+        .peg-kb .kb-3u    { width: calc(var(--u) * 3); }
+        .peg-kb .kb-0-5   { width: calc(var(--u) * 0.5); }
+        .peg-kb .kb-space { width: calc(var(--u) * 6.25); }
+
         .peg-kb .kb-key {
             background: var(--vc-keycap, #e7dcc2);
             border: 1px solid color-mix(in oklab, var(--vc-keycap, #e7dcc2) 78%, black 22%);
             border-radius: 1.5px;
             box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+        }
+        /* Modifier + accent variants — match welcome.html's keycap palette
+           so caps row / esc / enter etc. read with the same colour weight. */
+        .peg-kb .kb-mod {
+            background: color-mix(in oklab, var(--vc-keycap, #e7dcc2) 75%, black 25%);
+        }
+        .peg-kb .kb-accent {
+            background: color-mix(in oklab, var(--vc-keycap, #e7dcc2) 55%, black 45%);
         }
         .peg-kb .kb-gap { background: transparent; border: none; box-shadow: none; }
 
@@ -821,6 +838,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="transitions.js"></script>
     <script src="supabase-config.js"></script>
+    <!-- Shared keyboard layouts + renderer — same source as welcome.js so
+         every saved keyboard renders identically to the one the visitor built. -->
+    <script src="keyboard-layouts.js"></script>
     <script>
         // ---- Shared nav: hamburger + page transitions ----
         (function () {
@@ -894,66 +914,13 @@
             ];
 
             // ----- Layout-aware keyboard renderer -----
-            // Token-based mini-keyboard. Each row sums to the layout's total
-            // unit width so rows align horizontally. Flex-grow on keys/gaps
-            // makes the keyboard scale to the container's width while keeping
-            // proportions correct.
-            function kk(s) { return { type: 'key',   s: s || 1 }; }
-            function gg(s) { return { type: 'gap',   s: s || 1 }; }
-            function ss()  { return { type: 'space', s: 6.25 }; }
-
-            var LAYOUTS = {
-                '60%': {
-                    units: 15,
-                    rows: [
-                        [kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2)],
-                        [kk(1.5), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(1.5)],
-                        [kk(1.75), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.25)],
-                        [kk(2.25), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.75)],
-                        [kk(1.25), kk(1.25), kk(1.25), ss(), kk(1.25), kk(1.25), kk(1.25), kk(1.25)]
-                    ]
-                },
-                '75%': {
-                    units: 16,
-                    rows: [
-                        [kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk()],
-                        [kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2), kk()],
-                        [kk(1.5), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(1.5), kk()],
-                        [kk(1.75), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.25), kk()],
-                        [kk(2.25), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(1.75), kk(), kk()],
-                        [kk(1.25), kk(1.25), kk(1.25), ss(), kk(1.25), kk(1.25), gg(0.5), kk(), kk(), kk()]
-                    ]
-                },
-                'TKL': {
-                    units: 18.5,
-                    rows: [
-                        [kk(), gg(0.5), kk(), kk(), kk(), kk(), gg(0.5), kk(), kk(), kk(), kk(), gg(0.5), kk(), kk(), kk(), kk(), gg(1), kk(), kk(), kk()],
-                        [kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2), gg(0.5), kk(), kk(), kk()],
-                        [kk(1.5), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(1.5), gg(0.5), kk(), kk(), kk()],
-                        [kk(1.75), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.25), gg(0.5), gg(3)],
-                        [kk(2.25), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(), kk(2.75), gg(0.5), gg(1), kk(), gg(1)],
-                        [kk(1.25), kk(1.25), kk(1.25), ss(), kk(1.25), kk(1.25), kk(1.25), kk(1.25), gg(0.5), kk(), kk(), kk()]
-                    ]
-                }
-            };
-
-            function renderToken(t) {
-                var cls = (t.type === 'gap')
-                    ? 'kb-gap'
-                    : (t.type === 'space' ? 'kb-key kb-space' : 'kb-key');
-                return '<div class="' + cls + '" style="--key-units:' + t.s + '"></div>';
-            }
-
-            function renderKb(layoutName) {
-                var def = LAYOUTS[layoutName] || LAYOUTS['60%'];
-                return def.rows.map(function (row) {
-                    return '<div class="kb-row">' + row.map(renderToken).join('') + '</div>';
-                }).join('');
-            }
-
-            function layoutUnits(layoutName) {
-                return (LAYOUTS[layoutName] || LAYOUTS['60%']).units;
-            }
+            // Pulls layout data + per-key HTML from keyboard-layouts.js so
+            // every saved keyboard on this page matches the one the visitor
+            // built on welcome.html exactly. KbLayouts.LAYOUTS is aliased on
+            // both internal keys ('60'/'75'/'tkl') and display names
+            // ('60%'/'75%'/'TKL'), so passing v.layout directly works.
+            var renderKb     = window.KbLayouts.renderKeyboardHtml;
+            var layoutUnits  = window.KbLayouts.getUnits;
 
             function fmtDate(iso) {
                 if (!iso) return '—';
