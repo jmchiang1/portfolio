@@ -193,12 +193,19 @@
 
         /* The mounted keyboard — keys are perfect squares sized by --u,
            and bigger layouts (TKL) have wider/taller boards than 60%. */
+        /* Mirrors welcome.css's `.build-card-keyboard` rules — case frame,
+           mod cap, and accent cap all derive from the SAME formulas so the
+           saved keyboard renders identically to the one the visitor built.
+              · frame bg  = mix(case, black 30%)
+              · frame edge = mix(case, white 10%)
+              · mod cap   = mix(keycap, case 28%)   ← pulls toward the case
+              · accent    = legend colour            ← opposite-contrast cap */
         .peg-kb {
             --u: 12px;
             position: relative;
             padding: 7px;
-            background: var(--vc-color, #1f1f24);
-            border: 1px solid color-mix(in oklab, var(--vc-color, #1f1f24) 65%, white 35%);
+            background: color-mix(in oklab, var(--vc-color, #f4f4f6) 70%, black 30%);
+            border: 1px solid color-mix(in oklab, var(--vc-color, #f4f4f6) 55%, white 10%);
             border-radius: 4px;
             box-shadow:
                 0 10px 22px -8px rgba(0, 0, 0, 0.45),
@@ -233,18 +240,21 @@
         .peg-kb .kb-space { width: calc(var(--u) * 6.25); }
 
         .peg-kb .kb-key {
-            background: var(--vc-keycap, #e7dcc2);
-            border: 1px solid color-mix(in oklab, var(--vc-keycap, #e7dcc2) 78%, black 22%);
+            background: var(--vc-keycap, #16161d);
+            border: 1px solid color-mix(in oklab, var(--vc-keycap, #16161d) 78%, black 22%);
             border-radius: 1.5px;
             box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
         }
-        /* Modifier + accent variants — match welcome.html's keycap palette
-           so caps row / esc / enter etc. read with the same colour weight. */
+        /* Modifier caps pull toward the case colour (welcome's formula) so a
+           black/white build paints mods as light grey instead of "still black". */
         .peg-kb .kb-mod {
-            background: color-mix(in oklab, var(--vc-keycap, #e7dcc2) 75%, black 25%);
+            background: color-mix(in oklab, var(--vc-keycap, #16161d) 72%, var(--vc-color, #f4f4f6) 28%);
+            border-color: color-mix(in oklab, var(--vc-keycap, #16161d) 72%, var(--vc-color, #f4f4f6) 28%);
         }
+        /* Accent caps (esc, enter) wear the legend colour, mirroring welcome. */
         .peg-kb .kb-accent {
-            background: color-mix(in oklab, var(--vc-keycap, #e7dcc2) 55%, black 45%);
+            background: var(--vc-legend, #f3f3f3);
+            border-color: color-mix(in oklab, var(--vc-legend, #f3f3f3) 80%, white 16%);
         }
         .peg-kb .kb-gap { background: transparent; border: none; box-shadow: none; }
 
@@ -368,11 +378,14 @@
             text-transform: uppercase;
             color: var(--vc-text, #fff);
         }
+        /* Modal puts the case frame around the keyboard (matching welcome's
+           outer chrome). The inner `.peg-kb` becomes transparent so we don't
+           double up the frame. Formulas mirror welcome.css exactly. */
         .visitor-modal-card .vmc-kb-frame {
-            background: color-mix(in oklab, var(--vc-color, #1f1f24) 65%, black 35%);
-            border: 1px solid color-mix(in oklab, var(--vc-color, #1f1f24) 50%, white 12%);
-            border-radius: 4px;
-            padding: 10px;
+            background: color-mix(in oklab, var(--vc-color, #f4f4f6) 70%, black 30%);
+            border: 1px solid color-mix(in oklab, var(--vc-color, #f4f4f6) 55%, white 10%);
+            border-radius: 6px;
+            padding: 8px;
             display: flex;
             justify-content: center;
             width: fit-content;
@@ -870,19 +883,26 @@
         (function () {
             'use strict';
 
+            // Keyed by the display names welcome.js saves (`build.caseName` /
+             // `build.keycapName`, sourced from each swatch button's data-name).
+             // Keep these in sync with welcome.js's CASES/KEYCAPS — when they
+             // drift, every lookup misses and tiles render as the fallback.
             var CASES = {
-                Graphite: { color: '#1f1f24', text: '#ffffff', dim: 'rgba(255,255,255,0.55)' },
-                Midnight: { color: '#1a2747', text: '#ffffff', dim: 'rgba(255,255,255,0.6)'  },
-                Ember:    { color: '#c0673f', text: '#1a0d05', dim: 'rgba(26,13,5,0.6)'      },
-                Moss:     { color: '#3a5b3f', text: '#f4f1e3', dim: 'rgba(244,241,227,0.6)'  },
-                Bone:     { color: '#e6dccb', text: '#1c1a14', dim: 'rgba(28,26,20,0.55)'    }
+                'White':         { color: '#f4f4f6', text: '#1c1c20', dim: 'rgba(28,28,32,0.55)' },
+                'Charcoal Grey': { color: '#36383d', text: '#ffffff', dim: 'rgba(255,255,255,0.55)' },
+                'Navy Blue':     { color: '#1c2c54', text: '#ffffff', dim: 'rgba(255,255,255,0.6)'  },
+                'Crimson Red':   { color: '#9c1f2e', text: '#ffffff', dim: 'rgba(255,255,255,0.6)'  },
+                'Matcha Green':  { color: '#93a564', text: '#1a1e10', dim: 'rgba(26,30,16,0.6)'    }
             };
+            // `legend` is what welcome paints onto accent caps (esc, enter) so
+             // they read against the main keycap colour — black caps get a near-
+             // white legend, white caps get a near-black legend, etc.
             var KEYCAPS = {
-                Cream:      '#e7dcc2',
-                BoW:        '#13131a',
-                Olivia:     '#e9dcd4',
-                Botanical:  '#1c2a26',
-                Dolch:      '#2a2a2e'
+                'Black':            { color: '#16161d', legend: '#f3f3f3' },
+                'White':            { color: '#f4f4f6', legend: '#1d1a14' },
+                'Violet':           { color: '#7c5cf2', legend: '#ffffff' },
+                'Electric Yellow':  { color: '#f4e21f', legend: '#1a1a10' },
+                'Cream':            { color: '#e7dcc2', legend: '#1d1a14' }
             };
 
             var grid = document.getElementById('visitorsGrid');
@@ -906,11 +926,11 @@
             // the gallery never feels empty. Each one uses a different combo of
             // case / switch / keycaps / layout so the wall reads as varied.
             var SEED_VISITORS = [
-                { name: 'TACTILE LANTERN', layout: '75%',  case_color: 'Graphite', switch_type: 'Tactile', keycaps: 'Cream',     serial: 1038, created_at: '2026-04-12T17:24:00Z' },
-                { name: 'CHERRY ATLAS',    layout: '60%',  case_color: 'Midnight', switch_type: 'Linear',  keycaps: 'BoW',       serial: 1041, created_at: '2026-04-21T09:11:00Z' },
-                { name: 'INKY SAFFRON',    layout: 'TKL',  case_color: 'Ember',    switch_type: 'Clicky',  keycaps: 'Olivia',    serial: 1054, created_at: '2026-05-03T22:48:00Z' },
-                { name: 'FROSTED CYPHER',  layout: 'TKL',  case_color: 'Moss',     switch_type: 'Tactile', keycaps: 'Botanical', serial: 1062, created_at: '2026-05-11T14:02:00Z' },
-                { name: 'HOLY MARIGOLD',   layout: '75%',  case_color: 'Bone',     switch_type: 'Linear',  keycaps: 'Dolch',     serial: 1071, created_at: '2026-05-18T08:35:00Z' }
+                { name: 'TACTILE LANTERN', layout: '75%',  case_color: 'Charcoal Grey', switch_type: 'Tactile', keycaps: 'Cream',           serial: 1038, created_at: '2026-04-12T17:24:00Z' },
+                { name: 'CHERRY ATLAS',    layout: '60%',  case_color: 'Navy Blue',     switch_type: 'Linear',  keycaps: 'White',           serial: 1041, created_at: '2026-04-21T09:11:00Z' },
+                { name: 'INKY SAFFRON',    layout: 'TKL',  case_color: 'Crimson Red',   switch_type: 'Clicky',  keycaps: 'Electric Yellow', serial: 1054, created_at: '2026-05-03T22:48:00Z' },
+                { name: 'FROSTED CYPHER',  layout: 'TKL',  case_color: 'Matcha Green',  switch_type: 'Tactile', keycaps: 'Black',           serial: 1062, created_at: '2026-05-11T14:02:00Z' },
+                { name: 'HOLY MARIGOLD',   layout: '75%',  case_color: 'White',         switch_type: 'Linear',  keycaps: 'Violet',          serial: 1071, created_at: '2026-05-18T08:35:00Z' }
             ];
 
             // ----- Layout-aware keyboard renderer -----
@@ -936,8 +956,8 @@
             // and drives the row-by-row drop-in stagger. When `animate` is
             // false (resize re-render), the drop-in is suppressed.
             function renderCard(v, tileIdx, posInPage, cols, animate) {
-                var c = CASES[v.case_color] || CASES.Graphite;
-                var keycap = KEYCAPS[v.keycaps] || KEYCAPS.Cream;
+                var c = CASES[v.case_color] || CASES['White'];
+                var keycap = KEYCAPS[v.keycaps] || KEYCAPS['Black'];
                 var mine = !!v._mine;
                 var animStyle;
                 if (animate) {
@@ -951,7 +971,8 @@
                     '<article class="peg-tile' + (mine ? ' is-mine' : '') +
                     '" tabindex="0" data-index="' + tileIdx +
                     '" style="--vc-color:' + c.color +
-                    ';--vc-keycap:' + keycap + animStyle + '">' +
+                    ';--vc-keycap:' + keycap.color +
+                    ';--vc-legend:' + keycap.legend + animStyle + '">' +
                         '<div class="peg-kb-wrap">' +
                             '<div class="peg-kb">' + renderKb(v.layout) + '</div>' +
                         '</div>' +
@@ -1131,11 +1152,11 @@
                 { key: 'tkl', name: 'TKL' }
             ];
             var CASE_OPTS = [
-                { key: 'graphite', name: 'Graphite', color: '#1f1f24' },
-                { key: 'midnight', name: 'Midnight', color: '#1a2747' },
-                { key: 'ember',    name: 'Ember',    color: '#c0673f' },
-                { key: 'moss',     name: 'Moss',     color: '#3a5b3f' },
-                { key: 'bone',     name: 'Bone',     color: '#e6dccb' }
+                { key: 'white',    name: 'White',         color: '#f4f4f6' },
+                { key: 'charcoal', name: 'Charcoal Grey', color: '#36383d' },
+                { key: 'navy',     name: 'Navy Blue',     color: '#1c2c54' },
+                { key: 'crimson',  name: 'Crimson Red',   color: '#9c1f2e' },
+                { key: 'matcha',   name: 'Matcha Green',  color: '#93a564' }
             ];
             var SWITCH_OPTS = [
                 { key: 'linear',  name: 'Linear'  },
@@ -1143,11 +1164,11 @@
                 { key: 'clicky',  name: 'Clicky'  }
             ];
             var KEYCAP_OPTS = [
-                { key: 'cream',     name: 'Cream',     color: '#e7dcc2' },
-                { key: 'bow',       name: 'BoW',       color: '#13131a' },
-                { key: 'olivia',    name: 'Olivia',    color: '#e9dcd4' },
-                { key: 'botanical', name: 'Botanical', color: '#1c2a26' },
-                { key: 'dolch',     name: 'Dolch',     color: '#2a2a2e' }
+                { key: 'black',  name: 'Black',           color: '#16161d' },
+                { key: 'white',  name: 'White',           color: '#f4f4f6' },
+                { key: 'violet', name: 'Violet',          color: '#7c5cf2' },
+                { key: 'yellow', name: 'Electric Yellow', color: '#f4e21f' },
+                { key: 'cream',  name: 'Cream',           color: '#e7dcc2' }
             ];
 
             var ADJECTIVES = ['Tactile','Linear','Clicky','Lubed','Cream','Brass','Velvet','Crisp','Quiet','Thocky','Clacky','Steady','Holy','Inky','Bright','Polished','Solder','Frosted','Foamed','Marbled','Cherry','Topre','Bobo','Plate','Sprung'];
@@ -1196,12 +1217,12 @@
                     name:       own.name        || rollName(),
                     layout:     own.layout_key  || '60',
                     layoutName: own.layout      || '60%',
-                    caseKey:    own.case_key    || 'graphite',
-                    caseName:   own.case_color  || 'Graphite',
+                    caseKey:    own.case_key    || 'white',
+                    caseName:   own.case_color  || 'White',
                     switchKey:  own.switch_key  || 'tactile',
                     switchName: own.switch_type || 'Tactile',
-                    keycapKey:  own.keycap_key  || 'cream',
-                    keycapName: own.keycaps     || 'Cream'
+                    keycapKey:  own.keycap_key  || 'black',
+                    keycapName: own.keycaps     || 'Black'
                 };
 
                 nameInputEl.value = editState.name;
@@ -1373,8 +1394,8 @@
             var vModalCard = document.getElementById('visitorModalCard');
 
             function openVisitorModal(v) {
-                var c = CASES[v.case_color] || CASES.Graphite;
-                var keycap = KEYCAPS[v.keycaps] || KEYCAPS.Cream;
+                var c = CASES[v.case_color] || CASES['White'];
+                var keycap = KEYCAPS[v.keycaps] || KEYCAPS['Black'];
                 var mine = !!v._mine;
                 var editBtn = mine
                     ? '<button type="button" class="vmc-edit" data-edit-card aria-label="Edit your card"><i class="ph ph-pencil-simple"></i></button>'
@@ -1384,7 +1405,8 @@
                 vModalCard.style.setProperty('--vc-color', c.color);
                 vModalCard.style.setProperty('--vc-text', c.text);
                 vModalCard.style.setProperty('--vc-text-dim', c.dim);
-                vModalCard.style.setProperty('--vc-keycap', keycap);
+                vModalCard.style.setProperty('--vc-keycap', keycap.color);
+                vModalCard.style.setProperty('--vc-legend', keycap.legend);
                 vModalCard.innerHTML =
                     '<button type="button" class="visitor-modal-close" data-vmodal-close aria-label="Close">' +
                         '<i class="ph ph-x"></i>' +

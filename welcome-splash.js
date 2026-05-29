@@ -48,28 +48,29 @@
         var tl = gsap.timeline({ onComplete: reveal });
 
         // 1) Assemble — each square pops in from small + above, in DOM
-        //    order, which reads as the letterform drawing itself. (~1.5s)
+        //    order, which reads as the letterform drawing itself. This is
+        //    the part we *want* to feel deliberate, so it gets the budget.
         tl.fromTo(cells,
             { opacity: 0, scale: 0.3, y: -10 },
             {
                 opacity: 1, scale: 1, y: 0,
-                duration: 0.55,
+                duration: 0.5,
                 ease: 'back.out(2)',
-                stagger: { each: 0.05, from: 'start' }
+                stagger: { each: 0.045, from: 'start' }
             }
         );
 
-        // 2) Hold — the finished monogram sits for a beat (the '+=0.6' gap).
-        // 3) Press — the whole mark dips like a keycap bottoming out.
-        tl.to(mark, { y: 8, scale: 0.94, duration: 0.18, ease: 'power3.in' }, '+=0.6');
+        // 2) Hold — just long enough for the eye to register the full mark.
+        // 3) Press — keycap bottom-out.
+        tl.to(mark, { y: 8, scale: 0.94, duration: 0.13, ease: 'power3.in' }, '+=0.2');
 
-        // 4) Recede + lift (the closing motion) — the mark releases upward
-        //    as the curtain rises to reveal the builder beneath.
-        tl.to(mark,   { y: -24, scale: 1.08, opacity: 0, duration: 0.55, ease: 'power3.in' })
-          .to(splash, { yPercent: -100, duration: 0.7, ease: 'power4.inOut' }, '<0.05')
-          // Drop the gate just before the curtain finishes so the layout's
-          // entrance stagger animates up into the rising reveal.
-          .add(function () { body.classList.remove('is-splashing'); }, '<0.15');
+        // 4) Recede + lift — kept tight so the wipe to the builder is snappy.
+        tl.to(mark,   { y: -24, scale: 1.08, opacity: 0, duration: 0.22, ease: 'power3.in' })
+          .to(splash, { yPercent: -100, duration: 0.3, ease: 'power4.inOut' }, '<0.02')
+          // Drop the gate at the SAME instant the curtain starts rising, so
+          // the builder's entrance stagger plays in lock-step with the wipe
+          // instead of trailing it.
+          .add(function () { body.classList.remove('is-splashing'); }, '<');
 
         // Skip — fast-forward (rather than hard-cut) so it still reads.
         function skip() {
@@ -90,5 +91,5 @@
     }
 
     // Failsafe — never leave the builder gated if the timeline errors.
-    setTimeout(reveal, 5000);
+    setTimeout(reveal, 2500);
 })();
