@@ -35,7 +35,7 @@
         var base = getComputedStyle(tab).color;
         tab.animate([
             { color: base, textShadow: 'none' },
-            { color: '#66d2ff', textShadow: '0 0 14px rgba(102, 210, 255, 0.9), 0 0 30px rgba(17, 128, 249, 0.55)', offset: 0.35 },
+            { color: '#ffffff', textShadow: '0 0 14px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.55)', offset: 0.35 },
             { color: base, textShadow: 'none' }
         ], { duration: 950, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
     }

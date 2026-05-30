@@ -113,9 +113,6 @@ input { cursor: url('assets/cursor.cur'), text; }
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-14);
     font-weight: 600;
-    opacity: 0;
-    transform: translateY(-6px);
-    animation: welcome-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
@@ -172,9 +169,6 @@ input { cursor: url('assets/cursor.cur'), text; }
     color: #5aa3ff;
     letter-spacing: 0.06em;
     text-transform: lowercase;
-    opacity: 0;
-    transform: translateY(12px);
-    animation: welcome-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
 }
 
 .welcome-eyebrow i { font-size: var(--text-12); color: #66d2ff; }
@@ -186,9 +180,6 @@ input { cursor: url('assets/cursor.cur'), text; }
     line-height: 1.05;
     letter-spacing: -0.03em;
     color: #fff;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
 }
 
 .welcome-title-accent {
@@ -204,7 +195,6 @@ input { cursor: url('assets/cursor.cur'), text; }
     font-weight: 500;
     letter-spacing: -0.01em;
     margin-top: 6px;
-    animation-delay: 0.45s;
 }
 
 .welcome-blurb {
@@ -215,13 +205,6 @@ input { cursor: url('assets/cursor.cur'), text; }
     color: rgba(255, 255, 255, 0.55);
     max-width: 440px;
     margin: 0 auto;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
-}
-
-@keyframes welcome-up {
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================
@@ -235,9 +218,6 @@ input { cursor: url('assets/cursor.cur'), text; }
     /* Stretch so the panel matches the card's height; the card keeps its
        natural height via align-self below. */
     align-items: stretch;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
 }
 
 .welcome-stage > .build-card    { grid-column: 1; align-self: start; }
@@ -331,40 +311,12 @@ input { cursor: url('assets/cursor.cur'), text; }
     color: rgba(255, 255, 255, 0.7);
     font-size: var(--text-14);
     position: relative;
-    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .welcome-reroll:hover {
     background: rgba(17, 128, 249, 0.15);
     color: #66d2ff;
-}
-
-.welcome-reroll:active { transform: rotate(180deg); }
-
-.welcome-reroll::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(-4px);
-    padding: 5px 10px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 6px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: var(--text-11);
-    font-weight: 500;
-    color: #fff;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.welcome-reroll:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
 }
 
 /* ============================================
@@ -835,8 +787,6 @@ input { cursor: url('assets/cursor.cur'), text; }
     letter-spacing: 0.12em;
     text-transform: uppercase;
     padding-top: 24px;
-    opacity: 0;
-    animation: welcome-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.85s forwards;
 }
 
 .welcome-foot-status {
@@ -955,13 +905,18 @@ body.welcome-exiting .welcome-skip {
 /* ============================================
    First-visit splash — JC monogram assemble
    ============================================ */
+/* Frosted-glass curtain. We tint the viewport with a translucent navy and
+   blur whatever sits beneath, so the builder can run its entrance animation
+   underneath while the JC mark still reads as the focal point. */
 .welcome-splash {
     position: fixed;
     inset: 0;
     z-index: 9999;
     display: grid;
     place-items: center;
-    background: #000C19;
+    background: rgba(0, 12, 25, 0.95);
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
     will-change: transform, opacity;
 }
 
@@ -987,18 +942,14 @@ body.welcome-exiting .welcome-skip {
     transform-origin: center;
 }
 
-/* While the splash is up, hold the builder hidden and freeze its
-   entrance animations at frame 0, so they replay as one coordinated
-   reveal the instant the curtain lifts. */
+/* While the splash is up, only lock page scrolling — the builder is no
+   longer hidden or paused, so its entrance animations play behind the
+   blurred curtain and are already settled by the time the curtain lifts. */
 body.is-splashing { overflow: hidden; }
-body.is-splashing .welcome-layout { opacity: 0; }
-body.is-splashing .welcome-layout * { animation-play-state: paused !important; }
 
-/* Reduced motion: no assemble, no gate — show the page straight away.
+/* Reduced motion: no assemble at all, show the page straight away.
    Also serves as a CSS failsafe if the script never runs. */
 @media (prefers-reduced-motion: reduce) {
     .welcome-splash { display: none; }
     body.is-splashing { overflow: auto; }
-    body.is-splashing .welcome-layout { opacity: 1; }
-    body.is-splashing .welcome-layout * { animation-play-state: running !important; }
 }

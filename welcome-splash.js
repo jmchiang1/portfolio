@@ -3,13 +3,16 @@
 //
 // The brand monogram (same 7×5 grid as the favicon / nav logo) builds
 // itself square-by-square, holds for a beat, "presses" down like a keycap
-// bottoming out, then the curtain lifts away to reveal the builder.
+// bottoming out, then the (translucent, blurred) curtain just fades to
+// zero opacity so the builder underneath becomes interactive.
 //
-// The body carries `is-splashing` (set in the HTML so there's no flash):
-// it hides .welcome-layout and freezes that layout's CSS entrance
-// animations at frame 0. We drop the class as the curtain rises, so the
-// builder's existing `welcome-up` stagger plays into the reveal as one
-// coordinated motion.
+// The builder underneath is never hidden — `.welcome-splash` is a
+// frosted-glass overlay (rgba navy + backdrop-filter blur). The
+// welcome-layout has no entrance animation of its own; it renders fully
+// on page load and is just visible-but-blurred behind the curtain until
+// the curtain dissolves.
+// The body's `is-splashing` class only locks page scroll while the
+// curtain is up; `reveal()` drops it as cleanup.
 //
 // Honors prefers-reduced-motion, can be skipped with a click / keypress,
 // and has a hard failsafe so the gate can never get stuck.
@@ -54,9 +57,9 @@
             { opacity: 0, scale: 0.3, y: -10 },
             {
                 opacity: 1, scale: 1, y: 0,
-                duration: 0.5,
+                duration: 0.7,
                 ease: 'back.out(2)',
-                stagger: { each: 0.045, from: 'start' }
+                stagger: { each: 0.05, from: 'start' }
             }
         );
 
@@ -64,13 +67,10 @@
         // 3) Press — keycap bottom-out.
         tl.to(mark, { y: 8, scale: 0.94, duration: 0.13, ease: 'power3.in' }, '+=0.2');
 
-        // 4) Recede + lift — kept tight so the wipe to the builder is snappy.
-        tl.to(mark,   { y: -24, scale: 1.08, opacity: 0, duration: 0.22, ease: 'power3.in' })
-          .to(splash, { yPercent: -100, duration: 0.3, ease: 'power4.inOut' }, '<0.02')
-          // Drop the gate at the SAME instant the curtain starts rising, so
-          // the builder's entrance stagger plays in lock-step with the wipe
-          // instead of trailing it.
-          .add(function () { body.classList.remove('is-splashing'); }, '<');
+        // 4) Fade — instead of a slide-up wipe, just dissolve the whole
+        //    overlay (tint + blur + mark) to zero opacity, so the builder
+        //    sitting underneath becomes immediately interactive.
+        tl.to(splash, { opacity: 0, duration: 0.5, ease: 'power2.out' });
 
         // Skip — fast-forward (rather than hard-cut) so it still reads.
         function skip() {
@@ -91,5 +91,5 @@
     }
 
     // Failsafe — never leave the builder gated if the timeline errors.
-    setTimeout(reveal, 2500);
+    setTimeout(reveal, 3500);
 })();
