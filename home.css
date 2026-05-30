@@ -567,6 +567,7 @@ a, button, [role="button"],
     align-items: center;
     justify-content: center;
     padding: 10px 24px;
+    min-width: 115px;
     border-radius: 8px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;

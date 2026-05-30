@@ -636,7 +636,7 @@
 
     var typed = heading.querySelector('.hero-typed');
     var START_DELAY_MS = 300;  // kicks in just as the hero entrance starts
-    var CHAR_MS = 35;          // per-character speed — fast typewriter feel
+    var CHAR_MS = 67;          // ~1s total for "Jonathan Chiang" (15 chars × 67ms)
 
     var cursor = heading.querySelector('.hero-cursor');
     var i = 0;

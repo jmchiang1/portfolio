@@ -233,6 +233,7 @@ a, button, [role="button"],
     align-items: center;
     justify-content: center;
     padding: 10px 24px;
+    min-width: 115px;
     border-radius: 8px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
@@ -969,7 +970,10 @@ a, button, [role="button"],
     position: relative;
     width: 80%;
     max-height: 85vh;
-    background: #fff;
+    /* A step lighter than the page body (#000C19) so the modal reads as an
+       elevated surface, while keeping the same navy temperature as the rest
+       of the dark theme. */
+    background: #0F1B30;
     border: none;
     border-radius: 12px;
     overflow-y: auto;
@@ -1017,7 +1021,7 @@ a, button, [role="button"],
 .modal-body {
     padding: 50px 80px 80px;
     font-family: 'Parkinsans', sans-serif;
-    color: #030b2a;
+    color: #fff;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -1025,20 +1029,14 @@ a, button, [role="button"],
     font-size: var(--text-16);
 }
 
+/* All modal labels (titles, section labels) — white against the dark
+   modal bg. Previously the default was purple (#AA37F2 for Neon Drift)
+   with a per-modal override to dark navy; both are now unified to white. */
 .modal-label {
-    color: #AA37F2;
+    color: #fff;
     font-size: var(--text-16);
     font-weight: 700;
     margin-bottom: 0;
-}
-
-/* Non-Neon-Drift modals — black titles and labels */
-.modal-body > .modal-label:first-child:not(.modal-fade-in) {
-    color: #030b2a;
-}
-
-.modal-body > .modal-label:first-child:not(.modal-fade-in) ~ .modal-meta .modal-label {
-    color: #030b2a;
 }
 
 /* Reduce gap between title and video */

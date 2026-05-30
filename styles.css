@@ -1128,11 +1128,19 @@ a.nav-btn {
     }
 }
 
-/* Navigation typography — Pixelify Sans for the keyboard/computer theme.
+/* Navigation typography — Space Grotesk for the keyboard/computer theme.
    Appended as an override so it wins over each file's earlier .nav-link rule
    without needing per-page edits to the original declarations. */
 .nav-link,
 .mobile-menu-link {
-    font-family: 'Space Grotesk', sans-serifns-serif;
+    font-family: 'Space Grotesk', sans-serif;
     letter-spacing: 0.02em;
+}
+
+/* Equal-width desktop nav links. Without this, label length drives width
+   ("UX/UI" ≈ 92px vs "Visitors" ≈ 109px); the min-width snaps them all to
+   the same size for a tidier nav. Mobile menu intentionally excluded —
+   it's a stacked list, so equal width is irrelevant there. */
+.nav-link {
+    min-width: 115px;
 }

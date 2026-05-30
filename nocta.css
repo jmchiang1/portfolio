@@ -252,6 +252,7 @@ body::before {
     align-items: center;
     justify-content: center;
     padding: 9px 20px;
+    min-width: 115px;
     border-radius: 8px;
     font-family: var(--nx-sans);
     font-weight: 400;
