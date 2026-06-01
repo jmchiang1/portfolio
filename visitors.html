@@ -1410,7 +1410,11 @@
             // Boot: count once, then show page 1.
             loadCount().then(function (n) {
                 realCount = n;
-                countEl.textContent = n + ' visitor' + (n === 1 ? '' : 's');
+                // Counter reflects what the visitor SEES on the wall, so it
+                // sums real Supabase rows with the static seed cards that
+                // round out the gallery. Keep this in sync with pageCount().
+                var total = n + SEED_VISITORS.length;
+                countEl.textContent = total + ' visitor' + (total === 1 ? '' : 's');
                 showPage(1, true);
             });
 
@@ -1832,8 +1836,12 @@
                         finishLocal(isCreate ? 'Keyboard saved.' : 'Saved.');
                     })
                     .catch(function (err) {
+                        // The local save already succeeded (writeLocal above),
+                        // so the card is visible to *this* visitor — only the
+                        // server sync failed. Make that explicit so the user
+                        // doesn't think nothing happened.
                         console.warn('[edit] supabase save failed', err);
-                        setEditStatus('Save failed — try again.', 'error');
+                        setEditStatus('Saved locally — server sync failed.', 'error');
                         saveBtn.disabled = false;
                         setSaveLabel(savingLabel);
                     });

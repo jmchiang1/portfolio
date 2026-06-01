@@ -1,9 +1,16 @@
 -- ============================================
--- Visitor card storage — Supabase schema
--- Run this once in the SQL Editor after creating
--- your Supabase project.
+-- Idempotent setup + migration for the visitor-card gallery.
+--
+-- Safe to run on:
+--   - a brand-new Supabase project (will create everything)
+--   - a project that already has the table with old-palette policies
+--     (recreates policies, migrates legacy rows)
+--   - a project that's already on the new palette (no-op-ish)
+--
+-- Paste the whole thing into Supabase → SQL Editor → Run.
 -- ============================================
 
+-- 1) Ensure the table + supporting index exist.
 create extension if not exists "pgcrypto";
 
 create table if not exists public.visitors (
@@ -17,28 +24,19 @@ create table if not exists public.visitors (
     created_at    timestamptz not null default now()
 );
 
--- A simple length sanity check so nothing wild lands in the gallery.
+-- Name-length sanity (no-op if already added).
+alter table public.visitors
+    drop constraint if exists visitors_name_len;
 alter table public.visitors
     add constraint visitors_name_len check (char_length(name) between 1 and 48);
 
--- Index for the gallery's "most recent first" query.
 create index if not exists visitors_created_at_idx
     on public.visitors (created_at desc);
 
--- ============================================
--- Row-level security
--- Anonymous visitors can:
---   - INSERT their own card
---   - SELECT all cards (so the gallery loads)
---   - UPDATE any row (constrained to valid values)
--- DELETE remains blocked.
---
--- Update isn't restricted to "owner" because there's no auth — the
--- visitor identifies their card by the row id stored in localStorage.
--- The unguessable UUID is the only thing keeping random visitors from
--- editing each other's cards. Low-stakes for a portfolio gallery.
--- ============================================
+-- 2) Enable RLS (idempotent — Supabase allows re-enabling).
 alter table public.visitors enable row level security;
+
+-- 3) Recreate every policy with the new palette allow-lists.
 
 drop policy if exists "anon can read visitors" on public.visitors;
 create policy "anon can read visitors"
@@ -47,10 +45,6 @@ create policy "anon can read visitors"
     to anon
     using (true);
 
--- Allowed-value lists below MUST stay in sync with welcome.js's CASES + KEYCAPS
--- maps and the swatch buttons in welcome.html / visitors.html. When the palette
--- changes, recreate both policies AND migrate existing rows via a one-off
--- supabase-migration-*.sql so old rows don't render as the fallback colour.
 drop policy if exists "anon can insert visitor" on public.visitors;
 create policy "anon can insert visitor"
     on public.visitors
@@ -77,3 +71,18 @@ create policy "anon can update visitor"
         switch_type in ('Linear','Tactile','Clicky') and
         keycaps in ('Black','White','Violet','Electric Yellow','Cream')
     );
+
+-- 4) Map any legacy rows that were saved under the old palette to the
+-- closest equivalent in the new one. The visual mapping below is a
+-- judgement call — tweak before running if you'd prefer different
+-- substitutions. Each statement is a no-op if no matching rows exist.
+update public.visitors set case_color = 'Charcoal Grey' where case_color = 'Graphite';
+update public.visitors set case_color = 'Navy Blue'     where case_color = 'Midnight';
+update public.visitors set case_color = 'Crimson Red'   where case_color = 'Ember';
+update public.visitors set case_color = 'Matcha Green'  where case_color = 'Moss';
+update public.visitors set case_color = 'White'         where case_color = 'Bone';
+
+-- `Cream` keycap exists in both palettes, so no remap needed. The rest
+-- collapse: BoW/Botanical/Dolch → Black, Olivia → White.
+update public.visitors set keycaps = 'Black' where keycaps in ('BoW','Botanical','Dolch');
+update public.visitors set keycaps = 'White' where keycaps = 'Olivia';
