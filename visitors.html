@@ -287,6 +287,121 @@
             color: #0a5fb8;
         }
 
+        /* Owner indicators — all overlay-only so the tile layout stays
+           pixel-identical to the others. The brand-blue name + cyan keyboard
+           glow + a floating ★ in the corner add up to "this is yours" at
+           a glance, without adding any element inside the tile. */
+        .peg-tile.is-mine .peg-kb {
+            box-shadow:
+                0 0 0 1.5px rgba(102, 210, 255, 0.6),
+                0 0 26px rgba(17, 128, 249, 0.35),
+                0 10px 22px -8px rgba(0, 0, 0, 0.45),
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        /* Star marker on the top-right corner of the keyboard wrap — pure
+           CSS pseudo-element, absolutely positioned, so it doesn't push
+           anything down or change the tile's height. */
+        .peg-tile.is-mine .peg-kb-wrap {
+            position: relative;
+        }
+        .peg-tile.is-mine .peg-kb-wrap::before {
+            content: '\2605';                      /* ★ */
+            position: absolute;
+            top: -2px;
+            right: 6%;
+            z-index: 2;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1180f9 0%, #66d2ff 100%);
+            color: #fff;
+            font-size: 11px;
+            line-height: 1;
+            box-shadow:
+                0 0 0 2px #e6ddd0,                 /* cream "cutout" against wall */
+                0 4px 10px -2px rgba(17, 128, 249, 0.55);
+            pointer-events: none;
+            animation: peg-mine-pulse 2.4s ease-in-out infinite;
+        }
+        @keyframes peg-mine-pulse {
+            0%, 100% { transform: scale(1);    box-shadow: 0 0 0 2px #e6ddd0, 0 4px 10px -2px rgba(17, 128, 249, 0.55); }
+            50%      { transform: scale(1.08); box-shadow: 0 0 0 2px #e6ddd0, 0 4px 14px -2px rgba(102, 210, 255, 0.75); }
+        }
+
+        /* "Build yours" ghost tile — injected at the start of the grid when
+           the visitor hasn't created a keyboard yet. Linking <a>, so Enter
+           and click both navigate to /welcome.html. Drops out automatically
+           once they save a build (because loadOwn() returns non-null). Sits
+           on the cream pegboard wall, so the dashed frame + label use the
+           same dark navy (#2a261f) as the rest of the wall's etched text. */
+        /* Reset button chrome so .peg-tile--cta inherits its flex layout
+           from .peg-tile cleanly. */
+        .peg-tile--cta {
+            text-decoration: none;
+            background: transparent;
+            border: none;
+            padding: 0;
+            font: inherit;
+            color: inherit;
+            text-align: center;
+        }
+        .peg-tile--cta .peg-cta-frame {
+            width: 100%;
+            height: 124px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 2px dashed rgba(42, 38, 31, 0.4);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.18);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.25s ease;
+        }
+        .peg-tile--cta:hover .peg-cta-frame {
+            border-color: #1180f9;
+            border-style: solid;
+            background: rgba(17, 128, 249, 0.08);
+            transform: translateY(-3px);
+            box-shadow:
+                0 12px 24px -10px rgba(17, 128, 249, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.45);
+        }
+        .peg-tile--cta .peg-cta-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1180f9;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-20);
+            box-shadow: 0 6px 14px -4px rgba(17, 128, 249, 0.55);
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .peg-tile--cta:hover .peg-cta-icon {
+            background: #66d2ff;
+            transform: scale(1.08);
+        }
+        .peg-tile--cta .peg-cta-label {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--text-11);
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #2a261f;
+        }
+        .peg-tile--cta:hover .peg-cta-label { color: #0a5fb8; }
+        /* Name plate uses the same dark navy as the rest of the wall etching. */
+        .peg-tile--cta .peg-name { color: #2a261f; opacity: 0.75; }
+
         /* Visitor-details modal — opens on click; reuses the original
            dark-gradient card design, sized to its variant. */
         .visitor-modal {
@@ -471,13 +586,16 @@
             opacity: 0;
             animation: edit-fade 0.25s ease forwards;
         }
+        /* Wide variant accommodates the welcome-style two-column build stage
+           (build-card + welcome-panel). The legacy narrow .edit-modal-panel
+           rule is kept (without `--wide`) only as a safety fallback in case
+           any consumer still references the base class. */
         .edit-modal-panel {
             position: relative;
-            width: min(560px, 100%);
             max-height: calc(100vh - 48px);
             overflow-y: auto;
-            border-radius: 4px;
-            padding: 32px 28px 28px;
+            border-radius: 8px;
+            padding: 32px 32px 28px;
             background:
                 radial-gradient(120% 80% at 110% -10%, rgba(102, 210, 255, 0.08), transparent 55%),
                 linear-gradient(150deg, #0e1730 0%, #0a1024 100%);
@@ -486,6 +604,9 @@
             opacity: 0;
             transform: translateY(12px);
             animation: edit-rise 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .edit-modal-panel--wide {
+            width: min(1120px, calc(100vw - 48px));
         }
         @keyframes edit-fade { to { opacity: 1; } }
         @keyframes edit-rise { to { opacity: 1; transform: translateY(0); } }
@@ -505,9 +626,11 @@
             justify-content: center;
             cursor: url('assets/pointer.cur'), pointer;
             transition: background 0.2s ease, color 0.2s ease;
+            z-index: 2;
         }
         .edit-modal-close:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
 
+        .edit-modal-header { padding-right: 56px; }
         .edit-modal h2 {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
@@ -521,89 +644,35 @@
             color: rgba(255, 255, 255, 0.55);
         }
 
-        .edit-modal-body {
-            margin-top: 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .edit-field { display: flex; flex-direction: column; gap: 10px; }
-        .edit-field-label {
-            font-family: 'Space Mono', monospace;
-            font-size: var(--text-10);
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .edit-name-row { display: flex; gap: 8px; align-items: stretch; }
-        .edit-name-input {
-            flex: 1;
-            padding: 10px 14px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-family: 'Space Mono', monospace;
-            font-size: var(--text-14);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            outline: none;
-            transition: border-color 0.2s ease;
-        }
-        .edit-name-input:focus { border-color: rgba(102, 210, 255, 0.5); }
-        .edit-reroll {
-            padding: 0 14px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-            cursor: url('assets/pointer.cur'), pointer;
-            transition: background 0.2s ease, color 0.2s ease;
-        }
-        .edit-reroll:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
-        .edit-reroll i { font-size: var(--text-16); }
-
-        .edit-options { display: flex; flex-wrap: wrap; gap: 6px; }
-        .edit-opt {
-            padding: 7px 14px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-            font-family: 'Space Mono', monospace;
-            font-size: var(--text-12);
-            letter-spacing: 0.04em;
-            cursor: url('assets/pointer.cur'), pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-        }
-        .edit-opt:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
-        .edit-opt.is-active {
-            background: rgba(17, 128, 249, 0.14);
-            border-color: rgba(17, 128, 249, 0.45);
-            color: #66d2ff;
-        }
-        .edit-opt-swatch {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-            background: var(--swatch, #888);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+        /* The .welcome-stage inside the modal — gives it room to breathe and
+           overrides the welcome page's vertical centering (which would push
+           the card off-screen inside a constrained modal panel). */
+        .edit-stage {
+            margin-top: 24px;
+            align-items: start;
         }
 
         .edit-modal-foot {
-            margin-top: 22px;
+            margin-top: 18px;
             display: flex;
             justify-content: flex-end;
-            gap: 8px;
+            align-items: center;
+            gap: 12px;
         }
-        .edit-cancel, .edit-save {
+        .edit-status {
+            flex: 1;
+            font-family: 'Space Mono', monospace;
+            font-size: var(--text-11);
+            color: rgba(255, 255, 255, 0.55);
+        }
+        .edit-status.is-error { color: #ef4444; }
+        .edit-status.is-success { color: #4ade80; }
+        .edit-cancel {
             padding: 10px 18px;
             border-radius: 4px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.7);
             font-family: 'Space Mono', monospace;
             font-size: var(--text-13);
             font-weight: 500;
@@ -611,30 +680,17 @@
             cursor: url('assets/pointer.cur'), pointer;
             transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
         }
-        .edit-cancel {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            color: rgba(255, 255, 255, 0.7);
-        }
         .edit-cancel:hover { color: #fff; background: rgba(255, 255, 255, 0.04); }
-        .edit-save {
-            background: rgba(17, 128, 249, 0.18);
-            border: 1px solid rgba(17, 128, 249, 0.45);
-            color: #66d2ff;
-        }
-        .edit-save:hover { background: rgba(17, 128, 249, 0.28); border-color: rgba(17, 128, 249, 0.6); }
-        .edit-save[disabled] { opacity: 0.5; cursor: wait; }
-        .edit-status {
-            flex: 1;
-            font-family: 'Space Mono', monospace;
-            font-size: var(--text-11);
-            color: rgba(255, 255, 255, 0.55);
-            align-self: center;
-        }
-        .edit-status.is-error { color: #ef4444; }
-        .edit-status.is-success { color: #4ade80; }
 
         body.edit-modal-open { overflow: hidden; }
+
+        /* Below 900px the welcome-stage collapses to one column on its own
+           (welcome.css does that). Tighten the modal padding here so the
+           single-column stage still has room to breathe. */
+        @media (max-width: 900px) {
+            .edit-modal-panel--wide { padding: 24px 18px 22px; }
+            .edit-modal-header { padding-right: 48px; }
+        }
 
         /* ---- Closing CTA — inline after the visitor grid, centered ---- */
         .visitors-typing-cta-wrap {
@@ -784,52 +840,159 @@
         <article class="visitor-modal-card" id="visitorModalCard"></article>
     </div>
 
-    <!-- Edit-card modal -->
+    <!-- Edit-card modal — mirrors the welcome page's build stage so editing
+         feels identical to building. Same .build-card + .welcome-panel
+         components, same CSS (welcome.css is already loaded above), same
+         live-update behaviour driven by the JS at the bottom of this file. -->
     <div class="edit-modal" id="editModal" aria-hidden="true" role="dialog" aria-label="Edit your visitor card">
         <div class="edit-modal-backdrop" data-edit-close></div>
-        <div class="edit-modal-panel">
+        <div class="edit-modal-panel edit-modal-panel--wide">
             <button class="edit-modal-close" type="button" data-edit-close aria-label="Close">
                 <i class="ph ph-x"></i>
             </button>
-            <h2>Edit your card</h2>
-            <p class="edit-modal-sub">Changes update your card live in the gallery.</p>
+            <header class="edit-modal-header">
+                <h2>Edit your card</h2>
+                <p class="edit-modal-sub">Changes update your card live in the gallery.</p>
+            </header>
 
-            <div class="edit-modal-body">
-                <div class="edit-field">
-                    <span class="edit-field-label">Name</span>
-                    <div class="edit-name-row">
-                        <input type="text" class="edit-name-input" id="editName" maxlength="48" autocomplete="off" />
-                        <button type="button" class="edit-reroll" id="editReroll" aria-label="Shuffle name">
-                            <i class="ph ph-shuffle"></i>
+            <section class="welcome-stage edit-stage">
+                <!-- The Build Card (mirrors welcome.html) -->
+                <article class="build-card" id="editCard">
+                    <header class="build-card-head">
+                        <div class="build-card-brand">
+                            <h2 class="build-card-name" id="editCardName">YOUR NAME</h2>
+                        </div>
+                        <span class="build-card-serial" id="editCardSerial">NO. 0000</span>
+                    </header>
+
+                    <div class="build-card-keyboard" id="editCardKeyboard" aria-hidden="true">
+                        <!-- rendered by JS -->
+                    </div>
+
+                    <dl class="build-card-spec">
+                        <div class="build-card-spec-row">
+                            <dt>LAYOUT</dt>
+                            <dd id="editSpecLayout">60%</dd>
+                        </div>
+                        <div class="build-card-spec-row">
+                            <dt>CASE</dt>
+                            <dd>
+                                <span class="build-card-swatch" id="editSpecCaseSwatch" aria-hidden="true"></span>
+                                <span id="editSpecCase">White</span>
+                            </dd>
+                        </div>
+                        <div class="build-card-spec-row">
+                            <dt>SWITCH</dt>
+                            <dd>
+                                <i class="ph ph-circle-half" id="editSpecSwitchIcon" aria-hidden="true"></i>
+                                <span id="editSpecSwitch">Tactile</span>
+                            </dd>
+                        </div>
+                        <div class="build-card-spec-row">
+                            <dt>KEYCAPS</dt>
+                            <dd>
+                                <span class="build-card-swatch" id="editSpecKeycapSwatch" aria-hidden="true"></span>
+                                <span id="editSpecKeycap">Black</span>
+                            </dd>
+                        </div>
+                    </dl>
+
+                    <footer class="build-card-foot">
+                        <div class="build-card-foot-col">
+                            <span class="build-card-foot-label">ISSUED</span>
+                            <span class="build-card-foot-value" id="editCardDate">--/--/--</span>
+                        </div>
+                        <div class="build-card-foot-col build-card-sig">
+                            <span class="build-card-foot-label">SIGNATURE</span>
+                            <span class="build-card-foot-value build-card-foot-sig" id="editCardSignature">x ___________</span>
+                        </div>
+                    </footer>
+                </article>
+
+                <!-- Right-side controls panel (mirrors welcome.html) -->
+                <aside class="welcome-panel">
+                    <div class="build-controls">
+                        <div class="welcome-name-row">
+                            <label class="welcome-name-label" for="editName">visitor</label>
+                            <div class="welcome-name-input-wrap">
+                                <input
+                                    type="text"
+                                    id="editName"
+                                    class="welcome-name-input"
+                                    autocomplete="off"
+                                    autocorrect="off"
+                                    autocapitalize="characters"
+                                    spellcheck="false"
+                                    maxlength="24"
+                                    placeholder="YOUR NAME">
+                                <button class="welcome-reroll" id="editReroll" type="button" aria-label="Roll a new name">
+                                    <i class="ph ph-shuffle"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="build-control">
+                            <span class="build-control-label">layout</span>
+                            <div class="build-control-row" id="editLayouts">
+                                <button class="layout-btn" data-layout="60"  data-name="60%" type="button"><span class="layout-btn-name">60</span><span class="layout-btn-pct">%</span></button>
+                                <button class="layout-btn" data-layout="75"  data-name="75%" type="button"><span class="layout-btn-name">75</span><span class="layout-btn-pct">%</span></button>
+                                <button class="layout-btn" data-layout="tkl" data-name="TKL" type="button"><span class="layout-btn-name">TKL</span></button>
+                            </div>
+                        </div>
+
+                        <div class="build-control">
+                            <span class="build-control-label">case</span>
+                            <div class="build-control-row build-swatches" id="editCases">
+                                <button class="swatch-btn" data-case="white"    data-name="White"         style="--swatch:#f4f4f6" type="button" aria-label="White"></button>
+                                <button class="swatch-btn" data-case="charcoal" data-name="Charcoal Grey" style="--swatch:#36383d" type="button" aria-label="Charcoal Grey"></button>
+                                <button class="swatch-btn" data-case="navy"     data-name="Navy Blue"     style="--swatch:#1c2c54" type="button" aria-label="Navy Blue"></button>
+                                <button class="swatch-btn" data-case="crimson"  data-name="Crimson Red"   style="--swatch:#9c1f2e" type="button" aria-label="Crimson Red"></button>
+                                <button class="swatch-btn" data-case="matcha"   data-name="Matcha Green"  style="--swatch:#93a564" type="button" aria-label="Matcha Green"></button>
+                            </div>
+                        </div>
+
+                        <div class="build-control">
+                            <span class="build-control-label">switch</span>
+                            <div class="build-control-row" id="editSwitches">
+                                <button class="switch-btn" data-switch="tactile" data-name="Tactile" type="button">
+                                    <i class="ph ph-circle-half"></i>
+                                    <span>tactile</span>
+                                </button>
+                                <button class="switch-btn" data-switch="linear" data-name="Linear" type="button">
+                                    <i class="ph ph-line-segment"></i>
+                                    <span>linear</span>
+                                </button>
+                                <button class="switch-btn" data-switch="clicky" data-name="Clicky" type="button">
+                                    <i class="ph ph-wave-sine"></i>
+                                    <span>clicky</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="build-control">
+                            <span class="build-control-label">keycaps</span>
+                            <div class="build-control-row build-swatches" id="editKeycaps">
+                                <button class="swatch-btn" data-keycap="black"  data-name="Black"           style="--swatch:#16161d; --legend:#f3f3f3" type="button" aria-label="Black"></button>
+                                <button class="swatch-btn" data-keycap="white"  data-name="White"           style="--swatch:#f4f4f6; --legend:#1d1a14" type="button" aria-label="White"></button>
+                                <button class="swatch-btn" data-keycap="violet" data-name="Violet"          style="--swatch:#7c5cf2; --legend:#ffffff" type="button" aria-label="Violet"></button>
+                                <button class="swatch-btn" data-keycap="yellow" data-name="Electric Yellow" style="--swatch:#f4e21f; --legend:#1a1a10" type="button" aria-label="Electric Yellow"></button>
+                                <button class="swatch-btn" data-keycap="cream"  data-name="Cream"           style="--swatch:#e7dcc2; --legend:#1d1a14" type="button" aria-label="Cream"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="welcome-cta">
+                        <button class="welcome-submit" id="editSave" type="button">
+                            <span>Save changes</span>
+                            <i class="ph ph-arrow-right"></i>
                         </button>
                     </div>
-                </div>
-
-                <div class="edit-field">
-                    <span class="edit-field-label">Layout</span>
-                    <div class="edit-options" id="editLayouts"></div>
-                </div>
-
-                <div class="edit-field">
-                    <span class="edit-field-label">Case</span>
-                    <div class="edit-options" id="editCases"></div>
-                </div>
-
-                <div class="edit-field">
-                    <span class="edit-field-label">Switch</span>
-                    <div class="edit-options" id="editSwitches"></div>
-                </div>
-
-                <div class="edit-field">
-                    <span class="edit-field-label">Keycaps</span>
-                    <div class="edit-options" id="editKeycaps"></div>
-                </div>
-            </div>
+                </aside>
+            </section>
 
             <div class="edit-modal-foot">
                 <span class="edit-status" id="editStatus"></span>
                 <button type="button" class="edit-cancel" data-edit-close>Cancel</button>
-                <button type="button" class="edit-save" id="editSave">Save changes</button>
             </div>
         </div>
     </div>
@@ -973,6 +1136,10 @@
                     '" style="--vc-color:' + c.color +
                     ';--vc-keycap:' + keycap.color +
                     ';--vc-legend:' + keycap.legend + animStyle + '">' +
+                        // Ownership shown via overlay-only CSS (corner ★ on
+                        // .peg-kb-wrap::before, cyan glow on .peg-kb, blue
+                        // peg-name color) — no extra DOM, so the keyboard +
+                        // name stay vertically aligned with the other tiles.
                         '<div class="peg-kb-wrap">' +
                             '<div class="peg-kb">' + renderKb(v.layout) + '</div>' +
                         '</div>' +
@@ -1032,22 +1199,72 @@
             // Real visitors render first (newest at top, with the viewer's own
             // card hoisted to position 0). Seeds fill in behind them so the
             // gallery always shows at least the seed wall.
-            // `tilesData` holds the full array in render order so click
-            // handlers can look up a visitor by its global index.
+            // `tilesData` now holds JUST the rows visible on the current page
+            // (range-fetched lazily from Supabase). Click handlers index into
+            // it by per-page position so the visitor modal still works.
             var tilesData = [];
+            // Count of real DB rows (excludes seeds). Set once on initial load
+            // via a HEAD count query; drives pageCount().
+            var realCount = 0;
+            // Per-page cache of fetched rows. Flipping back to a previously-
+            // viewed page is instant; the cache is invalidated on edit save
+            // so the gallery shows the latest version of an edited card.
+            var pageCache = {};
+            var supaClient = null;
+
+            function getClient() {
+                if (supaClient !== null) return supaClient || null;
+                var url = window.SUPABASE_URL, key = window.SUPABASE_ANON_KEY;
+                if (!url || !key || typeof window.supabase === 'undefined') {
+                    supaClient = false;
+                    return null;
+                }
+                supaClient = window.supabase.createClient(url, key);
+                return supaClient;
+            }
 
             function pageCount() {
-                return Math.max(1, Math.ceil(tilesData.length / TILES_PER_PAGE));
+                // Real rows + seeds collectively determine page count.
+                return Math.max(1, Math.ceil((realCount + SEED_VISITORS.length) / TILES_PER_PAGE));
+            }
+
+            // Edge-case CTA: the visitor skipped the welcome flow, so there's
+            // no card of theirs to anchor the wall. Drop a ghost "build yours"
+            // tile at the front of page 1 that opens the SAME modal the
+            // pencil edit uses — just in "create" mode (no id, fresh serial).
+            // Once they save a build, loadOwn() returns non-null and this
+            // stops rendering; the hoisted real card takes its slot instead.
+            function renderCtaTile(animate) {
+                var animStyle = animate
+                    ? ';animation-delay:0.18s'
+                    : ';animation:none';
+                return (
+                    '<button type="button" class="peg-tile peg-tile--cta"' +
+                    ' data-create-card aria-label="Build your keyboard"' +
+                    ' style="' + animStyle + '">' +
+                        '<div class="peg-cta-frame">' +
+                            '<span class="peg-cta-icon"><i class="ph ph-plus"></i></span>' +
+                            '<span class="peg-cta-label">Build yours</span>' +
+                        '</div>' +
+                        '<div class="peg-name">Add your keyboard</div>' +
+                    '</button>'
+                );
             }
 
             function renderPage(animate) {
                 if (animate === undefined) animate = true;
                 var cols = columnCount();
-                var start = (currentPage - 1) * TILES_PER_PAGE;
-                var slice = tilesData.slice(start, start + TILES_PER_PAGE);
-                grid.innerHTML = slice.map(function (v, i) {
-                    return renderCard(v, start + i, i, cols, animate);
+                // `tilesData` IS the current page's rows in the new lazy
+                // model — no slicing needed. tileIdx == per-page index so
+                // the modal lookup (`tilesData[idx]`) hits the right row.
+                var html = tilesData.map(function (v, i) {
+                    return renderCard(v, i, i, cols, animate);
                 }).join('');
+                // Inject the CTA only on page 1 when there's no saved build.
+                if (currentPage === 1 && !loadOwn()) {
+                    html = renderCtaTile(animate) + html;
+                }
+                grid.innerHTML = html;
                 renderPagination();
             }
 
@@ -1069,26 +1286,113 @@
                         ' aria-label="Next page"><i class="ph ph-arrow-right"></i></button>';
             }
 
-            function renderAll(realRows) {
-                var hoisted = hoistOwn(realRows || []);
-                tilesData = hoisted.concat(SEED_VISITORS);
-                // Clamp the active page if the dataset shrank (e.g. after
-                // backend wipe), so we never land on an empty page.
-                if (currentPage > pageCount()) currentPage = pageCount();
-                renderPage();
-                var n = tilesData.length;
-                countEl.textContent = n + ' visitor' + (n === 1 ? '' : 's');
+            // ---------- Lazy pagination ----------
+            // Fetch only one page at a time from Supabase via `.range()` so
+            // the wall stays fast at scale. The cache (pageCache) keeps
+            // already-visited pages in memory for instant Prev/Next.
+
+            function loadCount() {
+                var client = getClient();
+                if (!client) return Promise.resolve(0);
+                return client.from('visitors')
+                    .select('id', { count: 'exact', head: true })
+                    .then(function (res) {
+                        if (res.error) throw res.error;
+                        return res.count || 0;
+                    })
+                    .catch(function (err) {
+                        console.warn('[visitors] count failed', err);
+                        return 0;
+                    });
             }
 
-            // Pagination clicks — re-render current page; the new tiles
-            // animate in fresh because the DOM is replaced.
+            // Fetch just the real-row range that falls on this page; combine
+            // with the matching seed slice, then hoist/strip the own card.
+            function loadPageRows(pageNum) {
+                if (pageCache[pageNum]) return Promise.resolve(pageCache[pageNum]);
+
+                var pStart = (pageNum - 1) * TILES_PER_PAGE;
+                var pEnd   = pStart + TILES_PER_PAGE; // exclusive
+
+                // Which real rows fall in this page? (indices 0..realCount-1)
+                var realStart = Math.min(pStart, realCount);
+                var realEnd   = Math.min(pEnd, realCount);
+                // Which seeds fall in this page? (seeds sit AFTER real rows.)
+                var seedStart = Math.max(0, pStart - realCount);
+                var seedEnd   = Math.max(0, pEnd - realCount);
+                var seedSlice = SEED_VISITORS.slice(seedStart, seedEnd);
+
+                var realPromise = Promise.resolve([]);
+                if (realEnd > realStart) {
+                    var client = getClient();
+                    if (client) {
+                        realPromise = client.from('visitors')
+                            .select('*')
+                            .order('created_at', { ascending: false })
+                            .range(realStart, realEnd - 1)
+                            .then(function (res) {
+                                if (res.error) throw res.error;
+                                return res.data || [];
+                            })
+                            .catch(function (err) {
+                                console.warn('[visitors] page load failed', err);
+                                return [];
+                            });
+                    }
+                }
+
+                return realPromise.then(function (realRows) {
+                    var combined = realRows.concat(seedSlice);
+                    var own = loadOwn();
+                    if (pageNum === 1) {
+                        // hoistOwn matches by id (if present) — otherwise it
+                        // prepends the local copy. Either way, the user's card
+                        // anchors page 1.
+                        combined = hoistOwn(combined);
+                    } else if (own && own.id) {
+                        // Suppress duplicate appearance of own card on later
+                        // pages (it already shows hoisted on page 1).
+                        combined = combined.filter(function (r) {
+                            return r.id !== own.id;
+                        });
+                    }
+                    pageCache[pageNum] = combined;
+                    return combined;
+                });
+            }
+
+            function showPage(pageNum, animate) {
+                if (animate === undefined) animate = true;
+                if (pageNum < 1) pageNum = 1;
+                var max = pageCount();
+                if (pageNum > max) pageNum = max;
+                currentPage = pageNum;
+                // Render an empty grid first so pagination feels responsive
+                // even when the page-fetch is in flight; tiles drop in once
+                // the promise resolves.
+                renderPagination();
+                loadPageRows(pageNum).then(function (rows) {
+                    // Guard against a stale fetch landing after the user has
+                    // already clicked through to a different page.
+                    if (currentPage !== pageNum) return;
+                    tilesData = rows;
+                    renderPage(animate);
+                });
+            }
+
+            // Invalidate the cache and re-fetch the current page — used after
+            // an edit-save so the gallery reflects the updated row.
+            function refreshAfterEdit() {
+                pageCache = {};
+                showPage(currentPage, false);
+            }
+
+            // Pagination clicks — Prev/Next swap pages with cache-first fetch.
             paginationEl.addEventListener('click', function (e) {
                 if (e.target.closest('[data-page-prev]') && currentPage > 1) {
-                    currentPage -= 1;
-                    renderPage();
+                    showPage(currentPage - 1, true);
                 } else if (e.target.closest('[data-page-next]') && currentPage < pageCount()) {
-                    currentPage += 1;
-                    renderPage();
+                    showPage(currentPage + 1, true);
                 }
             });
 
@@ -1103,33 +1407,12 @@
                 }, 200);
             });
 
-            function load() {
-                var url = window.SUPABASE_URL;
-                var key = window.SUPABASE_ANON_KEY;
-                if (!url || !key || typeof window.supabase === 'undefined') {
-                    // No backend wired — hoistOwn() still prepends the local
-                    // card when present.
-                    renderAll([]);
-                    return;
-                }
-
-                var client = window.supabase.createClient(url, key);
-                client.from('visitors')
-                    .select('*')
-                    .order('created_at', { ascending: false })
-                    .limit(200)
-                    .then(function (res) {
-                        if (res.error) throw res.error;
-                        renderAll(res.data || []);
-                    })
-                    .catch(function (err) {
-                        console.warn('[visitors] load failed', err);
-                        // Backend hiccup — still show seeds so the page isn't blank.
-                        renderAll([]);
-                    });
-            }
-
-            load();
+            // Boot: count once, then show page 1.
+            loadCount().then(function (n) {
+                realCount = n;
+                countEl.textContent = n + ' visitor' + (n === 1 ? '' : 's');
+                showPage(1, true);
+            });
 
             // ============================================
             // Edit-card modal
@@ -1144,32 +1427,59 @@
             var saveBtn     = document.getElementById('editSave');
             var statusEl    = document.getElementById('editStatus');
 
-            // Mirrors the option metadata in welcome.js so the modal can
-            // edit every field the welcome flow exposes.
-            var LAYOUT_OPTS = [
-                { key: '60',  name: '60%' },
-                { key: '75',  name: '75%' },
-                { key: 'tkl', name: 'TKL' }
-            ];
-            var CASE_OPTS = [
-                { key: 'white',    name: 'White',         color: '#f4f4f6' },
-                { key: 'charcoal', name: 'Charcoal Grey', color: '#36383d' },
-                { key: 'navy',     name: 'Navy Blue',     color: '#1c2c54' },
-                { key: 'crimson',  name: 'Crimson Red',   color: '#9c1f2e' },
-                { key: 'matcha',   name: 'Matcha Green',  color: '#93a564' }
-            ];
-            var SWITCH_OPTS = [
-                { key: 'linear',  name: 'Linear'  },
-                { key: 'tactile', name: 'Tactile' },
-                { key: 'clicky',  name: 'Clicky'  }
-            ];
-            var KEYCAP_OPTS = [
-                { key: 'black',  name: 'Black',           color: '#16161d' },
-                { key: 'white',  name: 'White',           color: '#f4f4f6' },
-                { key: 'violet', name: 'Violet',          color: '#7c5cf2' },
-                { key: 'yellow', name: 'Electric Yellow', color: '#f4e21f' },
-                { key: 'cream',  name: 'Cream',           color: '#e7dcc2' }
-            ];
+            // Build-card DOM refs (mirror welcome.js field-by-field).
+            var editCardEl         = document.getElementById('editCard');
+            var editCardKeyboard   = document.getElementById('editCardKeyboard');
+            var editCardName       = document.getElementById('editCardName');
+            var editCardSerial     = document.getElementById('editCardSerial');
+            var editCardDate       = document.getElementById('editCardDate');
+            var editCardSignature  = document.getElementById('editCardSignature');
+            var editSpecLayout     = document.getElementById('editSpecLayout');
+            var editSpecCase       = document.getElementById('editSpecCase');
+            var editSpecCaseSwatch = document.getElementById('editSpecCaseSwatch');
+            var editSpecSwitch     = document.getElementById('editSpecSwitch');
+            var editSpecSwitchIcon = document.getElementById('editSpecSwitchIcon');
+            var editSpecKeycap     = document.getElementById('editSpecKeycap');
+            var editSpecKeycapSwatch = document.getElementById('editSpecKeycapSwatch');
+
+            // Same hex maps welcome.js uses, so the edit-card paints the
+            // identical colours the build flow produces.
+            var EDIT_CASES = {
+                white:    { color: '#f4f4f6', text: '#1c1c20', textDim: 'rgba(28,28,32,0.55)' },
+                charcoal: { color: '#36383d', text: '#ffffff', textDim: 'rgba(255,255,255,0.55)' },
+                navy:     { color: '#1c2c54', text: '#ffffff', textDim: 'rgba(255,255,255,0.6)'  },
+                crimson:  { color: '#9c1f2e', text: '#ffffff', textDim: 'rgba(255,255,255,0.6)'  },
+                matcha:   { color: '#93a564', text: '#1a1e10', textDim: 'rgba(26,30,16,0.6)'     }
+            };
+            var EDIT_KEYCAPS = {
+                black:  { color: '#16161d', legend: '#f3f3f3' },
+                white:  { color: '#f4f4f6', legend: '#1d1a14' },
+                violet: { color: '#7c5cf2', legend: '#ffffff' },
+                yellow: { color: '#f4e21f', legend: '#1a1a10' },
+                cream:  { color: '#e7dcc2', legend: '#1d1a14' }
+            };
+            var EDIT_SWITCHES = {
+                tactile: { icon: 'ph-circle-half' },
+                linear:  { icon: 'ph-line-segment' },
+                clicky:  { icon: 'ph-wave-sine' }
+            };
+
+            // Older saves only persisted the display name (no `*_key`). Derive
+            // the short key from the display name so the active swatch always
+            // matches the loaded card, even for legacy localStorage records.
+            function layoutKeyFromName(n) {
+                if (!n) return '60';
+                var s = String(n).toLowerCase();
+                if (s.indexOf('75')  !== -1) return '75';
+                if (s.indexOf('tkl') !== -1) return 'tkl';
+                return '60';
+            }
+            var NAME_TO_CASE   = { 'White':'white','Charcoal Grey':'charcoal','Navy Blue':'navy','Crimson Red':'crimson','Matcha Green':'matcha' };
+            var NAME_TO_KEYCAP = { 'Black':'black','White':'white','Violet':'violet','Electric Yellow':'yellow','Cream':'cream' };
+            function switchKeyFromName(n) {
+                var k = (n || '').toLowerCase();
+                return (k === 'linear' || k === 'tactile' || k === 'clicky') ? k : 'tactile';
+            }
 
             var ADJECTIVES = ['Tactile','Linear','Clicky','Lubed','Cream','Brass','Velvet','Crisp','Quiet','Thocky','Clacky','Steady','Holy','Inky','Bright','Polished','Solder','Frosted','Foamed','Marbled','Cherry','Topre','Bobo','Plate','Sprung'];
             var NOUNS = ['Ember','Spruce','Comet','Falcon','Nimbus','Quartz','Marigold','Otter','Pollen','Drift','Echo','Lantern','Cypher','Atlas','Beacon','Glimmer','Pebble','Cricket','Aspen','Cinder','Sable','Indigo','Saffron','Onyx','Pine','Lark','Plume','Vesper'];
@@ -1180,25 +1490,16 @@
                 return (a + ' ' + n).toUpperCase();
             }
 
+            function formatIssuedDate(iso) {
+                if (!iso) return '--/--/--';
+                var d = new Date(iso);
+                if (isNaN(d.getTime())) return '--/--/--';
+                return String(d.getMonth() + 1).padStart(2, '0') + '/' +
+                       String(d.getDate()).padStart(2, '0') + '/' +
+                       String(d.getFullYear()).slice(-2);
+            }
+
             var editState = null;
-
-            function renderOptions(container, opts) {
-                container.innerHTML = opts.map(function (o) {
-                    var swatch = o.color
-                        ? '<span class="edit-opt-swatch" style="--swatch:' + o.color + '"></span>'
-                        : '';
-                    return '<button type="button" class="edit-opt" data-key="' + o.key +
-                           '" data-name="' + escapeHtml(o.name) + '">' +
-                                swatch + escapeHtml(o.name) +
-                           '</button>';
-                }).join('');
-            }
-
-            function highlightActive(container, key) {
-                container.querySelectorAll('.edit-opt').forEach(function (b) {
-                    b.classList.toggle('is-active', b.getAttribute('data-key') === key);
-                });
-            }
 
             function setEditStatus(msg, kind) {
                 statusEl.textContent = msg || '';
@@ -1207,42 +1508,164 @@
                 if (kind === 'success') statusEl.classList.add('is-success');
             }
 
-            function openEditModal() {
-                var own = loadOwn();
-                if (!own) return;
-                editState = {
-                    id:         own.id || null,
-                    serial:     own.serial,
-                    created_at: own.created_at || own.issued_at,
-                    name:       own.name        || rollName(),
-                    layout:     own.layout_key  || '60',
-                    layoutName: own.layout      || '60%',
-                    caseKey:    own.case_key    || 'white',
-                    caseName:   own.case_color  || 'White',
-                    switchKey:  own.switch_key  || 'tactile',
-                    switchName: own.switch_type || 'Tactile',
-                    keycapKey:  own.keycap_key  || 'black',
-                    keycapName: own.keycaps     || 'Black'
-                };
+            // The save button is `<button><span>Save changes</span><i></i></button>`
+            // — mutating textContent would wipe the icon, so we target the span.
+            var saveLabelEl = saveBtn.querySelector('span');
+            function setSaveLabel(text) {
+                if (saveLabelEl) saveLabelEl.textContent = text;
+                else saveBtn.textContent = text;
+            }
+
+            // ---------- Build-card updaters (welcome.js parity) ----------
+            function buildEditKeyboard(layout) {
+                editCardKeyboard.setAttribute('data-layout', layout);
+                editCardKeyboard.innerHTML = '';
+                var def = window.KbLayouts.LAYOUTS[layout] || window.KbLayouts.LAYOUTS['60'];
+                def.rows.forEach(function (row) {
+                    var rowEl = document.createElement('div');
+                    rowEl.className = 'kb-row';
+                    row.forEach(function (tok) {
+                        rowEl.appendChild(window.KbLayouts.renderKeyDom(tok));
+                    });
+                    editCardKeyboard.appendChild(rowEl);
+                });
+            }
+
+            function applyEditCase() {
+                var c = EDIT_CASES[editState.caseKey] || EDIT_CASES.white;
+                editCardEl.style.setProperty('--case-color', c.color);
+                editCardEl.style.setProperty('--case-text', c.text);
+                editCardEl.style.setProperty('--case-text-dim', c.textDim);
+                editSpecCase.textContent = editState.caseName;
+                editSpecCaseSwatch.style.setProperty('--swatch-color', c.color);
+            }
+            function applyEditKeycaps() {
+                var k = EDIT_KEYCAPS[editState.keycapKey] || EDIT_KEYCAPS.black;
+                editCardEl.style.setProperty('--keycap-color', k.color);
+                editCardEl.style.setProperty('--keycap-legend', k.legend);
+                editSpecKeycap.textContent = editState.keycapName;
+                editSpecKeycapSwatch.style.setProperty('--swatch-color', k.color);
+            }
+            function applyEditSwitch() {
+                editSpecSwitch.textContent = editState.switchName;
+                var s = EDIT_SWITCHES[editState.switchKey] || EDIT_SWITCHES.tactile;
+                editSpecSwitchIcon.className = 'ph ' + s.icon;
+            }
+            function applyEditLayout() {
+                editSpecLayout.textContent = editState.layoutName;
+                buildEditKeyboard(editState.layout);
+            }
+            function applyEditName(name) {
+                editState.name = name;
+                editCardName.textContent = name || 'YOUR NAME';
+                editCardSignature.textContent = 'x  ' + (name
+                    ? name.split(' ').map(function (w) { return w.charAt(0); }).join('')
+                    : '__');
+            }
+
+            // Toggle .active on the picker button whose data-* matches the key.
+            function highlightActive(container, attr, value) {
+                container.querySelectorAll('[' + attr + ']').forEach(function (b) {
+                    b.classList.toggle('active', b.getAttribute(attr) === value);
+                });
+            }
+
+            // Header text varies by mode: "Edit your card" for an existing
+            // owner card, "Build your keyboard" for the fresh-create flow.
+            var modalTitleEl = modalEl.querySelector('.edit-modal-header h2');
+            var modalSubEl   = modalEl.querySelector('.edit-modal-sub');
+
+            // 4-digit serial — mirrors welcome.js's generateSerial() so a
+            // build started here continues the same numbering sequence.
+            function generateSerial() {
+                var base = parseInt(localStorage.getItem('jc_visitor_serial') || '1037', 10);
+                if (isNaN(base)) base = 1037;
+                var next = base + 1;
+                try { localStorage.setItem('jc_visitor_serial', String(next)); } catch (e) {}
+                return next;
+            }
+
+            // Shared modal opener — paints the build card from `state`, sets
+            // the right title/save-label for the mode, then shows the modal.
+            function openModalWithState(state, opts) {
+                opts = opts || {};
+                editState = state;
 
                 nameInputEl.value = editState.name;
-                renderOptions(layoutsEl,  LAYOUT_OPTS);
-                renderOptions(casesEl,    CASE_OPTS);
-                renderOptions(switchesEl, SWITCH_OPTS);
-                renderOptions(keycapsEl,  KEYCAP_OPTS);
-                highlightActive(layoutsEl,  editState.layout);
-                highlightActive(casesEl,    editState.caseKey);
-                highlightActive(switchesEl, editState.switchKey);
-                highlightActive(keycapsEl,  editState.keycapKey);
+                applyEditCase();
+                applyEditKeycaps();
+                applyEditSwitch();
+                applyEditLayout();
+                applyEditName(editState.name);
+                editCardSerial.textContent = 'NO. ' + String(editState.serial || 0).padStart(4, '0');
+                editCardDate.textContent = formatIssuedDate(editState.created_at);
+
+                highlightActive(layoutsEl,  'data-layout',  editState.layout);
+                highlightActive(casesEl,    'data-case',    editState.caseKey);
+                highlightActive(switchesEl, 'data-switch',  editState.switchKey);
+                highlightActive(keycapsEl,  'data-keycap',  editState.keycapKey);
+
+                if (modalTitleEl) modalTitleEl.textContent = opts.title || 'Edit your card';
+                if (modalSubEl)   modalSubEl.textContent   = opts.sub   || 'Changes update your card live in the gallery.';
+                setSaveLabel(opts.saveLabel || 'Save changes');
 
                 setEditStatus('');
                 saveBtn.disabled = false;
-                saveBtn.textContent = 'Save changes';
 
                 modalEl.classList.add('is-open');
                 modalEl.setAttribute('aria-hidden', 'false');
                 document.body.classList.add('edit-modal-open');
-                setTimeout(function () { nameInputEl.focus(); nameInputEl.select(); }, 50);
+            }
+
+            function openEditModal() {
+                var own = loadOwn();
+                if (!own) return;
+                var layoutName  = own.layout      || '60%';
+                var caseName    = own.case_color  || 'White';
+                var switchName  = own.switch_type || 'Tactile';
+                var keycapName  = own.keycaps     || 'Black';
+                openModalWithState({
+                    id:         own.id || null,
+                    serial:     own.serial,
+                    created_at: own.created_at || own.issued_at,
+                    name:       own.name        || rollName(),
+                    layout:     own.layout_key  || layoutKeyFromName(layoutName),
+                    layoutName: layoutName,
+                    caseKey:    own.case_key    || NAME_TO_CASE[caseName]   || 'white',
+                    caseName:   caseName,
+                    switchKey:  own.switch_key  || switchKeyFromName(switchName),
+                    switchName: switchName,
+                    keycapKey:  own.keycap_key  || NAME_TO_KEYCAP[keycapName] || 'black',
+                    keycapName: keycapName
+                }, {
+                    title: 'Edit your card',
+                    sub:   'Changes update your card live in the gallery.',
+                    saveLabel: 'Save changes'
+                });
+            }
+
+            // Fresh-build flow — same modal, but no existing record. A null
+            // id flags the save handler to INSERT instead of UPDATE, and we
+            // mint a new serial + created_at on the spot.
+            function openCreateModal() {
+                openModalWithState({
+                    id:         null,
+                    serial:     generateSerial(),
+                    created_at: new Date().toISOString(),
+                    name:       rollName(),
+                    layout:     '60',
+                    layoutName: '60%',
+                    caseKey:    'white',
+                    caseName:   'White',
+                    switchKey:  'tactile',
+                    switchName: 'Tactile',
+                    keycapKey:  'black',
+                    keycapName: 'Black'
+                }, {
+                    title: 'Build your keyboard',
+                    sub:   'Customize your card — it joins the visitor wall on save.',
+                    saveLabel: 'Save keyboard'
+                });
             }
 
             function closeEditModal() {
@@ -1251,23 +1674,34 @@
                 document.body.classList.remove('edit-modal-open');
             }
 
-            function bindPicker(container, onPick) {
+            // Click → resolve key from the chosen button's data-* attr, fire
+            // onPick, then re-highlight the active state for that group.
+            function bindPicker(container, dataAttr, selector, onPick) {
                 container.addEventListener('click', function (e) {
-                    var btn = e.target.closest('.edit-opt');
+                    var btn = e.target.closest(selector);
                     if (!btn || !container.contains(btn)) return;
-                    onPick(btn.getAttribute('data-key'), btn.getAttribute('data-name'));
-                    highlightActive(container, btn.getAttribute('data-key'));
+                    var key  = btn.getAttribute(dataAttr);
+                    var name = btn.getAttribute('data-name');
+                    onPick(key, name);
+                    highlightActive(container, dataAttr, key);
                 });
             }
 
-            bindPicker(layoutsEl, function (k, n) {
+            bindPicker(layoutsEl, 'data-layout', '.layout-btn', function (key, name) {
                 if (!editState) return;
-                editState.layout = k; editState.layoutName = n;
+                editState.layout = key;
+                editState.layoutName = name;
+                applyEditLayout();
             });
-            bindPicker(casesEl, function (k, n) {
+            bindPicker(casesEl, 'data-case', '.swatch-btn', function (key, name) {
                 if (!editState) return;
-                editState.caseKey = k; editState.caseName = n;
+                editState.caseKey = key;
+                editState.caseName = name;
+                applyEditCase();
             });
+
+            // Switch sounds — keep the existing audio cue when the user picks
+            // a switch style; gracefully no-ops if the audio fails to load.
             var editSwitchSounds = {
                 linear:  new Audio('assets/sounds/linear.mp3'),
                 tactile: new Audio('assets/sounds/tactile.mp3'),
@@ -1283,26 +1717,30 @@
                 try { s.currentTime = 0; s.play().catch(function () {}); } catch (e) {}
             }
 
-            bindPicker(switchesEl, function (k, n) {
+            bindPicker(switchesEl, 'data-switch', '.switch-btn', function (key, name) {
                 if (!editState) return;
-                editState.switchKey = k; editState.switchName = n;
-                playEditSwitchSound(k);
+                editState.switchKey = key;
+                editState.switchName = name;
+                applyEditSwitch();
+                playEditSwitchSound(key);
             });
-            bindPicker(keycapsEl, function (k, n) {
+            bindPicker(keycapsEl, 'data-keycap', '.swatch-btn', function (key, name) {
                 if (!editState) return;
-                editState.keycapKey = k; editState.keycapName = n;
+                editState.keycapKey = key;
+                editState.keycapName = name;
+                applyEditKeycaps();
             });
 
             nameInputEl.addEventListener('input', function () {
                 if (!editState) return;
-                editState.name = nameInputEl.value.toUpperCase();
+                applyEditName(nameInputEl.value.toUpperCase());
             });
 
             rerollBtn.addEventListener('click', function () {
                 if (!editState) return;
                 var n = rollName();
                 nameInputEl.value = n;
-                editState.name = n;
+                applyEditName(n);
             });
 
             // Backdrop / close button / cancel all share [data-edit-close]
@@ -1332,56 +1770,72 @@
                     serial: editState.serial
                 };
 
+                var isCreate = !editState.id;
+                var savingLabel = isCreate ? 'Save keyboard' : 'Save changes';
+
                 saveBtn.disabled = true;
-                saveBtn.textContent = 'Saving…';
+                setSaveLabel('Saving…');
                 setEditStatus('');
 
-                // Mirror to localStorage first so the gallery reflects changes
-                // even when Supabase is unreachable.
-                try {
-                    localStorage.setItem('jc_visitor', JSON.stringify(Object.assign({}, payload, {
-                        id:         editState.id,
-                        case_key:   editState.caseKey,
-                        keycap_key: editState.keycapKey,
-                        switch_key: editState.switchKey,
-                        layout_key: editState.layout,
-                        issued_at:  editState.created_at || new Date().toISOString(),
-                        created_at: editState.created_at
-                    })));
-                } catch (e) {}
+                // Persist the build to localStorage first — guarantees the
+                // gallery reflects the change even if Supabase is unreachable.
+                // The `id` is overwritten with the DB-returned id after a
+                // successful INSERT (so future edits hit UPDATE, not INSERT).
+                function writeLocal(idOverride) {
+                    try {
+                        localStorage.setItem('jc_visitor', JSON.stringify(Object.assign({}, payload, {
+                            id:         idOverride != null ? idOverride : editState.id,
+                            case_key:   editState.caseKey,
+                            keycap_key: editState.keycapKey,
+                            switch_key: editState.switchKey,
+                            layout_key: editState.layout,
+                            issued_at:  editState.created_at || new Date().toISOString(),
+                            created_at: editState.created_at
+                        })));
+                        // Stop the welcome-redirect gate from firing on future
+                        // visits — they've now seeded a card from this page.
+                        localStorage.setItem('jc_welcomed', '1');
+                    } catch (e) {}
+                }
+                writeLocal();
 
                 function finishLocal(msg) {
                     setEditStatus(msg, 'success');
-                    setTimeout(function () { closeEditModal(); load(); }, 350);
+                    // Clear the page-cache + re-fetch the current page so the
+                    // gallery shows the new/updated row immediately.
+                    setTimeout(function () {
+                        closeEditModal();
+                        refreshAfterEdit();
+                    }, 350);
                 }
 
-                if (!editState.id) {
-                    finishLocal('Saved locally.');
-                    return;
-                }
-
-                var url = window.SUPABASE_URL;
-                var key = window.SUPABASE_ANON_KEY;
-                if (!url || !key || typeof window.supabase === 'undefined') {
+                var client = getClient();
+                if (!client) {
                     finishLocal('Saved locally — no backend.');
                     return;
                 }
 
-                var client = window.supabase.createClient(url, key);
-                client.from('visitors')
-                    .update(payload)
-                    .eq('id', editState.id)
-                    .select()
-                    .single()
+                // INSERT for fresh builds, UPDATE for owner edits. INSERT
+                // returns the new row so we can stamp its id back into
+                // localStorage — subsequent saves then take the UPDATE path.
+                var query = isCreate
+                    ? client.from('visitors').insert(payload)
+                    : client.from('visitors').update(payload).eq('id', editState.id);
+
+                query.select().single()
                     .then(function (res) {
                         if (res.error) throw res.error;
-                        finishLocal('Saved.');
+                        if (isCreate && res.data && res.data.id) {
+                            editState.id = res.data.id;
+                            writeLocal(res.data.id);
+                        }
+                        finishLocal(isCreate ? 'Keyboard saved.' : 'Saved.');
                     })
                     .catch(function (err) {
-                        console.warn('[edit] supabase update failed', err);
+                        console.warn('[edit] supabase save failed', err);
                         setEditStatus('Save failed — try again.', 'error');
                         saveBtn.disabled = false;
-                        saveBtn.textContent = 'Save changes';
+                        setSaveLabel(savingLabel);
                     });
             });
 
@@ -1445,8 +1899,14 @@
             }
 
             // Click handlers — tile opens visitor modal; pencil (inside the
-            // visitor modal) closes it and opens the edit modal.
+            // visitor modal) closes it and opens the edit modal; the CTA
+            // ghost tile opens the SAME modal in fresh-create mode.
             grid.addEventListener('click', function (e) {
+                if (e.target.closest('[data-create-card]')) {
+                    e.preventDefault();
+                    openCreateModal();
+                    return;
+                }
                 var tile = e.target.closest('.peg-tile');
                 if (!tile) return;
                 var idx = parseInt(tile.getAttribute('data-index'), 10);
