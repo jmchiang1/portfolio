@@ -482,7 +482,7 @@
             gap: 10px;
         }
         .visitor-modal-card.is-mine .vmc-tag {
-            color: #66d2ff;
+            color: var(--vc-text-dim, rgba(255,255,255,0.55));
             font-weight: 700;
         }
         .visitor-modal-card .vmc-name {
@@ -610,6 +610,23 @@
         }
         @keyframes edit-fade { to { opacity: 1; } }
         @keyframes edit-rise { to { opacity: 1; transform: translateY(0); } }
+        @keyframes edit-fade-out { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes edit-rise-out {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to   { opacity: 0; transform: translateY(12px) scale(0.96); }
+        }
+
+        /* Closing state — plays the open animation in reverse so the modal
+           settles down instead of snapping out. Mirrors the entrance:
+           backdrop fades, card drops + scales back to its pre-open pose. */
+        .visitor-modal.is-closing .visitor-modal-backdrop,
+        .edit-modal.is-closing .edit-modal-backdrop {
+            animation: edit-fade-out 0.22s ease forwards;
+        }
+        .visitor-modal.is-closing .visitor-modal-card,
+        .edit-modal.is-closing .edit-modal-panel {
+            animation: edit-rise-out 0.28s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+        }
 
         .edit-modal-close {
             position: absolute;
@@ -1159,6 +1176,24 @@
                 return name.split(' ').map(function (w) { return w.charAt(0); }).join('');
             }
 
+            // Old-palette → new-palette aliases. Mirrors the Supabase
+            // migration in supabase-migration-2026-05-palette.sql so a local
+            // record saved under the old palette still resolves to the same
+            // colour the server-side row was migrated to.
+            var LEGACY_CASE_ALIAS = {
+                'Midnight':  'Navy Blue',
+                'Graphite':  'Charcoal Grey',
+                'Ember':     'Crimson Red',
+                'Moss':      'Matcha Green',
+                'Bone':      'White'
+            };
+            var LEGACY_KEYCAP_ALIAS = {
+                'BoW':       'Black',
+                'Botanical': 'Black',
+                'Dolch':     'Black',
+                'Olivia':    'White'
+            };
+
             function loadOwn() {
                 try {
                     var raw = localStorage.getItem('jc_visitor');
@@ -1166,6 +1201,24 @@
                     var v = JSON.parse(raw);
                     if (!v) return null;
                     v.created_at = v.created_at || v.issued_at;
+
+                    // Normalise legacy palette names so every consumer sees
+                    // current-palette values. Re-persist on hit so this only
+                    // costs once per device.
+                    var changed = false;
+                    if (LEGACY_CASE_ALIAS[v.case_color]) {
+                        v.case_color = LEGACY_CASE_ALIAS[v.case_color];
+                        if (v.case_key) delete v.case_key;
+                        changed = true;
+                    }
+                    if (LEGACY_KEYCAP_ALIAS[v.keycaps]) {
+                        v.keycaps = LEGACY_KEYCAP_ALIAS[v.keycaps];
+                        if (v.keycap_key) delete v.keycap_key;
+                        changed = true;
+                    }
+                    if (changed) {
+                        try { localStorage.setItem('jc_visitor', JSON.stringify(v)); } catch (e) {}
+                    }
                     return v;
                 } catch (e) { return null; }
             }
@@ -1616,6 +1669,7 @@
                 setEditStatus('');
                 saveBtn.disabled = false;
 
+                modalEl.classList.remove('is-closing');
                 modalEl.classList.add('is-open');
                 modalEl.setAttribute('aria-hidden', 'false');
                 document.body.classList.add('edit-modal-open');
@@ -1672,10 +1726,18 @@
                 });
             }
 
+            var modalPanelEl = modalEl.querySelector('.edit-modal-panel');
             function closeEditModal() {
-                modalEl.classList.remove('is-open');
+                if (!modalEl.classList.contains('is-open')) return;
                 modalEl.setAttribute('aria-hidden', 'true');
-                document.body.classList.remove('edit-modal-open');
+                modalEl.classList.add('is-closing');
+                var onEnd = function (e) {
+                    if (e.target !== modalPanelEl) return;
+                    modalPanelEl.removeEventListener('animationend', onEnd);
+                    modalEl.classList.remove('is-open', 'is-closing');
+                    document.body.classList.remove('edit-modal-open');
+                };
+                modalPanelEl.addEventListener('animationend', onEnd);
             }
 
             // Click → resolve key from the chosen button's data-* attr, fire
@@ -1895,15 +1957,31 @@
                         '<span>x ' + escapeHtml(initials(v.name)) + '</span>' +
                     '</div>';
 
+                vModalEl.classList.remove('is-closing');
                 vModalEl.classList.add('is-open');
                 vModalEl.setAttribute('aria-hidden', 'false');
                 document.body.classList.add('edit-modal-open');
             }
 
-            function closeVisitorModal() {
-                vModalEl.classList.remove('is-open');
+            function closeVisitorModal(opts) {
+                if (!vModalEl.classList.contains('is-open')) return;
                 vModalEl.setAttribute('aria-hidden', 'true');
-                document.body.classList.remove('edit-modal-open');
+                // Skip the exit anim for in-place swaps (e.g. the pencil
+                // handoff to the edit modal) so the next modal can take over
+                // without a perceptible gap.
+                if (opts && opts.immediate) {
+                    vModalEl.classList.remove('is-open');
+                    document.body.classList.remove('edit-modal-open');
+                    return;
+                }
+                vModalEl.classList.add('is-closing');
+                var onEnd = function (e) {
+                    if (e.target !== vModalCard) return;
+                    vModalCard.removeEventListener('animationend', onEnd);
+                    vModalEl.classList.remove('is-open', 'is-closing');
+                    document.body.classList.remove('edit-modal-open');
+                };
+                vModalCard.addEventListener('animationend', onEnd);
             }
 
             // Click handlers — tile opens visitor modal; pencil (inside the
@@ -1926,7 +2004,7 @@
             vModalEl.addEventListener('click', function (e) {
                 if (e.target.closest('[data-edit-card]')) {
                     e.preventDefault();
-                    closeVisitorModal();
+                    closeVisitorModal({ immediate: true });
                     openEditModal();
                     return;
                 }
