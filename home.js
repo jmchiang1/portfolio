@@ -16,6 +16,10 @@
     var counterCurrent = counter && counter.querySelector('.counter-current');
     var counterTotal = counter && counter.querySelector('.counter-total');
     var counterName = counter && counter.querySelector('.counter-name');
+
+    // Carousel prev/next buttons — desktop nav for the carousel view.
+    var navPrev = document.querySelector('.carousel-nav-prev');
+    var navNext = document.querySelector('.carousel-nav-next');
     var cardNames = cards.map(function (c) {
         var titleEl = c.querySelector('.project-title');
         // strip any trailing icon text — use only the leading text node
@@ -41,6 +45,13 @@
     function setCounterVisible(visible) {
         if (!counter) return;
         counter.classList.toggle('counter-visible', visible);
+    }
+
+    // Mirrors the counter's visibility so the prev/next buttons fade in
+    // with the carousel and fade out when returning to hero.
+    function setNavVisible(visible) {
+        if (navPrev) navPrev.classList.toggle('nav-visible', visible);
+        if (navNext) navNext.classList.toggle('nav-visible', visible);
     }
 
     // Layout toggle — FLIP animate the same cards between carousel and 2-col grid.
@@ -336,6 +347,7 @@
         heroSection.classList.remove('section-hidden');
         glow.classList.remove('glow-dimmed', 'glow-blue', 'glow-green', 'glow-gold', 'glow-orange');
         setCounterVisible(false);
+        setNavVisible(false);
 
         if (loopForward) {
             positionCardsForHeroLoopForward();
@@ -362,6 +374,7 @@
         glow.classList.add('glow-dimmed');
         updateCounter();
         setCounterVisible(true);
+        setNavVisible(layoutMode === 'carousel');
 
         // Cards that were on the left but need to be on the right (after a loop)
         // should silently snap to far-right first, then animate to their target position.
@@ -495,6 +508,39 @@
             }
         }
     }, { passive: false });
+
+    // Prev/next button + arrow-key nav — desktop affordance for the carousel
+    // since the wheel/swipe gesture isn't obvious on a laptop. Both routes
+    // share the same `isTransitioning` guard the wheel handler uses so rapid
+    // input can't stack moves mid-animation. From the hero, either key
+    // enters the carousel (right → first card, left → last card) so the
+    // arrow keys behave as a continuous horizontal nav across the page.
+    function stepCarousel(direction) {
+        if (layoutMode === 'grid') return;
+        if (isTransitioning) return;
+        isTransitioning = true;
+        setTimeout(function () { isTransitioning = false; }, TRANSITION_MS);
+        if (currentView === 'hero') {
+            activeIndex = direction > 0 ? 0 : totalCards - 1;
+            showCarousel();
+            return;
+        }
+        if (direction > 0) nextCard();
+        else prevCard();
+    }
+
+    if (navPrev) navPrev.addEventListener('click', function () { stepCarousel(-1); });
+    if (navNext) navNext.addEventListener('click', function () { stepCarousel(1); });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        // Let inputs / contenteditable own the arrow keys.
+        var t = e.target;
+        if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+        if (layoutMode === 'grid') return;
+        e.preventDefault();
+        stepCarousel(e.key === 'ArrowRight' ? 1 : -1);
+    });
 
     // Video hover play/pause
     cards.forEach(function (card) {

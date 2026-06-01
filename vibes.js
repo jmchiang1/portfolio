@@ -50,13 +50,21 @@
     // ============================================
     var cards = document.querySelectorAll('.vibes-card');
     cards.forEach(function (card) {
+        // A card with data-case opens its internal case-study page (with the
+        // shared page transition); otherwise it opens the live site in a new tab.
+        var caseUrl = card.getAttribute('data-case');
         var liveUrl = card.getAttribute('data-live');
-        if (!liveUrl) return;
+        if (!caseUrl && !liveUrl) return;
 
         card.addEventListener('click', function (e) {
             // If the user clicked a real link/button inside the card, let it handle itself
             if (e.target.closest('a, button')) return;
-            window.open(liveUrl, '_blank', 'noopener,noreferrer');
+            if (caseUrl) {
+                if (window.PageTransitions) PageTransitions.exit(caseUrl);
+                else window.location.href = caseUrl;
+            } else {
+                window.open(liveUrl, '_blank', 'noopener,noreferrer');
+            }
         });
     });
 

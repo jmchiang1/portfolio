@@ -839,6 +839,75 @@ a, button, [role="button"],
     transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
+/* ============================================
+   Carousel prev/next nav — large laptop-friendly buttons
+   pinned to the viewport edges. Mirrors the counter's
+   visibility (carousel view only, hidden in grid mode + on mobile).
+   ============================================ */
+.carousel-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%) scale(0.92);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(20, 22, 30, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: rgba(255, 255, 255, 0.9);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-24);
+    cursor: url('assets/pointer.cur'), pointer;
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.45s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+}
+.carousel-nav-prev { left: 32px; }
+.carousel-nav-next { right: 32px; }
+
+.carousel-nav.nav-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50%) scale(1);
+}
+
+.carousel-nav:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+.carousel-nav.nav-visible:hover {
+    transform: translateY(-50%) scale(1.06);
+}
+.carousel-nav:active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Hide in grid mode (per-card nav doesn't apply) */
+body.grid-mode .carousel-nav {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Page exit fades the nav alongside the counter */
+.page-exit-active .carousel-nav {
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Hide on mobile — swipe + hero hint already cover this */
+@media (max-width: 900px) {
+    .carousel-nav { display: none; }
+}
+
 .footer-text {
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;

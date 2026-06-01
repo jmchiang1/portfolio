@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CourtFit — Case Study | Jonathan Chiang</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="cs-nav.css">
+    <link rel="stylesheet" href="courtfit.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+</head>
+<body>
+    <!-- Cover — visible from first paint to prevent flash between pages -->
+    <div class="page-transition-cover"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
+        </a>
+        <div class="nav-links cs-nav-links">
+            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#add" class="nav-link">Add</a>
+            <a href="#verdict" class="nav-link">Verdict</a>
+            <a href="#map" class="nav-link">Map</a>
+            <a href="#compare" class="nav-link">Compare</a>
+            <a href="#reflection" class="nav-link">Reflection</a>
+        </div>
+        <button class="hamburger" aria-label="Menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-menu-link">UX/UI</a>
+        <a href="motion.html" class="mobile-menu-link">Motion</a>
+        <a href="vibes.html" class="mobile-menu-link active">Vibes</a>
+        <a href="about.html" class="mobile-menu-link">About</a>
+        <a href="visitors.html" class="mobile-menu-link">Visitors</a>
+
+        <div class="mobile-menu-socials">
+            <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="LinkedIn">
+                <i class="ph ph-linkedin-logo"></i>
+            </a>
+            <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="GitHub">
+                <i class="ph ph-github-logo"></i>
+            </a>
+            <a href="assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="Resume">
+                <i class="ph ph-read-cv-logo"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Back to top button -->
+    <a href="#top" class="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+
+    <main id="top" class="case-study">
+        <!-- ============================================================
+             Hero
+             ============================================================ -->
+        <section class="cs-header">
+            <div class="cs-hero-inner">
+                <div class="cs-header-text">
+                    <p class="cs-label">CourtFit · AI Facility Underwriting</p>
+                    <h1 class="cs-title">Turning any listing into a <em>go / no-go</em> in seconds.</h1>
+                    <p class="cs-hero-sub">CourtFit is an AI-assisted underwriting tool for indoor badminton &amp; pickleball facilities. Paste a commercial listing and it sizes the courts, models the build-out and returns, scores local demand against the competition, and flags the NYC / Nassau code work — collapsing a week of broker calls and spreadsheets into one screen.</p>
+                </div>
+
+                <div class="cs-hero-media">
+                    <div class="cs-hero-desktop">
+                        <video src="assets/courtfit/courtfit-landing.mp4" poster="assets/courtfit/poster-courtfit-landing.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- At a glance -->
+            <div class="sk-meta">
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">Project</p>
+                    <p class="sk-meta-value">CourtFit — racket-sport facility analyzer</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">My role</p>
+                    <p class="sk-meta-value">Solo design &amp; build</p>
+                </div>
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">Stack</p>
+                    <p class="sk-meta-value">Next.js · TypeScript · Supabase · Claude · Google Maps</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">Timeline</p>
+                    <p class="sk-meta-value">2026</p>
+                </div>
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">What I owned</p>
+                    <p class="sk-meta-value">Product · UX · full-stack build · the AI pipeline</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">Sector</p>
+                    <p class="sk-meta-value">PropTech · Sports real estate</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             Overview
+             ============================================================ -->
+        <section id="overview" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Overview</p>
+                <div class="cs-content">
+                    <p>Opening an indoor badminton or pickleball facility starts with a brutal real-estate filter: of the commercial listings on the market, which warehouse or flex space can actually become a profitable court house? Answering that means juggling ceiling height, square footage, parking, zoning, build-out cost, neighborhood demand, and the existing competition — scattered across listing PDFs, the Census, Google Maps, and a back-of-napkin pro-forma.</p>
+                    <p>CourtFit folds all of it into one tool. The four flows below trace the real path an operator takes: <strong>add</strong> a listing, read its <strong>verdict</strong>, place it on the <strong>map</strong> against demand and competition, then <strong>compare</strong> the shortlist to pick the winner.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             01 — Add a property
+             ============================================================ -->
+        <section id="add" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">01 · Capture</p>
+                <h2 class="sk-section-title">Paste a listing, skip the <em>data entry</em>.</h2>
+                <p class="sk-section-kicker">A LoopNet listing → structured deal in one click.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The flow</p>
+                <div class="cs-content">
+                    <p>A broker's listing is unstructured prose and a photo gallery. CourtFit ships a bookmarklet that grabs the page straight from LoopNet (which blocks server-side scrapers), hands it to the app, and a language model extracts the hard facts — square footage, clear height, rent, zoning, parking — plus the photos. No form to fill out.</p>
+                    <p>The moment it's added, the calculator turns usable area into a court layout and a full pro-forma, so a raw listing becomes a rated deal before you've finished reading it.</p>
+                </div>
+            </div>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide">
+                <div class="sk-video-frame">
+                    <video class="sk-video-el" controls playsinline preload="none" poster="assets/courtfit/poster-add-property.jpg">
+                        <source src="assets/courtfit/add-property.mp4" type="video/mp4">
+                    </video>
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                        <span class="sk-video-ph-name">Add a property from a LoopNet listing</span>
+                        <span class="sk-video-ph-path">assets/courtfit/add-property.mp4</span>
+                    </div>
+                </div>
+            </figure>
+        </section>
+
+
+        <!-- ============================================================
+             02 — The verdict
+             ============================================================ -->
+        <section id="verdict" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">02 · The verdict</p>
+                <h2 class="sk-section-title">Everything to decide, <em>on one screen</em>.</h2>
+                <p class="sk-section-kicker">Open a property to see the full underwrite.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The flow</p>
+                <div class="cs-content">
+                    <p>Clicking a property opens its verdict: the rating and headline numbers up top — court count, NOI, payback — then the detail. A vision pass over the listing photos scales the renovation estimate (a bare shell trends toward a full gut), a code panel flags the NYC / Nassau checklist a sports facility hits, and the trade-area demographics score local badminton and pickleball demand.</p>
+                    <p>The design problem here was trust: deciding where the model gives a confident number and where it honestly says “verify this.”</p>
+                </div>
+            </div>
+
+            <div class="cf-grid">
+                <div class="cf-pillar">
+                    <span class="cf-pillar-icon"><i class="ph ph-calculator"></i></span>
+                    <h3>Deal math</h3>
+                    <p>Court layout, revenue, NOI, payback, and a rating from “Strong Candidate” to “Do Not Pursue.”</p>
+                </div>
+                <div class="cf-pillar">
+                    <span class="cf-pillar-icon"><i class="ph ph-shield-check"></i></span>
+                    <h3>Condition &amp; code</h3>
+                    <p>Vision-scaled renovation cost plus the assembly-occupancy / zoning / parking due-diligence checklist.</p>
+                </div>
+                <div class="cf-pillar">
+                    <span class="cf-pillar-icon"><i class="ph ph-users-three"></i></span>
+                    <h3>Demand &amp; whitespace</h3>
+                    <p>Census demand by sport, discounted by nearby competitors — unmet demand, not just population.</p>
+                </div>
+            </div>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide">
+                <div class="sk-video-frame">
+                    <video class="sk-video-el" controls playsinline preload="none" poster="assets/courtfit/poster-property-details.jpg">
+                        <source src="assets/courtfit/property-details.mp4" type="video/mp4">
+                    </video>
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                        <span class="sk-video-ph-name">Reading a property's verdict</span>
+                        <span class="sk-video-ph-path">assets/courtfit/property-details.mp4</span>
+                    </div>
+                </div>
+            </figure>
+        </section>
+
+
+        <!-- ============================================================
+             03 — The map
+             ============================================================ -->
+        <section id="map" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">03 · Pipeline map</p>
+                <h2 class="sk-section-title">Your pipeline and the <em>competition</em>, mapped.</h2>
+                <p class="sk-section-kicker">Sites, competitors, and demand on one canvas.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The flow</p>
+                <div class="cs-content">
+                    <p>The map layers your candidate sites against existing badminton and pickleball facilities. Toggle <em>My sites</em> and <em>Competitors</em>, filter by sport / borough / court count, and click any marker for a quick read on its demand and nearby competition.</p>
+                    <p>Flip on the <em>Demand</em> heatmap and roughly 2,500 Census tracts across the five boroughs and Nassau light up by population — the greenfield finder for underserved pockets worth scouting before a listing even exists.</p>
+                </div>
+            </div>
+
+            <div class="cf-grid">
+                <div class="cf-pillar">
+                    <span class="cf-pillar-icon"><i class="ph ph-funnel"></i></span>
+                    <h3>Layers &amp; filters</h3>
+                    <p>My sites vs. competitors, by sport, region, and court count — with a live trade-area ring.</p>
+                </div>
+                <div class="cf-pillar">
+                    <span class="cf-pillar-icon"><i class="ph ph-map-pin"></i></span>
+                    <h3>Click for detail</h3>
+                    <p>Any pin opens its demand + competition snapshot; jump straight to the full verdict.</p>
+                </div>
+                <div class="cf-pillar">
+                    <span class="cf-pillar-icon"><i class="ph ph-fire"></i></span>
+                    <h3>Demand heatmap</h3>
+                    <p>~2,500 tracts rendered as a live heat field to surface where to open next.</p>
+                </div>
+            </div>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide">
+                <div class="sk-video-frame">
+                    <video class="sk-video-el" controls playsinline preload="none" poster="assets/courtfit/poster-map.jpg">
+                        <source src="assets/courtfit/map.mp4" type="video/mp4">
+                    </video>
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                        <span class="sk-video-ph-name">Filters, competitors, my sites &amp; the demand heatmap</span>
+                        <span class="sk-video-ph-path">assets/courtfit/map.mp4</span>
+                    </div>
+                </div>
+            </figure>
+        </section>
+
+
+        <!-- ============================================================
+             04 — Compare
+             ============================================================ -->
+        <section id="compare" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">04 · Ranking</p>
+                <h2 class="sk-section-title">Which deal <em>wins</em>?</h2>
+                <p class="sk-section-kicker">A weighted leaderboard that turns a folder of maybes into a shortlist.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The flow</p>
+                <div class="cs-content">
+                    <p>The Compare tab normalizes every saved candidate across six dimensions — whitespace, profitability, payback speed, court capacity, build-readiness, and code safety — relative to the rest of your set, then blends them into one composite score.</p>
+                    <p>Sliders let you weight what matters for a given deal: a cash buyer cranks profitability and payback, an operator chasing a flagship leans on whitespace and capacity. The leaderboard re-ranks live, so “which one should I pursue?” becomes a tunable, defensible answer.</p>
+                </div>
+            </div>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide">
+                <div class="sk-video-frame">
+                    <video class="sk-video-el" controls playsinline preload="none" poster="assets/courtfit/poster-compare.jpg">
+                        <source src="assets/courtfit/compare.mp4" type="video/mp4">
+                    </video>
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                        <span class="sk-video-ph-name">Re-ranking with the weighting sliders</span>
+                        <span class="sk-video-ph-path">assets/courtfit/compare.mp4</span>
+                    </div>
+                </div>
+            </figure>
+        </section>
+
+
+        <!-- ============================================================
+             Reflection
+             ============================================================ -->
+        <section id="reflection" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Reflection</p>
+                <div class="cs-content">
+                    <p>CourtFit was a test of how far a single designer can take a real product with AI in the loop — not just generating code, but doing the work inside the app: reading listings, judging a space's condition from photos, and reasoning about building code. The interesting design problem wasn't the pro-forma; it was deciding where the model should give a confident number and where it should honestly say “verify this,” so the tool earns trust instead of faking certainty.</p>
+                    <p>It also reframed “best location” for me. Demand alone is a vanity metric — the real signal is demand the market hasn't captured yet. Building the whitespace score and the heatmap turned a fuzzy instinct (“Flushing feels right”) into something measurable, and made the case-study question — best facility in the best place — answerable on one screen.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- More case studies — cross-links to two other case studies -->
+    <footer class="cs-next" aria-label="More case studies">
+        <h2 class="cs-next-heading">More case studies</h2>
+        <div class="cs-next-grid">
+            <a class="cs-next-card" href="scriptchain.html">
+                <video class="cs-next-thumb" autoplay muted loop playsinline preload="metadata" poster="assets/scriptchain/poster-scriptchain-website.jpg" aria-label="ScriptChain Health case study">
+                    <source src="assets/scriptchain/scriptchain-website.mp4" type="video/mp4">
+                </video>
+                <div class="cs-next-info">
+                    <span class="cs-next-tags">Agentic Care Platform · Health · 2025</span>
+                    <h3 class="cs-next-name">ScriptChain Health <span class="cs-next-arrow" aria-hidden="true">→</span></h3>
+                </div>
+            </a>
+            <a class="cs-next-card" href="reveal.html">
+                <video class="cs-next-thumb" autoplay muted loop playsinline preload="metadata" poster="assets/reveal-large.png" aria-label="Reveal case study">
+                    <source src="assets/Reveal-animation.mp4" type="video/mp4">
+                </video>
+                <div class="cs-next-info">
+                    <span class="cs-next-tags">Motion Design · AR/VR · 2024</span>
+                    <h3 class="cs-next-name">Reveal <span class="cs-next-arrow" aria-hidden="true">→</span></h3>
+                </div>
+            </a>
+        </div>
+    </footer>
+
+    <script src="transitions.js"></script>
+    <script src="courtfit.js"></script>
+    <script src="cs-nav.js"></script>
+</body>
+</html>
