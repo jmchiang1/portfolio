@@ -963,6 +963,15 @@ button,
     aspect-ratio: 3056 / 2080;
 }
 
+/* Cap the capture's height so the tabs AND the full video stay visible together
+   in one viewport. Width derives from that max height (ratio preserved, nothing
+   cropped) and the frame centers. On tall screens the container's own width wins,
+   so the video still renders at full size. */
+.sk-feature-switch--wide .sk-video--desktop {
+    max-width: calc(64vh * 3056 / 2080);
+    margin-inline: auto;
+}
+
 /* ---- Versions variant: title + description + V tabs on one side, phone with on-screen
    hotspot annotations on the other. Two columns, alternating sides; phone stays in place
    and sticky-note bubbles appear on hover/focus of each dot. ---- */
