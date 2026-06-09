@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="cs-nav.css">
     <link rel="stylesheet" href="skillcat.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-</head>
+<style>.cs-section{opacity:1!important;transform:none!important}.cs-header,#overview,#starting-point,#research,#brand{display:none!important}.case-study{gap:60px!important;padding-top:40px!important}</style></head>
 <body>
     <!-- Cover — visible from first paint to prevent flash between pages -->
     <div class="page-transition-cover"></div>
@@ -169,17 +169,6 @@
                 <li class="sk-problem"><span class="sk-problem-num">03</span><p>Little sense of progress or "what's next" — easy to enroll, easy to drift.</p></li>
                 <li class="sk-problem"><span class="sk-problem-num">04</span><p>A five-tab nav (Social, Skill Check, Class, Simulations, Profile) split attention away from the goal.</p></li>
             </ul>
-
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="ph ph-sparkle sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <i class="ph ph-caret-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">I used <strong>AI to audit the original app</strong> end-to-end — pressure-testing my own read of where the catalog-first structure and five-tab nav were losing learners before they ever reached a credential.</p>
-                </div>
-            </aside>
         </section>
 
 
@@ -227,17 +216,6 @@
                 <li>Trade-school brands skew corporate and dated — a clear opening for something modern and trustworthy.</li>
                 <li>Most edtech is light and gentle; the trades read as practical and high-contrast — a chance to look different and earned.</li>
             </ul>
-
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="ph ph-sparkle sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <i class="ph ph-caret-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">AI sped up the groundwork: drafting <strong>research plans</strong>, generating early <strong>color, typography, and vibe directions</strong> to react against, and helping <strong>synthesize raw user findings</strong> into the threads above.</p>
-                </div>
-            </aside>
         </section>
 
 
@@ -333,15 +311,12 @@
              ============================================================ -->
         <section class="cs-section sk-showcase" aria-label="The redesigned screens">
             <div class="sk-section-head sk-showcase-head">
-                <p class="cs-label">The Redesign</p>
-                <div class="sk-device-toggle" role="tablist" aria-label="Device">
-                    <span class="sk-device-thumb" aria-hidden="true"></span>
-                    <button class="sk-device-btn is-active" type="button" role="tab" aria-selected="true" data-device="mobile">Mobile</button>
-                    <button class="sk-device-btn" type="button" role="tab" aria-selected="false" tabindex="-1" data-device="desktop">Desktop</button>
-                </div>
+                <p class="cs-label">The brand, applied</p>
+                <h2 class="sk-section-title">Navy and safety-orange, <em>on every screen</em>.</h2>
+                <p class="sk-showcase-lead">The same dark, practical system carried end to end — from the first sign-up screen to the credential in hand.</p>
             </div>
 
-            <div class="sk-lineup sk-device-view is-active" data-device="mobile">
+            <div class="sk-lineup">
                 <figure class="sk-lineup-phone">
                     <div class="sk-lineup-frame"><img src="assets/skillcat/comparison/updated/onboarding.png" alt="Redesigned onboarding screen" loading="lazy"></div>
                     <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">01</span> Onboarding</figcaption>
@@ -367,45 +342,6 @@
                     <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">06</span> Portfolio</figcaption>
                 </figure>
             </div>
-
-            <!-- Desktop view — fanned deck of browser windows, swaps in via the toggle -->
-            <div class="sk-deck sk-device-view" data-device="desktop" hidden>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/home.png" alt="Redesigned home screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">01</span> Home</figcaption>
-                </figure>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/overview.png" alt="Redesigned course overview screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">02</span> Overview</figcaption>
-                </figure>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/course-tree.png" alt="Redesigned course path screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">03</span> The path</figcaption>
-                </figure>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/task-complete.png" alt="Redesigned task complete screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">04</span> Task complete</figcaption>
-                </figure>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/portfolio.png" alt="Redesigned portfolio screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">05</span> Portfolio</figcaption>
-                </figure>
-            </div>
         </section>
 
 
@@ -425,18 +361,7 @@
                 </div>
             </div>
 
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="ph ph-sparkle sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <i class="ph ph-caret-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">In the design phase I used AI as a sparring partner — generating <strong>badge concepts</strong> and <strong>alternate starting layouts</strong> to choose from, then <strong>auditing my own screens</strong> for inconsistencies before I committed to a direction.</p>
-                </div>
-            </aside>
-
-            <!-- <div class="sk-beforeafter">
+            <div class="sk-beforeafter">
                 <div class="sk-ba-card sk-ba-before">
                     <p class="sk-ba-tag">Before · V1</p>
                     <p class="sk-ba-title">Form-first signup</p>
@@ -456,7 +381,7 @@
                         <li>A clear first step and recommended courses up front</li>
                     </ul>
                 </div>
-            </div> -->
+            </div>
 
             <!-- Per-screen tab switcher: each moment = a title + description + V1/V2/V3 pills.
                  Layout alternates: odd rows put text on the left, even rows flip with --reverse. -->
@@ -871,17 +796,6 @@
                 <li>Replace swipe-to-remove with an explicit delete icon on path cards.</li>
                 <li>Increase the CTA strength of the first course module so the starting point is unmissable.</li>
             </ul>
-
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="ph ph-sparkle sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <i class="ph ph-caret-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">I fed the raw heat-map results back to AI to <strong>synthesize the analysis</strong> — clustering scattered click patterns into the insights and candidate fixes above, far faster than sorting them by hand.</p>
-                </div>
-            </aside>
         </section>
 
 
@@ -1238,17 +1152,6 @@
                     <p>Working across consumer onboarding, B2B tooling, and specs meant constantly shifting altitude — from a single animation frame, up to an enterprise workflow, back down to the written rules that make it real. The throughline: understand the job the person is actually trying to do, then shape the product around that.</p>
                 </div>
             </div>
-
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="ph ph-sparkle sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <i class="ph ph-caret-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">When writing specs, I had AI <strong>audit my revisions</strong> — catching <strong>missing references and edge-case states</strong> (empty, error, fail-retry) before anything reached engineering handoff.</p>
-                </div>
-            </aside>
 
             <p class="sk-block-label">What this case study shows about how I work</p>
             <ul class="sk-decisions">

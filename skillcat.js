@@ -416,3 +416,93 @@
         update(parseFloat(input.value) || 0);
     });
 })();
+
+
+// ============================================
+// AI-in-the-process notes — collapsed to a compact pill (just the ✦ + label);
+// clicking the toggle expands the note out to the full content width to reveal
+// the detail. The collapsed width is measured from the toggle (--ai-note-collapsed)
+// so the pill wraps its label exactly, whatever the font metrics resolve to.
+// ============================================
+(function () {
+    var notes = Array.prototype.slice.call(document.querySelectorAll('.sk-ai-note'));
+    if (!notes.length) return;
+
+    function measure() {
+        notes.forEach(function (note) {
+            var toggle = note.querySelector('.sk-ai-note-toggle');
+            var parent = note.parentElement;
+            if (!toggle || !parent) return;
+            var toggleW = Math.ceil(toggle.getBoundingClientRect().width);
+            // collapsed pill = toggle's intrinsic width + the aside's L/R borders (2px + 1px),
+            // with a 1px cushion so sub-pixel rounding never clips the label.
+            note.style.setProperty('--ai-note-collapsed', (toggleW + 4) + 'px');
+            // detail = the width that opens up beside the toggle at full span:
+            // the section's content width − the aside borders − the toggle. Fixing
+            // it keeps the detail text from reflowing as the note animates open.
+            var full = parent.getBoundingClientRect().width;
+            var detail = Math.max(0, Math.floor(full - 3 - toggleW));
+            note.style.setProperty('--ai-note-detail', detail + 'px');
+        });
+    }
+
+    measure();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    window.addEventListener('resize', measure, { passive: true });
+
+    // Click anywhere on the card to toggle. The handler lives on the card; clicks
+    // on the inner button bubble up here, and keyboard activation of the button
+    // (Enter / Space) fires a click that bubbles too — so it stays accessible.
+    notes.forEach(function (note) {
+        var toggle = note.querySelector('.sk-ai-note-toggle');
+        note.addEventListener('click', function () {
+            var open = note.classList.toggle('is-open');
+            if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    });
+})();
+
+
+// ============================================
+// Showcase device toggle — swaps the redesign band between the mobile phone
+// fan and the desktop browser-window deck. Hiding the inactive view with the
+// `hidden` attribute (display:none) lets the per-item fade replay on each swap.
+// ============================================
+(function () {
+    var toggle = document.querySelector('.sk-device-toggle');
+    if (!toggle) return;
+    var section = toggle.closest('.sk-showcase');
+    if (!section) return;
+    var btns = Array.prototype.slice.call(toggle.querySelectorAll('.sk-device-btn'));
+    var views = Array.prototype.slice.call(section.querySelectorAll('.sk-device-view'));
+
+    function activate(device, focus) {
+        btns.forEach(function (b) {
+            var on = b.getAttribute('data-device') === device;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+            b.tabIndex = on ? 0 : -1;
+            if (on && focus) b.focus();
+        });
+        views.forEach(function (v) {
+            var on = v.getAttribute('data-device') === device;
+            v.classList.toggle('is-active', on);
+            if (on) v.removeAttribute('hidden');
+            else v.setAttribute('hidden', '');
+        });
+        toggle.classList.toggle('is-desktop', device === 'desktop');
+    }
+
+    btns.forEach(function (b, i) {
+        b.addEventListener('click', function () { activate(b.getAttribute('data-device')); });
+        b.addEventListener('keydown', function (e) {
+            var dir = 0;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') dir = 1;
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') dir = -1;
+            else return;
+            e.preventDefault();
+            var next = (i + dir + btns.length) % btns.length;
+            activate(btns[next].getAttribute('data-device'), true);
+        });
+    });
+})();
