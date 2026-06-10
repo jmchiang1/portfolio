@@ -727,7 +727,6 @@ body::before {
 .nx-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border: 1px solid var(--nx-line);
     border-radius: 20px;
     overflow: hidden;
     background: var(--nx-surface);
@@ -764,6 +763,117 @@ body::before {
 }
 
 /* ===========================================================================
+   COMMUNITY RESEARCH  (Reddit posts → hopeful close)
+   A scattered pile of real posts — tilted, overlapping printouts tossed in a
+   stack — reads as "I gathered a mound of evidence". Hover lifts one clear of
+   the pile. Resolves into the one hopeful line that turns toward the solution.
+   =========================================================================== */
+.nx-reddit-wall {
+    margin: 28px auto 0;
+    width: 100%;
+    max-width: 980px;
+    height: clamp(420px, 44vw, 520px);
+    display: flex;
+    gap: 16px;
+    overflow: hidden;
+    /* fade the top & bottom edges so posts dissolve in/out of the feed */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%);
+}
+
+.nx-reddit-col {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Each track holds the column's posts twice; translating by half its height
+   loops seamlessly (the -8px offsets the single gap that sits across the seam,
+   keeping spacing even). */
+.nx-reddit-track {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    will-change: transform;
+    animation: nx-reddit-up 46s linear infinite;
+}
+
+.nx-reddit-track--down {
+    animation-name: nx-reddit-down;
+    animation-duration: 54s;
+}
+
+.nx-reddit-track--slow {
+    animation-duration: 50s;
+}
+
+.nx-reddit-track img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+    border: 1px solid var(--nx-line-2);
+    box-shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.7);
+}
+
+/* pause the whole feed on hover so a reader can settle on a post */
+.nx-reddit-wall:hover .nx-reddit-track {
+    animation-play-state: paused;
+}
+
+@keyframes nx-reddit-up {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-50% - 8px)); }
+}
+
+@keyframes nx-reddit-down {
+    from { transform: translateY(calc(-50% - 8px)); }
+    to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nx-reddit-track {
+        animation: none;
+    }
+}
+
+.nx-reddit-turn {
+    margin: 44px auto 18px;
+    max-width: 44ch;
+    text-align: center;
+    font-family: var(--nx-serif);
+    font-size: var(--text-20);
+    color: var(--nx-fg-2);
+}
+
+/* The closing post spans the full content width (out to the regular page
+   margins) — a final, wide statement. */
+.nx-reddit-final {
+    width: 100%;
+    margin: 40px 0 0;
+    max-width: none;
+}
+
+/* peach glow above marks the emotional turn into the opportunity */
+.nx-reddit-final img {
+    width: 100%;
+    display: block;
+    border-radius: 14px;
+    box-shadow: 0 -8px 70px -18px rgba(243, 168, 124, 0.4);
+}
+
+/* On narrow screens drop the third column so the remaining two stay wide
+   enough to read; the marquee keeps running. */
+@media (max-width: 720px) {
+    .nx-reddit-wall {
+        max-width: 460px;
+        height: clamp(380px, 92vw, 460px);
+    }
+
+    .nx-reddit-col--3 {
+        display: none;
+    }
+}
+
+/* ===========================================================================
    PRIMER CARDS (background)
    =========================================================================== */
 .nx-cards-3 {
@@ -774,15 +884,8 @@ body::before {
 
 .nx-card {
     background: var(--nx-surface);
-    border: 1px solid var(--nx-line);
     border-radius: 20px;
     padding: 26px;
-    transition: border-color 0.25s ease, transform 0.25s ease;
-}
-
-.nx-card:hover {
-    border-color: var(--nx-line-2);
-    transform: translateY(-3px);
 }
 
 .nx-card-figure {
@@ -905,20 +1008,13 @@ body::before {
 
 .nx-edu-card {
     background: var(--nx-surface);
-    border: 1px solid var(--nx-line);
     border-radius: 20px;
     overflow: hidden;
-    transition: border-color 0.25s ease, transform 0.25s ease;
-}
-
-.nx-edu-card:hover {
-    border-color: var(--nx-line-2);
-    transform: translateY(-3px);
 }
 
 .nx-edu-fig {
     aspect-ratio: 16 / 10;
-    background: var(--nx-bg-soft);
+    /* background: var(--nx-bg-soft); */
 }
 
 .nx-edu-fig img {
@@ -953,7 +1049,6 @@ body::before {
 
 .nx-gear {
     background: var(--nx-surface);
-    border: 1px solid var(--nx-line);
     border-radius: 20px;
     padding: 34px;
     display: flex;
@@ -986,9 +1081,13 @@ body::before {
 .nx-gear-img {
     border-radius: 14px;
     overflow: hidden;
-    background: #f4f6fb;
-    aspect-ratio: 4 / 3;
-    border: 1px solid var(--nx-line);
+    /* background: #f4f6fb; */
+    /* aspect-ratio: 4 / 3; */
+    /* border: 1px solid var(--nx-line); */
+}
+
+.nx-gear-1 {
+    width: max-content;
 }
 
 .nx-gear-img.is-square {
@@ -1011,6 +1110,120 @@ body::before {
 
 .nx-gear-item figcaption span {
     color: var(--nx-fg-3);
+}
+
+.nx-gear-item-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ---- Fun aside — "part elephant, part Top Gun" CPAP selfie ----
+   A tilted polaroid of the designer in the mask, with the two look-alikes
+   pinned on as circular stickers. A light personal beat to close the device
+   primer. */
+.nx-cpap-aside {
+    margin: 4rem auto 4rem;
+    width: max-content;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.nx-cpap-photo {
+    position: relative;
+    width: 300px;
+    max-width: 76vw;
+    padding: 10px 10px 14px;
+    background: #f4f1ea;
+    border-radius: 14px;
+    box-shadow: 0 36px 70px -28px rgba(0, 0, 0, 0.7);
+    transform: rotate(-2.5deg);
+}
+
+.nx-cpap-photo > img {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.nx-cpap-sticker {
+    position: absolute;
+    width: 104px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nx-cpap-sticker img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 12px 26px -8px rgba(0, 0, 0, 0.65);
+}
+
+.nx-cpap-sticker span {
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.01em;
+    color: #160d04;
+    background: var(--nx-peach);
+    padding: 4px 11px;
+    border-radius: 999px;
+    white-space: nowrap;
+    box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.55);
+}
+
+.nx-cpap-sticker--elephant {
+    top: -38px;
+    right: -52px;
+    transform: rotate(7deg);
+}
+
+.nx-cpap-sticker--topgun {
+    bottom: -16px;
+    left: -52px;
+    transform: rotate(-7deg);
+}
+
+/* a small lift on hover keeps it playful (reverses cleanly via transition) */
+.nx-cpap-sticker--elephant:hover {
+    transform: rotate(0deg) scale(1.06);
+}
+
+.nx-cpap-sticker--topgun:hover {
+    transform: rotate(0deg) scale(1.06);
+}
+
+.nx-cpap-cap {
+    max-width: 36ch;
+    text-align: center;
+    font-size: var(--text-15);
+    color: var(--nx-fg-2);
+}
+
+@media (max-width: 560px) {
+    .nx-cpap-photo {
+        width: 240px;
+    }
+
+    .nx-cpap-sticker {
+        width: 84px;
+    }
+
+    .nx-cpap-sticker--elephant {
+        right: -34px;
+    }
+
+    .nx-cpap-sticker--topgun {
+        left: -34px;
+    }
 }
 
 .nx-compliance {
@@ -1133,7 +1346,6 @@ body::before {
 
 .nx-panel {
     background: var(--nx-surface);
-    border: 1px solid var(--nx-line);
     border-radius: 20px;
     padding: 30px;
     /* allow the panel to shrink inside its grid column instead of being
@@ -1208,7 +1420,6 @@ body::before {
     gap: 40px;
     align-items: center;
     background: var(--nx-surface);
-    border: 1px solid var(--nx-line);
     border-radius: 20px;
     padding: 40px;
 }
@@ -1336,15 +1547,8 @@ body::before {
 
 .nx-rail {
     background: var(--nx-surface);
-    border: 1px solid var(--nx-line);
     border-radius: 18px;
     padding: 30px;
-    transition: border-color 0.25s ease, transform 0.25s ease;
-}
-
-.nx-rail:hover {
-    border-color: rgba(243, 168, 124, 0.4);
-    transform: translateY(-3px);
 }
 
 .nx-rail-icon {
@@ -1523,7 +1727,6 @@ body::before {
 .nx-impact-card {
     padding: 34px 28px;
     border-radius: 20px;
-    border: 1px solid var(--nx-line);
     background: var(--nx-surface);
 }
 
@@ -1559,7 +1762,6 @@ body::before {
     background:
         radial-gradient(70% 120% at 50% 0%, rgba(243, 168, 124, 0.16), transparent 60%),
         var(--nx-bg-soft);
-    border: 1px solid var(--nx-line);
 }
 
 .nx-cta .nx-h2 {
@@ -1668,9 +1870,9 @@ body::before {
         grid-template-columns: 1fr;
     }
 
-    .nx-gear-row.is-2 {
+    /* .nx-gear-row.is-2 {
         grid-template-columns: 1fr;
-    }
+    } */
 
     .nx-gear-row.is-3 {
         grid-template-columns: 1fr 1fr;

@@ -1273,13 +1273,20 @@ a.project-card {
 /* SkillCat app-icon badge — top-left brand marker. */
 .sk-logo {
     position: absolute;
-    top: 7cqh;
+    /* match the project-tags' top so the logo and tags line up across the card */
+    top: 24px;
     left: 5cqw;
     width: 3rem;
     height: 3rem;
     border-radius: 8px;
     object-fit: cover;
     z-index: 2;
+}
+
+/* ScriptChain's mark is a teal glyph on light (not a full-bleed tile like
+   SkillCat's orange icon), so give it a white tile to read as a clean app icon. */
+.project-card--scriptchain .sk-logo {
+    background: #fff;
 }
 
 /* Device composition, centered on the card. */
