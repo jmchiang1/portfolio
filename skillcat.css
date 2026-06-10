@@ -1819,15 +1819,11 @@ button,
     padding: clamp(64px, 8vw, 120px) clamp(24px, 5vw, 72px);
     align-items: center;
     gap: clamp(40px, 5vw, 72px);
-    /* Edges fade to the page background (var(--sk-bg)) so the band dissolves
-       in with no hard seam; the orange radial wash still glows from the top. */
+    /* Just a faint orange glow centred behind the screens — the rest stays
+       transparent so it sits seamlessly on the page background (no band, no
+       hard edges). Centring the radial removes the harsh top line. */
     background:
-        radial-gradient(120% 90% at 50% 0%, rgba(232, 85, 46, 0.18) 0%, rgba(232, 85, 46, 0) 55%),
-        linear-gradient(180deg,
-            var(--sk-bg) 0%,
-            #00060d 32%,
-            #00060d 68%,
-            var(--sk-bg) 100%);
+        radial-gradient(55% 70% at 50% 52%, rgba(232, 85, 46, 0.16) 0%, transparent 70%);
     overflow: hidden;
 }
 

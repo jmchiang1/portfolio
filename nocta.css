@@ -488,6 +488,7 @@ body::before {
    HERO
    =========================================================================== */
 .nx-hero {
+    position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -495,15 +496,14 @@ body::before {
     overflow: hidden;
 }
 
+/* Header wash — sized to match the skillcat & scriptchain heroes
+   (1100×760 radial at 50% 22vh, 0.26 alpha) so the glow reads the same scale
+   across all three case studies, here in nocta's peach. */
 .nx-hero::before {
     content: '';
     position: absolute;
-    top: -10%;
-    left: 50%;
-    width: 1200px;
-    height: 900px;
-    transform: translateX(-50%);
-    background: radial-gradient(45% 50% at 50% 30%, var(--nx-glow) 0%, transparent 70%);
+    inset: 0;
+    background: radial-gradient(1100px 760px at 50% 22vh, rgba(243, 168, 124, 0.26) 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
 }
@@ -1639,32 +1639,100 @@ body::before {
 /* ===========================================================================
    FINAL  (phone lineup on a peach stage)
    =========================================================================== */
-.nx-final-stage {
-    position: relative;
-    border: 1px solid var(--nx-line);
-    border-radius: 24px;
-    padding: 56px 32px;
+/* ===========================================================================
+   THE RESULT  (full-bleed product showcase — fanned phone arc)
+   A full-width moment between the design system and the features: the finished
+   screens fanned out over a soft peach glow, centre phone raised.
+   =========================================================================== */
+.nx-showcase {
     overflow: hidden;
+    text-align: center;
+    /* full-width band whose edges dissolve into the page; peach glow centred */
     background:
-        radial-gradient(80% 90% at 50% 110%, rgba(243, 168, 124, 0.14), transparent 60%),
-        var(--nx-bg-soft);
+        radial-gradient(60% 75% at 50% 48%, rgba(243, 168, 124, 0.16) 0%, transparent 70%),
+        linear-gradient(180deg,
+            var(--nx-bg) 0%,
+            var(--nx-bg-soft) 26%,
+            var(--nx-bg-soft) 74%,
+            var(--nx-bg) 100%);
 }
 
-.nx-final-row {
+.nx-showcase-head {
+    max-width: 760px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+}
+
+.nx-showcase-fan {
     display: flex;
-    gap: 22px;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: clamp(6px, 1vw, 18px);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
-.nx-final-row .nx-device {
-    width: 220px;
-    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
-    transition: transform 0.3s ease;
+.nx-showcase-item {
+    margin: 0;
+    flex: 0 0 auto;
+    width: clamp(150px, 16vw, 232px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nx-final-row .nx-device:hover {
-    transform: translateY(-8px);
+.nx-showcase-item .nx-device {
+    width: 100%;
+    filter: drop-shadow(0 34px 64px rgba(0, 0, 0, 0.6));
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Lift on hover gets a peach edge + glow — the nocta equivalent of skillcat's
+   orange border/shadow treatment. */
+.nx-showcase-item:hover .nx-device {
+    border-color: var(--nx-peach);
+    box-shadow: 0 0 0 1px var(--nx-peach),
+        0 0 50px -6px rgba(243, 168, 124, 0.45);
+}
+
+.nx-showcase-cap {
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--nx-fg-3);
+}
+
+/* fanned arc — outer phones drop and rotate outward, centre phone raised */
+.nx-showcase-item:nth-child(1) { transform: translateY(36px) rotate(-9deg);   z-index: 1; }
+.nx-showcase-item:nth-child(2) { transform: translateY(10px) rotate(-4.5deg); z-index: 2; }
+.nx-showcase-item:nth-child(3) { transform: translateY(-6px) rotate(0deg);    z-index: 3; }
+.nx-showcase-item:nth-child(4) { transform: translateY(10px) rotate(4.5deg);  z-index: 2; }
+.nx-showcase-item:nth-child(5) { transform: translateY(36px) rotate(9deg);    z-index: 1; }
+
+.nx-showcase-item:hover {
+    transform: translateY(-14px) rotate(0deg) scale(1.05);
+    z-index: 5;
+}
+
+/* On narrow screens flatten the fan into a horizontal scroll-snap row. */
+@media (max-width: 760px) {
+    .nx-showcase-fan {
+        justify-content: flex-start;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 12px;
+    }
+
+    .nx-showcase-item {
+        width: clamp(170px, 60vw, 230px);
+        transform: none;
+        scroll-snap-align: center;
+    }
 }
 
 /* ===========================================================================
@@ -1967,10 +2035,6 @@ body::before {
 
     .nx-solution {
         padding: 36px 24px;
-    }
-
-    .nx-final-row .nx-device {
-        width: 42%;
     }
 
     .nx-desk-gallery {
