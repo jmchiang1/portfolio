@@ -5,7 +5,7 @@
    ========================================================================== */
 
 :root {
-    --sk-bg: #000C19;
+    --sk-bg: #0D0D0D;
     --sk-text: #ffffff;
     --sk-muted: rgba(255, 255, 255, 0.62);
     --sk-faint: rgba(255, 255, 255, 0.40);
@@ -299,6 +299,16 @@ button,
     margin: 0;
 }
 
+/* Block / sidebar labels are direct children of .cs-section (36px flex gap);
+   the negative margin binds them to the content below (~12px) while the full
+   gap stays above as separation from the previous group. The .cs-label section
+   eyebrows live inside flex heads that already supply their own gap, so they
+   stay at margin:0 — applying the offset there collapsed them onto the title. */
+.cs-sidebar-label,
+.sk-block-label {
+    margin-bottom: -24px;
+}
+
 .cs-sidebar-label {
     width: auto;
 }
@@ -364,6 +374,23 @@ button,
     font-size: var(--text-18);
     line-height: 1;
     color: var(--sk-orange-2);
+}
+
+/* Logos of the AI tools used in that phase — sit in the always-visible toggle,
+   between the label and the caret. Fixed size so the collapsed-width measurement
+   stays stable before the images load. */
+.sk-ai-note-tools {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 4px;
+}
+
+.sk-ai-note-tools img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: block;
 }
 
 .sk-ai-note-caret {
@@ -1267,6 +1294,12 @@ button,
     border-radius: 12px;
 }
 
+/* Admin dashboard walkthroughs are dark UI on the dark page — a light border
+   lifts each video frame off the background. */
+#dashboard .sk-video-frame {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .sk-video-el,
 .sk-embed-img {
     position: absolute;
@@ -1658,7 +1691,10 @@ button,
 }
 
 .sk-caption {
+    /* Same grouping logic as .sk-block-label: the caption labels the figure
+       directly below it, so close that gap (~10px) and keep the separation above. */
     margin-top: 12px;
+    margin-bottom: -26px;
     font-size: var(--text-14);
     color: var(--sk-muted);
     line-height: 1.5;
@@ -2107,6 +2143,13 @@ button,
     border-radius: 10px;
 }
 
+/* The redesigned "after" screens are dark and blend into the dark page; a
+   lighter border lifts them off the background. (The "before" originals are
+   light enough to read without one.) */
+.sk-compare-row--after img {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 /* Before row sits on top. The handle starts at the LEFT (--pos: 0) so the
    full Before strip is visible. As --pos increases, Before is clipped from
    the LEFT, revealing the After row underneath like a curtain pulled right. */
@@ -2534,7 +2577,7 @@ button,
 .sk-typescale {
     display: flex;
     flex-direction: row;
-    gap: 0;
+    gap: 1rem;
 }
 
 .sk-type-row {
@@ -2542,6 +2585,7 @@ button,
     flex-direction: column;
     gap: 6px;
     padding: 18px 0;
+    width: 50%;
     /* border-bottom: 1px solid var(--sk-border); */
 }
 
@@ -2555,6 +2599,7 @@ button,
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--sk-faint);
+    width: 50%;
 }
 
 .sk-type-display {
@@ -2573,6 +2618,70 @@ button,
     font-family: 'Space Mono', monospace;
     font-size: var(--text-16);
     letter-spacing: 0.04em;
+}
+
+/* Badge evolution — the six logo-badge iterations, 1st → 6th, with the final
+   one ringed like the chosen brand direction. */
+.sk-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.sk-badge {
+    margin: 0;
+    flex: 1 1 130px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.sk-badge-chip {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16%;
+    border-radius: 12px;
+    /* border: 1px solid var(--sk-border); */
+    background: var(--sk-surface);
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.sk-badge:hover .sk-badge-chip {
+    border-color: rgba(232, 85, 46, 0.5);
+    background: var(--sk-surface-2);
+    transform: translateY(-2px);
+}
+
+.sk-badge-chip img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.sk-badge-cap {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sk-faint);
+}
+
+.sk-badge--final .sk-badge-chip {
+    border: 2px solid var(--sk-orange);
+    background: var(--sk-orange-soft);
+    box-shadow: 0 0 0 4px rgba(232, 85, 46, 0.15);
+}
+
+.sk-badge--final .sk-badge-cap {
+    color: var(--sk-orange-2);
 }
 
 /* Testing stat row */
@@ -2941,6 +3050,7 @@ button,
 .cs-visible .sk-stats,
 .cs-visible .sk-swatches,
 .cs-visible .sk-typescale,
+.cs-visible .sk-badges,
 .cs-visible .sk-evo,
 .cs-visible .sk-evolve,
 .cs-visible .sk-scrubber,
@@ -3042,6 +3152,7 @@ button,
     .cs-visible .sk-stats,
     .cs-visible .sk-swatches,
     .cs-visible .sk-typescale,
+    .cs-visible .sk-badges,
     .cs-visible .sk-evo,
     .cs-visible .sk-evolve,
     .cs-visible .sk-scrubber,
