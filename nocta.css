@@ -763,6 +763,311 @@ body::before {
 }
 
 /* ===========================================================================
+   COMPETITIVE ANALYSIS  (Direct / Indirect competitor cards)
+   Uniform 4:3 cover cards: OSCAR (desktop, ~4:3) reads nearly full, the phone
+   apps show their hero/top — so a mixed set still grids cleanly.
+   =========================================================================== */
+.nx-comp-group {
+    margin-top: 40px;
+}
+
+.nx-comp-group + .nx-comp-group {
+    margin-top: 48px;
+}
+
+.nx-comp-label {
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nx-peach);
+    margin-bottom: 18px;
+}
+
+.nx-comp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.nx-comp-card {
+    margin: 0;
+    background: var(--nx-surface);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nx-comp-shot {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #0b0f1c;
+    border-bottom: 1px solid var(--nx-line);
+}
+
+.nx-comp-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+
+.nx-comp-meta {
+    padding: 20px 22px 24px;
+}
+
+.nx-comp-name {
+    font-size: var(--text-18);
+    font-weight: 600;
+    color: var(--nx-fg);
+    margin-bottom: 6px;
+}
+
+.nx-comp-note {
+    font-size: var(--text-14);
+    line-height: 1.55;
+    color: var(--nx-fg-2);
+}
+
+.nx-comp-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 820px) {
+    .nx-comp-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 520px) {
+    .nx-comp-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* clickable card — an "N screens" pill hints at the deeper-dive lightbox */
+.nx-comp-card[role="button"] {
+    cursor: pointer;
+}
+
+.nx-comp-card[role="button"]:focus-visible {
+    outline: 2px solid var(--nx-peach);
+    outline-offset: 3px;
+}
+
+.nx-comp-shot {
+    position: relative;
+}
+
+.nx-comp-expand {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: rgba(6, 9, 18, 0.72);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.03em;
+    color: var(--nx-fg);
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.nx-comp-card:hover .nx-comp-expand {
+    background: var(--nx-peach);
+    color: #0b0f1c;
+    border-color: var(--nx-peach);
+}
+
+/* ===========================================================================
+   COMPETITOR LIGHTBOX  (deeper dive — all of a competitor's screens)
+   =========================================================================== */
+.nx-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    background: rgba(4, 6, 12, 0.88);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    padding: clamp(20px, 5vh, 56px) clamp(16px, 4vw, 56px);
+    animation: nx-lb-in 0.3s ease;
+}
+
+.nx-lightbox[hidden] {
+    display: none;
+}
+
+@keyframes nx-lb-in {
+    from { opacity: 0; }
+}
+
+.nx-lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    z-index: 2;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--nx-line-2);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--nx-fg);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.nx-lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.nx-lightbox-inner {
+    margin: auto;
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    min-height: 0;
+}
+
+.nx-lightbox-title {
+    text-align: center;
+    font-family: var(--nx-serif);
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    color: var(--nx-fg);
+}
+
+.nx-lightbox-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Every screen shares the row equally and shrinks to fit — all visible side by
+   side, no scrolling. object-fit keeps each screenshot's aspect within its
+   slot (height capped to the viewport). */
+.nx-lightbox-row img {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 1px solid var(--nx-line-2);
+    background: #0b0f1c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nx-lightbox {
+        animation: none;
+    }
+}
+
+/* ===========================================================================
+   USER INTERVIEWS  (participant roster + synthesized themes)
+   =========================================================================== */
+.nx-people {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 50px;
+}
+
+.nx-person {
+    margin: 0;
+    background: var(--nx-surface);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.nx-person-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nx-person-avatar {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(243, 168, 124, 0.16);
+    color: var(--nx-peach);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--nx-mono);
+    font-weight: 700;
+    font-size: var(--text-14);
+}
+
+.nx-person-name {
+    font-size: var(--text-18);
+    font-weight: 600;
+    color: var(--nx-fg);
+}
+
+.nx-person-role {
+    margin-top: 3px;
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.03em;
+    color: var(--nx-fg-3);
+}
+
+.nx-person-take {
+    flex: 1;
+    font-family: var(--nx-serif);
+    font-style: italic;
+    font-size: var(--text-18);
+    line-height: 1.45;
+    color: var(--nx-fg);
+}
+
+.nx-person-stack {
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.02em;
+    color: var(--nx-fg-3);
+    border-top: 1px solid var(--nx-line);
+    padding-top: 14px;
+}
+
+.nx-interviews-sublabel {
+    margin-top: 4px;
+}
+
+@media (max-width: 820px) {
+    .nx-people {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 520px) {
+    .nx-people {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===========================================================================
    COMMUNITY RESEARCH  (Reddit posts → hopeful close)
    A scattered pile of real posts — tilted, overlapping printouts tossed in a
    stack — reads as "I gathered a mound of evidence". Hover lifts one clear of
@@ -832,6 +1137,14 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
     .nx-reddit-track {
         animation: none;
+    }
+
+    .nx-iter-view:not([hidden]) .nx-device {
+        animation: none;
+    }
+
+    .nx-iter-thumb {
+        transition: none;
     }
 }
 
@@ -1123,7 +1436,7 @@ body::before {
    pinned on as circular stickers. A light personal beat to close the device
    primer. */
 .nx-cpap-aside {
-    margin: 4rem auto 4rem;
+    margin: 8rem auto 4rem;
     width: max-content;
     max-width: 100%;
     display: flex;
@@ -1634,6 +1947,187 @@ body::before {
     margin: 0 0 26px;
     max-width: 60px;
     border-top-color: var(--nx-peach);
+}
+
+/* ===========================================================================
+   DIVERGENT SKETCHES  (paper sketches, auto horizontal marquee)
+   The track holds the sketches twice; translating by half its width loops
+   seamlessly (the -9px offsets the single gap across the seam). Pauses on
+   hover, freezes for reduced-motion.
+   =========================================================================== */
+.nx-sketches {
+    margin-top: 16px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+.nx-sketch-track {
+    display: flex;
+    width: max-content;
+    gap: 18px;
+    will-change: transform;
+    animation: nx-sketch-marquee 64s linear infinite;
+}
+
+.nx-sketches:hover .nx-sketch-track {
+    animation-play-state: paused;
+}
+
+.nx-sketch {
+    flex: 0 0 auto;
+    height: clamp(240px, 30vw, 320px);
+    margin: 0;
+    overflow: hidden;
+}
+
+.nx-sketch img {
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+@keyframes nx-sketch-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50% - 9px)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nx-sketch-track {
+        animation: none;
+    }
+}
+
+/* ===========================================================================
+   ITERATIONS  (V1 / V2 / V3 segmented toggle + phone row)
+   =========================================================================== */
+.nx-iter-toggle {
+    position: relative;
+    display: flex;
+    width: max-content;
+    max-width: 100%;
+    margin-top: 26px;
+    padding: 4px;
+    border-radius: 999px;
+    background: var(--nx-surface);
+    border: 1px solid var(--nx-line);
+    --i: 0;
+}
+
+.nx-iter-thumb {
+    position: absolute;
+    z-index: 0;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc((100% - 8px) / 3);
+    border-radius: 999px;
+    background: rgba(243, 168, 124, 0.14);
+    border: 1px solid var(--nx-peach);
+    transform: translateX(calc(var(--i) * 100%));
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nx-iter-btn {
+    position: relative;
+    z-index: 1;
+    flex: 1 0 auto;
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    padding: 9px 20px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--nx-fg-3);
+    white-space: nowrap;
+    transition: color 0.25s ease;
+}
+
+.nx-iter-btn b {
+    font-weight: 700;
+    color: var(--nx-fg-2);
+}
+
+.nx-iter-btn.is-active {
+    color: var(--nx-fg-2);
+}
+
+.nx-iter-btn.is-active b {
+    color: var(--nx-peach);
+}
+
+.nx-iter-stage {
+    margin-top: 30px;
+}
+
+.nx-iter-view {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nx-iter-view[hidden] {
+    display: none;
+}
+
+/* Six screens fill the full content width — width is the row minus the five
+   1rem gaps, divided by six. Drops to 3-up then 2-up on smaller screens. */
+.nx-iter-view .nx-device {
+    width: calc((100% - 5rem) / 6);
+    /* these are flat screen exports, not device shots — a small corner reads
+       better than the 40px phone radius used elsewhere */
+    border-radius: 8px;
+    filter: drop-shadow(0 24px 50px rgba(0, 0, 0, 0.55));
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 820px) {
+    .nx-iter-view .nx-device { width: calc((100% - 2rem) / 3); }
+}
+
+@media (max-width: 480px) {
+    .nx-iter-view .nx-device { width: calc((100% - 1rem) / 2); }
+}
+
+.nx-iter-view .nx-device:hover {
+    transform: translateY(-8px);
+    border-color: var(--nx-peach);
+    box-shadow: 0 0 0 1px var(--nx-peach),
+        0 0 42px -8px rgba(243, 168, 124, 0.4);
+}
+
+/* hidden → shown (display:none → flex) restarts this, so the phones stagger
+   in each time you switch versions */
+.nx-iter-view:not([hidden]) .nx-device {
+    animation: nx-iter-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.nx-iter-view:not([hidden]) .nx-device:nth-child(2) { animation-delay: 0.05s; }
+.nx-iter-view:not([hidden]) .nx-device:nth-child(3) { animation-delay: 0.10s; }
+.nx-iter-view:not([hidden]) .nx-device:nth-child(4) { animation-delay: 0.15s; }
+.nx-iter-view:not([hidden]) .nx-device:nth-child(5) { animation-delay: 0.20s; }
+.nx-iter-view:not([hidden]) .nx-device:nth-child(6) { animation-delay: 0.25s; }
+
+@keyframes nx-iter-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+}
+
+@media (max-width: 560px) {
+    .nx-iter-btn {
+        padding: 8px 13px;
+        gap: 5px;
+        letter-spacing: 0.04em;
+    }
 }
 
 /* ===========================================================================

@@ -168,3 +168,105 @@
     vids.forEach(function (v) { io.observe(v); });
 })();
 
+// ============================================
+// Iterations toggle — V1 / V2 / V3 segmented control swaps the phone row.
+// The sliding thumb is positioned by the active button's index (--i); hiding
+// the inactive views with `hidden` lets the per-phone stagger replay on swap.
+// ============================================
+(function () {
+    var toggle = document.querySelector('.nx-iter-toggle');
+    if (!toggle) return;
+    var section = toggle.closest('#iterations');
+    if (!section) return;
+    var btns = Array.prototype.slice.call(toggle.querySelectorAll('.nx-iter-btn'));
+    var views = Array.prototype.slice.call(section.querySelectorAll('.nx-iter-view'));
+
+    function activate(ver, focus) {
+        btns.forEach(function (b, i) {
+            var on = b.getAttribute('data-ver') === ver;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+            b.tabIndex = on ? 0 : -1;
+            if (on) {
+                toggle.style.setProperty('--i', i);
+                if (focus) b.focus();
+            }
+        });
+        views.forEach(function (v) {
+            var on = v.getAttribute('data-ver') === ver;
+            v.classList.toggle('is-active', on);
+            if (on) v.removeAttribute('hidden');
+            else v.setAttribute('hidden', '');
+        });
+    }
+
+    btns.forEach(function (b, i) {
+        b.addEventListener('click', function () { activate(b.getAttribute('data-ver')); });
+        b.addEventListener('keydown', function (e) {
+            var dir = 0;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') dir = 1;
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') dir = -1;
+            else return;
+            e.preventDefault();
+            var next = (i + dir + btns.length) % btns.length;
+            activate(btns[next].getAttribute('data-ver'), true);
+        });
+    });
+})();
+
+// ============================================
+// Competitor lightbox — click a card to see all of that competitor's screens.
+// Image paths are built from the card's data-comp + data-count:
+//   assets/nocta/competition/<comp>/<comp>-<n>.png
+// ============================================
+(function () {
+    var lb = document.getElementById('nx-lightbox');
+    if (!lb) return;
+    var titleEl = lb.querySelector('.nx-lightbox-title');
+    var rowEl = lb.querySelector('.nx-lightbox-row');
+    var closeBtn = lb.querySelector('.nx-lightbox-close');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.nx-comp-card[data-comp]'));
+    var lastFocused = null;
+
+    function open(card) {
+        var comp = card.getAttribute('data-comp');
+        var count = parseInt(card.getAttribute('data-count'), 10) || 0;
+        var nameEl = card.querySelector('.nx-comp-name');
+        var name = nameEl ? nameEl.textContent : comp;
+        titleEl.textContent = name;
+        rowEl.innerHTML = '';
+        for (var i = 1; i <= count; i++) {
+            var img = document.createElement('img');
+            img.src = 'assets/nocta/competition/' + comp + '/' + comp + '-' + i + '.png';
+            img.alt = name + ' — screen ' + i + ' of ' + count;
+            img.loading = 'lazy';
+            rowEl.appendChild(img);
+        }
+        rowEl.scrollLeft = 0;
+        lastFocused = card;
+        lb.removeAttribute('hidden');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+    }
+
+    function close() {
+        lb.setAttribute('hidden', '');
+        rowEl.innerHTML = '';
+        document.body.style.overflow = '';
+        if (lastFocused) lastFocused.focus();
+    }
+
+    cards.forEach(function (card) {
+        card.addEventListener('click', function () { open(card); });
+        card.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(card); }
+        });
+    });
+
+    closeBtn.addEventListener('click', close);
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !lb.hasAttribute('hidden')) close();
+    });
+})();
+
