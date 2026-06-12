@@ -1997,7 +1997,11 @@ button,
    column on purpose: these screens are landscape, so they fan out further and
    can spill past the 1180px content width into the full-bleed band. --- */
 .sk-deck {
-    --w: clamp(280px, 32vw, 480px);
+    /* 5 fanned windows span ~3.7× one window's width. The deck is centered on the
+       viewport, so the side margin is (100vw − 3.7·w)/2 — sizing each window at
+       ~26vw makes the fan span ~96vw, near-full-width with just a thin margin so
+       the outer windows don't clip against the viewport edges. */
+    --w: clamp(220px, 26vw, 560px);
     display: flex;
     justify-content: center;
     align-items: center;

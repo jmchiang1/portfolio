@@ -1090,9 +1090,11 @@
             var paginationEl = document.getElementById('visitorsPagination');
 
             // Pagination — limit tiles per page so the wall doesn't grow
-            // unbounded as visitors accumulate. Page size matches a 4-row
-            // block at 3 cols, 6-row block at 2 cols.
-            var TILES_PER_PAGE = 12;
+            // unbounded as visitors accumulate. Page size matches a 5-row
+            // block at 3 cols. The CTA tile / hoisted own card on page 1
+            // count toward this total (see loadPageRows) so every page
+            // renders a clean grid rather than overflowing by one.
+            var TILES_PER_PAGE = 15;
             var currentPage = 1;
 
             // Current column count drives the row-by-row animation stagger.
@@ -1402,6 +1404,14 @@
                         // prepends the local copy. Either way, the user's card
                         // anchors page 1.
                         combined = hoistOwn(combined);
+                        // Page 1 also carries one extra grid slot: the CTA
+                        // tile when there's no saved build, or the hoisted
+                        // own card (when it isn't among the fetched rows).
+                        // Cap the data tiles so the visible page — that extra
+                        // slot included — stays an exact TILES_PER_PAGE grid
+                        // instead of spilling to a lone 16th tile.
+                        var cap = own ? TILES_PER_PAGE : TILES_PER_PAGE - 1;
+                        if (combined.length > cap) combined = combined.slice(0, cap);
                     } else if (own && own.id) {
                         // Suppress duplicate appearance of own card on later
                         // pages (it already shows hoisted on page 1).
