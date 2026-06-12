@@ -213,7 +213,7 @@ a, button, [role="button"],
     align-items: center;
     justify-content: center;
     z-index: 100;
-    padding: 40px 60px 60px;
+    padding: 20px 60px;
 }
 
 /* Progressive blur behind navbar — base layer: linear-gradient tint + light backdrop blur, fading out toward the bottom edge */
@@ -1273,20 +1273,13 @@ a.project-card {
 /* SkillCat app-icon badge — top-left brand marker. */
 .sk-logo {
     position: absolute;
-    /* match the project-tags' top so the logo and tags line up across the card */
-    top: 24px;
+    top: 7cqh;
     left: 5cqw;
     width: 3rem;
     height: 3rem;
     border-radius: 8px;
     object-fit: cover;
     z-index: 2;
-}
-
-/* ScriptChain's mark is a teal glyph on light (not a full-bleed tile like
-   SkillCat's orange icon), so give it a white tile to read as a clean app icon. */
-.project-card--scriptchain .sk-logo {
-    background: #fff;
 }
 
 /* Device composition, centered on the card. */
@@ -1767,18 +1760,8 @@ body.grid-mode .project-card:hover .project-overlay {
    Responsive
    ============================================ */
 
-/* Desktop navbar uses asymmetric vertical padding (40px top / 60px bottom),
-   which centers the in-flow .nav-links 10px higher than the absolutely-
-   positioned logo and controls (they key off the full padding box). Nudge
-   those two up by the same (60-40)/2 = 10px so the logo, nav-links, and
-   layout-toggle share one horizontal line. Below 1200px the padding is
-   symmetric, so this offset is intentionally not applied there. */
-@media (min-width: 1201px) {
-    .nav-logo,
-    .bg-controls {
-        transform: translateY(calc(-50% - 10px));
-    }
-}
+/* Navbar padding is symmetric (20px top/bottom), so the logo, nav-links, and
+   layout-toggle already share one centerline — no vertical nudge needed. */
 
 @media (max-width: 1200px) {
     .navbar {
