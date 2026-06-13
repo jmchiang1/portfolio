@@ -250,10 +250,21 @@
     }
 
     function close() {
-        lb.setAttribute('hidden', '');
-        rowEl.innerHTML = '';
-        document.body.style.overflow = '';
-        if (lastFocused) lastFocused.focus();
+        // Play the reverse (fade-out) before hiding, mirroring the open animation.
+        lb.classList.add('is-closing');
+        var done = false;
+        var finish = function () {
+            if (done) return;
+            done = true;
+            lb.removeEventListener('animationend', finish);
+            lb.setAttribute('hidden', '');
+            lb.classList.remove('is-closing');
+            rowEl.innerHTML = '';
+            document.body.style.overflow = '';
+            if (lastFocused) lastFocused.focus();
+        };
+        lb.addEventListener('animationend', finish);
+        setTimeout(finish, 320); // fallback (reduced-motion / missed event)
     }
 
     cards.forEach(function (card) {
