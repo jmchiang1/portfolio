@@ -1221,3 +1221,24 @@ a, button, [role="button"],
         transform: none;
     }
 }
+
+/* Colophon / icon-library attribution (CC BY 4.0) */
+.about-colophon {
+    position: relative;
+    z-index: 2;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 48px 40px 64px;
+    text-align: center;
+}
+.about-colophon p {
+    font-size: 0.8125rem;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.38);
+}
+.about-colophon a {
+    color: rgba(255, 255, 255, 0.62);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.about-colophon a:hover { color: rgba(255, 255, 255, 0.9); }

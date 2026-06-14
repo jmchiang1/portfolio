@@ -604,7 +604,7 @@ function setupChrome() {
         var hidden = bgGrid.classList.toggle('grid-hidden');
         bgGrid.classList.toggle('grid-visible', !hidden);
         var icon = bgVisibility.querySelector('i');
-        if (icon) icon.className = hidden ? 'ph ph-eye-slash' : 'ph ph-eye';
+        if (icon) icon.className = hidden ? 'hn hn-eye-cross' : 'hn hn-eye';
         bgVisibility.setAttribute('data-tooltip', hidden ? 'Show' : 'Hide');
     });
 }

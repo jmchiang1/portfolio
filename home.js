@@ -224,7 +224,7 @@
         });
 
         if (layoutToggle) {
-            layoutToggle.querySelector('i').className = 'ph ph-slideshow';
+            layoutToggle.querySelector('i').className = 'hn hn-image';
             layoutToggle.setAttribute('data-tooltip', 'Layout: Carousel view');
             layoutToggle.setAttribute('aria-label', 'Switch to carousel view');
         }
@@ -252,7 +252,7 @@
         });
 
         if (layoutToggle) {
-            layoutToggle.querySelector('i').className = 'ph ph-squares-four';
+            layoutToggle.querySelector('i').className = 'hn hn-grid';
             layoutToggle.setAttribute('data-tooltip', 'Layout: Grid view');
             layoutToggle.setAttribute('aria-label', 'Switch to grid view');
         }
