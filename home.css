@@ -928,8 +928,7 @@ body.grid-mode .carousel-nav {
 }
 
 .footer-text:last-child {
-    max-width: 285px;
-    text-align: end;
+    text-align: left;
 }
 
 /* Mobile-only line break (only renders on mobile to wrap "based in NYC") */
@@ -1557,7 +1556,7 @@ body.grid-mode .section-hero {
     position: relative;
     /* Tall hero: the statement sits up top, the name/role intro is pinned to
        the bottom — mirrors the example heroes. */
-    min-height: 92vh;
+    min-height: 80vh;
     justify-content: flex-start;
     align-items: flex-start;
     padding: 140px 7rem 56px;
@@ -1586,8 +1585,8 @@ body.grid-mode .hero-heading {
 body.grid-mode .hero-tagline {
     display: block;
     font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: clamp(2.75rem, 6.5vw, 5rem);
+    font-weight: 500;
+    font-size: 6rem;
     line-height: 1.04;
     letter-spacing: -0.02em;
     color: #fff;
@@ -1611,9 +1610,9 @@ body.grid-mode .footer-info.entered {
     max-width: none;
     margin-top: auto;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: left;
     align-items: flex-end;
-    gap: 48px;
+    gap: 12rem;
     opacity: 1;
     transform: none;
     pointer-events: auto;
@@ -2056,7 +2055,7 @@ body.grid-mode .project-title {
 
     .footer-text,
     .footer-text:last-child {
-        text-align: center;
+        text-align: left;
         max-width: none;
     }
 

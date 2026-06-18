@@ -695,7 +695,7 @@ button,
     min-width: 0;
     font-size: var(--text-18);
     line-height: 1.7;
-    max-width: 64ch;
+    /* max-width: 64ch; */
 }
 
 .cs-content p {
@@ -826,6 +826,47 @@ button,
 
 @media (max-width: 640px) {
     .sk-interviews {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Insight / fix cards (testing section) — icon + serif title + body, in a 2-col grid.
+   Mirrors the Nocta case study's .nx-rail treatment with SkillCat tokens. */
+.sk-rails {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.sk-rail {
+    background: var(--sk-surface);
+    border-radius: 12px;
+    padding: 28px;
+}
+
+.sk-rail-icon {
+    display: block;
+    font-size: var(--text-28);
+    color: var(--sk-orange-2);
+    margin-bottom: 16px;
+}
+
+.sk-rail-title {
+    font-family: var(--sk-serif);
+    font-size: var(--text-22);
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.sk-rail-body {
+    font-size: var(--text-15);
+    line-height: 1.6;
+    color: var(--sk-muted);
+}
+
+@media (max-width: 640px) {
+    .sk-rails {
         grid-template-columns: 1fr;
     }
 }
@@ -1059,16 +1100,11 @@ button,
     margin-bottom: 18px;
 }
 
-.sk-feature-switch--wide .sk-video--desktop .sk-video-frame {
-    aspect-ratio: 3056 / 2080;
-}
-
 /* Cap the capture's height so the tabs AND the full video stay visible together
    in one viewport. Width derives from that max height (ratio preserved, nothing
    cropped) and the frame centers. On tall screens the container's own width wins,
    so the video still renders at full size. */
 .sk-feature-switch--wide .sk-video--desktop {
-    max-width: calc(64vh * 3056 / 2080);
     margin-inline: auto;
 }
 
@@ -1112,6 +1148,13 @@ button,
 }
 .sk-feature-switch--versions-desk .sk-video-frame {
     aspect-ratio: 1280 / 832;
+}
+
+/* Container for the three dashboard iteration switchers (Inbox, People, Paywall). */
+.sk-dash-iterations {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
 }
 
 .sk-feature-info {
@@ -1386,7 +1429,8 @@ button,
 
 /* Admin dashboard walkthroughs are dark UI on the dark page — a light border
    lifts each video frame off the background. */
-#dashboard .sk-video-frame {
+#dashboard .sk-video-frame,
+#dashboard-features .sk-video-frame {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -1662,7 +1706,7 @@ button,
     display: flex;
     flex-direction: column;
     gap: 14px;
-    max-width: 80ch;
+    /* max-width: 80ch; */
 }
 
 .sk-decisions li,

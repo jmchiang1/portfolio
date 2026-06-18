@@ -535,7 +535,11 @@
     var frames = [];
     sections.forEach(function (sec) {
         var found = sec.querySelectorAll('.sk-lineup-frame, .sk-deck-frame, .sk-video-frame');
-        Array.prototype.forEach.call(found, function (f) { frames.push(f); });
+        Array.prototype.forEach.call(found, function (f) {
+            // The admin-dashboard V1→Vn iterations are early WIP — not under NDA.
+            if (f.closest('.sk-feature-switch--versions-desk')) return;
+            frames.push(f);
+        });
     });
 
     // Already unlocked in this browser? Reveal and skip the gate.

@@ -915,23 +915,45 @@
 
             </div>
 
-            <!-- Insights (verbatim from the testing board) -->
+            <!-- Insights — what the heatmaps surfaced -->
             <p class="sk-block-label">Insights</p>
-            <ul class="sk-decisions">
-                <li>The tree-map navigation isn't intuitive yet: confusion about where to start, or how to preview a path.</li>
-                <li>Most users clicked the nav bar or home course cards <em>before</em> finding the path module.</li>
-                <li>Mobile dropped users off at "Edit Path": freezing and reloading on path flows. A Maze prototype flaw, but it cost real frustration.</li>
-                <li>Some users tapped path cards before discovering swipe-to-remove.</li>
-                <li>What's not working: preview navigation, Edit Path functionality, "swipe to delete."</li>
-            </ul>
+            <div class="sk-rails">
+                <div class="sk-rail">
+                    <i class="hn hn-question sk-rail-icon" aria-hidden="true"></i>
+                    <h3 class="sk-rail-title">Tree-map nav isn't intuitive</h3>
+                    <p class="sk-rail-body">Users weren't sure where to start, or how to preview a path before committing to it.</p>
+                </div>
+                <div class="sk-rail">
+                    <i class="hn hn-shuffle sk-rail-icon" aria-hidden="true"></i>
+                    <h3 class="sk-rail-title">They click everywhere but the path</h3>
+                    <p class="sk-rail-body">Most users hit the nav bar or home course cards before they ever found the path module.</p>
+                </div>
+                <div class="sk-rail">
+                    <i class="hn hn-refresh sk-rail-icon" aria-hidden="true"></i>
+                    <h3 class="sk-rail-title">Mobile stalled at Edit Path</h3>
+                    <p class="sk-rail-body">Path flows froze and reloaded on mobile. A Maze prototype flaw, but it cost real frustration.</p>
+                </div>
+                <div class="sk-rail">
+                    <i class="hn hn-octagon-times sk-rail-icon" aria-hidden="true"></i>
+                    <h3 class="sk-rail-title">Swipe-to-remove stayed hidden</h3>
+                    <p class="sk-rail-body">Some users tapped path cards over and over before discovering the swipe-to-delete gesture.</p>
+                </div>
+            </div>
 
-            <!-- Potential fixes (verbatim) -->
+            <!-- Potential fixes -->
             <p class="sk-block-label">Potential fixes</p>
-            <ul class="sk-demonstrates">
-                <li>Add path education on first arrival: a short walkthrough of the tree map.</li>
-                <li>Replace swipe-to-remove with an explicit delete icon on path cards.</li>
-                <li>Increase the CTA strength of the first course module so the starting point is unmissable.</li>
-            </ul>
+            <div class="sk-rails">
+                <div class="sk-rail">
+                    <i class="hn hn-notebook sk-rail-icon" aria-hidden="true"></i>
+                    <h3 class="sk-rail-title">Teach the path on arrival</h3>
+                    <p class="sk-rail-body">A short first-run walkthrough of the tree map, so the structure clicks before users dive in.</p>
+                </div>
+                <div class="sk-rail">
+                    <i class="hn hn-arrow-right sk-rail-icon" aria-hidden="true"></i>
+                    <h3 class="sk-rail-title">Strengthen the first step</h3>
+                    <p class="sk-rail-body">Boost the CTA on the first course module so the starting point is impossible to miss.</p>
+                </div>
+            </div>
 
             <aside class="sk-ai-note">
                 <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
@@ -957,7 +979,7 @@
         <section id="learner" class="cs-section sk-nda">
             <div class="sk-section-head">
                 <p class="cs-label">06 · The Learner Redesign</p>
-                <h2 class="sk-section-title">Five flows that carry a learner from <em>adding a course</em> to earning an EPA 608 certification.</h2>
+                <h2 class="sk-section-title">Carry a learner from <em>adding a course</em> to earning an EPA 608 certification.</h2>
             </div>
 
             <div class="cs-two-col">
@@ -1085,6 +1107,61 @@
 
 
         <!-- ============================================================
+             Before & After — drag a single line across six screens to wipe
+             between the original SkillCat app and the redesign. This is the
+             B2C learner app, so it sits with the rest of the consumer-app work,
+             before the case study moves on to the B2B admin dashboard.
+             ============================================================ -->
+        <section id="comparison" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">Before &amp; After</p>
+                <h2 class="sk-section-title">Full redesigned <em>comparison</em>: drag to see the difference</h2>
+            </div>
+
+            <figure class="sk-compare" data-pos="50">
+                <!-- After (redesign) — bottom layer, fully visible. -->
+                <div class="sk-compare-row sk-compare-row--after" aria-hidden="true">
+                    <img src="assets/skillcat/comparison/updated/onboarding.png"  alt="" loading="lazy">
+                    <img src="assets/skillcat/comparison/updated/home.png"        alt="" loading="lazy">
+                    <img src="assets/skillcat/comparison/updated/overview.png"    alt="" loading="lazy">
+                    <img src="assets/skillcat/comparison/updated/course-tree.png" alt="" loading="lazy">
+                    <img src="assets/skillcat/comparison/updated/portfolio.png"   alt="" loading="lazy">
+                    <img src="assets/skillcat/comparison/updated/task-complete.png" alt="" loading="lazy">
+                </div>
+
+                <!-- Before (original) — top layer, clipped from the right by the wipe. -->
+                <div class="sk-compare-row sk-compare-row--before">
+                    <img src="assets/skillcat/comparison/original/onboarding.png"  alt="Original SkillCat onboarding" loading="lazy">
+                    <img src="assets/skillcat/comparison/original/home.png"        alt="Original SkillCat home" loading="lazy">
+                    <img src="assets/skillcat/comparison/original/overview.png"    alt="Original SkillCat course overview" loading="lazy">
+                    <img src="assets/skillcat/comparison/original/course-tree.png" alt="Original SkillCat course tree" loading="lazy">
+                    <img src="assets/skillcat/comparison/original/portfolio.png"   alt="Original SkillCat portfolio" loading="lazy">
+                    <img src="assets/skillcat/comparison/original/task-complete.png" alt="Original SkillCat task complete" loading="lazy">
+                </div>
+
+                <!-- Corner labels — orient the viewer to which side is which. -->
+                <span class="sk-compare-label sk-compare-label--before" aria-hidden="true">Before</span>
+                <span class="sk-compare-label sk-compare-label--after"  aria-hidden="true">After</span>
+
+                <!-- Wipe handle — vertical line + knob. Position driven by --pos CSS var. -->
+                <div class="sk-compare-handle" aria-hidden="true">
+                    <span class="sk-compare-line"></span>
+                    <span class="sk-compare-knob">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7 5 L2 10 L7 15"  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path d="M13 5 L18 10 L13 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </span>
+                </div>
+
+                <!-- Native range input drives the wipe — invisible but handles drag + keyboard.
+                     Starts at 0 so the full Before strip is visible until the user drags. -->
+                <input type="range" min="0" max="100" value="0" step="0.1" class="sk-compare-input" aria-label="Drag right to reveal the redesign">
+            </figure>
+        </section>
+
+
+        <!-- ============================================================
              Section 2 — The Admin Dashboard
              ============================================================ -->
         <section id="dashboard" class="cs-section sk-nda">
@@ -1101,18 +1178,12 @@
 
             <div class="cs-two-col">
                 <div class="cs-content">
-                    <p>I helped design the employer side as a full dashboard for running training across a team. Assigning courses was reframed from a flat list into a structured plan: pick employees, stack courses in order, set a due date on each. Alongside that: a role-aware Inbox, on-the-job photo review, and a people view that scales past a handful of employees.</p>
+                    <p>I helped redesign the employer side as a full dashboard for running training across a team. Assigning courses was reframed from a flat list into a structured plan: pick employees, stack courses in order, set a due date on each. Alongside that: a role-aware Inbox, on-the-job photo review, and a people view that scales past a handful of employees.</p>
                 </div>
             </div>
 
-            <!-- Per-screen version iterations (admin dashboard) -->
-            <p class="sk-block-label">Each screen, version by version</p>
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>Most dashboard screens went through several rounds before they shipped. Here are three of them, from the first pass to the final.</p>
-                </div>
-            </div>
-
+            <!-- Per-screen version iterations: Inbox, People, Paywall -->
+            <div class="sk-dash-iterations">
             <!-- INBOX — 3 versions -->
             <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
                 <div class="sk-feature-info">
@@ -1228,9 +1299,25 @@
                     </div>
                 </div>
             </div>
+            </div>
+        </section>
 
-            <!-- The dashboard, feature by feature -->
-            <p class="sk-block-label">The dashboard, feature by feature</p>
+
+        <!-- ============================================================
+             08 — The Dashboard, Feature by Feature (final walkthroughs)
+             ============================================================ -->
+        <section id="dashboard-features" class="cs-section sk-nda">
+            <div class="sk-section-head">
+                <p class="cs-label">08 · Feature by Feature</p>
+                <h2 class="sk-section-title">Four flows that take an admin from <em>assigning a course</em> to grading the work.</h2>
+            </div>
+
+            <div class="cs-two-col">
+                <div class="cs-content">
+                    <p>Here is the shipped dashboard in motion, one core flow at a time.</p>
+                </div>
+            </div>
+
             <div class="sk-feature-switch sk-feature-switch--wide">
                 <!-- Top: feature tabs -->
                 <div class="sk-feature-list" role="tablist" aria-label="Admin dashboard features">
@@ -1360,60 +1447,6 @@
                 <figcaption class="sk-video-cap">A representative spec excerpt — states, rules, and edge cases for one of the flows above.</figcaption>
             </figure>
         </section> -->
-
-        <!-- ============================================================
-             Before & After — drag a single line across six screens to wipe
-             between the original SkillCat app and the redesign. Sits before
-             Reflection so the case study still closes on personal takeaway.
-             ============================================================ -->
-        <section id="comparison" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">Before &amp; After</p>
-                <h2 class="sk-section-title">Full redesigned <em>comparison</em>: drag to see the difference</h2>
-            </div>
-
-            <figure class="sk-compare" data-pos="50">
-                <!-- After (redesign) — bottom layer, fully visible. -->
-                <div class="sk-compare-row sk-compare-row--after" aria-hidden="true">
-                    <img src="assets/skillcat/comparison/updated/onboarding.png"  alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/home.png"        alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/overview.png"    alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/course-tree.png" alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/portfolio.png"   alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/task-complete.png" alt="" loading="lazy">
-                </div>
-
-                <!-- Before (original) — top layer, clipped from the right by the wipe. -->
-                <div class="sk-compare-row sk-compare-row--before">
-                    <img src="assets/skillcat/comparison/original/onboarding.png"  alt="Original SkillCat onboarding" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/home.png"        alt="Original SkillCat home" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/overview.png"    alt="Original SkillCat course overview" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/course-tree.png" alt="Original SkillCat course tree" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/portfolio.png"   alt="Original SkillCat portfolio" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/task-complete.png" alt="Original SkillCat task complete" loading="lazy">
-                </div>
-
-                <!-- Corner labels — orient the viewer to which side is which. -->
-                <span class="sk-compare-label sk-compare-label--before" aria-hidden="true">Before</span>
-                <span class="sk-compare-label sk-compare-label--after"  aria-hidden="true">After</span>
-
-                <!-- Wipe handle — vertical line + knob. Position driven by --pos CSS var. -->
-                <div class="sk-compare-handle" aria-hidden="true">
-                    <span class="sk-compare-line"></span>
-                    <span class="sk-compare-knob">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M7 5 L2 10 L7 15"  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                            <path d="M13 5 L18 10 L13 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                        </svg>
-                    </span>
-                </div>
-
-                <!-- Native range input drives the wipe — invisible but handles drag + keyboard.
-                     Starts at 0 so the full Before strip is visible until the user drags. -->
-                <input type="range" min="0" max="100" value="0" step="0.1" class="sk-compare-input" aria-label="Drag right to reveal the redesign">
-            </figure>
-        </section>
-
 
         <!-- ============================================================
              09 — Reflection (closes the case study)

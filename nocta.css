@@ -441,7 +441,7 @@ body::before {
        per-block margins (mirrors the .case-study section rhythm). */
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 4rem;
 }
 
 /* Sections carry no vertical padding — the consistent 15rem between them comes
@@ -484,7 +484,8 @@ body::before {
     font-size: clamp(1rem, 1.5vw, 1.1875rem);
     line-height: 1.7;
     color: var(--nx-fg-2);
-    max-width: 60ch;
+    /* spans the full content width (up to the page padding) */
+    max-width: none;
 }
 
 .nx-lead strong {
@@ -721,12 +722,20 @@ body::before {
    SECTION HEAD (eyebrow + heading + lead)
    =========================================================================== */
 .nx-head {
-    max-width: 47.5rem;
+    /* Full content width so the lead can run the full page; the heading keeps
+       its readable line length via the scoped .nx-head .nx-h2 cap below. */
+    max-width: none;
     /* margin-bottom: 3.5rem; */
     /* Inner elements spaced by this gap, not per-element margins. */
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+}
+
+/* Keep the section heading at its previous readable width even though the
+   head is now full-width (so the lead can span the page). */
+.nx-head .nx-h2 {
+    max-width: 47.5rem;
 }
 
 .nx-head .nx-h2 {
@@ -859,11 +868,6 @@ body::before {
 /* clickable card — an "N screens" pill hints at the deeper-dive lightbox */
 .nx-comp-card[role="button"] {
     cursor: pointer;
-}
-
-.nx-comp-card[role="button"]:focus-visible {
-    outline: 0.125rem solid var(--nx-peach);
-    outline-offset: 0.1875rem;
 }
 
 .nx-comp-shot {
@@ -1069,8 +1073,16 @@ body::before {
     padding-top: 0.875rem;
 }
 
-.nx-interviews-sublabel {
-    margin-top: 0.25rem;
+/* Groups the "What I heard" label with the rails so the gap between them is a
+   consistent 1.25rem (the label's own margins are zeroed in this context). */
+.nx-insights {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.nx-insights .nx-comp-label {
+    margin: 0;
 }
 
 @media (max-width: 820px) {
@@ -1188,7 +1200,7 @@ body::before {
     width: 100%;
     display: block;
     border-radius: 0.875rem;
-    box-shadow: 0 -0.5rem 4.375rem -1.125rem rgba(243, 168, 124, 0.4);
+    box-shadow: 0 0rem 10rem 0rem rgba(243, 168, 124, 0.4);
 }
 
 /* On narrow screens drop the third column so the remaining two stay wide
@@ -1302,10 +1314,15 @@ body::before {
 }
 
 .nx-primer-head {
-    max-width: 47.5rem;
+    /* full content width so the lead runs the page; title kept readable below */
+    max-width: none;
     display: flex;
     flex-direction: column;
     gap: 0.875rem;
+}
+
+.nx-primer-head .nx-primer-title {
+    max-width: 47.5rem;
 }
 
 .nx-primer-k {
@@ -1624,6 +1641,14 @@ body::before {
     margin: 0 auto;
 }
 
+/* Group the eyebrow + HMW question so the gap between them is exactly 1.25rem
+   (the solution card below keeps its existing spacing). */
+.nx-hmw-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
 .nx-hmw {
     font-family: var(--nx-serif);
     font-style: italic;
@@ -1683,6 +1708,8 @@ body::before {
     background: var(--nx-surface);
     border-radius: 1.25rem;
     padding: 1.875rem;
+    display: flex;
+    flex-direction: column;
     /* allow the panel to shrink inside its grid column instead of being
        forced wide by its content (was overflowing the page on mobile) */
     min-width: 0;
@@ -1700,11 +1727,12 @@ body::before {
 .nx-swatches {
     display: flex;
     gap: 0.75rem;
+    flex: 1;
 }
 
 .nx-swatch {
     flex: 1;
-    height: 7.5rem;
+    min-height: 7.5rem;
     border-radius: 0.75rem;
     display: flex;
     align-items: flex-end;
@@ -1822,7 +1850,7 @@ body::before {
     align-items: center;
     gap: 4.5rem;
     padding-top: 1.75rem;
-    border-top: 0.0625rem solid var(--nx-line);
+    /* border-top: 0.0625rem solid var(--nx-line); */
 }
 
 .nx-feature:first-of-type {
@@ -1927,7 +1955,6 @@ body::before {
     gap: 4.5rem;
     align-items: center;
     padding-top: 1.75rem;
-    border-top: 0.0625rem solid var(--nx-line);
 }
 
 .nx-ship.is-reverse {
@@ -2605,7 +2632,7 @@ body::before {
     .nx-swatch {
         flex: 1 1 28%;
         min-width: 0;
-        height: 5rem;
+        min-height: 5rem;
     }
 
     /* hamburger + mobile menu */
