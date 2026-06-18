@@ -109,7 +109,7 @@ button,
     align-items: center;
     justify-content: center;
     z-index: 100;
-    padding: 20px 60px;
+    padding: 1.5rem 60px;
 }
 
 .navbar::before {

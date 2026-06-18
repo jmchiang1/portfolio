@@ -83,7 +83,7 @@ button,
     /* Symmetric vertical padding keeps the logo (top:50%) and links
        (align-items:center) on the same centerline while trimming the bar height.
        20px 60px is shared across every page so the logo sits in the same spot. */
-    padding: 20px 60px;
+    padding: 1.5rem 60px;
 }
 
 .navbar::before {
@@ -780,6 +780,56 @@ button,
     color: var(--sk-muted);
 }
 
+/* User-research interview pull-quotes (research section). */
+.sk-interviews {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.sk-interview {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0;
+    padding: 28px;
+    border-radius: 12px;
+    background: var(--sk-surface);
+    border-left: 2px solid var(--sk-orange);
+}
+
+.sk-interview blockquote {
+    margin: 0;
+    font-family: var(--sk-serif);
+    font-size: var(--text-20);
+    line-height: 1.45;
+    color: #fff;
+}
+
+.sk-interview figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: auto;
+}
+
+.sk-interview-name {
+    font-weight: 600;
+    font-size: var(--text-15);
+    color: #fff;
+}
+
+.sk-interview-role {
+    font-size: var(--text-13);
+    color: var(--sk-muted);
+}
+
+@media (max-width: 640px) {
+    .sk-interviews {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ============================================
    Flow (end to end)
    ============================================ */
@@ -1045,6 +1095,23 @@ button,
 .sk-feature-switch--versions.sk-feature-switch--reverse .sk-feature-stage {
     grid-column: 1;
     grid-row: 1;
+}
+
+/* Desktop landscape variant (admin dashboard screens): a wide screenshot beside
+   the title + version pills. Must come after the base --versions rules so it wins
+   on equal specificity. Mobile stacking is inherited from the --versions media query. */
+.sk-feature-switch--versions-desk {
+    grid-template-columns: 300px minmax(0, 720px);
+}
+.sk-feature-switch--versions-desk.sk-feature-switch--reverse {
+    grid-template-columns: minmax(0, 720px) 300px;
+}
+.sk-feature-switch--versions-desk .sk-feature-stage .sk-video--desktop {
+    width: 100%;
+    max-width: 100%;
+}
+.sk-feature-switch--versions-desk .sk-video-frame {
+    aspect-ratio: 1280 / 832;
 }
 
 .sk-feature-info {

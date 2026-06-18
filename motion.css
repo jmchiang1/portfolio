@@ -156,7 +156,7 @@ a, button, [role="button"],
     align-items: center;
     justify-content: center;
     z-index: 100;
-    padding: 20px 60px;
+    padding: 1.5rem 60px;
 }
 
 /* Progressive blur behind navbar — base layer: linear-gradient tint + light backdrop blur, fading out toward the bottom edge */
@@ -566,10 +566,10 @@ a, button, [role="button"],
     border-radius: 4px;
     overflow: hidden;
     cursor: url('assets/pointer.cur'), pointer;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                background 0.4s ease,
-                border-color 0.4s ease,
-                box-shadow 0.5s ease;
+    /* resting "raised tile" block — card presses into it on hover */
+    box-shadow: 6px 6px 0 0 rgba(255, 255, 255, 0.10);
+    transition: transform 0.16s ease, box-shadow 0.16s ease,
+                background 0.3s ease, border-color 0.3s ease;
     opacity: 0;
     transform: translateY(28px);
     animation: motion-card-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -586,11 +586,11 @@ a, button, [role="button"],
 }
 
 .motion-card:hover {
-    transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.035);
-    border-color: rgba(17, 128, 249, 0.25);
-    box-shadow: 0 24px 60px -20px rgba(17, 128, 249, 0.25),
-                0 0 0 1px rgba(17, 128, 249, 0.05);
+    /* press the card down into its block-shadow — a tactile keycap push */
+    transform: translate(6px, 6px);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
 }
 
 .motion-card-preview {

@@ -201,17 +201,43 @@
                 </div>
             </div>
 
-            <!-- <div class="sk-threads">
-                <div class="sk-thread"><p class="sk-thread-num">01</p><p class="sk-thread-title">Outcome-driven</p><p class="sk-thread-desc">They're here for a credential and a raise, not points and streaks for their own sake.</p></div>
-                <div class="sk-thread"><p class="sk-thread-num">02</p><p class="sk-thread-title">Field language</p><p class="sk-thread-desc">OJT, EPA 608, HVAC: the product should sound like the worksite, not a classroom.</p></div>
-                <div class="sk-thread"><p class="sk-thread-num">03</p><p class="sk-thread-title">Mixed confidence</p><p class="sk-thread-desc">First-timers and seasoned techs both use it: the path has to work for both ends.</p></div>
-            </div> -->
-
-            <!-- <div class="cs-two-col">
+            <!-- User research: texting + Zoom interviews -->
+            <p class="sk-block-label">Talking to the trades</p>
+            <div class="cs-two-col">
                 <div class="cs-content">
-                    <p>I audited both direct trade-education players and the broader learning apps people already know — pulling apart their typography, color, and tone to find an opening SkillCat could own.</p>
+                    <p>Before redesigning a single screen, I went to the source. I texted around <strong>30 trade workers and SkillCat users a day for two weeks</strong>, and ran longer Zoom interviews with a couple of them. Texting let me meet people where they were, between jobs and on their own time, so I heard from far more of them than scheduled calls ever could have.</p>
                 </div>
-            </div> -->
+            </div>
+
+            <div class="sk-stats">
+                <div class="sk-stat"><p class="sk-stat-num">~30/day</p><p class="sk-stat-label">Trade workers &amp; active users texted, every day for two weeks</p></div>
+                <div class="sk-stat"><p class="sk-stat-num">100%</p><p class="sk-stat-label">Async by design: replies came on their own time, between jobs</p></div>
+                <div class="sk-stat"><p class="sk-stat-num">2</p><p class="sk-stat-label">In-depth Zoom interviews for the full story</p></div>
+            </div>
+
+            <div class="sk-interviews">
+                <figure class="sk-interview">
+                    <blockquote>"Get the certification and land a job right away: quick, easy, and usable, so I can get back to work. The safety trainings I've done are archaic, boring videos you click through, not absorb."</blockquote>
+                    <figcaption>
+                        <span class="sk-interview-name">Sam Park</span>
+                        <span class="sk-interview-role">Multi-trade laborer · construction, road marking, warehousing</span>
+                    </figcaption>
+                </figure>
+                <figure class="sk-interview">
+                    <blockquote>"On-the-job experience can't be replaced by videos. When I'm stuck it's manuals first, then Reddit, but experience is what narrows a problem from 30 possible causes down to 3."</blockquote>
+                    <figcaption>
+                        <span class="sk-interview-name">Winson Chan</span>
+                        <span class="sk-interview-role">Fire alarm technician · 2.5 years in the field</span>
+                    </figcaption>
+                </figure>
+            </div>
+
+            <p class="sk-block-label">What I heard</p>
+            <div class="sk-threads">
+                <div class="sk-thread"><p class="sk-thread-num">01</p><p class="sk-thread-title">Outcome-driven</p><p class="sk-thread-desc">Get the cert, get the job, get the raise. Learning is a means to a paycheck and seniority, not points or streaks for their own sake.</p></div>
+                <div class="sk-thread"><p class="sk-thread-num">02</p><p class="sk-thread-title">Learn by doing</p><p class="sk-thread-desc">Skills come from the job, plus YouTube, manuals, Reddit, and a mentor. Formal school is slow and pricey, and "archaic" videos lose them fast.</p></div>
+                <div class="sk-thread"><p class="sk-thread-num">03</p><p class="sk-thread-title">"...then what?"</p><p class="sk-thread-desc">The loudest anxiety: does finishing the courses actually get me hired? The path from learning to resume to job isn't closed in their heads.</p></div>
+            </div>
 
             <p class="sk-caption">Direct, trade schools &amp; cert providers (Interplay Learning, Penn Foster, HVACR School): credible but corporate and dated.</p>
             <figure class="sk-shot">
@@ -1079,8 +1105,132 @@
                 </div>
             </div>
 
+            <!-- Per-screen version iterations (admin dashboard) -->
+            <p class="sk-block-label">Each screen, version by version</p>
+            <div class="cs-two-col">
+                <div class="cs-content">
+                    <p>Most dashboard screens went through several rounds before they shipped. Here are three of them, from the first pass to the final.</p>
+                </div>
+            </div>
+
+            <!-- INBOX — 3 versions -->
+            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
+                <div class="sk-feature-info">
+                    <h3 class="sk-feature-screen-title">Inbox</h3>
+                    <p class="sk-feature-screen-desc">The admin's command center. Every approval, assignment, and pending action lands in one role-aware queue; I iterated on density and on how the most urgent items rise to the top.</p>
+                    <div class="sk-version-tabs" role="tablist" aria-label="Inbox — versions">
+                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-inbox-panel-1" id="dash-inbox-tab-1" data-flow="1">V1</button>
+                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-inbox-panel-2" id="dash-inbox-tab-2" data-flow="2">V2</button>
+                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-inbox-panel-3" id="dash-inbox-tab-3" data-flow="3">V3</button>
+                    </div>
+                </div>
+                <div class="sk-feature-stage">
+                    <div class="sk-feature-panel is-active" id="dash-inbox-panel-1" role="tabpanel" aria-labelledby="dash-inbox-tab-1" data-flow="1">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%201.svg" alt="Inbox — V1" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="sk-feature-panel" id="dash-inbox-panel-2" role="tabpanel" aria-labelledby="dash-inbox-tab-2" data-flow="2">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%202.svg" alt="Inbox — V2" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="sk-feature-panel" id="dash-inbox-panel-3" role="tabpanel" aria-labelledby="dash-inbox-tab-3" data-flow="3">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%203.svg" alt="Inbox — V3" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PEOPLE — 4 versions (taller 1280×865 frame) -->
+            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
+                <div class="sk-feature-info">
+                    <h3 class="sk-feature-screen-title">People</h3>
+                    <p class="sk-feature-screen-desc">Managing the whole team: roles, progress, and bulk actions. Each round pushed it to scale well past a handful of employees without turning into a spreadsheet.</p>
+                    <div class="sk-version-tabs" role="tablist" aria-label="People — versions">
+                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-people-panel-1" id="dash-people-tab-1" data-flow="1">V1</button>
+                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-people-panel-2" id="dash-people-tab-2" data-flow="2">V2</button>
+                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-people-panel-3" id="dash-people-tab-3" data-flow="3">V3</button>
+                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-people-panel-4" id="dash-people-tab-4" data-flow="4">V4</button>
+                    </div>
+                </div>
+                <div class="sk-feature-stage">
+                    <div class="sk-feature-panel is-active" id="dash-people-panel-1" role="tabpanel" aria-labelledby="dash-people-tab-1" data-flow="1">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame" style="aspect-ratio: 1280 / 865;">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/people%201.svg" alt="People — V1" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="sk-feature-panel" id="dash-people-panel-2" role="tabpanel" aria-labelledby="dash-people-tab-2" data-flow="2">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame" style="aspect-ratio: 1280 / 865;">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/people%202.svg" alt="People — V2" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="sk-feature-panel" id="dash-people-panel-3" role="tabpanel" aria-labelledby="dash-people-tab-3" data-flow="3">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame" style="aspect-ratio: 1280 / 865;">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/people%203.svg" alt="People — V3" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="sk-feature-panel" id="dash-people-panel-4" role="tabpanel" aria-labelledby="dash-people-tab-4" data-flow="4">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame" style="aspect-ratio: 1280 / 865;">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/people%204.svg" alt="People — V4" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAYWALL — 3 versions -->
+            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
+                <div class="sk-feature-info">
+                    <h3 class="sk-feature-screen-title">Paywall</h3>
+                    <p class="sk-feature-screen-desc">Where an admin upgrades their plan to add seats and unlock features. I reworked the hierarchy so the value and the upgrade action read at a glance.</p>
+                    <div class="sk-version-tabs" role="tablist" aria-label="Paywall — versions">
+                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-paywall-panel-1" id="dash-paywall-tab-1" data-flow="1">V1</button>
+                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-paywall-panel-2" id="dash-paywall-tab-2" data-flow="2">V2</button>
+                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-paywall-panel-3" id="dash-paywall-tab-3" data-flow="3">V3</button>
+                    </div>
+                </div>
+                <div class="sk-feature-stage">
+                    <div class="sk-feature-panel is-active" id="dash-paywall-panel-1" role="tabpanel" aria-labelledby="dash-paywall-tab-1" data-flow="1">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/paywall%201.svg" alt="Paywall — V1" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="sk-feature-panel" id="dash-paywall-panel-2" role="tabpanel" aria-labelledby="dash-paywall-tab-2" data-flow="2">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/paywall%202.svg" alt="Paywall — V2" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="sk-feature-panel" id="dash-paywall-panel-3" role="tabpanel" aria-labelledby="dash-paywall-tab-3" data-flow="3">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/paywall%203.svg" alt="Paywall — V3" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
             <!-- The dashboard, feature by feature -->
-            <!-- <p class="sk-block-label">The dashboard, feature by feature</p> -->
+            <p class="sk-block-label">The dashboard, feature by feature</p>
             <div class="sk-feature-switch sk-feature-switch--wide">
                 <!-- Top: feature tabs -->
                 <div class="sk-feature-list" role="tablist" aria-label="Admin dashboard features">
