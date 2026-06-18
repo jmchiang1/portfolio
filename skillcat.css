@@ -3925,7 +3925,7 @@ body.nda-unlocked .sk-nda-cover {
 .sk-nda-modal-card {
     position: relative;
     width: 100%;
-    max-width: 380px;
+    max-width: 30rem;
     padding: 40px 32px 32px;
     border-radius: 18px;
     /* Two layered fills from the Figma "Slide Up Modal": #0D0D0D base with a
@@ -3981,7 +3981,7 @@ body.nda-unlocked .sk-nda-cover {
     border-color: var(--sk-orange);
 }
 
-.sk-nda-form button {
+.sk-nda-form > button {
     border: none;
     background: var(--sk-orange);
     color: #fff;
@@ -3993,7 +3993,45 @@ body.nda-unlocked .sk-nda-cover {
     transition: background 0.2s ease;
 }
 
-.sk-nda-form button:hover { background: var(--sk-orange-2); }
+.sk-nda-form > button:hover { background: var(--sk-orange-2); }
+
+/* Password field with a show/hide eye toggle. */
+.sk-nda-field {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-width: 0;
+}
+
+.sk-nda-field .sk-nda-input {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.sk-nda-eye {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--sk-muted);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: color 0.18s ease;
+}
+
+.sk-nda-eye:hover { color: #fff; }
+.sk-nda-eye svg { display: block; }
+.sk-nda-eye .sk-nda-eye-off { display: none; }
+.sk-nda-eye.is-on .sk-nda-eye-open { display: none; }
+.sk-nda-eye.is-on .sk-nda-eye-off { display: block; }
 
 .sk-nda-error {
     color: var(--sk-orange-2);

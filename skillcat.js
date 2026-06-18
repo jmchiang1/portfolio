@@ -530,14 +530,18 @@
     var input = modal.querySelector('.sk-nda-input');
     var errorEl = modal.querySelector('.sk-nda-error');
     var closeBtn = modal.querySelector('.sk-nda-modal-close');
+    var eyeBtn = modal.querySelector('.sk-nda-eye');
 
     // Every protected media frame inside the protected sections.
     var frames = [];
     sections.forEach(function (sec) {
         var found = sec.querySelectorAll('.sk-lineup-frame, .sk-deck-frame, .sk-video-frame');
         Array.prototype.forEach.call(found, function (f) {
-            // The admin-dashboard V1→Vn iterations are early WIP — not under NDA.
-            if (f.closest('.sk-feature-switch--versions-desk')) return;
+            // Dashboard iterations: V1 is a free preview; V2+ stay under NDA.
+            if (f.closest('.sk-feature-switch--versions-desk')) {
+                var panel = f.closest('.sk-feature-panel');
+                if (!panel || panel.getAttribute('data-flow') === '1') return;
+            }
             frames.push(f);
         });
     });
@@ -586,6 +590,13 @@
         lastFocused = document.activeElement;
         errorEl.setAttribute('hidden', '');
         input.value = '';
+        // Always reopen with the password masked.
+        input.type = 'password';
+        if (eyeBtn) {
+            eyeBtn.classList.remove('is-on');
+            eyeBtn.setAttribute('aria-pressed', 'false');
+            eyeBtn.setAttribute('aria-label', 'Show password');
+        }
         modal.classList.remove('is-closing');
         modal.removeAttribute('hidden');
         document.body.style.overflow = 'hidden';
@@ -627,6 +638,16 @@
 
     unlockBtn.addEventListener('click', openModal);
     closeBtn.addEventListener('click', closeModal);
+    if (eyeBtn) {
+        eyeBtn.addEventListener('click', function () {
+            var show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            eyeBtn.classList.toggle('is-on', show);
+            eyeBtn.setAttribute('aria-pressed', show ? 'true' : 'false');
+            eyeBtn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+            input.focus();
+        });
+    }
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();

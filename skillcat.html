@@ -1529,7 +1529,20 @@
             <p class="sk-nda-modal-title" id="sk-nda-title">NDA-protected work</p>
             <p class="sk-nda-modal-sub">Enter the password to view the redesigned SkillCat screens.</p>
             <form class="sk-nda-form">
-                <input type="password" class="sk-nda-input" placeholder="Password" autocomplete="off" spellcheck="false">
+                <div class="sk-nda-field">
+                    <input type="password" class="sk-nda-input" placeholder="Password" autocomplete="off" spellcheck="false">
+                    <button type="button" class="sk-nda-eye" aria-label="Show password" aria-pressed="false">
+                        <svg class="sk-nda-eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+                        </svg>
+                        <svg class="sk-nda-eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+                            <line x1="4" y1="20" x2="20" y2="4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
                 <button type="submit">Unlock</button>
             </form>
             <p class="sk-nda-error" hidden>Incorrect password — try again.</p>
