@@ -1291,6 +1291,15 @@ a.project-card {
     z-index: 2;
 }
 
+/* Nocta's logo is a transparent mark (not a baked-in app icon like the other
+   two), so give it a matching framed background + border. */
+.project-card--nocta .sk-logo {
+    background: #0e1424;
+    /* border: 1px solid rgba(255, 255, 255, 0.12); */
+    object-fit: contain;
+    padding: 6px;
+}
+
 /* Device composition, centered on the card. */
 .sk-thumb {
     position: absolute;
