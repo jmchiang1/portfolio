@@ -644,6 +644,37 @@ body::before {
     height: auto;
 }
 
+/* iPhone mockup frame — applied only to devices holding a VIDEO (still-image
+   devices keep the plain frame above). Mirrors the home-page nocta thumbnail:
+   a metallic bezel, a rounded screen, and a dynamic-island pill. */
+.nx-device:has(video) {
+    position: relative;
+    padding: 0.45rem;
+    border: none;
+    border-radius: 2.9rem;
+    background: linear-gradient(150deg, #3a3f4b 0%, #15181f 42%, #0a0c11 100%);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07),
+                inset 0 0 0 0.09rem rgba(255, 255, 255, 0.06);
+}
+
+.nx-device:has(video) video {
+    border-radius: 2.45rem;
+}
+
+/* Dynamic Island */
+.nx-device:has(video)::before {
+    content: "";
+    position: absolute;
+    top: 1.05rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26%;
+    height: 1.05rem;
+    background: #04060b;
+    border-radius: 1rem;
+    z-index: 3;
+}
+
 .nx-scroll-cue {
     position: absolute;
     bottom: 2.125rem;
@@ -1756,7 +1787,7 @@ body::before {
 }
 
 .nx-type-spec-serif {
-    font-family: var(--nx-serif);
+    font-family: "DM Sans", sans-serif;
     font-size: var(--text-44);
     font-weight: 400;
     line-height: 1.05;
