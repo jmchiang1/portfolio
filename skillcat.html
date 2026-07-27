@@ -388,7 +388,7 @@
         <!-- ============================================================
              Showcase — The brand, applied (full-bleed phone lineup)
              ============================================================ -->
-        <section class="cs-section sk-showcase sk-nda" aria-label="The redesigned screens">
+        <section class="cs-section sk-showcase" aria-label="The redesigned screens">
             <div class="sk-section-head sk-showcase-head">
                 <p class="cs-label">The Redesign</p>
                 <div class="sk-device-toggle" role="tablist" aria-label="Device">
@@ -469,7 +469,7 @@
         <!-- ============================================================
              04 — Iterating The Experience
              ============================================================ -->
-        <section id="iterations" class="cs-section sk-nda">
+        <section id="iterations" class="cs-section">
             <div class="sk-section-head">
                 <p class="cs-label">04 · Iterating The Experience</p>
                 <h2 class="sk-section-title">4 main <em>iterations</em>: what changed at every step.</h2>
@@ -976,7 +976,7 @@
         <!-- ============================================================
              06 — The Learner Redesign
              ============================================================ -->
-        <section id="learner" class="cs-section sk-nda">
+        <section id="learner" class="cs-section">
             <div class="sk-section-head">
                 <p class="cs-label">06 · The Learner Redesign</p>
                 <h2 class="sk-section-title">Carry a learner from <em>adding a course</em> to earning an EPA 608 certification.</h2>
@@ -1164,7 +1164,7 @@
         <!-- ============================================================
              Section 2 — The Admin Dashboard
              ============================================================ -->
-        <section id="dashboard" class="cs-section sk-nda">
+        <section id="dashboard" class="cs-section">
             <div class="sk-section-head">
                 <p class="cs-label">07 · The Admin Dashboard</p>
                 <h2 class="sk-section-title">Valuable insights for <em>admins</em> too</h2>
@@ -1306,7 +1306,7 @@
         <!-- ============================================================
              08 — The Dashboard, Feature by Feature (final walkthroughs)
              ============================================================ -->
-        <section id="dashboard-features" class="cs-section sk-nda">
+        <section id="dashboard-features" class="cs-section">
             <div class="sk-section-head">
                 <p class="cs-label">08 · Feature by Feature</p>
                 <h2 class="sk-section-title">Four flows that take an admin from <em>assigning a course</em> to grading the work.</h2>
@@ -1513,41 +1513,6 @@
             </a>
         </div>
     </footer>
-
-    <!-- NDA gate — blurs the redesigned screens until a password is entered.
-         Pill + per-image covers + modal are wired up in skillcat.js. -->
-    <div class="sk-nda-pill" hidden>
-        <i class="hn hn-lock" aria-hidden="true"></i>
-        <span><strong class="sk-nda-count">0</strong> images are NDA-protected ·</span>
-        <button class="sk-nda-unlock" type="button">unlock</button>
-    </div>
-
-    <div class="sk-nda-modal" role="dialog" aria-modal="true" aria-labelledby="sk-nda-title" hidden>
-        <div class="sk-nda-modal-card">
-            <button class="sk-nda-modal-close" type="button" aria-label="Close">✕</button>
-            <i class="hn hn-lock sk-nda-modal-icon" aria-hidden="true"></i>
-            <p class="sk-nda-modal-title" id="sk-nda-title">NDA-protected work</p>
-            <p class="sk-nda-modal-sub">Enter the password to view the redesigned SkillCat screens.</p>
-            <form class="sk-nda-form">
-                <div class="sk-nda-field">
-                    <input type="password" class="sk-nda-input" placeholder="Password" autocomplete="off" spellcheck="false">
-                    <button type="button" class="sk-nda-eye" aria-label="Show password" aria-pressed="false">
-                        <svg class="sk-nda-eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
-                        </svg>
-                        <svg class="sk-nda-eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
-                            <line x1="4" y1="20" x2="20" y2="4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                </div>
-                <button type="submit">Unlock</button>
-            </form>
-            <p class="sk-nda-error" hidden>Incorrect password — try again.</p>
-        </div>
-    </div>
 
     <script src="transitions.js"></script>
     <script src="skillcat.js"></script>
