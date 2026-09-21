@@ -69,6 +69,24 @@
     });
 
     // ============================================
+    // Internal links inside a card (e.g. "Case study") — route through the
+    // shared page transition so they match the rest of the site instead of
+    // hard-cutting. External links and new-tab links are left alone.
+    // ============================================
+    document.querySelectorAll('.vibes-card a[href]').forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (!href || href === '#' || href.charAt(0) === '#') return;
+        if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.indexOf('//') === 0) return;
+        if (link.target === '_blank') return;
+
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.PageTransitions) PageTransitions.exit(href);
+            else window.location.href = href;
+        });
+    });
+
+    // ============================================
     // Page transitions on internal nav links — handled by the shared
     // GSAP transitions module (transitions.js)
     // ============================================

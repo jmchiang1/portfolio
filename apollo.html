@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apollo Racket Club · Case Study | Jonathan Chiang</title>
+    <meta name="description" content="Apollo Racket Club is a dedicated indoor badminton facility I am opening in the Nassau and Northeast Queens corridor. I designed the brand and site, built an AI-assisted site analysis tool, and ran the demand research the financial model rests on.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Marcellus&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="cs-nav.css">
+    <link rel="stylesheet" href="apollo.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
+</head>
+<body>
+    <!-- Cover — visible from first paint to prevent flash between pages -->
+    <div class="page-transition-cover"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="assets/logo.png" alt="JC" />
+        </a>
+        <div class="nav-links cs-nav-links">
+            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#brand" class="nav-link">Brand</a>
+            <a href="#site" class="nav-link">Site</a>
+            <a href="#courtfit" class="nav-link">CourtFit</a>
+            <a href="#research" class="nav-link">Research</a>
+            <a href="#reflection" class="nav-link">Reflection</a>
+        </div>
+        <button class="hamburger" aria-label="Menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-menu-link">UX/UI</a>
+        <a href="motion.html" class="mobile-menu-link">Motion</a>
+        <a href="vibes.html" class="mobile-menu-link active">Vibes</a>
+        <a href="about.html" class="mobile-menu-link">About</a>
+        <a href="visitors.html" class="mobile-menu-link">Visitors</a>
+
+        <div class="mobile-menu-socials">
+            <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="LinkedIn">
+                <i class="hn hn-linkedin"></i>
+            </a>
+            <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="GitHub">
+                <i class="hn hn-github"></i>
+            </a>
+            <a href="assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="Resume">
+                <i class="hn hn-notebook"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Back to top button -->
+    <a href="#top" class="back-to-top" aria-label="Back to top">
+        <i class="hn hn-arrow-up" aria-hidden="true" style="font-size:20px"></i>
+    </a>
+
+    <main id="top" class="case-study">
+        <!-- ============================================================
+             Hero
+             ============================================================ -->
+        <section class="cs-header">
+            <div class="cs-hero-inner">
+                <div class="cs-header-text">
+                    <p class="cs-label">Apollo Racket Club · Founder, designer, builder</p>
+                    <h1 class="cs-title">Designing and building the <em>digital layer</em> of a business I am launching.</h1>
+                    <p class="cs-hero-sub">Apollo Racket Club is a dedicated indoor badminton facility I am opening in the Nassau County area of Long Island, NY. I developed the brand, designed and built the site, built an AI-assisted tool to find the right building, and ran the research the financial model rests on.</p>
+                    <div class="ap-links">
+                        <a href="https://apolloracketclub.com/" target="_blank" rel="noopener noreferrer" class="ap-link ap-link-primary">
+                            <span>apolloracketclub.com</span>
+                            <i class="hn hn-external-link" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/apolloracketclub/" target="_blank" rel="noopener noreferrer" class="ap-link ap-link-ghost">
+                            <i class="hn hn-instagram" aria-hidden="true"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61592577303122" target="_blank" rel="noopener noreferrer" class="ap-link ap-link-ghost">
+                            <i class="hn hn-facebook-round" aria-hidden="true"></i>
+                            <span>Facebook</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="cs-hero-media">
+                    <div class="ap-logo-lockup">
+                        <img class="ap-logo-mark" src="assets/apollo/apollo-logo.svg" alt="Apollo Racket Club logo" width="248" height="297">
+                        <p class="ap-logo-name">Apollo</p>
+                        <p class="ap-logo-sub">Racket Club</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- At a glance -->
+            <div class="sk-meta">
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">Project</p>
+                    <p class="sk-meta-value">Apollo Racket Club, a dedicated indoor badminton facility</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">My role</p>
+                    <p class="sk-meta-value">Founder. Solo design &amp; build.</p>
+                </div>
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">Stack</p>
+                    <p class="sk-meta-value">Next.js · Tailwind · Framer Motion · TypeScript · Supabase · Claude</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">Stage</p>
+                    <p class="sk-meta-value">Pre lease, 2026</p>
+                </div>
+                <div class="sk-meta-item sk-meta-wide">
+                    <p class="sk-meta-label">What I owned</p>
+                    <p class="sk-meta-value">Brand · marketing site · CourtFit · the research program</p>
+                </div>
+                <div class="sk-meta-item">
+                    <p class="sk-meta-label">Sector</p>
+                    <p class="sk-meta-value">Sports &amp; recreation · Real estate</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             Overview
+             ============================================================ -->
+        <section id="overview" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Overview</p>
+                <div class="cs-content">
+                    <p>Apollo Racket Club is a planned indoor badminton facility. It operates as Apollo Sports, LLC, a New York LLC, and it is currently pre lease: building a loan file, searching for a building, and running demand validation. The concept is badminton only, not a multi sport venue. The differentiation is specialization, so court spacing, lighting, air handling, flooring, and the entire programming calendar are built around one sport.</p>
+                    <p>The market is the Great Neck and New Hyde Park corridor into central Nassau. The thesis is a supply gap: no dedicated badminton facility in that corridor against a large and underserved player base. I have played badminton since I was 13 and have been part of the New York badminton community for years, so the product decisions come from my own extensive experience with the sport and community.</p>
+                </div>
+            </div>
+
+            <div class="ap-grid">
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-paint-brush" aria-hidden="true"></i></span>
+                    <h3>01 · Brand &amp; identity</h3>
+                    <p>The name, the mark, and the repositioning from casual to premium. Brand strategy and identity design.</p>
+                </div>
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-laptop" aria-hidden="true"></i></span>
+                    <h3>02 · The marketing site</h3>
+                    <p>The identity applied in a live, responsive front end. Product design and front end.</p>
+                </div>
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-sparkles" aria-hidden="true"></i></span>
+                    <h3>03 · CourtFit</h3>
+                    <p>A site analysis tool for commercial listings. Full stack plus applied AI.</p>
+                </div>
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-analytics" aria-hidden="true"></i></span>
+                    <h3>04 · The research</h3>
+                    <p>Original demand survey and competitive study. Analysis feeding product and pricing.</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ============================================================
+             01 — Brand and identity
+
+             OPEN DECISION (from the build brief, not yet confirmed):
+             a) Apollo the dog stays in the public narrative as the origin.
+                This draft keeps him, per the brief's stated default: he
+                explains the name and the V1 identity, and the current mark
+                de-emphasizes the mascot either way.
+             b) Tell the brand purely as the Greek-god direction.
+
+             OPEN DECISION: consumer name of record. The brief notes the mark
+             reads "Apollo Badminton Club" while the domain and live site read
+             "Apollo Racket Club". This page uses Apollo Racket Club
+             throughout, matching the domain and the live wordmark.
+             ============================================================ -->
+        <section id="brand" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">01 · Brand &amp; identity</p>
+                <h2 class="sk-section-title">The club narrowed to badminton, so the <em>identity had to change</em>.</h2>
+                <p class="sk-section-kicker">A casual mascot brand, rebuilt as gold light on onyx.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The problem</p>
+                <div class="cs-content">
+                    <p>Apollo launched with a casual, mascot forward identity. Then the business changed underneath it. The club narrowed to badminton only, and the positioning moved to premium and tech forward: smart access, booking, a real technology layer. The casual identity undersold both. I rebranded deliberately instead of tweaking the old one.</p>
+                </div>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Where the name came from</p>
+                <div class="cs-content">
+                    <p>Two places at once. My English Cream Golden Retriever is named Apollo, and so is the Greek god. The first identity leaned on the dog. He was the mascot, and the palette was anchored to his cream coat. The second identity keeps the name and moves the reference to the god, which is also where the mark comes from.</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">The two identities</p>
+            <div class="ap-versions" data-versions>
+                <div class="ap-ver-tabs" role="tablist" aria-label="Identity versions">
+                    <button type="button" class="ap-ver-tab is-active" role="tab" id="ver-tab-v1"
+                            aria-controls="ver-panel-v1" aria-selected="true" data-ver="v1">
+                        <span class="ap-ver-tab-num">V1</span>
+                        <span class="ap-ver-tab-name">Casual</span>
+                    </button>
+                    <button type="button" class="ap-ver-tab" role="tab" id="ver-tab-v2"
+                            aria-controls="ver-panel-v2" aria-selected="false" tabindex="-1" data-ver="v2">
+                        <span class="ap-ver-tab-num">V2</span>
+                        <span class="ap-ver-tab-name">Current</span>
+                    </button>
+                </div>
+
+                <div class="ap-ver-panel is-active" role="tabpanel" id="ver-panel-v1"
+                     aria-labelledby="ver-tab-v1" data-ver="v1">
+                    <div class="ap-ver-grid">
+                        <figure class="ap-ver-fig ap-ver-fig--wide">
+                            <div class="ap-ver-shot" style="aspect-ratio:991/541">
+                                <img src="assets/apollo/v1/ideas1-web.jpg" alt="Four generated V1 logo concepts: a crest, a monogram with a leaping dog, a mascot dog with a paddle, and an AS monogram" loading="lazy">
+                            </div>
+                        </figure>
+
+                        <figure class="ap-ver-fig">
+                            <div class="ap-ver-shot" style="aspect-ratio:991/541">
+                                <img src="assets/apollo/v1/ideas2-web.jpg" alt="A second sheet of generated V1 logo concepts" loading="lazy">
+                            </div>
+                        </figure>
+
+                        <figure class="ap-ver-fig">
+                            <div class="ap-ver-shot" style="aspect-ratio:991/541">
+                                <img src="assets/apollo/v1/ideas3-web.jpg" alt="A third sheet of generated V1 logo concepts" loading="lazy">
+                            </div>
+                        </figure>
+
+                        <figure class="ap-ver-fig">
+                            <div class="ap-ver-shot" style="aspect-ratio:1/1">
+                                <img src="assets/apollo/v1/logo.png" alt="The V1 Apollo mark: a golden retriever holding a racket, in white on deep teal" loading="lazy">
+                            </div>
+                        </figure>
+
+                        <figure class="ap-ver-fig">
+                            <div class="ap-ver-shot ap-ver-shot--scroll">
+                                <img src="assets/apollo/v1/website.png" alt="The V1 apolloracketclub.com, teal and green with dog illustrations throughout" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+
+                <div class="ap-ver-panel" role="tabpanel" id="ver-panel-v2"
+                     aria-labelledby="ver-tab-v2" data-ver="v2">
+                    <div class="ap-ver-grid">
+                        <figure class="ap-ver-fig">
+                            <div class="ap-ver-shot" style="aspect-ratio:1/1">
+                                <img src="assets/apollo/v2/idea1-web.jpg" alt="Nine monogram explorations in gold on dark green, labelled A1 through A9" loading="lazy">
+                            </div>
+                        </figure>
+
+                        <figure class="ap-ver-fig">
+                            <div class="ap-ver-shot" style="aspect-ratio:1402/1122">
+                                <img src="assets/apollo/v2/idea2-web.jpg" alt="Feather rays explorations: five primary mark variants, three lockups, alternate marks by use, and brand applications" loading="lazy">
+                            </div>
+                        </figure>
+
+                        <figure class="ap-ver-fig">
+                            <div class="ap-ver-shot" style="aspect-ratio:16/10;display:flex;align-items:center;justify-content:center">
+                                <img src="assets/apollo/apollo-logo.svg" alt="The final Apollo mark, a shuttlecock drawn as a sunburst" style="position:static;width:auto;height:62%;object-fit:contain" loading="lazy">
+                            </div>
+                        </figure>
+
+                        <figure class="ap-ver-fig">
+                            <div class="ap-ver-shot" style="aspect-ratio:16/10">
+                                <img src="assets/apollo/site-hero.jpg" alt="The V2 identity applied on the live apolloracketclub.com" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <p class="sk-block-label">How I directed the logo work</p>
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Brief, not prompt</p>
+                <div class="cs-content">
+                    <p>I wrote a structured brief rather than prompting blind, then fed it to image generation tools to produce concepts. The brief carried business context, brand personality, a description of the mascot, and four style directions to explore. Steering the tools is the work. Accepting whatever they return is not.</p>
+                </div>
+            </div> -->
+
+            <!-- <div class="sk-steps sk-steps--4">
+                <div class="sk-step"><p class="sk-step-num">01</p><p class="sk-step-title">Crest</p><p class="sk-step-desc">Traditional club authority, the direction a heritage racquet club would take.</p></div>
+                <div class="sk-step"><p class="sk-step-num">02</p><p class="sk-step-title">Minimal mark</p><p class="sk-step-desc">A single geometric symbol that survives at favicon size.</p></div>
+                <div class="sk-step"><p class="sk-step-num">03</p><p class="sk-step-title">Mascot</p><p class="sk-step-desc">Apollo the dog as the face of the club, which is where V1 landed.</p></div>
+                <div class="sk-step"><p class="sk-step-num">04</p><p class="sk-step-title">Monogram plus mascot</p><p class="sk-step-desc">A lettermark carrying the mascot as a secondary device.</p></div>
+            </div> -->
+
+            <!-- <div class="sk-video-row">
+                <figure class="sk-video sk-video--desktop">
+                    <div class="sk-video-frame">
+                        <img class="sk-embed-img" src="assets/apollo/brand-brief.png" alt="The original logo brief used to direct the concept generation" onerror="this.style.display='none'">
+                        <div class="sk-video-ph" aria-hidden="true">
+                            <span class="sk-video-ph-tag">▦ Artifact</span>
+                            <span class="sk-video-ph-name">The original logo brief</span>
+                            <span class="sk-video-ph-path">assets/apollo/brand-brief.png</span>
+                        </div>
+                    </div>
+                </figure>
+
+                <figure class="sk-video sk-video--desktop">
+                    <div class="sk-video-frame">
+                        <img class="sk-embed-img" src="assets/apollo/brand-concepts.png" alt="Concept sheet of generated logo directions" onerror="this.style.display='none'">
+                        <div class="sk-video-ph" aria-hidden="true">
+                            <span class="sk-video-ph-tag">▦ Artifact</span>
+                            <span class="sk-video-ph-name">Concept sheet</span>
+                            <span class="sk-video-ph-path">assets/apollo/brand-concepts.png</span>
+                        </div>
+                    </div>
+                </figure>
+            </div> -->
+
+            <!-- <p class="sk-block-label">V1 to V2</p>
+            <div class="ap-ba">
+                <div class="ap-ba-card">
+                    <p class="ap-ba-tag">V1 · Casual</p>
+                    <p class="ap-ba-title">Friendly, community first, mascot forward</p>
+                    <div class="ap-ba-shot">
+                        <img src="assets/apollo/v1/website.png" alt="The V1 Apollo identity, teal and green with rounded casual type" style="object-position:top" loading="lazy">
+                    </div>
+                    <div class="ap-swatches">
+                        <div class="ap-swatch">
+                            <span class="ap-swatch-chip" style="background:#1D3C44"></span>
+                            <span class="ap-swatch-name">Deep teal</span>
+                            <span class="ap-swatch-hex">#1D3C44</span>
+                        </div>
+                        <div class="ap-swatch">
+                            <span class="ap-swatch-chip" style="background:#5FC5B3"></span>
+                            <span class="ap-swatch-name">Mint</span>
+                            <span class="ap-swatch-hex">#5FC5B3</span>
+                        </div>
+                    </div>
+                    <p class="ap-ba-why">Teal and green with rounded, casual fonts, anchored to the cream of the dog's coat. Right for a friendly multi sport club. Wrong for a badminton specialist selling a premium, tech forward experience.</p>
+                </div>
+
+                <div class="ap-ba-card ap-ba-card--after">
+                    <p class="ap-ba-tag">V2 · Current</p>
+                    <p class="ap-ba-title">Gold light on onyx</p>
+                    <div class="ap-ba-shot">
+                        <img src="assets/apollo/site-hero.jpg" alt="The V2 Apollo identity applied on the live site, gold on onyx" loading="lazy">
+                    </div>
+                    <div class="ap-swatches">
+                        <div class="ap-swatch">
+                            <span class="ap-swatch-chip" style="background:#050F0E"></span>
+                            <span class="ap-swatch-name">Onyx</span>
+                            <span class="ap-swatch-hex">#050F0E</span>
+                        </div>
+                        <div class="ap-swatch">
+                            <span class="ap-swatch-chip" style="background:#C6A15B"></span>
+                            <span class="ap-swatch-name">Gold</span>
+                            <span class="ap-swatch-hex">#C6A15B</span>
+                        </div>
+                        <div class="ap-swatch">
+                            <span class="ap-swatch-chip" style="background:#F4EEE3"></span>
+                            <span class="ap-swatch-name">Ivory</span>
+                            <span class="ap-swatch-hex">#F4EEE3</span>
+                        </div>
+                    </div>
+                    <p class="ap-ba-why">A deep green black base measured around #050F0E, which is why the identity reads as dark green and gold rather than flat black. Metallic gold as the only accent. This is the palette you are reading right now.</p>
+                </div>
+            </div> -->
+
+            <p class="sk-block-label">The mark</p>
+            <div class="ap-mark">
+                <img src="assets/apollo/apollo-logo.svg" alt="The Apollo Racket Club mark: a shuttlecock drawn as a sunburst" width="248" height="297">
+                <p class="ap-mark-note">A shuttlecock rendered as a sunburst. Art Deco geometry against modern product precision, which is what connects the Greek god to the sport. It holds at favicon size and it does not need the mascot to work.</p>
+            </div>
+
+            <p class="sk-block-label">The brand board</p>
+            <figure class="sk-video sk-video--desktop sk-video--wide ap-shot--3x2">
+                <div class="sk-video-frame">
+                    <img class="sk-embed-img" src="assets/apollo/v2/concept-sheet-web.jpg" alt="The Apollo V2 brand board: secondary iconography, pattern and texture, color palette, photography style, graphic elements, typography, brand message, and lifestyle mockups" onerror="this.style.display='none'">
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▦ Artifact</span>
+                        <span class="sk-video-ph-name">Brand board</span>
+                        <span class="sk-video-ph-path">assets/apollo/v2/concept-sheet-web.jpg</span>
+                    </div>
+                </div>
+            </figure>
+
+            <p class="sk-grounding">Palette discipline governs the whole system: roughly 90 percent onyx and ivory, about 8 percent gold, and no more than 2 percent of anything else. That ratio is what keeps the gold reading as metal rather than as a theme color.</p>
+
+            <!-- <p class="sk-block-label">The workflow</p>
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Brief to implemented tokens</p>
+                <div class="cs-content">
+                    <p>The pipeline is the part worth showing. It runs from a written brief to tokens that are live in code, and the colors never get eyeballed on the way through.</p>
+                </div>
+            </div> -->
+
+            <!-- <div class="sk-steps sk-steps--5">
+                <div class="sk-step"><p class="sk-step-num">01</p><p class="sk-step-title">Brief the concept</p><p class="sk-step-desc">Business context, personality, and the four style directions, written before anything is generated.</p></div>
+                <div class="sk-step"><p class="sk-step-num">02</p><p class="sk-step-title">Generate options</p><p class="sk-step-desc">Image tools produce concepts against the brief, not against a one line prompt.</p></div>
+                <div class="sk-step"><p class="sk-step-num">03</p><p class="sk-step-title">Extract the color</p><p class="sk-step-desc">Exact hex values pulled from the chosen artwork by script, so the tokens are accurate to the source.</p></div>
+                <div class="sk-step"><p class="sk-step-num">04</p><p class="sk-step-title">Systematize</p><p class="sk-step-desc">Those values become CSS variables and a Tailwind theme, with the palette ratio written down as a rule.</p></div>
+                <div class="sk-step"><p class="sk-step-num">05</p><p class="sk-step-title">Implement</p><p class="sk-step-desc">Hand the token spec to Claude Code and build the site against it.</p></div>
+            </div> -->
+
+            <!-- <p class="sk-grounding">Step three is the one that matters. Eyedropping a logo by hand gets you close and leaves the system slightly wrong everywhere. Pulling the values programmatically means the tokens are the artwork, so the brand does not drift between the mark and the build.</p> -->
+        </section>
+
+
+        <!-- ============================================================
+             02 — The marketing site
+             ============================================================ -->
+        <section id="site" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">02 · Marketing site</p>
+                <h2 class="sk-section-title">Making a facility that does not exist yet <em>feel real</em>.</h2>
+                <!-- <p class="sk-section-kicker">apolloracketclub.com, the public face of the brand and the top of the demand funnel.</p> -->
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The problem</p>
+                <div class="cs-content">
+                    <p>A pre launch business needs a credible brand and a way to capture demand before a single court exists. The site has to make a facility that has not opened feel real, and it has to turn community interest into a measurable waitlist that also seeds a retargeting audience for opening week.</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">Design decisions</p>
+            <ul class="sk-decisions">
+                <li><strong>A brand system from scratch, not a template.</strong> Gold <code>#C6A15B</code> against a stone ink field <code>#14201E</code>, with cream <code>#F2ECE0</code> carrying the type. That same palette is the accent system for this case study page, so the portfolio piece and the product it documents read as one thing.</li>
+                <li><strong>Waitlist capture is the landing page's job.</strong> The pre launch page is built around one conversion, and every other element is subordinate to it.</li>
+                <li><strong>Booking is built, the pre launch page is not.</strong> The site is booking enabled for opening. What is live today is the waitlist page, because before a lease there is nothing to book yet.</li>
+                <li><strong>Motion is deliberate, not decorative.</strong> Entrance and scroll transitions carry the weight of a considered single page. Nothing animates that does not earn it.</li>
+            </ul>
+
+            <div class="ap-grid">
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-shapes" aria-hidden="true"></i></span>
+                    <h3>Component structure</h3>
+                    <p>Next.js and Tailwind, composed from a small set of reusable sections rather than one-off pages.</p>
+                </div>
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-expand" aria-hidden="true"></i></span>
+                    <h3>Responsive layout</h3>
+                    <p>Most of the badminton community finds the club on a phone, so mobile is the primary layout.</p>
+                </div>
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-bolt" aria-hidden="true"></i></span>
+                    <h3>Motion &amp; performance</h3>
+                    <p>Framer Motion for entrance and scroll transitions, kept off the critical render path.</p>
+                </div>
+            </div>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide">
+                <div class="sk-video-frame">
+                    <video class="sk-video-el" controls playsinline preload="none" poster="assets/apollo/poster-site-scroll.jpg">
+                        <source src="assets/apollo/site-scroll.mp4" type="video/mp4">
+                    </video>
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Scroll</span>
+                        <span class="sk-video-ph-name">The page end to end</span>
+                        <span class="sk-video-ph-path">assets/apollo/site-scroll.mp4</span>
+                    </div>
+                </div>
+            </figure>
+
+            <div class="ap-links">
+                <a href="https://apolloracketclub.com/" target="_blank" rel="noopener noreferrer" class="ap-link ap-link-primary">
+                    <span>Visit the live site</span>
+                    <i class="hn hn-external-link" aria-hidden="true"></i>
+                </a>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             03 — CourtFit
+
+             Decision (per the build brief): CourtFit stays on its own page.
+             This section summarizes the product and the engineering worth
+             surfacing, then links out to /courtfit.html for the deep dive.
+             The full walkthrough is deliberately NOT duplicated here.
+             ============================================================ -->
+        <section id="courtfit" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">03 · CourtFit</p>
+                <h2 class="sk-section-title">I got tired of underwriting warehouses <em>by hand</em>.</h2>
+                <p class="sk-section-kicker">A site analysis tool for evaluating commercial properties as a racquet sports facility.</p>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The problem</p>
+                <div class="cs-content">
+                    <p>Evaluating commercial warehouse listings by hand is slow and messy. My workflow was: save LoopNet listings, copy details into Excel, calculate court counts, estimate rent and revenue and profit, map competitors in Google Maps, check demographics, estimate renovation scope from photos, and reason about building code risk. Every promising building meant repeating all of it.</p>
+                    <p>CourtFit collapses that into one input. Paste a commercial property listing (a LoopNet URL, raw listing text, or manual details) and it returns a full site analysis and a decision: extracted property details, a court fit analysis, a pro forma with NOI and payback and a deal rating, a renovation read from the listing photos, code and site risk flags, trade area demographics, nearby competition, and a weighted leaderboard that ranks saved properties against priorities I choose.</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">The engineering worth surfacing</p>
+            <div class="ap-grid">
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-file-import" aria-hidden="true"></i></span>
+                    <h3>AI listing extraction</h3>
+                    <p>Unstructured listing prose becomes structured property fields: square footage, clear height, rent, zoning, warehouse and office split.</p>
+                </div>
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-image" aria-hidden="true"></i></span>
+                    <h3>Vision renovation scoring</h3>
+                    <p>A vision model reads the listing photos to estimate condition and buildout scope, which scales the renovation line in the pro forma.</p>
+                </div>
+                <div class="ap-pillar">
+                    <span class="ap-pillar-icon"><i class="hn hn-check-list" aria-hidden="true"></i></span>
+                    <h3>Code reasoning</h3>
+                    <p>Flags the specific municipal approvals a warehouse to assembly conversion triggers: occupancy, sprinklers, parking, certificate of occupancy, change of use.</p>
+                </div>
+            </div>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The part I care about</p>
+                <div class="cs-content">
+                    <p>The deterministic core underneath. Court math, the pro forma, and the deal rating logic are explicit rules. The model handles extraction and judgment, and the numbers stay auditable. That split is the whole design argument: AI where the input is messy, hard code where a lender is going to ask how I got the number.</p>
+                </div>
+            </div>
+
+            <a class="ap-linkout" href="courtfit.html">
+                <span class="ap-linkout-label">Full case study</span>
+                <h3 class="ap-linkout-title">CourtFit, end to end <span class="ap-linkout-arrow" aria-hidden="true">→</span></h3>
+                <p>The complete walkthrough: adding a property, reading its verdict, the pipeline map with the Census demand heatmap, and the weighted leaderboard. Four recorded flows and the design reasoning behind each one.</p>
+            </a>
+
+            <div class="ap-links">
+                <a href="https://sports-complex-calc.vercel.app/" target="_blank" rel="noopener noreferrer" class="ap-link ap-link-primary">
+                    <span>Live demo</span>
+                    <i class="hn hn-external-link" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/jmchiang1/Sports-Complex-Calc" target="_blank" rel="noopener noreferrer" class="ap-link ap-link-ghost">
+                    <i class="hn hn-github" aria-hidden="true"></i>
+                    <span>Source</span>
+                </a>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             04 — Market and demand research
+             ============================================================ -->
+        <section id="research" class="cs-section">
+            <div class="sk-section-head">
+                <p class="cs-label">04 · Market &amp; demand research</p>
+                <h2 class="sk-section-title">I needed to know how people <em>actually play</em> before I priced anything.</h2>
+                <p class="sk-section-kicker">An original survey measuring current player behavior, interest, and demand for badminton in the corridor.</p>
+            </div>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide ap-shot--3x2">
+                <div class="sk-video-frame">
+                    <img class="sk-embed-img" src="assets/apollo/survey.png" alt="Page one of the Apollo Racket Club badminton player survey in Tally: home ZIP code and a select-all sports screener" onerror="this.style.display='none'">
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▦ Screenshot</span>
+                        <span class="sk-video-ph-name">The live survey</span>
+                        <span class="sk-video-ph-path">assets/apollo/survey.png</span>
+                    </div>
+                </div>
+            </figure>
+
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">What it measures</p>
+                <div class="cs-content">
+                    <p>Three things: how people play now (frequency, time of day, group size, where they go today), what they want (coaching, juniors, membership, what would make them switch), and what they will pay. Built in Tally, badminton only, roughly 30 questions after branching, four to five minutes on mobile, targeting about 300 responses.</p>
+                </div>
+            </div>
+
+            <p class="sk-block-label">How it routes</p>
+            <div class="sk-steps sk-steps--4">
+                <div class="sk-step"><p class="sk-step-num">01</p><p class="sk-step-title">Screener</p><p class="sk-step-desc">Page one routes everyone. Players and non players never see the same instrument again.</p></div>
+                <div class="sk-step"><p class="sk-step-num">02</p><p class="sk-step-title">Non players</p><p class="sk-step-desc">A short latent demand block, then an early exit.</p></div>
+                <div class="sk-step"><p class="sk-step-num">03</p><p class="sk-step-title">Players</p><p class="sk-step-desc">Play behavior, current facility, price, booking, coaching, juniors, membership, demographics.</p></div>
+                <div class="sk-step"><p class="sk-step-num">04</p><p class="sk-step-title">Concept test</p><p class="sk-step-desc">The concept, then email capture with an organizer flag.</p></div>
+            </div>
+
+            <p class="sk-block-label">The eight questions that carry the file</p>
+            <ul class="sk-problems">
+                <li class="sk-problem"><span class="sk-problem-num">01</span><p>Home ZIP, which draws the trade area map.</p></li>
+                <li class="sk-problem"><span class="sk-problem-num">02</span><p>The sports screener, which sizes the player base and routes everything else.</p></li>
+                <li class="sk-problem"><span class="sk-problem-num">03</span><p>Times of day played, which sets the peak and off peak split.</p></li>
+                <li class="sk-problem"><span class="sk-problem-num">04</span><p>Max travel distance, which sets the catchment radius.</p></li>
+                <li class="sk-problem"><span class="sk-problem-num">05</span><p>Turned away in the last three months, the direct read on unmet demand.</p></li>
+                <li class="sk-problem"><span class="sk-problem-num">06</span><p>Current spend, the price anchor everything else is tested against.</p></li>
+                <li class="sk-problem"><span class="sk-problem-num">07</span><p>The badminton price ladder, which is the rate card test.</p></li>
+                <li class="sk-problem"><span class="sk-problem-num">08</span><p>The membership tier forced choice, which is the premium test.</p></li>
+            </ul>
+            <p class="sk-grounding">Every question maps to a model input, and the failure thresholds were set before fielding. If fewer than a set share accept the target peak rate, the rate card changes before a lender sees it. Frequency and group size sit outside the eight because they multiply into court hours, which is the bottom up utilization estimate.</p>
+
+            <p class="sk-block-label">Distribution</p>
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Cost per usable respondent</p>
+                <div class="cs-content">
+                    <p>I planned distribution around cost per usable local respondent instead of a panel buy: free seeding through player run groups, WeChat and KakaoTalk chats, coaches, and DUPR, plus cheap targeted paid on Reddit and geo radius Meta ads pinned to the trade area. Total lands near $800 against a panel quote roughly three times that, and it yields real local players plus a named waitlist. UTM fields tag every channel, so response quality is measurable by source.</p>
+                </div>
+            </div>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide ap-shot--3x2">
+                <div class="sk-video-frame">
+                    <img class="sk-embed-img" src="assets/apollo/survey-results.png" alt="The Tally insights dashboard for the survey, showing visits, submissions, and per-question answer breakdowns" onerror="this.style.display='none'">
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▦ Screenshot</span>
+                        <span class="sk-video-ph-name">Live insights</span>
+                        <span class="sk-video-ph-path">assets/apollo/survey-results.png</span>
+                    </div>
+                </div>
+            </figure>
+
+            <div class="sk-metrics">
+                <p class="sk-metrics-label">Fielding in progress</p>
+                <p class="sk-metrics-hint">Responses are coming in against a target of about 300. The final count and the headline findings go here once fielding closes. Nothing is reported as a result before there is enough data to support it.</p>
+            </div>
+
+            <!-- Competitive landscape: hidden for now. To restore, delete the
+                 opening and closing comment markers around the block below. -->
+            <!--
+            <p class="sk-block-label sk-block-label--sub">4.2 · Competitive landscape</p>
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">The study</p>
+                <div class="cs-content">
+                    <p>A two round competitive study across roughly twenty one facilities spanning Brooklyn, Long Island City, Queens, and Nassau and Suffolk. Six structured comparison tables. The data is operator verified from published rate cards, booking portals, and price list images rather than scraped from aggregators, which is the reason round two contradicted round one.</p>
+                </div>
+            </div>
+
+            <div class="ap-table-wrap">
+                <table class="ap-table">
+                    <caption>Six comparison tables, and the decision each one fed.</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Comparison</th>
+                            <th scope="col">What it captured</th>
+                            <th scope="col">Decision it fed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Open play pricing</th>
+                            <td>Drop in rates by facility and time block</td>
+                            <td>The open play price point and peak split</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Court rental tiers</th>
+                            <td>Hourly rates by peak, off peak, and member status</td>
+                            <td>The rate card structure</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Membership structures</th>
+                            <td>Tier counts, inclusions, and monthly pricing</td>
+                            <td>Whether a premium tier is defensible</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Coaching rates</th>
+                            <td>Private and group lesson pricing, coach split</td>
+                            <td>Coaching revenue and coach compensation</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Leagues &amp; clinics</th>
+                            <td>Session length, pricing, and calendar cadence</td>
+                            <td>The programming calendar and off peak fill</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Junior programming</th>
+                            <td>Age bands, term pricing, and camp structure</td>
+                            <td>The juniors line in the revenue model</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="sk-block-label">Three conclusions reversed on verified data</p>
+            <ul class="sk-decisions">
+                <li><strong>Badminton does not command a rate premium on Long Island.</strong> Round one said it did. Operator verified rate cards said otherwise, so the pricing argument was rebuilt around rate stability instead of a premium.</li>
+                <li><strong>The square footage per court assumption held up.</strong> Reframed as defensible against the closest operating comparable rather than against an aggregator average.</li>
+                <li><strong>The premium membership tier survived.</strong> It validated once it was benchmarked against the right comparable instead of the wrong one.</li>
+            </ul>
+
+            <figure class="sk-video sk-video--desktop sk-video--wide">
+                <div class="sk-video-frame">
+                    <img class="sk-embed-img" src="assets/apollo/competitive-table.png" alt="Competitive comparison table, operator verified rates" onerror="this.style.display='none'">
+                    <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▦ Screenshot</span>
+                        <span class="sk-video-ph-name">Competitive comparison table</span>
+                        <span class="sk-video-ph-path">assets/apollo/competitive-table.png</span>
+                    </div>
+                </div>
+            </figure>
+
+            -->
+
+            <!-- Secondary and demographic -->
+            <p class="sk-block-label sk-block-label--sub">Secondary &amp; demographic research</p>
+            <ul class="sk-decisions">
+                <li><strong>Esri drive time report</strong> for the corridor at 10, 20, and 30 minute catchments: population, income, Asian subgroup composition, racquet sport participation, and consumer spending indices.</li>
+                <li><strong>SimplyAnalytics village level comparison</strong> against Nassau County, New York State, and national baselines.</li>
+                <li><strong>US Census 2020 and ACS five year estimates</strong> for the local ZIP and adjacent areas.</li>
+                <li><strong>Industry benchmarking</strong> from IBISWorld gym and fitness, Vertical IQ fitness centers, SFIA State of Pickleball, and USA Pickleball growth data.</li>
+            </ul>
+        </section>
+
+
+        <!-- ============================================================
+             Reflection
+             ============================================================ -->
+        <section id="reflection" class="cs-section">
+            <div class="cs-two-col">
+                <p class="cs-sidebar-label">Reflection</p>
+                <div class="cs-content">
+                    <p>Owning the business changed how I designed for it. When the waitlist is my waitlist and the rate card is the one a lender will question, there is no handoff and no one to defer to. Every decision on this page had to survive contact with a real constraint: a lease I have to sign, a loan file that has to close, a community I play in every week and will answer to.</p>
+                    <p>The hardest call was the rebrand. The first identity was not bad work, it was work for a different business, and I had already shipped it. Throwing it out cost more than adjusting it would have, and adjusting it would have left a friendly mascot brand attached to a premium specialist club. Knowing when a design is finished and when it is answering the wrong brief is the judgment I most wanted this project to test.</p>
+                    <p>The most useful thing I learned came from the competitive study. Three conclusions reversed when operator verified data replaced aggregator figures, and each reversal changed a decision. The rate premium I had assumed was not there. Finding that out before the rate card went into the model is worth more than the survey responses, because it is the kind of error that compounds quietly through every downstream number.</p>
+                    <p>The AI work landed in a similar place. CourtFit is useful because the model does the part that is genuinely messy, reading listings and judging photos, while the court math and the pro forma stay as explicit rules I can point at. Deciding where the model gets to be confident and where it has to say verify this is the design problem, and it is the one worth showing.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- More case studies — cross-links to two other case studies -->
+    <footer class="cs-next" aria-label="More case studies">
+        <h2 class="cs-next-heading">More case studies</h2>
+        <div class="cs-next-grid">
+            <a class="cs-next-card" href="courtfit.html">
+                <video class="cs-next-thumb" autoplay muted loop playsinline preload="metadata" poster="assets/courtfit/poster-courtfit-landing.jpg" aria-label="CourtFit case study">
+                    <source src="assets/courtfit/courtfit-landing.mp4" type="video/mp4">
+                </video>
+                <div class="cs-next-info">
+                    <span class="cs-next-tags">AI Facility Underwriting · PropTech · 2026</span>
+                    <h3 class="cs-next-name">CourtFit <span class="cs-next-arrow" aria-hidden="true">→</span></h3>
+                </div>
+            </a>
+            <a class="cs-next-card" href="scriptchain.html">
+                <video class="cs-next-thumb" autoplay muted loop playsinline preload="metadata" poster="assets/scriptchain/poster-scriptchain-website.jpg" aria-label="ScriptChain Health case study">
+                    <source src="assets/scriptchain/scriptchain-website.mp4" type="video/mp4">
+                </video>
+                <div class="cs-next-info">
+                    <span class="cs-next-tags">Agentic Care Platform · Health · 2025</span>
+                    <h3 class="cs-next-name">ScriptChain Health <span class="cs-next-arrow" aria-hidden="true">→</span></h3>
+                </div>
+            </a>
+        </div>
+    </footer>
+
+    <script src="transitions.js"></script>
+    <script src="apollo.js"></script>
+    <script src="cs-nav.js"></script>
+</body>
+</html>
