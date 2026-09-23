@@ -265,3 +265,71 @@
         });
     });
 })();
+
+// ============================================
+// Image carousel. Scroll-snap does the moving, so the track still works by
+// swipe, trackpad, or keyboard with JS off. The buttons drive the same scroll
+// and the counter follows whatever slide is actually in view.
+// ============================================
+(function () {
+    document.querySelectorAll('[data-carousel]').forEach(function (root) {
+        var track = root.querySelector('.ap-carousel-track');
+        var slides = Array.prototype.slice.call(root.querySelectorAll('.ap-slide'));
+        var count = root.querySelector('.ap-carousel-count');
+        var btns = Array.prototype.slice.call(root.querySelectorAll('.ap-carousel-btn'));
+        if (!track || slides.length < 2) return;
+
+        function step() {
+            // Measured live: the panel may have been hidden at load time.
+            var a = slides[0].getBoundingClientRect();
+            var b = slides[1].getBoundingClientRect();
+            return Math.round(b.left - a.left) || Math.round(a.width);
+        }
+
+        function index() {
+            var s = step();
+            if (!s) return 0;
+            return Math.min(slides.length - 1, Math.max(0, Math.round(track.scrollLeft / s)));
+        }
+
+        function sync() {
+            var i = index();
+            if (count) count.textContent = (i + 1) + ' / ' + slides.length;
+            btns.forEach(function (b) {
+                var dir = parseInt(b.getAttribute('data-dir'), 10);
+                b.disabled = dir < 0 ? i === 0 : i === slides.length - 1;
+            });
+        }
+
+        btns.forEach(function (b) {
+            b.addEventListener('click', function () {
+                var dir = parseInt(b.getAttribute('data-dir'), 10);
+                var next = Math.min(slides.length - 1, Math.max(0, index() + dir));
+                track.scrollTo({ left: next * step(), behavior: 'smooth' });
+            });
+        });
+
+        track.addEventListener('keydown', function (e) {
+            var dir = 0;
+            if (e.key === 'ArrowRight') dir = 1;
+            else if (e.key === 'ArrowLeft') dir = -1;
+            else return;
+            e.preventDefault();
+            var next = Math.min(slides.length - 1, Math.max(0, index() + dir));
+            track.scrollTo({ left: next * step(), behavior: 'smooth' });
+        });
+
+        var t;
+        track.addEventListener('scroll', function () {
+            clearTimeout(t);
+            t = setTimeout(sync, 60);
+        }, { passive: true });
+
+        window.addEventListener('resize', function () {
+            clearTimeout(t);
+            t = setTimeout(sync, 120);
+        }, { passive: true });
+
+        sync();
+    });
+})();
