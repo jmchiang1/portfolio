@@ -266,6 +266,109 @@
 })();
 
 // ============================================
+// Exploration stack — a stack of phone cards inside one version panel.
+// Click the front card / › to toss it to the back; ‹ pulls the last one
+// back in (the same animation, reversed). Fans out whenever its panel opens.
+// ============================================
+(function () {
+    var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('.sk-stack').forEach(function (deck) {
+        var stack = deck.querySelector('.sk-stack-pile');
+        var cards = Array.prototype.slice.call(deck.querySelectorAll('.sk-stack-card'));
+        var indexEl = deck.querySelector('.sk-stack-index');
+        var caption = deck.querySelector('.sk-stack-caption');
+        var panel = deck.closest('.sk-feature-panel');
+        var n = cards.length;
+        var front = 0;
+        var busy = false;
+
+        function layout() {
+            cards.forEach(function (c, i) {
+                var pos = (i - front + n) % n;
+                if (c.classList.contains('is-leaving')) return;
+                c.setAttribute('data-pos', pos <= 2 ? String(pos) : 'back');
+                c.style.zIndex = String(n - pos);
+            });
+            indexEl.textContent = String(front + 1);
+            if (caption) {
+                var text = cards[front].getAttribute('data-caption') || '';
+                caption.textContent = text;
+                caption.hidden = !text;
+            }
+        }
+
+        function snapToBack(card) {
+            // Drop the animation without a transition flash back to the front slot.
+            card.style.transition = 'none';
+            card.classList.remove('is-leaving');
+            layout();
+            void card.offsetWidth;
+            card.style.transition = '';
+        }
+
+        function step(dir) {
+            if (busy) return;
+            if (reduceMotion) { front = (front + dir + n) % n; layout(); return; }
+            busy = true;
+            if (dir > 0) {
+                var out = cards[front];
+                out.classList.add('is-leaving');
+                out.style.zIndex = String(n + 1);
+                front = (front + 1) % n;
+                layout();
+                out.addEventListener('animationend', function done() {
+                    out.removeEventListener('animationend', done);
+                    snapToBack(out);
+                    busy = false;
+                });
+            } else {
+                front = (front - 1 + n) % n;
+                var back = cards[front];
+                layout();
+                back.style.zIndex = String(n + 1);
+                back.classList.add('is-returning');
+                back.addEventListener('animationend', function done() {
+                    back.removeEventListener('animationend', done);
+                    back.classList.remove('is-returning');
+                    layout();
+                    busy = false;
+                });
+            }
+        }
+
+        stack.addEventListener('click', function () { step(1); });
+        stack.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ') step(1);
+            else if (e.key === 'ArrowLeft') step(-1);
+            else return;
+            e.preventDefault();
+        });
+        deck.querySelectorAll('.sk-stack-nav').forEach(function (b) {
+            b.addEventListener('click', function () { step(Number(b.getAttribute('data-dir'))); });
+        });
+
+        // Fan out each time the panel is shown; collapse when it's hidden.
+        function sync() {
+            if (panel && !panel.classList.contains('is-active')) {
+                deck.classList.remove('is-fanned');
+                return;
+            }
+            if (deck.classList.contains('is-fanned')) return;
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () { deck.classList.add('is-fanned'); });
+            });
+        }
+        if (panel) {
+            new MutationObserver(sync).observe(panel, { attributes: true, attributeFilter: ['class'] });
+        }
+        layout();
+        sync();
+    });
+})();
+
+// ============================================
 // Iteration scrubber — drag V1 → V2 → V3 and all 5 phones cross-fade
 // together. Drives a native range input (for keyboard + drag) and tweens
 // to a stop when a stop button is clicked.

@@ -1350,6 +1350,154 @@ button,
     border-color: var(--sk-orange);
 }
 
+/* Range pill (V1.1 - V1.99) — keep its label on one line. */
+.sk-version-btn--range {
+    white-space: nowrap;
+}
+
+/* ---- Exploration stack: the 8 early course-view directions stacked in the same
+   phone footprint. JS sets --pos on each card (0 = front); the next two peek out
+   behind, fanned away from the info column. .is-fanned is added when the panel
+   opens so the stack spreads from a single card; removing it collapses it back. ---- */
+.sk-stack-pile {
+    position: relative;
+    width: 82%;
+    margin-inline: auto;
+    aspect-ratio: 9 / 19.5;
+    cursor: url('assets/pointer.cur'), pointer;
+    outline: none;
+}
+.sk-stack-pile:focus-visible .sk-stack-card[data-pos="0"] {
+    box-shadow: 0 0 0 3px var(--sk-orange);
+}
+
+.sk-stack-card {
+    --pos: 0;
+    --dx: 0%;
+    --dy: 0%;
+    --rot: 0deg;
+    --scale: 1;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #05101f;
+    border: 8px solid #000;
+    border-radius: 32px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    transform-origin: 50% 90%;
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(var(--scale));
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, filter 0.35s ease;
+}
+.sk-stack-card .sk-embed-img {
+    object-position: top;
+}
+
+.sk-stack.is-fanned .sk-stack-card[data-pos="1"] {
+    --dx: -9%; --dy: 1.5%; --rot: -4deg; --scale: 0.96;
+    filter: brightness(0.6);
+}
+.sk-stack.is-fanned .sk-stack-card[data-pos="2"],
+.sk-stack.is-fanned .sk-stack-card[data-pos="back"] {
+    --dx: -17%; --dy: 3%; --rot: -8deg; --scale: 0.92;
+    filter: brightness(0.4);
+}
+.sk-stack-card[data-pos="back"] {
+    opacity: 0;
+}
+.sk-stack:not(.is-fanned) .sk-stack-card:not([data-pos="0"]) {
+    filter: brightness(0.4);
+}
+
+/* Forward: the old front card tosses out to the left, then settles at the back.
+   Backward: the reverse — the new front card flies in from that same spot. */
+.sk-stack-card.is-leaving {
+    animation: sk-stack-toss 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.sk-stack-card.is-returning {
+    animation: sk-stack-toss 0.45s cubic-bezier(0.4, 0, 0.2, 1) reverse both;
+}
+@keyframes sk-stack-toss {
+    from { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+    to   { transform: translate(-70%, 4%) rotate(-14deg) scale(0.9); opacity: 0; }
+}
+
+.sk-stack-controls {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    row-gap: 10px;
+    margin-top: 20px;
+}
+.sk-stack-nav {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: #232323;
+    color: var(--sk-muted);
+    font-size: var(--text-20);
+    line-height: 1;
+    cursor: url('assets/pointer.cur'), pointer;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+.sk-stack-nav:hover,
+.sk-stack-nav:focus-visible {
+    color: #fff;
+    background: var(--sk-surface-2);
+    outline: none;
+}
+.sk-stack-count {
+    justify-self: center;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-13);
+    letter-spacing: 0.12em;
+    color: var(--sk-faint);
+}
+.sk-stack-index {
+    color: #fff;
+}
+.sk-stack-caption {
+    grid-column: 1 / -1;
+    margin: 0;
+    min-height: 2.9em;
+    text-align: center;
+    font-size: var(--text-14);
+    line-height: 1.45;
+    color: var(--sk-muted);
+}
+
+/* The row with the range pill holds five tabs — too wide for the 400px info
+   column (and a phone) at the default padding, so its pills share the row. */
+.sk-version-tabs:has(.sk-version-btn--range) {
+    gap: 8px;
+}
+.sk-version-tabs:has(.sk-version-btn--range) .sk-version-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px;
+}
+@media (max-width: 480px) {
+    .sk-version-tabs:has(.sk-version-btn--range) {
+        gap: 6px;
+    }
+    .sk-version-tabs:has(.sk-version-btn--range) .sk-version-btn {
+        padding: 10px 8px;
+        letter-spacing: 0.06em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sk-stack-card {
+        transition: opacity 0.2s ease;
+    }
+    .sk-stack-card.is-leaving,
+    .sk-stack-card.is-returning {
+        animation: none;
+    }
+}
+
 /* The phone in the versions variant — sized to match the Learner Redesign phone. */
 .sk-feature-switch--versions .sk-feature-stage .sk-video--mobile {
     width: 100%;
