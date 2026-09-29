@@ -1359,6 +1359,9 @@ button,
    phone footprint. JS sets --pos on each card (0 = front); the next two peek out
    behind, fanned away from the info column. .is-fanned is added when the panel
    opens so the stack spreads from a single card; removing it collapses it back. ---- */
+/* The pile keeps the full V1–V4 phone footprint so switching tabs never shifts
+   the page; the cards inside are drawn smaller (--card-w) and the controls sit
+   in the space that frees up, with card + controls centred as a group. */
 .sk-stack-pile {
     position: relative;
     aspect-ratio: 9 / 19.5;
@@ -1376,11 +1379,14 @@ button,
     --rot: 0deg;
     --scale: 1;
     position: absolute;
-    inset: 0;
+    top: calc((100% - var(--card-w) - 56px) / 2);
+    left: calc((100% - var(--card-w)) / 2);
+    width: var(--card-w);
+    aspect-ratio: 9 / 19.5;
     overflow: hidden;
     background: #05101f;
     border: 8px solid #000;
-    border-radius: 32px;
+    border-radius: 28px;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
     transform-origin: 50% 90%;
     transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(var(--scale));
@@ -1422,18 +1428,18 @@ button,
 /* Controls hang below the phone out of flow, so this panel is exactly as tall
    as the single-phone V1–V4 panels and switching tabs doesn't shift the page. */
 .sk-stack {
+    --card-w: 76%;
     position: relative;
 }
 .sk-stack-controls {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    bottom: calc((100% - var(--card-w) - 56px) / 2);
+    left: calc((100% - var(--card-w)) / 2);
+    right: calc((100% - var(--card-w)) / 2);
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     row-gap: 10px;
-    margin-top: 20px;
 }
 .sk-stack-nav {
     appearance: none;
@@ -3632,11 +3638,6 @@ button,
     }
     .sk-feature-switch--versions .sk-feature-stage .sk-video--mobile {
         max-width: 300px;
-    }
-    /* Stacked, the next section sits right below — reserve room for the
-       out-of-flow deck controls on every tab so switching still doesn't shift. */
-    .sk-feature-stage:has(.sk-stack) {
-        padding-bottom: 56px;
     }
     /* Mobile: note bubbles open downward from the dot. Cap width to a fraction
        of the viewport so notes near the right edge of a phone don't push past
