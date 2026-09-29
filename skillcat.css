@@ -2040,21 +2040,6 @@ button,
                 0 24px 60px -28px rgba(0, 0, 0, 0.7);
 }
 
-.sk-brand-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 2;
-    padding: 6px 12px;
-    border-radius: 8px;
-    background: var(--sk-orange);
-    color: #fff;
-    font-family: 'Space Mono', monospace;
-    font-size: var(--text-12);
-    font-weight: 700;
-    letter-spacing: 0.04em;
-}
-
 .sk-brand-cap {
     font-family: 'Space Mono', monospace;
     font-size: var(--text-12);
