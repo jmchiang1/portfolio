@@ -1361,8 +1361,6 @@ button,
    opens so the stack spreads from a single card; removing it collapses it back. ---- */
 .sk-stack-pile {
     position: relative;
-    width: 82%;
-    margin-inline: auto;
     aspect-ratio: 9 / 19.5;
     cursor: url('assets/pointer.cur'), pointer;
     outline: none;
@@ -1421,7 +1419,16 @@ button,
     to   { transform: translate(-70%, 4%) rotate(-14deg) scale(0.9); opacity: 0; }
 }
 
+/* Controls hang below the phone out of flow, so this panel is exactly as tall
+   as the single-phone V1–V4 panels and switching tabs doesn't shift the page. */
+.sk-stack {
+    position: relative;
+}
 .sk-stack-controls {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
@@ -3625,6 +3632,11 @@ button,
     }
     .sk-feature-switch--versions .sk-feature-stage .sk-video--mobile {
         max-width: 300px;
+    }
+    /* Stacked, the next section sits right below — reserve room for the
+       out-of-flow deck controls on every tab so switching still doesn't shift. */
+    .sk-feature-stage:has(.sk-stack) {
+        padding-bottom: 56px;
     }
     /* Mobile: note bubbles open downward from the dot. Cap width to a fraction
        of the viewport so notes near the right edge of a phone don't push past
