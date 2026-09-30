@@ -718,7 +718,6 @@ button,
     display: flex;
     flex-direction: column;
     gap: 16px;
-    max-width: 760px;
 }
 
 .sk-section-title {
@@ -728,6 +727,7 @@ button,
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: #fff;
+    max-width: 100%;
 }
 
 .sk-section-title em {
@@ -1993,7 +1993,7 @@ button,
     font-size: var(--text-14);
     color: var(--sk-muted);
     line-height: 1.5;
-    max-width: 72ch;
+    /* max-width: 72ch; */
 }
 
 /* Brand-direction options — the alternates are muted, the chosen one is
