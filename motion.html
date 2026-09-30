@@ -100,6 +100,27 @@
 
     <!-- Project Grid -->
     <section class="motion-grid">
+        <!-- Card 0 — SkillCat -->
+        <article class="motion-card" data-modal="skillcat-modal">
+            <div class="motion-card-preview">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/SkillCat.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">SkillCat</h2>
+                    </div>
+                    <span class="motion-card-year">2026</span>
+                </div>
+                <p class="motion-card-description">
+                    A motion graphics piece for SkillCat, made with Claude.
+                </p>
+            </div>
+        </article>
+
         <!-- Card 1 — Neon Drift -->
         <article class="motion-card" data-modal="neon-drift-modal">
             <div class="motion-card-preview">
@@ -206,6 +227,40 @@
         </article>
         </section>
     </main>
+
+    <!-- SkillCat Modal -->
+    <div class="modal-overlay" id="skillcat-modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <div class="modal-body">
+                <p class="modal-label">SkillCat Motion Graphics</p>
+
+                <div class="modal-video-target" data-unmute></div>
+
+                <div class="modal-meta modal-fade-in">
+                    <div class="modal-meta-overview">
+                        <p class="modal-label">Project Overview</p>
+                        <p>A motion graphics video for SkillCat, created with Claude.</p>
+                    </div>
+                    <div class="modal-meta-sidebar">
+                        <div>
+                            <p class="modal-label">Tools</p>
+                            <p>Claude</p>
+                        </div>
+                        <div>
+                            <p class="modal-label">Timeline</p>
+                            <p>2026</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Neon Drift Modal -->
     <div class="modal-overlay" id="neon-drift-modal">
