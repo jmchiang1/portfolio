@@ -872,6 +872,15 @@
                 </div>
             </div>
 
+            <!-- Details collapsed by default; the button expands the heatmaps, insights and fixes -->
+            <button class="sk-collapse-toggle" type="button" aria-expanded="false" aria-controls="testing-details">
+                <span class="sk-collapse-label">View testing details</span>
+                <i class="hn hn-angle-down sk-collapse-caret" aria-hidden="true"></i>
+            </button>
+
+            <div class="sk-collapse" id="testing-details">
+            <div class="sk-collapse-inner" inert>
+
             <!-- Per-flow tabs: each card is a tab. Click one to swap the heatmap panel below.
                  Default: Flow 01 (Create Account) so the case study reads in flow order. -->
             <!-- <div class="sk-flow-results" role="tablist" aria-label="Testing flows">
@@ -1006,6 +1015,8 @@
                     <p class="sk-ai-note-body">I used Claude Code, Cursor and Codex to <strong>convert the Figma designs into fully functional prototypes</strong> to test without needing engineering support, and to analyze the heatmap results.</p>
                 </div>
             </aside>
+            </div>
+            </div>
         </section>
 
 

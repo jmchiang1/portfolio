@@ -567,6 +567,60 @@
 
 
 // ============================================
+// Collapsible section detail — a toggle expands/collapses secondary content
+// (the testing heatmaps + insights). Collapsed content is `inert` so it stays
+// out of the tab order; .is-settled lifts the clip once the open animation ends.
+// ============================================
+(function () {
+    var toggles = Array.prototype.slice.call(document.querySelectorAll('.sk-collapse-toggle'));
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    toggles.forEach(function (toggle) {
+        var panel = document.getElementById(toggle.getAttribute('aria-controls'));
+        if (!panel) return;
+        var inner = panel.querySelector('.sk-collapse-inner');
+        var label = toggle.querySelector('.sk-collapse-label');
+        var closedText = label ? label.textContent : '';
+        var openText = closedText.replace(/^View/, 'Hide');
+
+        function set(open) {
+            panel.classList.toggle('is-open', open);
+            panel.classList.remove('is-settled');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (label) label.textContent = open ? openText : closedText;
+            if (inner) {
+                if (open) inner.removeAttribute('inert');
+                else inner.setAttribute('inert', '');
+            }
+            // the AI note inside measured itself while collapsed; re-measure on open
+            if (open) window.dispatchEvent(new Event('resize'));
+            // no transition to wait for under reduced motion
+            if (open && reduced) panel.classList.add('is-settled');
+        }
+
+        panel.addEventListener('transitionend', function (e) {
+            if (e.target === panel && e.propertyName === 'grid-template-rows' && panel.classList.contains('is-open')) {
+                panel.classList.add('is-settled');
+            }
+        });
+
+        toggle.addEventListener('click', function () {
+            set(!panel.classList.contains('is-open'));
+        });
+
+        // Deep links into the collapsed content open it first
+        if (location.hash) {
+            var target = document.getElementById(location.hash.slice(1));
+            if (target && panel.contains(target)) {
+                set(true);
+                panel.classList.add('is-settled');
+            }
+        }
+    });
+})();
+
+
+// ============================================
 // Showcase device toggle — swaps the redesign band between the mobile phone
 // fan and the desktop browser-window deck. Hiding the inactive view with the
 // `hidden` attribute (display:none) lets the per-item fade replay on each swap.

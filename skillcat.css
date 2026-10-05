@@ -491,6 +491,93 @@ button,
     }
 }
 
+/* ── Collapsible section detail — secondary content (e.g. the testing heatmaps)
+   tucked behind a toggle. Height animates via grid-template-rows 0fr → 1fr so it
+   opens and closes smoothly at any content height. The inner clips while
+   animating; once fully open JS adds .is-settled so hover effects can overflow. ── */
+.sk-collapse-toggle {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 18px;
+    border: 1px solid var(--sk-border);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-weight: 500;
+    font-size: var(--text-12);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sk-orange);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.sk-collapse-toggle:hover {
+    border-color: var(--sk-orange);
+    background: var(--sk-orange-soft);
+}
+
+.sk-collapse-toggle:focus-visible {
+    outline: 2px solid var(--sk-orange-2);
+    outline-offset: 3px;
+}
+
+.sk-collapse-caret {
+    font-size: var(--text-14);
+    line-height: 1;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sk-collapse-toggle[aria-expanded="true"] .sk-collapse-caret {
+    transform: rotate(180deg);
+}
+
+.sk-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    /* cancel the section's flex gap while closed so the toggle ends the section */
+    margin-top: -36px;
+    transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                margin-top 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sk-collapse.is-open {
+    grid-template-rows: 1fr;
+    margin-top: 0;
+}
+
+.sk-collapse-inner {
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.35s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sk-collapse.is-open .sk-collapse-inner {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.45s ease 0.1s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sk-collapse.is-settled .sk-collapse-inner {
+    overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sk-collapse,
+    .sk-collapse-inner,
+    .sk-collapse.is-open .sk-collapse-inner,
+    .sk-collapse-caret {
+        transition: none;
+    }
+}
+
 /* ============================================
    Header / hero
    ============================================ */
