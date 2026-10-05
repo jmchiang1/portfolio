@@ -657,6 +657,70 @@ a, button, [role="button"],
 }
 
 /* ============================================
+   Postscript — Mirror vs. Robinhood Social
+   ============================================ */
+.cs-link {
+    color: #cab479;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.cs-link:hover {
+    color: #e3d3a4;
+}
+
+.cs-compare {
+    padding: 8px 20px;
+}
+
+.cs-compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-16);
+    line-height: 1.5;
+    text-align: left;
+}
+
+.cs-compare-table th,
+.cs-compare-table td {
+    padding: 16px 20px 16px 0;
+    vertical-align: top;
+}
+
+.cs-compare-table tbody tr {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cs-compare-table thead th {
+    font-size: var(--text-20);
+    font-weight: 700;
+    width: 37%;
+}
+
+.cs-compare-name--mirror {
+    background: linear-gradient(to bottom, #9a8651 17.553%, #cab479);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cs-compare-date {
+    display: block;
+    font-size: var(--text-14);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.cs-compare-table tbody th {
+    font-weight: 700;
+    color: #66d2ff;
+}
+
+.cs-compare-table tbody td {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* ============================================
    Page Entrance & Scroll Animations
    ============================================ */
 .page-transition-cover {
@@ -913,6 +977,38 @@ a, button, [role="button"],
 
     .cs-impact-row {
         flex-direction: column;
+    }
+
+    .cs-sidebar-label:empty {
+        display: none;
+    }
+
+    /* Comparison table → each row stacks: feature name full-width,
+       then Mirror and Social side by side. */
+    .cs-compare-table thead tr,
+    .cs-compare-table tbody tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 16px;
+    }
+
+    .cs-compare-table thead td {
+        display: none;
+    }
+
+    .cs-compare-table thead th {
+        width: auto;
+        font-size: var(--text-16);
+    }
+
+    .cs-compare-table tbody th {
+        grid-column: 1 / -1;
+        padding-bottom: 4px;
+    }
+
+    .cs-compare-table tbody td {
+        padding-top: 0;
+        font-size: var(--text-14);
     }
 
     .cs-introducing {
