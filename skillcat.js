@@ -663,3 +663,45 @@
         });
     });
 })();
+
+
+// ============================================
+// Phone row — the learner journey's five flow clips play together (muted,
+// looping) while the row is on screen and pause once it scrolls away. Clicking
+// a clip pauses / resumes just that one; under reduced motion nothing
+// autoplays and a click starts the clip instead.
+// ============================================
+(function () {
+    var rows = document.querySelectorAll('.sk-phone-row');
+    if (!rows.length) return;
+    var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    rows.forEach(function (row) {
+        var videos = Array.prototype.slice.call(row.querySelectorAll('video'));
+
+        function play(v) {
+            v.muted = true;
+            var p = v.play();
+            if (p && p.catch) p.catch(function () { /* autoplay blocked */ });
+        }
+
+        videos.forEach(function (v) {
+            v.addEventListener('click', function () {
+                if (v.paused) { v.dataset.userPaused = ''; play(v); }
+                else { v.dataset.userPaused = '1'; v.pause(); }
+            });
+        });
+
+        if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+        new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                videos.forEach(function (v) {
+                    if (e.isIntersecting) { if (!v.dataset.userPaused) play(v); }
+                    else v.pause();
+                });
+            });
+        }, { threshold: 0.25 }).observe(row);
+    });
+})();

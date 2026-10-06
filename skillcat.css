@@ -839,6 +839,11 @@ button,
     gap: 16px;
 }
 
+/* Reflection takeaways — two cards; the mobile rule below still stacks them. */
+.sk-threads--two {
+    grid-template-columns: repeat(2, 1fr);
+}
+
 .sk-thread {
     display: flex;
     flex-direction: column;
@@ -1178,6 +1183,30 @@ button,
     font-size: var(--text-16);
 }
 
+/* Numbered flow tabs (08) — number inline before the title, like the learner row captions. */
+#dashboard-features .sk-feature-btn {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+}
+
+#dashboard-features .sk-feature-btn-num {
+    letter-spacing: 0.08em;
+}
+
+#dashboard-features .sk-feature-btn.is-active .sk-feature-btn-num {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Long flow labels wrap unevenly side by side on phones — stack them instead. */
+@media (max-width: 640px) {
+    #dashboard-features .sk-feature-btn {
+        flex-basis: 100%;
+        justify-content: flex-start;
+        text-align: left;
+    }
+}
+
 /* Active feature's description — sits between the tabs and the video. */
 .sk-feature-switch--wide .sk-feature-desc {
     font-size: var(--text-16);
@@ -1193,6 +1222,11 @@ button,
    so the video still renders at full size. */
 .sk-feature-switch--wide .sk-video--desktop {
     margin-inline: auto;
+}
+
+/* Match the walkthrough captures (1920×1308) so headers, footers, and toasts aren't cropped. */
+#dashboard-features .sk-video--desktop .sk-video-frame {
+    aspect-ratio: 1920 / 1308;
 }
 
 /* ---- Versions variant: title + description + V tabs on one side, phone with on-screen
@@ -1654,6 +1688,78 @@ button,
     min-width: 280px;
 }
 
+/* Learner journey — all five flow clips side by side, each with a short
+   numbered caption. Narrow screens turn the row into a swipeable strip. */
+.sk-phone-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.sk-phone-row .sk-video--mobile {
+    width: 100%;
+    margin: 0;
+    gap: 14px;
+}
+
+.sk-phone-row .sk-video--mobile .sk-video-frame {
+    border-width: 6px;
+    border-radius: 26px;
+}
+
+.sk-phone-row video {
+    cursor: url('assets/pointer.cur'), pointer;
+}
+
+.sk-phone-row-cap {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    font-size: var(--text-14);
+    line-height: 1.4;
+    color: var(--sk-muted);
+}
+
+.sk-phone-row-num {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.08em;
+    color: var(--sk-orange);
+}
+
+@media (max-width: 820px) {
+    .sk-phone-row {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        /* bleed to the screen edges so cards can scroll past the gutter */
+        margin-inline: -36px;
+        padding-inline: 36px;
+        scroll-padding-inline: 36px;
+    }
+
+    .sk-phone-row::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sk-phone-row .sk-video--mobile {
+        flex: 0 0 min(56vw, 240px);
+        scroll-snap-align: start;
+    }
+}
+
+@media (max-width: 640px) {
+    .sk-phone-row {
+        margin-inline: -22px;
+        padding-inline: 22px;
+        scroll-padding-inline: 22px;
+    }
+}
+
 .sk-video--wide {
     width: 100%;
 }
@@ -2081,6 +2187,138 @@ button,
     color: var(--sk-muted);
     line-height: 1.5;
     /* max-width: 72ch; */
+}
+
+/* Competitor positioning map — a 2×2 whose 1px grid gap draws the crosshair.
+   Axis labels sit on the ends of the axes; the empty credible + modern
+   quadrant is SkillCat's target. */
+.sk-posmap {
+    margin: 0;
+}
+
+.sk-posmap-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    gap: 1px;
+    padding: 28px 0;
+    background:
+        linear-gradient(var(--sk-border), var(--sk-border)) center / 1px 100% no-repeat,
+        linear-gradient(var(--sk-border), var(--sk-border)) center / 100% 1px no-repeat;
+}
+
+.sk-posmap-q {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 32px 36px;
+    background: var(--sk-bg);
+}
+
+.sk-posmap-q--target {
+    background:
+        radial-gradient(120% 120% at 100% 0%, var(--sk-orange-soft), transparent 70%),
+        var(--sk-bg);
+}
+
+.sk-posmap-q-label {
+    margin: 0;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sk-faint);
+}
+
+.sk-posmap-q--target .sk-posmap-q-label {
+    color: var(--sk-orange);
+}
+
+.sk-posmap-plot {
+    --logo: 56px;
+    position: relative;
+    flex: 1;
+    min-height: 220px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Each logo is placed by --x / --y (0–1) inside the plot, inset by half a logo
+   so it never crosses the axes. */
+.sk-posmap-pt {
+    position: absolute;
+    left: calc(var(--logo) / 2 + (100% - var(--logo)) * var(--x));
+    top: calc(var(--logo) / 2 + (100% - var(--logo)) * var(--y));
+    width: var(--logo);
+    height: var(--logo);
+    transform: translate(-50%, -50%);
+}
+
+.sk-posmap-pt img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 24%;
+    box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sk-posmap-pt:hover img {
+    transform: scale(1.08);
+}
+
+.sk-posmap-pt--us {
+    width: calc(var(--logo) * 1.3);
+    height: calc(var(--logo) * 1.3);
+}
+
+.sk-posmap-pt--us img {
+    box-shadow: 0 0 0 6px var(--sk-orange-soft), 0 14px 40px -8px rgba(232, 85, 46, 0.55);
+}
+
+.sk-posmap-q-note {
+    margin: 0;
+    font-size: var(--text-15);
+    line-height: 1.5;
+    color: var(--sk-muted);
+}
+
+.sk-posmap-axis {
+    position: absolute;
+    padding: 2px 8px;
+    background: var(--sk-bg);
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sk-muted);
+    white-space: nowrap;
+}
+
+.sk-posmap-axis--top    { top: 0;    left: 50%; transform: translateX(-50%); }
+.sk-posmap-axis--bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+.sk-posmap-axis--left   { left: 0;   top: 50%;  transform: translateY(-50%); padding-left: 0; }
+.sk-posmap-axis--right  { right: 0;  top: 50%;  transform: translateY(-50%); padding-right: 0; }
+
+@media (max-width: 640px) {
+    .sk-posmap-q {
+        padding: 28px 12px 24px;
+        gap: 10px;
+    }
+    .sk-posmap-plot {
+        --logo: 40px;
+        min-height: 190px;
+    }
+    .sk-posmap-q-label,
+    .sk-posmap-axis {
+        font-size: var(--text-10);
+        letter-spacing: 0.1em;
+    }
+    .sk-posmap-q-note {
+        font-size: var(--text-13);
+    }
 }
 
 /* Brand-direction options — the alternates are muted, the chosen one is
@@ -3402,6 +3640,7 @@ button,
 .cs-visible .cs-two-col,
 .cs-visible .sk-pillars,
 .cs-visible .sk-threads,
+.cs-visible .sk-posmap,
 .cs-visible .sk-flow,
 .cs-visible .sk-flows,
 .cs-visible .sk-feature-switch,
@@ -3504,6 +3743,7 @@ button,
     .cs-visible .cs-two-col,
     .cs-visible .sk-pillars,
     .cs-visible .sk-threads,
+    .cs-visible .sk-posmap,
     .cs-visible .sk-flow,
     .cs-visible .sk-flows,
     .cs-visible .sk-feature-switch,

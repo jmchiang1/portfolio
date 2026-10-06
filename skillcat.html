@@ -86,7 +86,7 @@
 
                 <div class="cs-hero-media">
                     <div class="cs-hero-desktop">
-                        <video src="assets/skillcat/B2B/assign.mp4" poster="assets/skillcat/B2B/poster-assign.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                        <video src="assets/skillcat/B2B/hero.mp4" poster="assets/skillcat/B2B/poster-hero.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     </div>
                     <div class="cs-hero-phone">
                         <video src="assets/skillcat/Complete-Task.mp4" poster="assets/skillcat/poster-complete-task.jpg" autoplay muted loop playsinline preload="metadata"></video>
@@ -143,7 +143,7 @@
         <section id="starting-point" class="cs-section">
             <div class="sk-section-head">
                 <p class="cs-label">01 · The Starting Point</p>
-                <h2 class="sk-section-title">The <em>original app</em>: a deep catalog, but no clear path.</h2>
+                <h2 class="sk-section-title"><em>Original app</em>: deep catalog with no clear path.</h2>
             </div>
 
             <div class="cs-two-col">
@@ -239,15 +239,62 @@
                 <div class="sk-thread"><p class="sk-thread-num">03</p><p class="sk-thread-title">"...then what?"</p><p class="sk-thread-desc">The loudest anxiety: does finishing the courses actually get me hired? The path from learning to resume to job isn't closed in their heads.</p></div>
             </div>
 
-            <p class="sk-caption">Direct, trade schools &amp; cert providers (Interplay Learning, Penn Foster, HVACR School): credible but corporate and dated.</p>
-            <figure class="sk-shot">
-                <img src="assets/skillcat/process/direct-comp.png" alt="Direct competitor analysis — trade schools and certification providers" loading="lazy">
+            <!-- Competitive positioning — direct competitors cluster credible-but-dated,
+                 indirect ones modern-but-light; SkillCat targets the empty credible + modern quadrant. -->
+            <p class="sk-block-label">Where the market sits</p>
+            <figure class="sk-posmap" aria-label="Competitor positioning map: credibility versus modernity">
+                <!-- Within each quadrant, --x (0–1) runs dated → modern and --y (0–1) runs credible → casual -->
+                <div class="sk-posmap-grid">
+                    <div class="sk-posmap-q">
+                        <p class="sk-posmap-q-label">Direct · trade schools &amp; cert providers</p>
+                        <ul class="sk-posmap-plot">
+                            <li class="sk-posmap-pt" style="--x: 0.40; --y: 0.05;"><img src="assets/skillcat/process/logos/penn-foster.png" alt="Penn Foster" title="Penn Foster" loading="lazy"></li>
+                            <li class="sk-posmap-pt" style="--x: 0.05; --y: 0.50;"><img src="assets/skillcat/process/logos/new-england.png" alt="New England Trade School" title="New England Trade School" loading="lazy"></li>
+                            <li class="sk-posmap-pt" style="--x: 0.92; --y: 0.38;"><img src="assets/skillcat/process/logos/interplay.png" alt="Interplay Learning" title="Interplay Learning" loading="lazy"></li>
+                            <li class="sk-posmap-pt" style="--x: 0.55; --y: 0.95;"><img src="assets/skillcat/process/logos/hvac-school.png" alt="HVAC School" title="HVAC School" loading="lazy"></li>
+                        </ul>
+                    </div>
+                    <div class="sk-posmap-q sk-posmap-q--target">
+                        <p class="sk-posmap-q-label">The opening</p>
+                        <ul class="sk-posmap-plot">
+                            <li class="sk-posmap-pt sk-posmap-pt--us" style="--x: 0.62; --y: 0.35;"><img src="assets/skillcat/process/logos/skillcat.png" alt="SkillCat" title="SkillCat" loading="lazy"></li>
+                        </ul>
+                    </div>
+                    <div class="sk-posmap-q" aria-hidden="true"></div>
+                    <div class="sk-posmap-q">
+                        <p class="sk-posmap-q-label">Indirect · consumer learning apps</p>
+                        <ul class="sk-posmap-plot">
+                            <li class="sk-posmap-pt" style="--x: 0.10; --y: 0.10;"><img src="assets/skillcat/process/logos/coursera.png" alt="Coursera" title="Coursera" loading="lazy"></li>
+                            <li class="sk-posmap-pt" style="--x: 0.80; --y: 0.30;"><img src="assets/skillcat/process/logos/skillshare.png" alt="Skillshare" title="Skillshare" loading="lazy"></li>
+                            <li class="sk-posmap-pt" style="--x: 0.42; --y: 0.92;"><img src="assets/skillcat/process/logos/duolingo.png" alt="Duolingo" title="Duolingo" loading="lazy"></li>
+                        </ul>
+                    </div>
+                    <span class="sk-posmap-axis sk-posmap-axis--top">↑ Credible</span>
+                    <span class="sk-posmap-axis sk-posmap-axis--bottom">↓ Casual</span>
+                    <span class="sk-posmap-axis sk-posmap-axis--left">← Dated</span>
+                    <span class="sk-posmap-axis sk-posmap-axis--right">Modern →</span>
+                </div>
             </figure>
 
-            <p class="sk-caption">Indirect, consumer learning apps (Coursera, Skillshare, Duolingo): polished and habit-forming, but mostly light and soft.</p>
-            <figure class="sk-shot">
-                <img src="assets/skillcat/process/indirect-comp.png" alt="Indirect competitor analysis — consumer learning apps" loading="lazy">
-            </figure>
+            <!-- Full brand audit boards collapsed by default -->
+            <button class="sk-collapse-toggle" type="button" aria-expanded="false" aria-controls="competitor-audit">
+                <span class="sk-collapse-label">View full brand audit</span>
+                <i class="hn hn-angle-down sk-collapse-caret" aria-hidden="true"></i>
+            </button>
+
+            <div class="sk-collapse" id="competitor-audit">
+            <div class="sk-collapse-inner" inert>
+                <p class="sk-caption">Direct, trade schools &amp; cert providers: logos, type, palettes, and product screens.</p>
+                <figure class="sk-shot">
+                    <img src="assets/skillcat/process/direct-comp.png" alt="Direct competitor analysis — trade schools and certification providers" loading="lazy">
+                </figure>
+
+                <p class="sk-caption">Indirect, consumer learning apps: logos, type, palettes, and product screens.</p>
+                <figure class="sk-shot">
+                    <img src="assets/skillcat/process/indirect-comp.png" alt="Indirect competitor analysis — consumer learning apps" loading="lazy">
+                </figure>
+            </div>
+            </div>
 
             <p class="sk-block-label">What the scan told me</p>
             <ul class="sk-decisions">
@@ -1029,126 +1076,48 @@
                 <h2 class="sk-section-title">Carry a learner from <em>adding a course</em> to earning an EPA 608 certification.</h2>
             </div>
 
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>Enrolling is easy. The hard part is carrying someone from picking a course, through lessons and hands-on tasks, into a proctored final exam, and out the other side holding a real EPA 608 certification, without losing them at any step.</p>
-                </div>
-            </div>
-
-            <!-- <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>I helped design the journey as one continuous path: add a course, work through lessons and hands-on tasks, sit the proctored EPA 608 final, get the certification. Every step is a complete set of states (in progress, complete, pass, fail, review), so the next action is never in doubt.</p>
-                </div>
-            </div> -->
-
-            <!-- The journey, in five flows -->
-            <div class="sk-feature-switch">
-                <!-- Left: flow selector buttons -->
-                <div class="sk-feature-list" role="tablist" aria-label="Learner journey flows">
-                    <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="flow-panel-1" id="flow-tab-1" data-flow="1">
-                        <!-- <span class="sk-feature-btn-num">Flow 01</span> -->
-                        <span class="sk-feature-btn-title">Add a course to your path</span>
-                        <span class="sk-feature-btn-desc">Browse the catalog, open a certification like EPA 608 Universal, and tap Add Certification: a short &ldquo;All Set&rdquo; moment confirms it's on your path.</span>
-                    </button>
-                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="flow-panel-2" id="flow-tab-2" data-flow="2">
-                        <!-- <span class="sk-feature-btn-num">Flow 02</span> -->
-                        <span class="sk-feature-btn-title">Start a lesson &amp; complete a task</span>
-                        <span class="sk-feature-btn-desc">Open a node on the path and work through a lesson, landing on a &ldquo;That's a Win&rdquo; moment that unlocks the next one.</span>
-                    </button>
-                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="flow-panel-3" id="flow-tab-3" data-flow="3">
-                        <!-- <span class="sk-feature-btn-num">Flow 03</span> -->
-                        <span class="sk-feature-btn-title">Start the EPA 608 final exam</span>
-                        <span class="sk-feature-btn-desc">Kick off the proctored final: camera access, identity verification (scan ID, camera check), where to send the certification, then rules and tips.</span>
-                    </button>
-                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="flow-panel-4" id="flow-tab-4" data-flow="4">
-                        <!-- <span class="sk-feature-btn-num">Flow 04</span> -->
-                        <span class="sk-feature-btn-title">Take &amp; pass the exam</span>
-                        <span class="sk-feature-btn-desc">Work through the questions (under live proctoring), then reach the pass result.</span>
-                    </button>
-                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="flow-panel-5" id="flow-tab-5" data-flow="5">
-                        <!-- <span class="sk-feature-btn-num">Flow 05</span> -->
-                        <span class="sk-feature-btn-title">Get your EPA certification card</span>
-                        <span class="sk-feature-btn-desc">Open the earned EPA 608 certificate, add it to your digital wallet, and track the official card order.</span>
-                    </button>
-                </div>
-
-                <!-- Right: phone that swaps to match the selected flow -->
-                <div class="sk-feature-stage">
-                    <div class="sk-feature-panel is-active" id="flow-panel-1" role="tabpanel" aria-labelledby="flow-tab-1" data-flow="1">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-add-course.jpg">
-                                    <source src="assets/skillcat/Add-Course.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">Flow 01: Add a course</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/Add-Course.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
+            <!-- The journey in five flows, side by side; clips autoplay while the row is on screen -->
+            <div class="sk-phone-row">
+                <figure class="sk-video sk-video--mobile sk-phone-row-item">
+                    <div class="sk-video-frame">
+                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-add-course.jpg" aria-label="Flow 01: Add a course">
+                            <source src="assets/skillcat/Add-Course.mp4" type="video/mp4">
+                        </video>
                     </div>
-
-                    <div class="sk-feature-panel" id="flow-panel-2" role="tabpanel" aria-labelledby="flow-tab-2" data-flow="2">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-complete-task.jpg">
-                                    <source src="assets/skillcat/Complete-Task.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">Flow 02: Complete a task</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/Complete-Task.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
+                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">01</span>Add a course</figcaption>
+                </figure>
+                <figure class="sk-video sk-video--mobile sk-phone-row-item">
+                    <div class="sk-video-frame">
+                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-complete-task.jpg" aria-label="Flow 02: Start a lesson">
+                            <source src="assets/skillcat/Complete-Task.mp4" type="video/mp4">
+                        </video>
                     </div>
-
-                    <div class="sk-feature-panel" id="flow-panel-3" role="tabpanel" aria-labelledby="flow-tab-3" data-flow="3">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-start-exam.jpg">
-                                    <source src="assets/skillcat/Start-Exam.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">Flow 03: Start the EPA 608 exam</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/Start-Exam.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
+                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">02</span>Start a lesson</figcaption>
+                </figure>
+                <figure class="sk-video sk-video--mobile sk-phone-row-item">
+                    <div class="sk-video-frame">
+                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-start-exam.jpg" aria-label="Flow 03: Start the final exam">
+                            <source src="assets/skillcat/Start-Exam.mp4" type="video/mp4">
+                        </video>
                     </div>
-
-                    <div class="sk-feature-panel" id="flow-panel-4" role="tabpanel" aria-labelledby="flow-tab-4" data-flow="4">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-complete-exam.jpg">
-                                    <source src="assets/skillcat/Complete-Exam.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">Flow 04: Take &amp; pass the exam</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/Complete-Exam.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
+                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">03</span>Start an exam</figcaption>
+                </figure>
+                <figure class="sk-video sk-video--mobile sk-phone-row-item">
+                    <div class="sk-video-frame">
+                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-complete-exam.jpg" aria-label="Flow 04: Take &amp; pass the exam">
+                            <source src="assets/skillcat/Complete-Exam.mp4" type="video/mp4">
+                        </video>
                     </div>
-
-                    <div class="sk-feature-panel" id="flow-panel-5" role="tabpanel" aria-labelledby="flow-tab-5" data-flow="5">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/poster-get-epacard.jpg">
-                                    <source src="assets/skillcat/Get-EPACard.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">Flow 05: Get your EPA card</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/Get-EPACard.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
+                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">04</span>Pass an exam</figcaption>
+                </figure>
+                <figure class="sk-video sk-video--mobile sk-phone-row-item">
+                    <div class="sk-video-frame">
+                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-get-epacard.jpg" aria-label="Flow 05: Get the EPA card">
+                            <source src="assets/skillcat/Get-EPACard.mp4" type="video/mp4">
+                        </video>
                     </div>
-                </div>
+                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">05</span>Get the EPA card</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -1162,7 +1131,7 @@
         <section id="comparison" class="cs-section">
             <div class="sk-section-head">
                 <p class="cs-label">Before &amp; After</p>
-                <h2 class="sk-section-title">Full redesigned <em>comparison</em>: drag to see the difference</h2>
+                <h2 class="sk-section-title">Full <em>redesigned</em> comparsion</h2>
             </div>
 
             <figure class="sk-compare" data-pos="50">
@@ -1229,28 +1198,48 @@
                 </div>
             </div>
 
-            <!-- Per-screen version iterations: Inbox, People, Create Certification -->
+            <!-- Per-screen version iterations: Home, Inbox, People -->
             <div class="sk-dash-iterations">
-            <!-- INBOX — 3 versions -->
+            <!-- HOME — V1 was the old Dashboard; V2 is the redesigned Home -->
+            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
+                <div class="sk-feature-info">
+                    <h3 class="sk-feature-screen-title">Home</h3>
+                    <p class="sk-feature-screen-desc">Where an admin lands. V1 was a static grid of quick actions and reports; the redesign turns it into a live overview of team training that admins can customize.</p>
+                    <div class="sk-version-tabs" role="tablist" aria-label="Home — versions">
+                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-home-panel-1" id="dash-home-tab-1" data-flow="1">V1</button>
+                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-home-panel-2" id="dash-home-tab-2" data-flow="2">V2</button>
+                    </div>
+                </div>
+                <div class="sk-feature-stage">
+                    <div class="sk-feature-panel is-active" id="dash-home-panel-1" role="tabpanel" aria-labelledby="dash-home-tab-1" data-flow="1">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%201.svg" alt="Home — V1" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="sk-feature-panel" id="dash-home-panel-2" role="tabpanel" aria-labelledby="dash-home-tab-2" data-flow="2">
+                        <figure class="sk-video sk-video--desktop">
+                            <div class="sk-video-frame">
+                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/home%202.jpg" alt="Home — V2" loading="lazy">
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INBOX — got its own screen in V2 -->
             <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
                 <div class="sk-feature-info">
                     <h3 class="sk-feature-screen-title">Inbox</h3>
                     <p class="sk-feature-screen-desc">The admin's command center. Every approval, assignment, and pending action lands in one role-aware queue.</p>
                     <div class="sk-version-tabs" role="tablist" aria-label="Inbox — versions">
-                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-inbox-panel-1" id="dash-inbox-tab-1" data-flow="1">V1</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-inbox-panel-2" id="dash-inbox-tab-2" data-flow="2">V2</button>
+                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-inbox-panel-2" id="dash-inbox-tab-2" data-flow="2">V2</button>
                         <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-inbox-panel-3" id="dash-inbox-tab-3" data-flow="3">V3</button>
                     </div>
                 </div>
                 <div class="sk-feature-stage">
-                    <div class="sk-feature-panel is-active" id="dash-inbox-panel-1" role="tabpanel" aria-labelledby="dash-inbox-tab-1" data-flow="1">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%201.svg" alt="Inbox — V1" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="dash-inbox-panel-2" role="tabpanel" aria-labelledby="dash-inbox-tab-2" data-flow="2">
+                    <div class="sk-feature-panel is-active" id="dash-inbox-panel-2" role="tabpanel" aria-labelledby="dash-inbox-tab-2" data-flow="2">
                         <figure class="sk-video sk-video--desktop">
                             <div class="sk-video-frame">
                                 <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%202.svg" alt="Inbox — V2" loading="lazy">
@@ -1310,42 +1299,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- CREATE CERTIFICATION — 3 versions -->
-            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
-                <div class="sk-feature-info">
-                    <h3 class="sk-feature-screen-title">Create Certification</h3>
-                    <p class="sk-feature-screen-desc">Where an admin builds a brand-new certification — naming it, stacking the required courses, and publishing it to their team.</p>
-                    <div class="sk-version-tabs" role="tablist" aria-label="Create Certification — versions">
-                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-create-cert-panel-1" id="dash-create-cert-tab-1" data-flow="1">V1</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-create-cert-panel-2" id="dash-create-cert-tab-2" data-flow="2">V2</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-create-cert-panel-3" id="dash-create-cert-tab-3" data-flow="3">V3</button>
-                    </div>
-                </div>
-                <div class="sk-feature-stage">
-                    <div class="sk-feature-panel is-active" id="dash-create-cert-panel-1" role="tabpanel" aria-labelledby="dash-create-cert-tab-1" data-flow="1">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/create%20certification%201.svg" alt="Create Certification — V1" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="dash-create-cert-panel-2" role="tabpanel" aria-labelledby="dash-create-cert-tab-2" data-flow="2">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/create%20certification%202.svg" alt="Create Certification — V2" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="dash-create-cert-panel-3" role="tabpanel" aria-labelledby="dash-create-cert-tab-3" data-flow="3">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/create%20certification%203.svg" alt="Create Certification — V3" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                </div>
-            </div>
             </div>
         </section>
 
@@ -1356,58 +1309,37 @@
         <section id="dashboard-features" class="cs-section">
             <div class="sk-section-head">
                 <p class="cs-label">08 · Feature by Feature</p>
-                <h2 class="sk-section-title">Four flows that take an admin from <em>assigning a course</em> to grading the work.</h2>
+                <h2 class="sk-section-title">Team summary to <em>grading</em> the work.</h2>
             </div>
             
             <div class="sk-feature-switch sk-feature-switch--wide">
                 <!-- Top: feature tabs -->
                 <div class="sk-feature-list" role="tablist" aria-label="Admin dashboard features">
                     <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="admin-panel-2" id="admin-tab-2" data-flow="2">
-                        <span class="sk-feature-btn-title">The Inbox</span>
+                        <span class="sk-feature-btn-num">01</span><span class="sk-feature-btn-title">Check progress across date ranges</span>
                     </button>
                     <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-4" id="admin-tab-4" data-flow="4">
-                        <span class="sk-feature-btn-title">People Management</span>
+                        <span class="sk-feature-btn-num">02</span><span class="sk-feature-btn-title">Filter the team &amp; open a profile</span>
                     </button>
                     <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-3" id="admin-tab-3" data-flow="3">
-                        <span class="sk-feature-btn-title">Employee Project Review</span>
-                    </button>
-                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-1" id="admin-tab-1" data-flow="1">
-                        <span class="sk-feature-btn-title">Assign Courses to a User</span>
+                        <span class="sk-feature-btn-num">03</span><span class="sk-feature-btn-title">Review &amp; approve a hands-on project</span>
                     </button>
                 </div>
 
                 <!-- Below: full-width capture that swaps to match the selected tab -->
                 <div class="sk-feature-stage">
 
-                    <!-- INBOX PEOPLE -->
+                    <!-- HOME — date ranges -->
                     <div class="sk-feature-panel is-active" id="admin-panel-2" role="tabpanel" aria-labelledby="admin-tab-2" data-flow="2">
-                        <p class="sk-feature-desc">A role-aware, unified task system: every approval, assignment, and action an admin owns, surfaced in one place.</p>
                         <figure class="sk-video sk-video--desktop sk-video--wide">
                             <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-inbox.jpg">
-                                    <source src="assets/skillcat/B2B/inbox.mp4" type="video/mp4">
+                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-home.jpg">
+                                    <source src="assets/skillcat/B2B/home.mp4" type="video/mp4">
                                 </video>
                                 <div class="sk-video-ph" aria-hidden="true">
                                     <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">The Inbox: unified task system</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/B2B/inbox.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
-                    </div>
-
-                    <!-- ASSIGN -->
-                    <div class="sk-feature-panel" id="admin-panel-1" role="tabpanel" aria-labelledby="admin-tab-1" data-flow="1">
-                        <p class="sk-feature-desc">Pick employees, stack courses into a sequenced plan with a due date on each row, then review and assign: the three-step plan builder in action.</p>
-                        <figure class="sk-video sk-video--desktop sk-video--wide">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-assign.jpg">
-                                    <source src="assets/skillcat/B2B/assign.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">Assign courses to a user</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/B2B/assign.mp4</span>
+                                    <span class="sk-video-ph-name">Home: team progress by date range</span>
+                                    <span class="sk-video-ph-path">assets/skillcat/B2B/home.mp4</span>
                                 </div>
                             </div>
                         </figure>
@@ -1415,7 +1347,6 @@
 
                     <!-- OTJ FEATURE -->
                     <div class="sk-feature-panel" id="admin-panel-3" role="tabpanel" aria-labelledby="admin-tab-3" data-flow="3">
-                        <p class="sk-feature-desc">Review and grade the photos learners submit for hands-on (OTJ) tasks: approve, score, or send it back for another attempt.</p>
                         <figure class="sk-video sk-video--desktop sk-video--wide">
                             <div class="sk-video-frame">
                                 <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-otj.jpg">
@@ -1432,7 +1363,6 @@
 
                     <!-- PEOPLE FEATURE -->
                     <div class="sk-feature-panel" id="admin-panel-4" role="tabpanel" aria-labelledby="admin-tab-4" data-flow="4">
-                        <p class="sk-feature-desc">Search, filter, and manage the whole team: roles, progress, and bulk actions that scale well past a handful of employees.</p>
                         <figure class="sk-video sk-video--desktop sk-video--wide">
                             <div class="sk-video-frame">
                                 <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-people.jpg">
@@ -1497,10 +1427,9 @@
                 <p class="cs-label">09 · Reflection</p>
             </div>
 
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>Working across consumer onboarding, B2B tooling, and specs meant constantly shifting altitude: from a single animation frame, up to an enterprise workflow, back down to the written rules that make it real. The throughline: understand the job the person is actually trying to do, then shape the product around that.</p>
-                </div>
+            <div class="sk-threads sk-threads--two">
+                <div class="sk-thread"><p class="sk-thread-num">01</p><p class="sk-thread-title">A design is never done</p><p class="sk-thread-desc">Several times we thought we had the final iteration, then testing with more users surfaced new ways to improve. I learned to treat iteration as continuous and never settle on a design as finished.</p></div>
+                <div class="sk-thread"><p class="sk-thread-num">02</p><p class="sk-thread-title">Designing and coding at the same time</p><p class="sk-thread-desc">Prototyping in code while designing often showed me a screen was too complex to build, or that transitional screens were missing entirely, since our visual designer focused on the core screens. Raising these with the team before engineering handoff headed off problems and sped up the product lifecycle.</p></div>
             </div>
 
             <aside class="sk-ai-note">
