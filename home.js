@@ -241,8 +241,6 @@
             layoutMode = 'carousel';
             document.body.classList.remove('grid-mode');
             if (currentView === 'carousel') {
-                heroContent.classList.add('hero-hidden');
-                footerInfo.classList.add('footer-hidden');
                 if (swipeHint) swipeHint.classList.add('swipe-hint-hidden');
             }
         }, function (hero, footer, cardsArr) {
@@ -270,7 +268,7 @@
     // Reveal=blue, NovaCore=violet, Mindscapes=pink
     var GLOW_COLORS = ['blue', 'green', 'gold', 'orange', 'blue', 'violet', 'pink'];
     var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-far-left', 'pos-far-right',
-                       'pos-hero-peek', 'pos-hero-peek-left', 'pos-hero-back', 'pos-back-left', 'pos-back-right'];
+                       'pos-hero-peek', 'pos-back-left', 'pos-back-right'];
 
     var currentView = 'hero'; // 'hero' or 'carousel'
     var activeIndex = 0;
@@ -289,41 +287,39 @@
         POS_CLASSES.forEach(function (cls) { card.classList.remove(cls); });
     }
 
-    // Cards ride a ring. In the hero view the ring sits on a half step, so no
-    // card is in front of the monitor: card 0 peeks right, the last card peeks
-    // left, the opposite card parks blurred behind the screen, the rest hide.
-    var RING_STEP = 360 / totalCards;
+    // The hero screen and the cards share one ring: slot 0 is the screen,
+    // slots 1..N are the cards. The active slot sits in the centre, its
+    // neighbours peek in on either side, and the rest wait on the far side —
+    // so leaving the hero swipes the screen aside just like a card.
+    var monitor = document.querySelector('.hero-monitor');
+    var slots = (monitor ? [monitor] : []).concat(cards);
+    var SLOT_OFFSET = monitor ? 1 : 0;
 
-    function heroAngle(i) {
-        var a = ((i + 0.5) * RING_STEP) % 360;
-        return a > 180 ? a - 360 : a;
+    function activeSlot() {
+        return currentView === 'hero' ? 0 : activeIndex + SLOT_OFFSET;
     }
 
-    // Shortest signed distance around the ring from the active card
-    function ringDiff(i) {
-        var d = ((i - activeIndex) % totalCards + totalCards) % totalCards;
-        return d > totalCards / 2 ? d - totalCards : d;
+    // Shortest signed distance around the ring from the active slot
+    function ringDiff(slot) {
+        var n = slots.length;
+        var d = ((slot - activeSlot()) % n + n) % n;
+        return d > n / 2 ? d - n : d;
     }
 
-    function positionCardsForHero() {
-        cards.forEach(function (card, i) {
-            removePositions(card);
-            var a = heroAngle(i);
-            if (Math.abs(a) <= RING_STEP / 2 + 0.01) card.classList.add(a > 0 ? 'pos-hero-peek' : 'pos-hero-peek-left');
-            else if (Math.abs(a) >= 180 - RING_STEP / 2 - 0.01) card.classList.add('pos-hero-back');
-            else card.classList.add(a > 0 ? 'pos-far-right' : 'pos-far-left');
-        });
+    function poseFor(diff) {
+        if (diff === 0) return 'pos-center';
+        if (diff === -1) return 'pos-left';
+        if (diff === 1) return 'pos-right';
+        return diff < 0 ? 'pos-back-left' : 'pos-back-right';
     }
 
-    function positionCards() {
-        cards.forEach(function (card, i) {
-            removePositions(card);
-
-            var diff = ringDiff(i);
-            if (diff === 0) card.classList.add('pos-center');
-            else if (diff === -1) card.classList.add('pos-left');
-            else if (diff === 1) card.classList.add('pos-right');
-            else card.classList.add(diff < 0 ? 'pos-back-left' : 'pos-back-right');
+    function positionRing() {
+        slots.forEach(function (el, slot) {
+            var pose = poseFor(ringDiff(slot));
+            removePositions(el);
+            el.classList.add(pose);
+            // Hand the screen off from its entrance keyframes once it moves
+            if (el === monitor && pose !== 'pos-center') el.classList.add('entered');
         });
     }
 
@@ -334,8 +330,6 @@
 
     function showHero() {
         currentView = 'hero';
-        heroContent.classList.remove('hero-hidden');
-        footerInfo.classList.remove('footer-hidden');
         if (swipeHint) swipeHint.classList.remove('swipe-hint-hidden');
         if (socialLinks) socialLinks.classList.remove('social-hidden');
         heroSection.classList.remove('section-hidden');
@@ -343,7 +337,7 @@
         setCounterVisible(false);
         setNavVisible(false);
 
-        positionCardsForHero();
+        positionRing();
 
         // Keep carousel on top during exit animation, then drop it behind
         setTimeout(function () {
@@ -355,8 +349,6 @@
 
     function showCarousel() {
         currentView = 'carousel';
-        heroContent.classList.add('hero-hidden');
-        footerInfo.classList.add('footer-hidden');
         if (swipeHint) swipeHint.classList.add('swipe-hint-hidden');
         if (socialLinks) socialLinks.classList.add('social-hidden');
         heroSection.classList.add('section-hidden');
@@ -366,7 +358,7 @@
         setCounterVisible(true);
         setNavVisible(layoutMode === 'carousel');
 
-        positionCards();
+        positionRing();
 
         updateGlow();
     }
@@ -374,7 +366,7 @@
     function nextCard() {
         if (activeIndex < totalCards - 1) {
             activeIndex++;
-            positionCards();
+            positionRing();
             updateGlow();
             updateCounter();
         } else {
@@ -386,7 +378,7 @@
     function prevCard() {
         if (activeIndex > 0) {
             activeIndex--;
-            positionCards();
+            positionRing();
             updateGlow();
             updateCounter();
         } else {
@@ -396,11 +388,12 @@
     }
 
     // Initial load: start every card offscreen on its own side of the ring so
-    // they swing into their hero spots alongside the monitor entrance
+    // they swing into place alongside the screen's entrance
     cards.forEach(function (card, i) {
         removePositions(card);
-        card.classList.add(heroAngle(i) < 0 ? 'pos-far-left' : 'pos-far-right');
+        card.classList.add(ringDiff(i + SLOT_OFFSET) < 0 ? 'pos-far-left' : 'pos-far-right');
     });
+    if (monitor) monitor.classList.add('pos-center');
 
     // After entrance animation, switch to class-driven state so transitions work
     heroContent.addEventListener('animationend', function handler() {
@@ -422,7 +415,7 @@
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
             carouselSection.classList.add('carousel-ready');
-            setTimeout(positionCardsForHero, 400);
+            setTimeout(positionRing, 400);
         });
     });
 
@@ -535,8 +528,8 @@
             // turns the ring toward itself instead. In grid mode any card navigates.
             if (layoutMode === 'carousel' && !card.classList.contains('pos-center')) {
                 e.preventDefault();
-                if (card.matches('.pos-right, .pos-hero-peek')) stepCarousel(1);
-                else if (card.matches('.pos-left, .pos-hero-peek-left')) stepCarousel(-1);
+                if (card.classList.contains('pos-right')) stepCarousel(1);
+                else if (card.classList.contains('pos-left')) stepCarousel(-1);
                 return;
             }
             // External links (target="_blank") just open natively — no page-exit transition
@@ -549,6 +542,16 @@
             else window.location.href = href;
         });
     });
+
+    // A peeking hero screen turns the ring back to the hero (and swallows the
+    // click so the SkillCat link inside it doesn't fire while it's aside)
+    if (monitor) {
+        monitor.addEventListener('click', function (e) {
+            if (layoutMode !== 'carousel') return;
+            if (monitor.classList.contains('pos-right')) { e.preventDefault(); stepCarousel(1); }
+            else if (monitor.classList.contains('pos-left')) { e.preventDefault(); stepCarousel(-1); }
+        });
+    }
 
     // Desktop nav-link + logo exits — handled by the shared GSAP transitions module
     if (window.PageTransitions) PageTransitions.bindNavLinks();

@@ -79,8 +79,17 @@
         setTimeout(finish, 700); // safety net if transitionend never fires
     }
 
+    // Portrait tiles (panels with data-video-bg) letterbox inside the 16:9
+    // slot on their own background colour, and stay uncropped while flying
+    function fitToPanel(video, panel) {
+        var bg = panel && panel.getAttribute('data-video-bg');
+        video.style.objectFit = bg ? 'contain' : '';
+        video.style.background = bg || '';
+    }
+
     // Drop a video into the modal slot (sound + controls if the panel allows)
     function mountInTarget(video, panel) {
+        fitToPanel(video, panel);
         target.appendChild(video);
         if (panel && panel.hasAttribute('data-unmute')) {
             video.muted = false;
@@ -95,6 +104,7 @@
         var overlay = frame.querySelector('.motion-card-frame-overlay');
         video.muted = true;
         video.controls = false;
+        fitToPanel(video, null);
         video.classList.add('project-video');
         frame.insertBefore(video, overlay);
         playQuietly(video);
@@ -110,6 +120,9 @@
         modal.querySelectorAll('.modal-panel').forEach(function (p) { p.hidden = true; });
         var panel = panelFor(i);
         if (panel) panel.hidden = false;
+        target.style.background = (panel && panel.getAttribute('data-video-bg')) || '';
+        // Mobile recordings get a tall video column with the info beside it
+        modal.classList.toggle('modal-portrait', !!(panel && panel.hasAttribute('data-portrait')));
         var title = panel && panel.querySelector('.modal-title');
         modalContent.setAttribute('aria-label', title ? title.textContent.trim() : '');
         pagerCount.textContent = (i + 1) + '/' + cards.length;
@@ -142,6 +155,7 @@
         document.body.style.overflow = 'hidden';
         modal.offsetHeight;
 
+        fitToPanel(video, panel);
         fly(video, fromRect, target.getBoundingClientRect(), FLY_RADIUS, '0px', function (v) {
             mountInTarget(v, panel);
             revealFadeItems(panel);

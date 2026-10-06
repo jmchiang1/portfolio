@@ -1105,26 +1105,9 @@ a.project-card {
 }
 
 /* ---- Orbit ring poses ----
-   Hero view sits on a half step of the ring: the first card peeks right
-   (pos-hero-peek), the last card mirrors it on the left, and the card
-   opposite them parks far behind the monitor, out of sight. */
-.project-card.pos-hero-peek-left {
-    transform: translateX(-105%) rotateY(30deg) scale(0.75);
-    z-index: 3;
-}
-
-.project-card.pos-hero-peek-left::after {
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.project-card.pos-hero-back {
-    transform: translateY(-4%) translateZ(-650px);
-    filter: blur(28px) saturate(1.2);
-    opacity: 0.75;
-    z-index: 0;
-}
-
-/* Carousel view: the far side of the ring, tucked behind the front card */
+   The hero screen and the cards share one ring: the active slot is centred,
+   its neighbours peek left/right, and the rest wait on the far side. */
+/* The far side of the ring, tucked behind the front slot */
 .project-card.pos-back-left,
 .project-card.pos-back-right {
     opacity: 0;
@@ -1141,16 +1124,12 @@ a.project-card {
 
 /* Peeking cards are clickable — they rotate the ring toward themselves */
 .project-card.pos-left,
-.project-card.pos-right,
-.project-card.pos-hero-peek,
-.project-card.pos-hero-peek-left {
+.project-card.pos-right {
     pointer-events: auto;
 }
 
 .project-card.pos-left:hover::after,
-.project-card.pos-right:hover::after,
-.project-card.pos-hero-peek:hover::after,
-.project-card.pos-hero-peek-left:hover::after {
+.project-card.pos-right:hover::after {
     background: rgba(0, 0, 0, 0.25);
 }
 
@@ -2626,18 +2605,22 @@ body.grid-mode .project-title {
    Scoped to carousel layout; grid mode collapses the frame (see below).
    ============================================ */
 body:not(.grid-mode) .section-hero {
-    /* Above the carousel so the back card sits behind the screen; clicks
-       pass through to the peeking cards everywhere except the monitor. */
+    /* Same perspective + centre as .carousel-viewport so the screen moves
+       through the ring exactly like a card. Clicks pass through to the
+       cards everywhere except the screen itself. */
     z-index: 3;
     pointer-events: none;
-    padding-top: 56px;
+    perspective: 1200px;
 }
 
+/* The screen is the ring's first slot — same footprint as a project card */
 .hero-monitor {
-    --screen-w: min(1000px, 72vw, calc((100dvh - 230px) * 16 / 9));
+    --screen-w: min(956px, 58vw);
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 18px;
     pointer-events: auto;
     opacity: 0;
     transform: translateY(24px) scale(0.97);
@@ -2659,11 +2642,53 @@ body:not(.grid-mode) .section-hero {
     transform: none;
 }
 
-/* Carousel view — the monitor recedes and fades as the cards take over */
-.section-hero.section-hidden .hero-monitor {
+/* Ring poses for the screen — mirror the .project-card pos-* poses */
+.hero-monitor.entered.pos-left {
+    transform: translateX(-105%) rotateY(30deg) scale(0.75);
+}
+
+.hero-monitor.entered.pos-right {
+    transform: translateX(105%) rotateY(-30deg) scale(0.75);
+}
+
+.hero-monitor.entered.pos-back-left,
+.hero-monitor.entered.pos-back-right {
     opacity: 0;
-    transform: scale(0.92);
     pointer-events: none;
+}
+
+.hero-monitor.entered.pos-back-left {
+    transform: translateX(-55%) translateZ(-900px) rotateY(25deg);
+}
+
+.hero-monitor.entered.pos-back-right {
+    transform: translateX(55%) translateZ(-900px) rotateY(-25deg);
+}
+
+/* Same dimming as a peeking card */
+.hero-monitor::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    transition: background 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.hero-monitor.pos-left::after,
+.hero-monitor.pos-right::after {
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-monitor.pos-left:hover::after,
+.hero-monitor.pos-right:hover::after {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.hero-monitor.pos-left,
+.hero-monitor.pos-right {
+    cursor: url('assets/pointer.cur'), pointer;
 }
 
 .hero-screen {
@@ -2671,7 +2696,7 @@ body:not(.grid-mode) .section-hero {
     display: flex;
     flex-direction: column;
     width: var(--screen-w);
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 956 / 599;
     border: 12px solid #242321;
     border-radius: 18px;
     background:
@@ -2770,7 +2795,8 @@ body.grid-mode .hero-screen {
     display: contents;
 }
 
-body.grid-mode .hero-screen-bar {
+body.grid-mode .hero-screen-bar,
+body.grid-mode .hero-monitor::after {
     display: none;
 }
 
@@ -2803,18 +2829,42 @@ body.grid-mode .type-caret {
     animation: cursor-blink 1s step-end infinite;
 }
 
+@media (max-width: 1200px) {
+    .hero-monitor { --screen-w: min(956px, 55vw); }
+}
+
+@media (max-width: 900px) {
+    .hero-monitor { --screen-w: 60vw; }
+
+    .hero-monitor.entered.pos-left {
+        transform: translateX(-95%) rotateY(25deg) scale(0.7);
+    }
+
+    .hero-monitor.entered.pos-right {
+        transform: translateX(95%) rotateY(-25deg) scale(0.7);
+    }
+}
+
 @media (max-width: 640px) {
-    body:not(.grid-mode) .section-hero {
-        padding-top: 40px;
-    }
-
     .hero-monitor {
-        --screen-w: calc(100vw - 32px);
+        --screen-w: 90vw;
+        border-radius: 14px;
     }
 
+    .hero-monitor.entered.pos-left {
+        transform: translateX(-85%) rotateY(20deg) scale(0.65);
+        opacity: 0.4;
+    }
+
+    .hero-monitor.entered.pos-right {
+        transform: translateX(85%) rotateY(-20deg) scale(0.65);
+        opacity: 0.4;
+    }
+
+    /* Same footprint as the mobile project cards */
     .hero-screen {
         aspect-ratio: auto;
-        min-height: 56dvh;
+        height: 70vh;
         border-width: 8px;
         border-radius: 14px;
     }
@@ -2829,12 +2879,6 @@ body.grid-mode .type-caret {
 
     body:not(.grid-mode) .hero-screen .hero-tagline {
         font-size: var(--text-18);
-    }
-
-    /* Mobile cards are tall enough that the back card's blur spills out
-       above the screen — keep it fully hidden here */
-    .project-card.pos-hero-back {
-        opacity: 0;
     }
 
     /* Mobile footer has no visible lines — drop the divider + spacing */

@@ -551,10 +551,20 @@ a, button, [role="button"],
 /* ============================================
    Motion Grid — vibes-style card grid
    ============================================ */
+/* Bento: motion videos span two of four columns; interaction tiles take one */
 .motion-grid {
+    --motion-gap: 36px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 36px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--motion-gap);
+}
+
+.motion-card {
+    grid-column: span 2;
+}
+
+.motion-card.motion-card-tile {
+    grid-column: span 1;
 }
 
 .motion-card {
@@ -583,6 +593,10 @@ a, button, [role="button"],
 .motion-card:nth-child(6) { animation-delay: 1.1s; }
 .motion-card:nth-child(7) { animation-delay: 1.2s; }
 .motion-card:nth-child(8) { animation-delay: 1.3s; }
+.motion-card:nth-child(9) { animation-delay: 1.4s; }
+.motion-card:nth-child(10) { animation-delay: 1.5s; }
+.motion-card:nth-child(11) { animation-delay: 1.6s; }
+.motion-card:nth-child(12) { animation-delay: 1.7s; }
 
 @keyframes motion-card-up {
     to { opacity: 1; transform: translateY(0); }
@@ -616,6 +630,18 @@ a, button, [role="button"],
     overflow: hidden;
     background: #0a0a0d;
 }
+
+/* Tile frames match the height of a two-column 16:10 card in the same row:
+   (2 × tile width + gap) × 10/16, via padding (percentages track width) */
+.motion-card-tile .motion-card-frame {
+    aspect-ratio: auto;
+    height: 0;
+    padding-top: calc((200% + var(--motion-gap)) * 0.625);
+}
+
+.motion-card-tile .motion-card-title { font-size: var(--text-22); }
+.motion-card-tile .motion-card-body { padding: 64px 20px 18px; }
+.motion-card-tile .motion-card-tags { top: 12px; right: 12px; }
 
 .motion-card-frame video {
     position: absolute;
@@ -763,7 +789,7 @@ a, button, [role="button"],
     }
 
     .motion-grid {
-        gap: 28px;
+        --motion-gap: 28px;
     }
 }
 
@@ -776,10 +802,16 @@ a, button, [role="button"],
         margin-bottom: 56px;
     }
 
+    /* Videos go full width; tiles pair up two per row at their native 3:4 */
     .motion-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+        --motion-gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
     }
+
+    .motion-card-tile .motion-card-frame { padding-top: 133.333%; }
+    .motion-card-tile .motion-card-title { font-size: var(--text-18); }
+    .motion-card-tile .motion-card-body { padding: 48px 14px 14px; }
+    .motion-card-tile .motion-card-description { display: none; }
 
     .motion-card-title { font-size: var(--text-22); }
     .motion-card-body { padding: 64px 20px 18px; }
@@ -1121,6 +1153,41 @@ a, button, [role="button"],
     background: #000;
 }
 
+/* Portrait modal — mobile interaction recordings. The 3:4 video fills the
+   card's full height on the left; the info panel sits beside it. */
+.modal-overlay.modal-portrait {
+    --portrait-h: min(760px, calc(100svh - 140px));
+}
+
+.modal-portrait .modal-content {
+    width: min(100%, calc(var(--portrait-h) * 3 / 4 + 400px));
+}
+
+.modal-portrait .modal-scroll {
+    display: flex;
+    align-items: stretch;
+}
+
+.modal-portrait .modal-video-target {
+    flex: 0 0 auto;
+    width: calc(var(--portrait-h) * 3 / 4);
+    height: var(--portrait-h);
+    aspect-ratio: auto;
+}
+
+.modal-portrait .modal-panel:not([hidden]) {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.modal-portrait .modal-built {
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
 /* Info panel */
 .modal-info {
     padding: 28px 32px 30px;
@@ -1398,6 +1465,22 @@ a, button, [role="button"],
 
     .modal-pager-btn {
         width: 42px;
+    }
+
+    /* Portrait stacks: video on top, capped so the info still peeks in */
+    .modal-portrait .modal-content {
+        width: 100%;
+    }
+
+    .modal-portrait .modal-scroll {
+        display: block;
+    }
+
+    .modal-portrait .modal-video-target {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 4;
+        max-height: calc(100svh - 260px);
     }
 }
 
