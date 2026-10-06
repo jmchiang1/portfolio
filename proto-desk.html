@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desk (prototype) | Jonathan Chiang</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="shell.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
+
+    <!-- PROTOTYPE — desk setup. A monitor shows the intro or the selected
+         case study; the keyboard below drives it (click keys or use your
+         real keyboard: 1–5, ← →, Enter, Esc). Keycap + case colours come
+         from the visitor's welcome-page build when there is one. -->
+    <style>
+        :root {
+            --case: #36383d;
+            --cap: #16161d;
+            --legend: #f3f3f3;
+            --glow: #1180f9;
+        }
+
+        .desk {
+            --W: min(880px, 64vw, calc((100svh - 260px) / 0.9));
+            position: fixed;
+            inset: 0;
+            padding-top: 96px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        /* Soft project-coloured light spilling from the screen */
+        .desk-glow {
+            position: absolute;
+            top: 32%;
+            left: 50%;
+            width: calc(var(--W) * 1.6);
+            height: calc(var(--W) * 0.9);
+            transform: translate(-50%, -50%);
+            background: radial-gradient(closest-side, color-mix(in srgb, var(--glow) 32%, transparent), transparent);
+            filter: blur(30px);
+            opacity: 0.55;
+            pointer-events: none;
+            transition: background 0.6s ease;
+        }
+
+        /* ---- Monitor ---- */
+        .monitor {
+            position: relative;
+            width: var(--W);
+            padding: 12px 12px 0;
+            border-radius: 18px 18px 6px 6px;
+            background: linear-gradient(180deg, #2a2a2c, #19191b);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .monitor-chin {
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: var(--text-10);
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.28);
+        }
+
+        .monitor-neck {
+            width: calc(var(--W) * 0.12);
+            height: 30px;
+            background: linear-gradient(90deg, #1c1c1e, #2e2e31 50%, #1c1c1e);
+        }
+
+        .monitor-base {
+            width: calc(var(--W) * 0.3);
+            height: 9px;
+            border-radius: 6px 6px 3px 3px;
+            background: linear-gradient(180deg, #333336, #1c1c1e);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .screen {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #0b0b0d;
+            cursor: url('assets/pointer.cur'), pointer;
+        }
+
+        /* Glass sheen + faint scanlines */
+        .screen::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            pointer-events: none;
+            background:
+                linear-gradient(125deg, rgba(255, 255, 255, 0.06) 0%, transparent 35%),
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px);
+        }
+
+        .menubar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 15;
+            height: 26px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(10, 10, 12, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: var(--text-12);
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .menubar b { font-weight: 600; }
+        .menubar .menubar-clock { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+        /* Slides — the incoming one wipes down like a screen refresh */
+        .slide {
+            position: absolute;
+            inset: 0;
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            z-index: 1;
+        }
+
+        .slide.is-active {
+            clip-path: inset(0 0 0 0);
+            z-index: 2;
+        }
+
+        .slide.is-leaving { z-index: 1; clip-path: inset(0 0 0 0); transition: none; }
+
+        /* Home slide */
+        .slide-home {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            background:
+                radial-gradient(70% 60% at 50% 40%, rgba(17, 128, 249, 0.18), transparent 70%),
+                #0d0f14;
+        }
+
+        .slide-home h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: calc(var(--W) * 0.075);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .slide-home p {
+            margin-top: calc(var(--W) * 0.016);
+            font-size: calc(var(--W) * 0.021);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .slide-home em { font-family: 'Space Grotesk', sans-serif; color: #fff; }
+
+        .prompt {
+            margin-top: calc(var(--W) * 0.05);
+            min-width: 60%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: 'Space Mono', monospace;
+            font-size: calc(var(--W) * 0.016);
+            color: rgba(255, 255, 255, 0.5);
+            text-align: left;
+        }
+
+        .prompt-typed { color: #fff; }
+        .prompt-ghost { color: rgba(255, 255, 255, 0.3); }
+        .prompt-caret {
+            display: inline-block;
+            width: 0.6em;
+            height: 1.1em;
+            margin-left: 1px;
+            vertical-align: -0.2em;
+            background: #1180f9;
+            animation: caret 1s steps(1) infinite;
+        }
+
+        @keyframes caret { 50% { opacity: 0; } }
+
+        .home-hint {
+            margin-top: 14px;
+            font-family: 'Space Mono', monospace;
+            font-size: calc(var(--W) * 0.013);
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .home-hint kbd {
+            display: inline-block;
+            padding: 1px 6px 3px;
+            margin: 0 1px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.4);
+            font-family: inherit;
+            color: #fff;
+        }
+
+        .home-foot {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 18px;
+            font-size: calc(var(--W) * 0.0135);
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Project slides */
+        .slide-project { background: var(--bg); }
+
+        .slide-media {
+            position: absolute;
+            top: 46%;
+            left: 50%;
+            width: 66%;
+            transform: translate(-50%, -50%);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        .slide-media video, .slide-media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-media--phone {
+            width: auto;
+            height: 74%;
+            aspect-ratio: 430 / 932;
+            border-radius: 24px;
+            border: 5px solid #1c1f27;
+        }
+
+        .slide-media--full {
+            top: 0; left: 0; width: 100%; height: 100%;
+            transform: none; border: none; border-radius: 0; box-shadow: none;
+        }
+
+        .slide-info {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 3;
+            padding: 70px 28px 22px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        .slide-info h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: calc(var(--W) * 0.036);
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .slide-info p {
+            margin-top: 4px;
+            font-size: calc(var(--W) * 0.017);
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .slide-tags {
+            position: absolute;
+            top: 40px;
+            right: 18px;
+            z-index: 3;
+            padding: 5px 10px;
+            border-radius: 7px;
+            background: rgba(0, 0, 0, 0.35);
+            font-size: calc(var(--W) * 0.014);
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .slide-logo {
+            position: absolute;
+            top: 40px;
+            left: 18px;
+            z-index: 3;
+            width: calc(var(--W) * 0.046);
+            height: calc(var(--W) * 0.046);
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .open-chip {
+            flex-shrink: 0;
+            padding: 7px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-family: 'Space Mono', monospace;
+            font-size: calc(var(--W) * 0.0135);
+            white-space: nowrap;
+        }
+
+        /* ---- Keyboard ---- */
+        .kb-wrap {
+            margin-top: 26px;
+            perspective: 1100px;
+        }
+
+        .kb {
+            --u: calc(var(--W) * 0.86 / 16);
+            width: calc(var(--W) * 0.86 + 28px);
+            padding: 14px;
+            border-radius: 14px;
+            background: var(--case);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                inset 0 -4px 0 rgba(0, 0, 0, 0.25),
+                0 26px 40px rgba(0, 0, 0, 0.55);
+            transform: rotateX(38deg);
+            transform-origin: 50% 0;
+        }
+
+        .kb-row {
+            display: flex;
+            gap: calc(var(--u) * 0.08);
+            margin-bottom: calc(var(--u) * 0.08);
+        }
+
+        .kb-row:last-child { margin-bottom: 0; }
+
+        .key {
+            position: relative;
+            flex: var(--s, 1) var(--s, 1) 0;
+            height: calc(var(--u) * 0.92);
+            padding: 0;
+            border: none;
+            border-radius: calc(var(--u) * 0.14);
+            background: var(--cap);
+            color: var(--legend);
+            font-family: 'Space Mono', monospace;
+            font-size: calc(var(--u) * 0.24);
+            line-height: 1;
+            box-shadow:
+                inset 0 calc(var(--u) * -0.09) 0 rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.14),
+                0 2px 0 rgba(0, 0, 0, 0.35);
+            cursor: url('assets/pointer.cur'), pointer;
+            transition: transform 0.07s ease, box-shadow 0.07s ease, filter 0.2s ease;
+        }
+
+        .key.mod { filter: brightness(0.82); }
+        .key.gap { visibility: hidden; }
+
+        .key:hover { filter: brightness(1.15); }
+
+        .key.is-down {
+            transform: translateY(calc(var(--u) * 0.06));
+            box-shadow:
+                inset 0 calc(var(--u) * -0.03) 0 rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .key-legend {
+            position: absolute;
+            top: 18%;
+            left: 16%;
+            pointer-events: none;
+        }
+
+        /* Project keys — tinted in the project colour so the five "app" keys
+           read at a glance; number + name + a status LED */
+        .key.project {
+            background: color-mix(in srgb, var(--c) 72%, var(--cap));
+            color: #fff;
+        }
+
+        .key.project .key-legend { font-weight: 700; }
+
+        .key-name {
+            position: absolute;
+            left: 16%;
+            bottom: 24%;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: calc(var(--u) * 0.16);
+            opacity: 0.7;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .key-led {
+            position: absolute;
+            top: 18%;
+            right: 16%;
+            width: calc(var(--u) * 0.1);
+            height: calc(var(--u) * 0.1);
+            border-radius: 50%;
+            background: var(--c);
+            opacity: 0.35;
+            transition: opacity 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .key.project.is-active .key-led {
+            opacity: 1;
+            box-shadow: 0 0 6px 2px var(--c);
+        }
+
+        .key.project.is-active {
+            outline: 2px solid var(--c);
+            outline-offset: 1px;
+        }
+
+        .key.accent {
+            background: #1180f9;
+            color: #fff;
+        }
+
+        .kb-caption {
+            margin-top: 22px;
+            font-family: 'Space Mono', monospace;
+            font-size: var(--text-12);
+            color: rgba(255, 255, 255, 0.45);
+            text-align: center;
+        }
+
+        .kb-caption a { color: #fff; }
+
+        .proto-badge {
+            position: fixed;
+            left: 24px;
+            bottom: 24px;
+            z-index: 130;
+            padding: 6px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            font-family: 'Space Mono', monospace;
+            font-size: var(--text-11);
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .desk { --W: 92vw; padding-top: 88px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+
+    <nav class="navbar">
+        <a href="/" class="nav-logo"><img src="assets/logo.png" alt="JC" /></a>
+        <div class="nav-links">
+            <a href="index.html?skipgate" class="nav-link active">UX/UI</a>
+            <a href="motion.html" class="nav-link">Motion</a>
+            <a href="vibes.html" class="nav-link">Vibes</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="visitors.html" class="nav-link">Visitors</a>
+        </div>
+    </nav>
+
+    <main class="desk">
+        <div class="desk-glow"></div>
+
+        <div class="monitor">
+            <div class="screen">
+                <div class="menubar">
+                    <b>JC</b>
+                    <span class="menubar-app">Home</span>
+                    <span class="menubar-clock"></span>
+                </div>
+
+                <section class="slide slide-home is-active" data-index="0">
+                    <h1>Jonathan Chiang</h1>
+                    <p>Turning product ideas into <em>shipped</em> experiences.</p>
+                    <div class="prompt">jc@portfolio ~ % <span class="prompt-typed"></span><span class="prompt-caret"></span><span class="prompt-ghost"></span></div>
+                    <p class="home-hint">press <kbd>1</kbd>–<kbd>5</kbd> or type a project name</p>
+                    <p class="home-foot">Product Designer &amp; Software Engineer · NYC · Currently Design Engineering at SkillCat</p>
+                </section>
+
+                <section class="slide slide-project" data-index="1" data-href="skillcat.html" data-name="SkillCat" data-color="#E8552E"
+                         style="--bg: radial-gradient(60% 60% at 50% 2%, rgba(255,138,92,.45), transparent 58%), linear-gradient(180deg, #E8552E 0%, #8a2d15 30%, #2a0f08 74%, #160a06 100%)">
+                    <img class="slide-logo" src="assets/skillcat/skillcat-logo.png" alt="">
+                    <span class="slide-tags">In-House · Brand Redesign · 2026</span>
+                    <div class="slide-media" style="aspect-ratio: 1920/1308"><video src="assets/skillcat/B2B/hero.mp4" poster="assets/skillcat/B2B/poster-hero.jpg" muted loop playsinline preload="metadata"></video></div>
+                    <div class="slide-info"><div><h2>SkillCat</h2><p>Reimagining how trade professionals learn, certify, and grow on mobile</p></div><span class="open-chip">↵ open</span></div>
+                </section>
+
+                <section class="slide slide-project" data-index="2" data-href="nocta.html" data-name="Nocta" data-color="#f3a87c"
+                         style="--bg: radial-gradient(58% 62% at 50% 0%, rgba(243,168,124,.2), transparent 62%), linear-gradient(180deg, #0e1424 0%, #060912 100%)">
+                    <img class="slide-logo" src="assets/nocta/nocta-logo.svg" alt="" style="background:#0e1424; object-fit:contain; padding:5px">
+                    <span class="slide-tags">Personal · 0-1 Design · 2025</span>
+                    <div class="slide-media slide-media--phone"><video src="assets/nocta/v2/flow-week.mp4" poster="assets/nocta/v2/flow-week-poster.jpg" muted loop playsinline preload="metadata"></video></div>
+                    <div class="slide-info"><div><h2>Nocta</h2><p>Transforming complex CPAP data into personalized, actionable insights</p></div><span class="open-chip">↵ open</span></div>
+                </section>
+
+                <section class="slide slide-project" data-index="3" data-href="scriptchain.html" data-name="ScriptChain" data-color="#48a9a6"
+                         style="--bg: radial-gradient(60% 60% at 50% 2%, rgba(126,205,201,.42), transparent 58%), linear-gradient(180deg, #48a9a6 0%, #235a58 30%, #0c2422 74%, #061413 100%)">
+                    <img class="slide-logo" src="assets/scriptchain/scriptchain-logo.png" alt="">
+                    <span class="slide-tags">In-House · 0-1 Design · 2025</span>
+                    <div class="slide-media" style="aspect-ratio: 1600/1094"><video src="assets/scriptchain/scriptchain-website.mp4" poster="assets/scriptchain/poster-scriptchain-website.jpg" muted loop playsinline preload="metadata"></video></div>
+                    <div class="slide-info"><div><h2>ScriptChain Health</h2><p>Reducing metabolic syndrome through custom diet and exercise plans</p></div><span class="open-chip">↵ open</span></div>
+                </section>
+
+                <section class="slide slide-project" data-index="4" data-href="robinhood.html" data-name="Robinhood" data-color="#c3f53c" style="--bg: #0b0b0b">
+                    <span class="slide-tags">Personal · Feature Add On · 2024</span>
+                    <div class="slide-media slide-media--full"><img src="assets/robinhood-mockup.png" alt=""></div>
+                    <div class="slide-info"><div><h2>Robinhood Mirror</h2><p>Public Profiles and Mirror Trading for young investors</p></div><span class="open-chip">↵ open</span></div>
+                </section>
+
+                <section class="slide slide-project" data-index="5" data-href="reveal.html" data-name="Reveal" data-color="#3b9cff" style="--bg: #05070d">
+                    <span class="slide-tags">Personal · AR/VR · 2024</span>
+                    <div class="slide-media slide-media--full"><video src="assets/Reveal-animation.mp4" muted loop playsinline preload="metadata"></video></div>
+                    <div class="slide-info"><div><h2>Reveal</h2><p>Using augmented reality to uncover and reimagine hostile architecture</p></div><span class="open-chip">↵ open</span></div>
+                </section>
+            </div>
+            <div class="monitor-chin">JC-1</div>
+        </div>
+        <div class="monitor-neck"></div>
+        <div class="monitor-base"></div>
+
+        <div class="kb-wrap">
+            <div class="kb" id="kb"></div>
+        </div>
+        <p class="kb-caption"></p>
+    </main>
+
+    <a class="proto-badge" href="index.html?skipgate">PROTOTYPE · desk — back to current home</a>
+
+    <script>
+    (function () {
+        var slides = Array.from(document.querySelectorAll('.slide'));
+        var projects = slides.slice(1);
+        var menubarApp = document.querySelector('.menubar-app');
+        var glow = document.querySelector('.desk-glow');
+        var typedEl = document.querySelector('.prompt-typed');
+        var ghostEl = document.querySelector('.prompt-ghost');
+        var current = 0;
+        var typed = '';
+
+        // ---- Visitor's build colours (from welcome.html) ----
+        var visitor = null;
+        try { visitor = JSON.parse(localStorage.getItem('jc_visitor') || 'null'); } catch (e) {}
+        var root = document.documentElement.style;
+        if (visitor && visitor.case_hex) root.setProperty('--case', visitor.case_hex);
+        if (visitor && visitor.keycap_hex) root.setProperty('--cap', visitor.keycap_hex);
+        if (visitor && visitor.keycap_legend) root.setProperty('--legend', visitor.keycap_legend);
+        document.querySelector('.kb-caption').innerHTML = visitor && visitor.name
+            ? 'Keycaps &amp; case from your build — ' + visitor.name
+            : 'Click the keys or use your keyboard · <a href="welcome.html">build your own</a>';
+
+        // ---- Keyboard layout (65%) ----
+        // [label, code, size, kind]  kind: mod | accent | gap | project:N
+        var ROWS = [
+            [['esc','Escape',1,'mod'],['1','Digit1',1,'project:1'],['2','Digit2',1,'project:2'],['3','Digit3',1,'project:3'],['4','Digit4',1,'project:4'],['5','Digit5',1,'project:5'],['6','Digit6'],['7','Digit7'],['8','Digit8'],['9','Digit9'],['0','Digit0'],['-','Minus'],['=','Equal'],['⌫','Backspace',2,'mod'],['del','Delete',1,'mod']],
+            [['tab','Tab',1.5,'mod'],['Q','KeyQ'],['W','KeyW'],['E','KeyE'],['R','KeyR'],['T','KeyT'],['Y','KeyY'],['U','KeyU'],['I','KeyI'],['O','KeyO'],['P','KeyP'],['[','BracketLeft'],[']','BracketRight'],['\\','Backslash',1.5],['pgup','PageUp',1,'mod']],
+            [['caps','CapsLock',1.75,'mod'],['A','KeyA'],['S','KeyS'],['D','KeyD'],['F','KeyF'],['G','KeyG'],['H','KeyH'],['J','KeyJ'],['K','KeyK'],['L','KeyL'],[';','Semicolon'],["'",'Quote'],['open ↵','Enter',2.25,'accent'],['pgdn','PageDown',1,'mod']],
+            [['shift','ShiftLeft',2.25,'mod'],['Z','KeyZ'],['X','KeyX'],['C','KeyC'],['V','KeyV'],['B','KeyB'],['N','KeyN'],['M','KeyM'],[',','Comma'],['.','Period'],['/','Slash'],['shift','ShiftRight',1.75,'mod'],['↑','ArrowUp',1,'mod'],['end','End',1,'mod']],
+            [['ctrl','ControlLeft',1.25,'mod'],['opt','AltLeft',1.25,'mod'],['cmd','MetaLeft',1.25,'mod'],['','Space',6.25],['cmd','MetaRight',1,'mod'],['fn','Fn',1,'mod'],['ctrl','ControlRight',1,'mod'],['←','ArrowLeft',1,'mod'],['↓','ArrowDown',1,'mod'],['→','ArrowRight',1,'mod']]
+        ];
+
+        var kb = document.getElementById('kb');
+        var keyByCode = {};
+        ROWS.forEach(function (row) {
+            var rowEl = document.createElement('div');
+            rowEl.className = 'kb-row';
+            row.forEach(function (k) {
+                var label = k[0], code = k[1], size = k[2] || 1, kind = k[3] || '';
+                var el = document.createElement('button');
+                el.type = 'button';
+                el.className = 'key';
+                el.style.setProperty('--s', size);
+                el.dataset.code = code;
+                if (kind === 'mod') el.classList.add('mod');
+                if (kind === 'accent') el.classList.add('accent');
+                var html = '<span class="key-legend">' + label + '</span>';
+                if (kind.indexOf('project:') === 0) {
+                    var p = projects[+kind.split(':')[1] - 1];
+                    el.classList.add('project');
+                    el.style.setProperty('--c', p.dataset.color);
+                    el.dataset.project = kind.split(':')[1];
+                    el.setAttribute('aria-label', p.dataset.name);
+                    html += '<span class="key-led"></span><span class="key-name">' + p.dataset.name + '</span>';
+                }
+                if (code === 'Escape') el.setAttribute('aria-label', 'Home');
+                el.innerHTML = html;
+                rowEl.appendChild(el);
+                keyByCode[code] = el;
+            });
+            kb.appendChild(rowEl);
+        });
+
+        // ---- Screen ----
+        function show(i) {
+            if (i === current) return;
+            var prev = slides[current];
+            var next = slides[i];
+            slides.forEach(function (s) { s.classList.remove('is-leaving'); });
+            prev.classList.remove('is-active');
+            prev.classList.add('is-leaving');
+            next.classList.add('is-active');
+            setTimeout(function () { prev.classList.remove('is-leaving'); }, 520);
+
+            slides.forEach(function (s) {
+                var v = s.querySelector('video');
+                if (!v) return;
+                if (s === next) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+                else setTimeout(function () { v.pause(); }, 520);
+            });
+
+            current = i;
+            menubarApp.textContent = i === 0 ? 'Home' : next.dataset.name;
+            glow.style.setProperty('--glow', i === 0 ? '#1180f9' : next.dataset.color);
+            document.querySelectorAll('.key.project').forEach(function (k) {
+                k.classList.toggle('is-active', +k.dataset.project === i);
+            });
+        }
+
+        function open() {
+            if (current > 0) window.location.href = slides[current].dataset.href;
+        }
+
+        // ---- Prompt (type a project name on the home screen) ----
+        function match() {
+            if (typed.length < 1) return null;
+            var t = typed.toLowerCase();
+            for (var i = 0; i < projects.length; i++) {
+                if (projects[i].dataset.name.toLowerCase().indexOf(t) === 0) return i + 1;
+            }
+            return null;
+        }
+
+        function renderPrompt() {
+            typedEl.textContent = typed;
+            var m = match();
+            ghostEl.textContent = m ? projects[m - 1].dataset.name.slice(typed.length) : '';
+        }
+
+        // ---- Input ----
+        function act(code, key) {
+            if (/^Digit[1-5]$/.test(code)) return show(+code.slice(5));
+            if (code === 'Escape') { typed = ''; renderPrompt(); return show(0); }
+            if (code === 'ArrowRight' || code === 'ArrowDown') return show((current + 1) % slides.length);
+            if (code === 'ArrowLeft' || code === 'ArrowUp') return show((current - 1 + slides.length) % slides.length);
+            if (code === 'Enter') {
+                if (current === 0) {
+                    var m = match();
+                    typed = ''; renderPrompt();
+                    if (m) show(m);
+                    return;
+                }
+                return open();
+            }
+            if (current !== 0) return;
+            if (code === 'Backspace') { typed = typed.slice(0, -1); return renderPrompt(); }
+            if (code === 'Space') { typed += ' '; return renderPrompt(); }
+            if (key && key.length === 1 && /[a-z]/i.test(key) && typed.length < 24) { typed += key; renderPrompt(); }
+        }
+
+        function press(el) {
+            if (!el) return;
+            el.classList.add('is-down');
+            clearTimeout(el._t);
+            el._t = setTimeout(function () { el.classList.remove('is-down'); }, 140);
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.metaKey || e.ctrlKey) return;
+            var el = keyByCode[e.code];
+            if (el) { el.classList.add('is-down'); clearTimeout(el._t); }
+            if (/^(Arrow|Space|Backspace|Tab)/.test(e.code)) e.preventDefault();
+            if (!e.repeat) act(e.code, e.key);
+        });
+        document.addEventListener('keyup', function (e) {
+            var el = keyByCode[e.code];
+            if (el) el.classList.remove('is-down');
+        });
+
+        kb.addEventListener('click', function (e) {
+            var el = e.target.closest('.key');
+            if (!el) return;
+            press(el);
+            var label = el.querySelector('.key-legend').textContent;
+            act(el.dataset.code, label.length === 1 ? label.toLowerCase() : '');
+        });
+
+        document.querySelector('.screen').addEventListener('click', open);
+
+        // Menubar clock
+        var clock = document.querySelector('.menubar-clock');
+        function tickClock() {
+            clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        }
+        tickClock();
+        setInterval(tickClock, 15000);
+    })();
+    </script>
+</body>
+</html>

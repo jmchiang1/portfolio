@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="motion.css">
     <link rel="stylesheet" href="welcome.css">
+    <link rel="stylesheet" href="shell.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
 
     <style>
@@ -27,7 +28,7 @@
             z-index: 1;
             max-width: 1280px;
             margin: 0 auto;
-            padding: 200px 60px 80px;
+            padding: 128px 60px 80px;
         }
 
         /* ---- Centered hero (mirrors .motion-hero) ---- */
@@ -416,7 +417,7 @@
         .visitor-modal-backdrop {
             position: absolute;
             inset: 0;
-            background: rgba(0, 6, 12, 0.6);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             opacity: 0;
@@ -579,7 +580,7 @@
         .edit-modal-backdrop {
             position: absolute;
             inset: 0;
-            background: rgba(0, 6, 12, 0.6);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             opacity: 0;
@@ -597,7 +598,7 @@
             padding: 32px 32px 28px;
             background:
                 radial-gradient(120% 80% at 110% -10%, rgba(102, 210, 255, 0.08), transparent 55%),
-                linear-gradient(150deg, #0e1730 0%, #0a1024 100%);
+                linear-gradient(150deg, var(--page-surface-2) 0%, var(--page-surface) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
             opacity: 0;
@@ -766,7 +767,7 @@
             .peg-kb-wrap { height: 116px; }
         }
         @media (max-width: 540px) {
-            .visitors-layout { padding: 140px 16px 32px; }
+            .visitors-layout { padding: 112px 16px 32px; }
             .visitors-hero { margin-bottom: 40px; }
             .visitors-grid {
                 padding: 40px 22px;
@@ -828,15 +829,7 @@
 
     <!-- Visitors Content -->
     <main class="visitors-layout">
-        <section class="visitors-hero">
-            <h1 class="visitors-hero-title">
-                Everyone who's <span class="visitors-hero-title-accent">stopped by.</span>
-            </h1>
-            <div class="visitors-hero-meta">
-                <span id="visitorCount">— visitors</span>
-            </div>
-        </section>
-
+        <h1 class="visually-hidden">Visitors</h1>
         <section class="visitors-grid" id="visitorsGrid"></section>
         <nav class="visitors-pagination" id="visitorsPagination" aria-label="Visitor pages"></nav>
 
@@ -1476,7 +1469,7 @@
                 // sums real Supabase rows with the static seed cards that
                 // round out the gallery. Keep this in sync with pageCount().
                 var total = n + SEED_VISITORS.length;
-                countEl.textContent = total + ' visitor' + (total === 1 ? '' : 's');
+                if (countEl) countEl.textContent = total + ' visitor' + (total === 1 ? '' : 's');
                 showPage(1, true);
             });
 

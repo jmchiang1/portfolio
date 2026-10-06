@@ -15,168 +15,230 @@
         if (p && p.catch) p.catch(function () {});
     });
 
-    // Card click → animated modal open (flying-video animation lifts the
-    // card's preview video into the modal's video target)
-    cards.forEach(function (card) {
-        card.addEventListener('click', function () {
-            var modalId = card.getAttribute('data-modal');
-            if (!modalId) return;
-            var modal = document.getElementById(modalId);
-            if (!modal) return;
+    // ---- Project modal -------------------------------------------------
+    // One shared modal. Opening a card flies its preview video into
+    // .modal-video-target and shows the matching .modal-panel; prev/next
+    // swaps the video + panel in place; closing flies the video back home.
+    var modal = document.getElementById('motion-modal');
+    var modalContent = modal.querySelector('.modal-content');
+    var modalScroll = modal.querySelector('.modal-scroll');
+    var target = modal.querySelector('.modal-video-target');
+    var pagerCount = modal.querySelector('.modal-pager-count');
+    var EASE_OUT = 'cubic-bezier(0.16, 1, 0.3, 1)';
+    var FLY_RADIUS = '4px';
+    var currentIndex = -1;
+    var busy = false;
 
-            var cardVideo = card.querySelector('.project-video');
-            if (!cardVideo) {
-                modal.classList.add('modal-open');
-                document.body.style.overflow = 'hidden';
-                return;
-            }
-
-            // Measure the card video's current position
-            var cardRect = cardVideo.getBoundingClientRect();
-
-            // Pull the actual video out of the card and into a fixed flying wrapper
-            var flyingEl = document.createElement('div');
-            flyingEl.className = 'flying-video';
-            flyingEl.style.left = cardRect.left + 'px';
-            flyingEl.style.top = cardRect.top + 'px';
-            flyingEl.style.width = cardRect.width + 'px';
-            flyingEl.style.height = cardRect.height + 'px';
-
-            // Move the real video into the flying wrapper
-            cardVideo.classList.remove('project-video');
-            cardVideo.classList.add('flying-video-el');
-            flyingEl.appendChild(cardVideo);
-            document.body.appendChild(flyingEl);
-
-            // Show the modal overlay but keep content faded
-            modal.classList.add('modal-open', 'modal-animated');
-            document.body.style.overflow = 'hidden';
-
-            // Reset scroll so measurement is accurate
-            var modalContent = modal.querySelector('.modal-content');
-            if (modalContent) modalContent.scrollTop = 0;
-
-            // Ensure fade-in elements are hidden
-            var fadeItems = modal.querySelectorAll('.modal-fade-in');
-            fadeItems.forEach(function (el) { el.classList.remove('revealed'); });
-
-            // Force layout so modal is at its final position (transition: none)
-            modal.offsetHeight;
-
-            // Measure target now that modal is fully laid out
-            requestAnimationFrame(function () {
-                var target = modal.querySelector('.modal-video-target');
-
-                // Set target height from video's natural aspect ratio so it doesn't collapse
-                var vw = cardVideo.videoWidth;
-                var vh = cardVideo.videoHeight;
-                if (vw && vh) {
-                    target.style.aspectRatio = vw + ' / ' + vh;
-                } else {
-                    // Fallback: use the card video's current dimensions
-                    target.style.aspectRatio = cardRect.width + ' / ' + cardRect.height;
-                }
-
-                // Force layout so target has correct size before measuring
-                target.offsetHeight;
-
-                var targetRect = target.getBoundingClientRect();
-
-                // Animate to the target position
-                requestAnimationFrame(function () {
-                    flyingEl.style.left = targetRect.left + 'px';
-                    flyingEl.style.top = targetRect.top + 'px';
-                    flyingEl.style.width = targetRect.width + 'px';
-                    flyingEl.style.height = targetRect.height + 'px';
-                });
-
-                // After animation ends, drop the video into the modal target
-                flyingEl.addEventListener('transitionend', function handler(e) {
-                    if (e.target !== flyingEl) return;
-                    flyingEl.removeEventListener('transitionend', handler);
-
-                    // Move the video into the modal target slot
-                    cardVideo.classList.remove('flying-video-el');
-                    target.appendChild(cardVideo);
-                    flyingEl.remove();
-
-                    // Unmute and add controls if target has data-unmute
-                    if (target.hasAttribute('data-unmute')) {
-                        cardVideo.muted = false;
-                        cardVideo.controls = true;
-                    }
-
-                    // Stagger-reveal the rest of the modal content
-                    fadeItems.forEach(function (el, i) {
-                        setTimeout(function () {
-                            el.classList.add('revealed');
-                        }, i * 80);
-                    });
-                });
-            });
-        });
-    });
-
-    // Close modal helper
-    function closeModal(modal) {
-        if (!modal) return;
-        modal.classList.remove('modal-open', 'modal-animated');
-        document.body.style.overflow = '';
-
-        // Move the video back to its original card
-        var target = modal.querySelector('.modal-video-target');
-        if (target) {
-            var video = target.querySelector('video');
-            if (video) {
-                // Re-mute and remove controls before returning to card
-                video.muted = true;
-                video.controls = false;
-
-                // Find the card that owns this modal and put the video back
-                // inside its frame (so the overlay sits on top of it again)
-                var modalId = modal.id;
-                var ownerCard = document.querySelector('.motion-card[data-modal="' + modalId + '"]');
-                var ownerFrame = ownerCard && ownerCard.querySelector('.motion-card-frame');
-                var ownerOverlay = ownerFrame && ownerFrame.querySelector('.motion-card-frame-overlay');
-                if (ownerFrame) {
-                    video.classList.add('project-video');
-                    if (ownerOverlay) ownerFrame.insertBefore(video, ownerOverlay);
-                    else ownerFrame.appendChild(video);
-                }
-
-                // Resume the muted loop so the thumbnail keeps playing in the grid.
-                var p = video.play();
-                if (p && p.catch) p.catch(function () {});
-            }
-        }
-
-        // Reset fade-in items
-        var fadeItems = modal.querySelectorAll('.modal-fade-in');
-        fadeItems.forEach(function (el) { el.classList.remove('revealed'); });
+    function cardVideo(i) {
+        return cards[i].querySelector('video');
     }
 
-    // Close modal via X button
-    document.querySelectorAll('.modal-close').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            closeModal(btn.closest('.modal-overlay'));
-        });
-    });
+    function panelFor(i) {
+        return modal.querySelector('.modal-panel[data-project="' + cards[i].getAttribute('data-modal') + '"]');
+    }
 
-    // Close modal on overlay click (outside content)
-    document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
-        overlay.addEventListener('click', function (e) {
-            if (e.target === overlay) {
-                closeModal(overlay);
-            }
-        });
-    });
+    function playQuietly(video) {
+        var p = video.play();
+        if (p && p.catch) p.catch(function () {});
+    }
 
-    // Close modal on Escape key
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            var openModal = document.querySelector('.modal-overlay.modal-open');
-            if (openModal) closeModal(openModal);
+    // Shared fly helper — moves `video` into a fixed wrapper at `from`,
+    // transitions it to `to`, then hands it to `done`.
+    function fly(video, from, to, fromRadius, toRadius, done) {
+        var flyingEl = document.createElement('div');
+        flyingEl.className = 'flying-video';
+        flyingEl.style.left = from.left + 'px';
+        flyingEl.style.top = from.top + 'px';
+        flyingEl.style.width = from.width + 'px';
+        flyingEl.style.height = from.height + 'px';
+        flyingEl.style.borderRadius = fromRadius;
+
+        video.classList.remove('project-video');
+        flyingEl.appendChild(video);
+        document.body.appendChild(flyingEl);
+        playQuietly(video);
+
+        flyingEl.offsetHeight;
+        requestAnimationFrame(function () {
+            flyingEl.style.left = to.left + 'px';
+            flyingEl.style.top = to.top + 'px';
+            flyingEl.style.width = to.width + 'px';
+            flyingEl.style.height = to.height + 'px';
+            flyingEl.style.borderRadius = toRadius;
+        });
+
+        var finished = false;
+        function finish(e) {
+            if (finished || (e && e.target !== flyingEl)) return;
+            finished = true;
+            flyingEl.removeEventListener('transitionend', finish);
+            done(video);
+            flyingEl.remove();
         }
+        flyingEl.addEventListener('transitionend', finish);
+        setTimeout(finish, 700); // safety net if transitionend never fires
+    }
+
+    // Drop a video into the modal slot (sound + controls if the panel allows)
+    function mountInTarget(video, panel) {
+        target.appendChild(video);
+        if (panel && panel.hasAttribute('data-unmute')) {
+            video.muted = false;
+            video.controls = true;
+        }
+        playQuietly(video);
+    }
+
+    // Return a video to its card frame as a muted, looping thumbnail
+    function mountInCard(video, i) {
+        var frame = cards[i].querySelector('.motion-card-frame');
+        var overlay = frame.querySelector('.motion-card-frame-overlay');
+        video.muted = true;
+        video.controls = false;
+        video.classList.add('project-video');
+        frame.insertBefore(video, overlay);
+        playQuietly(video);
+    }
+
+    function pauseExtras(panel) {
+        if (!panel) return;
+        panel.querySelectorAll('.modal-extras video').forEach(function (v) { v.pause(); });
+    }
+
+    // Show panel i (hidden attr + dialog label + counter); fade items start hidden
+    function showPanel(i) {
+        modal.querySelectorAll('.modal-panel').forEach(function (p) { p.hidden = true; });
+        var panel = panelFor(i);
+        if (panel) panel.hidden = false;
+        var title = panel && panel.querySelector('.modal-title');
+        modalContent.setAttribute('aria-label', title ? title.textContent.trim() : '');
+        pagerCount.textContent = (i + 1) + '/' + cards.length;
+        modalScroll.scrollTop = 0;
+        return panel;
+    }
+
+    function revealFadeItems(panel) {
+        if (!panel) return;
+        panel.querySelectorAll('.modal-fade-in').forEach(function (el, i) {
+            setTimeout(function () { el.classList.add('revealed'); }, i * 80);
+        });
+    }
+
+    function hideFadeItems() {
+        modal.querySelectorAll('.modal-fade-in').forEach(function (el) { el.classList.remove('revealed'); });
+    }
+
+    function openModal(i) {
+        if (busy || currentIndex !== -1) return;
+        busy = true;
+        currentIndex = i;
+        var video = cardVideo(i);
+        var fromRect = video.getBoundingClientRect();
+
+        hideFadeItems();
+        var panel = showPanel(i);
+        modal.classList.add('modal-open', 'modal-animated');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        modal.offsetHeight;
+
+        fly(video, fromRect, target.getBoundingClientRect(), FLY_RADIUS, '0px', function (v) {
+            mountInTarget(v, panel);
+            revealFadeItems(panel);
+            busy = false;
+        });
+    }
+
+    function closeModal() {
+        if (busy || currentIndex === -1) return;
+        busy = true;
+        var i = currentIndex;
+        var video = target.querySelector('video');
+        var panel = panelFor(i);
+        pauseExtras(panel);
+        hideFadeItems();
+
+        var fromRect = target.getBoundingClientRect();
+        // Bring the owning card on screen first (it may have changed via
+        // prev/next) so the video has somewhere visible to land.
+        var frame = cards[i].querySelector('.motion-card-frame');
+        var frameRect = frame.getBoundingClientRect();
+        if (frameRect.bottom < 0 || frameRect.top > window.innerHeight) {
+            window.scrollTo({
+                top: window.scrollY + frameRect.top - (window.innerHeight - frameRect.height) / 2,
+                behavior: 'instant'
+            });
+            frameRect = frame.getBoundingClientRect();
+        }
+
+        video.muted = true;
+        video.controls = false;
+        modal.classList.remove('modal-open', 'modal-animated');
+        modal.setAttribute('aria-hidden', 'true');
+
+        fly(video, fromRect, frameRect, '0px', FLY_RADIUS, function (v) {
+            mountInCard(v, i);
+            document.body.style.overflow = '';
+            currentIndex = -1;
+            busy = false;
+        });
+    }
+
+    // Prev/next — slide the card out, swap video + panel, slide back in
+    function step(dir) {
+        if (busy || currentIndex === -1) return;
+        busy = true;
+        var prev = currentIndex;
+        var next = (prev + dir + cards.length) % cards.length;
+        var shift = dir > 0 ? -40 : 40;
+
+        var out = modalContent.animate([
+            { opacity: 1, transform: 'translateX(0)' },
+            { opacity: 0, transform: 'translateX(' + shift + 'px)' }
+        ], { duration: 180, easing: 'ease-in', fill: 'forwards' });
+
+        out.onfinish = function () {
+            pauseExtras(panelFor(prev));
+            var oldVideo = target.querySelector('video');
+            if (oldVideo) mountInCard(oldVideo, prev);
+
+            hideFadeItems();
+            currentIndex = next;
+            var panel = showPanel(next);
+            var video = cardVideo(next);
+            video.classList.remove('project-video');
+            mountInTarget(video, panel);
+
+            var inAnim = modalContent.animate([
+                { opacity: 0, transform: 'translateX(' + (-shift) + 'px)' },
+                { opacity: 1, transform: 'translateX(0)' }
+            ], { duration: 380, easing: EASE_OUT });
+            out.cancel();
+            revealFadeItems(panel);
+            inAnim.onfinish = function () { busy = false; };
+        };
+    }
+
+    cards.forEach(function (card, i) {
+        card.addEventListener('click', function () { openModal(i); });
+    });
+
+    modal.querySelector('.modal-close').addEventListener('click', closeModal);
+    modal.querySelector('.modal-prev').addEventListener('click', function () { step(-1); });
+    modal.querySelector('.modal-next').addEventListener('click', function () { step(1); });
+
+    // Close on backdrop click (outside the card / pager)
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+    });
+
+    // Escape closes; arrow keys page through projects
+    document.addEventListener('keydown', function (e) {
+        if (currentIndex === -1) return;
+        if (e.key === 'Escape') return closeModal();
+        if (e.target.tagName === 'VIDEO') return; // let focused videos seek
+        if (e.key === 'ArrowLeft') step(-1);
+        else if (e.key === 'ArrowRight') step(1);
     });
 
     // Desktop nav-link + logo exits — handled by the shared GSAP transitions module

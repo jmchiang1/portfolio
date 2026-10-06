@@ -351,7 +351,7 @@ a, button, [role="button"],
     z-index: 1;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 200px 60px 80px;
+    padding: 128px 60px 80px;
     opacity: 0;
     animation: vibes-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
 }
@@ -787,7 +787,7 @@ a, button, [role="button"],
     gap: 16px;
     flex: 1;
     background:
-        linear-gradient(to bottom, rgba(8, 8, 14, 0.75), rgba(8, 8, 14, 0.75));
+        var(--page-surface);
     backdrop-filter: blur(60px) saturate(160%);
     -webkit-backdrop-filter: blur(60px) saturate(160%);
     border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -1077,7 +1077,7 @@ a, button, [role="button"],
    ============================================ */
 @media (max-width: 1024px) {
     .vibes-layout {
-        padding: 180px 40px 60px;
+        padding: 128px 40px 60px;
     }
 
     .vibes-grid {
@@ -1261,7 +1261,7 @@ a, button, [role="button"],
 
     /* Layout adjustments */
     .vibes-layout {
-        padding: 160px 20px 40px;
+        padding: 112px 20px 40px;
         /* Safety clip in case fanned chips/transforms try to escape the
            viewport on narrow phones. */
         overflow-x: clip;

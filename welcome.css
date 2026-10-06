@@ -243,8 +243,8 @@ input { cursor: url('assets/cursor.cur'), text; }
     padding: 5px 5px 5px 16px;
     /* Opaque frosted surface over #000C19 — backdrop-filter blur was ineffective
        because the entrance transform created a compositing layer, so we fake the
-       frosted look with a near-solid navy that hides the background grid. */
-    background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #0d1626;
+       frosted look with a near-solid surface that hides the background grid. */
+    background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), var(--page-surface);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
@@ -253,7 +253,7 @@ input { cursor: url('assets/cursor.cur'), text; }
 
 .welcome-name-row:focus-within {
     border-color: rgba(17, 128, 249, 0.4);
-    background: linear-gradient(rgba(17, 128, 249, 0.1), rgba(17, 128, 249, 0.1)), #0d1626;
+    background: linear-gradient(rgba(17, 128, 249, 0.1), rgba(17, 128, 249, 0.1)), var(--page-surface);
     box-shadow: 0 0 0 4px rgba(17, 128, 249, 0.08);
 }
 
@@ -617,7 +617,7 @@ input { cursor: url('assets/cursor.cur'), text; }
     gap: 3px;
     padding: 4px;
     /* Opaque frosted surface — see .welcome-name-row note above. */
-    background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #0d1626;
+    background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), var(--page-surface);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     width: 100%;
@@ -914,7 +914,7 @@ body.welcome-exiting .welcome-skip {
     z-index: 9999;
     display: grid;
     place-items: center;
-    background: rgba(0, 12, 25, 0.95);
+    background: color-mix(in srgb, var(--page-bg) 95%, transparent);
     backdrop-filter: blur(18px) saturate(120%);
     -webkit-backdrop-filter: blur(18px) saturate(120%);
     will-change: transform, opacity;

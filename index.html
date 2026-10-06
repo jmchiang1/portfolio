@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="shell.css">
     <link rel="prefetch" href="assets/nocta/hero-mockup.jpg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
 
@@ -110,19 +111,30 @@
 
         <!-- Section: Hero -->
         <section class="section section-hero" id="hero">
-            <div class="hero-content">
-                <h1 class="hero-heading">Jonathan Chiang</h1>
-                <p class="hero-tagline">Turning product ideas into <em>shipped</em> experiences.</p>
+            <!-- Hero monitor — a simple desktop screen that types out the
+                 intro. In grid mode the frame collapses (display: contents)
+                 so the grid hero is unchanged. -->
+            <div class="hero-monitor">
+                <div class="hero-screen">
+                    <div class="hero-screen-bar" aria-hidden="true">
+                        <span class="hero-screen-dots"><i></i><i></i><i></i></span>
+                        <span class="hero-screen-title">~/desktop</span>
+                    </div>
+                    <div class="hero-content">
+                        <h1 class="hero-heading">Jonathan Chiang</h1>
+                        <p class="hero-tagline">Turning product ideas into <em>shipped</em> experiences.</p>
+                    </div>
+                    <footer class="footer-info">
+                        <div class="footer-col-left">
+                            <p class="footer-name">Jonathan Chiang</p>
+                            <p class="footer-text footer-desktop">A Product Designer and Software Engineer<br>with 4 years of experience based in NYC</p>
+                        </div>
+                        <p class="footer-text footer-desktop">Currently Design Engineering<br>at <a href="https://www.skillcatapp.com/" target="_blank" rel="noopener noreferrer" class="footer-link">SkillCat</a></p>
+                        <!-- <p class="footer-text footer-mobile">Product Designer &amp; Engineer · NYC · Currently at <a href="https://www.skillcatapp.com/" target="_blank" rel="noopener noreferrer" class="footer-link">SkillCat</a></p> -->
+                    </footer>
+                </div>
             </div>
             <p class="hero-swipe-hint">Swipe right to view case studies <span class="swipe-arrow">→</span></p>
-            <footer class="footer-info">
-                <div class="footer-col-left">
-                    <p class="footer-name">Jonathan Chiang</p>
-                    <p class="footer-text footer-desktop">A Product Designer and Software Engineer<br>with 4 years of experience based in NYC</p>
-                </div>
-                <p class="footer-text footer-desktop">Currently Design Engineering<br>at <a href="https://www.skillcatapp.com/" target="_blank" rel="noopener noreferrer" class="footer-link">SkillCat</a></p>
-                <!-- <p class="footer-text footer-mobile">Product Designer &amp; Engineer · NYC · Currently at <a href="https://www.skillcatapp.com/" target="_blank" rel="noopener noreferrer" class="footer-link">SkillCat</a></p> -->
-            </footer>
         </section>
 
         <!-- Carousel counter — visible only when in carousel view -->

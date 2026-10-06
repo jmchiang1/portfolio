@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbit (prototype) | Jonathan Chiang</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="shell.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
+
+    <!-- PROTOTYPE — orbit carousel. Cards ride a ring around the title:
+         one peeking left, one right, one far behind the title (heavily
+         blurred), two deep in the back. Scroll / arrows rotate the ring. -->
+    <style>
+        .orbit-stage {
+            position: fixed;
+            inset: 0;
+            perspective: 1400px;
+            perspective-origin: 50% 45%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* ---- Title (sits between the back of the ring and the front) ---- */
+        .orbit-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -54%);
+            text-align: center;
+            z-index: 60;
+            pointer-events: none;
+            transition: opacity 0.6s ease, filter 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .orbit-title h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(var(--text-48), 6.4vw, var(--text-96));
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            white-space: nowrap;
+            color: #fff;
+            text-shadow: 0 6px 40px rgba(0, 0, 0, 0.55);
+        }
+
+        .orbit-title p {
+            margin-top: 18px;
+            font-size: var(--text-20);
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .orbit-title p em {
+            font-family: 'Space Grotesk', sans-serif;
+            font-style: italic;
+            color: #fff;
+        }
+
+        body.is-focus .orbit-title {
+            opacity: 0.12;
+            filter: blur(6px);
+            transform: translate(-50%, -54%) scale(0.92);
+        }
+
+        /* ---- Cards ---- */
+        .orbit-card {
+            --w: min(58vw, 940px);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: var(--w);
+            aspect-ratio: 16 / 10;
+            margin-left: calc(var(--w) / -2);
+            margin-top: calc(var(--w) * -0.3125);
+            border-radius: 10px;
+            overflow: hidden;
+            text-decoration: none;
+            color: #fff;
+            background: var(--card-bg);
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
+            will-change: transform, filter, opacity;
+            cursor: url('assets/pointer.cur'), pointer;
+        }
+
+        .orbit-card-inner {
+            position: absolute;
+            inset: 0;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .orbit-card.is-near:hover .orbit-card-inner,
+        .orbit-card.is-front:hover .orbit-card-inner {
+            transform: scale(1.025);
+        }
+
+        .orbit-media {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 74%;
+            transform: translate(-50%, -50%);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .orbit-media video,
+        .orbit-media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .orbit-media--phone {
+            width: auto;
+            height: 84%;
+            aspect-ratio: 430 / 932;
+            border-radius: 28px;
+            border: 6px solid #1c1f27;
+        }
+
+        .orbit-media--full {
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transform: none;
+            top: 0;
+            left: 0;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .orbit-logo {
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            object-fit: cover;
+            z-index: 2;
+        }
+
+        .orbit-card-info {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 80px 28px 24px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.78), transparent);
+            z-index: 2;
+        }
+
+        .orbit-card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: var(--text-36);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .orbit-card-desc {
+            margin-top: 4px;
+            max-width: 60ch;
+            font-size: var(--text-16);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .orbit-card-tags {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            z-index: 2;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            font-size: var(--text-14);
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* ---- Counter + hint ---- */
+        .orbit-counter,
+        .orbit-hint {
+            position: fixed;
+            left: 50%;
+            bottom: 44px;
+            transform: translateX(-50%);
+            z-index: 120;
+            font-family: 'Space Mono', monospace;
+            font-size: var(--text-14);
+            color: rgba(255, 255, 255, 0.6);
+            white-space: nowrap;
+            transition: opacity 0.4s ease;
+        }
+
+        .orbit-counter {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            opacity: 0;
+        }
+
+        .orbit-counter b {
+            font-size: var(--text-24);
+            color: #fff;
+        }
+
+        .orbit-counter .orbit-counter-name {
+            padding-left: 12px;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: #fff;
+        }
+
+        body.is-focus .orbit-counter { opacity: 1; }
+        body.is-focus .orbit-hint { opacity: 0; }
+
+        .orbit-hint kbd {
+            display: inline-block;
+            min-width: 26px;
+            margin: 0 2px;
+            padding: 2px 6px 4px;
+            border-radius: 5px;
+            background: var(--page-surface-2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.35);
+            font-family: inherit;
+            color: #fff;
+            text-align: center;
+        }
+
+        .proto-badge {
+            position: fixed;
+            left: 24px;
+            bottom: 24px;
+            z-index: 130;
+            padding: 6px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            font-family: 'Space Mono', monospace;
+            font-size: var(--text-11);
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .orbit-card { --w: 82vw; }
+            .orbit-title p { font-size: var(--text-16); }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+
+    <nav class="navbar">
+        <a href="/" class="nav-logo"><img src="assets/logo.png" alt="JC" /></a>
+        <div class="nav-links">
+            <a href="index.html?skipgate" class="nav-link active">UX/UI</a>
+            <a href="motion.html" class="nav-link">Motion</a>
+            <a href="vibes.html" class="nav-link">Vibes</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="visitors.html" class="nav-link">Visitors</a>
+        </div>
+    </nav>
+
+    <main class="orbit-stage">
+        <div class="orbit-title">
+            <h1>Jonathan Chiang</h1>
+            <p>Turning product ideas into <em>shipped</em> experiences.</p>
+        </div>
+
+        <a href="skillcat.html" class="orbit-card" data-name="SkillCat"
+           style="--card-bg: radial-gradient(60% 60% at 50% 2%, rgba(255,138,92,.45), transparent 58%), linear-gradient(180deg, #E8552E 0%, #8a2d15 30%, #2a0f08 74%, #160a06 100%)">
+            <div class="orbit-card-inner">
+                <img class="orbit-logo" src="assets/skillcat/skillcat-logo.png" alt="">
+                <span class="orbit-card-tags">In-House · Brand Redesign · 2026</span>
+                <div class="orbit-media" style="aspect-ratio: 1920/1308">
+                    <video src="assets/skillcat/B2B/hero.mp4" poster="assets/skillcat/B2B/poster-hero.jpg" autoplay muted loop playsinline></video>
+                </div>
+                <div class="orbit-card-info">
+                    <h2 class="orbit-card-title">SkillCat</h2>
+                    <p class="orbit-card-desc">Reimagining how trade professionals learn, certify, and grow on mobile</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="nocta.html" class="orbit-card" data-name="Nocta"
+           style="--card-bg: radial-gradient(58% 62% at 50% 0%, rgba(243,168,124,.2), transparent 62%), linear-gradient(180deg, #0e1424 0%, #060912 100%)">
+            <div class="orbit-card-inner">
+                <img class="orbit-logo" src="assets/nocta/nocta-logo.svg" alt="" style="background:#0e1424; object-fit:contain; padding:6px">
+                <span class="orbit-card-tags">Personal · 0-1 Design · 2025</span>
+                <div class="orbit-media orbit-media--phone">
+                    <video src="assets/nocta/v2/flow-week.mp4" poster="assets/nocta/v2/flow-week-poster.jpg" autoplay muted loop playsinline></video>
+                </div>
+                <div class="orbit-card-info">
+                    <h2 class="orbit-card-title">Nocta</h2>
+                    <p class="orbit-card-desc">Transforming complex CPAP data into personalized, actionable insights</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="scriptchain.html" class="orbit-card" data-name="ScriptChain Health"
+           style="--card-bg: radial-gradient(60% 60% at 50% 2%, rgba(126,205,201,.42), transparent 58%), linear-gradient(180deg, #48a9a6 0%, #235a58 30%, #0c2422 74%, #061413 100%)">
+            <div class="orbit-card-inner">
+                <img class="orbit-logo" src="assets/scriptchain/scriptchain-logo.png" alt="">
+                <span class="orbit-card-tags">In-House · 0-1 Design · 2025</span>
+                <div class="orbit-media" style="aspect-ratio: 1600/1094">
+                    <video src="assets/scriptchain/scriptchain-website.mp4" poster="assets/scriptchain/poster-scriptchain-website.jpg" autoplay muted loop playsinline></video>
+                </div>
+                <div class="orbit-card-info">
+                    <h2 class="orbit-card-title">ScriptChain Health</h2>
+                    <p class="orbit-card-desc">Reducing metabolic syndrome through custom diet and exercise plans</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="robinhood.html" class="orbit-card" data-name="Robinhood Mirror" style="--card-bg: #0b0b0b">
+            <div class="orbit-card-inner">
+                <span class="orbit-card-tags">Personal · Feature Add On · 2024</span>
+                <div class="orbit-media orbit-media--full">
+                    <img src="assets/robinhood-mockup.png" alt="">
+                </div>
+                <div class="orbit-card-info">
+                    <h2 class="orbit-card-title">Robinhood Mirror</h2>
+                    <p class="orbit-card-desc">Public Profiles and Mirror Trading for young investors</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="reveal.html" class="orbit-card" data-name="Reveal" style="--card-bg: #05070d">
+            <div class="orbit-card-inner">
+                <span class="orbit-card-tags">Personal · AR/VR · 2024</span>
+                <div class="orbit-media orbit-media--full">
+                    <video src="assets/Reveal-animation.mp4" autoplay muted loop playsinline></video>
+                </div>
+                <div class="orbit-card-info">
+                    <h2 class="orbit-card-title">Reveal</h2>
+                    <p class="orbit-card-desc">Using augmented reality to uncover and reimagine hostile architecture</p>
+                </div>
+            </div>
+        </a>
+    </main>
+
+    <p class="orbit-hint">Scroll or press <kbd>→</kbd> to orbit through case studies</p>
+    <div class="orbit-counter" aria-live="polite">
+        <b class="orbit-counter-current">01</b><span>/ 05</span>
+        <span class="orbit-counter-name">SkillCat</span>
+    </div>
+
+    <a class="proto-badge" href="index.html?skipgate">PROTOTYPE · orbit — back to current home</a>
+
+    <script>
+    (function () {
+        var cards = Array.from(document.querySelectorAll('.orbit-card'));
+        var N = cards.length;
+        var STEP = 360 / N;
+        var HERO = -0.5;              // half-step offset: card 0 right, last card left, middle card behind
+        var counterCur = document.querySelector('.orbit-counter-current');
+        var counterName = document.querySelector('.orbit-counter-name');
+        document.querySelector('.orbit-counter span').textContent = '/ ' + String(N).padStart(2, '0');
+
+        // pos: continuous ring position (card index at the front). Hero
+        // state sits on a half step so no card is in front of the title.
+        var pos = HERO, targetPos = HERO;
+        var spread = 1, targetSpread = 1;   // 1 = hero ring (wide), 0 = focus ring (tighter)
+
+        function isFocus() { return Math.abs(targetPos - Math.round(targetPos)) < 0.01; }
+        function frontIndex() { return ((Math.round(targetPos) % N) + N) % N; }
+
+        function layout() {
+            var vw = window.innerWidth;
+            var mobile = vw < 768;
+            // Wider ring in hero so the side cards sit at the screen edges,
+            // tighter in focus so the neighbours peek in beside the front card.
+            var rx = vw * (mobile ? 0.9 + 0.25 * spread : 0.8 + 0.27 * spread);
+            var rz = 900;
+            var P = 1400;
+
+            cards.forEach(function (card, i) {
+                var theta = ((i - pos) * STEP) % 360;
+                if (theta > 180) theta -= 360;
+                if (theta <= -180) theta += 360;
+                var rad = theta * Math.PI / 180;
+                var x = Math.sin(rad) * rx;
+                var z = (Math.cos(rad) - 1) * rz;
+                var ry = -Math.sin(rad) * 30;
+                var depth = (1 - Math.cos(rad)) / 2;        // 0 front → 1 back
+
+                // Depth styling — the back of the ring melts into a soft blur
+                var b = Math.max(0, depth - 0.15) / 0.85;
+                var blur = Math.pow(b, 1.2) * 26;
+                var bright = 1 - depth * 0.55;
+                var opacity = 1 - Math.pow(depth, 1.4) * 0.55;
+
+                card.style.transform = 'translate3d(' + x.toFixed(1) + 'px, 0, ' + z.toFixed(1) + 'px) rotateY(' + ry.toFixed(2) + 'deg)';
+                card.style.filter = 'blur(' + blur.toFixed(1) + 'px) brightness(' + bright.toFixed(3) + ')';
+                card.style.opacity = opacity.toFixed(3);
+                // Near half of the ring renders over the title (z 60), far half under it
+                card.style.zIndex = String(depth < 0.4 ? 100 + Math.round((1 - depth) * 100) : Math.round((1 - depth) * 50));
+                card.classList.toggle('is-front', depth < 0.02);
+                card.classList.toggle('is-near', depth < 0.25);
+                card.style.pointerEvents = depth < 0.5 ? 'auto' : 'none';
+            });
+        }
+
+        // rAF spring-ish easing so cards travel ALONG the ring (a CSS transform
+        // transition would cut straight across the circle instead).
+        var raf = null;
+        function tick() {
+            pos += (targetPos - pos) * 0.11;
+            spread += (targetSpread - spread) * 0.11;
+            if (Math.abs(targetPos - pos) < 0.0008 && Math.abs(targetSpread - spread) < 0.001) {
+                pos = targetPos; spread = targetSpread;
+                layout();
+                raf = null;
+                return;
+            }
+            layout();
+            raf = requestAnimationFrame(tick);
+        }
+
+        function goTo(p) {
+            targetPos = p;
+            targetSpread = isFocus() ? 0 : 1;
+            document.body.classList.toggle('is-focus', isFocus());
+            if (isFocus()) {
+                var i = frontIndex();
+                counterCur.textContent = String(i + 1).padStart(2, '0');
+                counterName.textContent = cards[i].getAttribute('data-name');
+            }
+            if (!raf) raf = requestAnimationFrame(tick);
+        }
+
+        // Hero → first card → … → last card → hero (keeps rotating the same way)
+        function next() {
+            if (!isFocus()) goTo(targetPos + 0.5);
+            else if (frontIndex() === N - 1) goTo(targetPos + 0.5);
+            else goTo(targetPos + 1);
+        }
+        function prev() {
+            if (!isFocus()) goTo(targetPos - 0.5);
+            else if (frontIndex() === 0) goTo(targetPos - 0.5);
+            else goTo(targetPos - 1);
+        }
+
+        // Click: front card opens; any other visible card rotates to the front
+        cards.forEach(function (card, i) {
+            card.addEventListener('click', function (e) {
+                if (card.classList.contains('is-front')) return;
+                e.preventDefault();
+                var cur = targetPos;
+                var d = ((i - cur) % N + N) % N;
+                if (d > N / 2) d -= N;
+                goTo(Math.round(cur + d));
+            });
+        });
+
+        // One wheel gesture = one step
+        var lastWheel = 0, gestureUsed = false;
+        window.addEventListener('wheel', function (e) {
+            var now = Date.now();
+            if (now - lastWheel > 120) gestureUsed = false;
+            lastWheel = now;
+            if (gestureUsed) return;
+            var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+            if (Math.abs(d) < 8) return;
+            gestureUsed = true;
+            if (d > 0) next(); else prev();
+        }, { passive: true });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev();
+            else if (e.key === 'Escape') goTo(Math.floor(targetPos) + 0.5 - (isFocus() ? 1 : 0));
+            else if (e.key === 'Enter' && isFocus()) window.location.href = cards[frontIndex()].getAttribute('href');
+        });
+
+        // Touch swipe
+        var tx = null;
+        window.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+        window.addEventListener('touchend', function (e) {
+            if (tx === null) return;
+            var dx = e.changedTouches[0].clientX - tx;
+            if (Math.abs(dx) > 40) { if (dx < 0) next(); else prev(); }
+            tx = null;
+        });
+
+        window.addEventListener('resize', layout);
+
+        // Entrance — ring spins in from a quarter turn away
+        pos = HERO - 1.5;
+        spread = 1.4;
+        layout();
+        requestAnimationFrame(function () { goTo(HERO); });
+    })();
+    </script>
+</body>
+</html>

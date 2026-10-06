@@ -372,7 +372,7 @@ a, button, [role="button"],
     z-index: 1;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 200px 60px 80px;
+    padding: 128px 60px 80px;
     opacity: 0;
     animation: motion-layout-fade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
 }
@@ -581,6 +581,8 @@ a, button, [role="button"],
 .motion-card:nth-child(4) { animation-delay: 0.9s; }
 .motion-card:nth-child(5) { animation-delay: 1.0s; }
 .motion-card:nth-child(6) { animation-delay: 1.1s; }
+.motion-card:nth-child(7) { animation-delay: 1.2s; }
+.motion-card:nth-child(8) { animation-delay: 1.3s; }
 
 @keyframes motion-card-up {
     to { opacity: 1; transform: translateY(0); }
@@ -596,7 +598,6 @@ a, button, [role="button"],
 
 .motion-card-preview {
     position: relative;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     background: #0a0a0d;
 }
 
@@ -646,18 +647,84 @@ a, button, [role="button"],
     opacity: 0.4;
 }
 
+/* Info overlay — hidden until hover, like the UX/UI cards: it rises over the
+   bottom of the video on a blurred, darkened band. Touch screens show it
+   by default (see the hover: none query below). */
 .motion-card-body {
-    position: relative;
-    padding: 28px 28px 24px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 80px 28px 24px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    flex: 1;
-    background:
-        linear-gradient(to bottom, rgba(8, 8, 14, 0.75), rgba(8, 8, 14, 0.75));
-    backdrop-filter: blur(60px) saturate(160%);
-    -webkit-backdrop-filter: blur(60px) saturate(160%);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 10px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* Blur + darkening layer behind the text, faded in from the top edge */
+.motion-card-body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.75) 100%);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
+}
+
+.motion-card:hover .motion-card-body {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Type + year chip — top-right, drops in on hover like the UX/UI card tags.
+   Darker fill than UX/UI so it stays legible on the white-background videos. */
+.motion-card-tags {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.35);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: var(--text-14);
+    color: #fff;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.motion-card-tag-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.motion-card:hover .motion-card-tags {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (hover: none) {
+    .motion-card-body,
+    .motion-card-tags {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .motion-card-header {
@@ -683,25 +750,16 @@ a, button, [role="button"],
     line-height: 1.1;
 }
 
-.motion-card-year {
-    font-family: 'Space Mono', monospace;
-    font-size: var(--text-12);
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.4);
-    padding-top: 4px;
-    flex-shrink: 0;
-}
-
 .motion-card-description {
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-15);
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.82);
 }
 
 @media (max-width: 1024px) {
     .motion-layout {
-        padding: 180px 40px 60px;
+        padding: 128px 40px 60px;
     }
 
     .motion-grid {
@@ -711,7 +769,7 @@ a, button, [role="button"],
 
 @media (max-width: 768px) {
     .motion-layout {
-        padding: 160px 20px 40px;
+        padding: 112px 20px 40px;
     }
 
     .motion-hero {
@@ -724,7 +782,7 @@ a, button, [role="button"],
     }
 
     .motion-card-title { font-size: var(--text-22); }
-    .motion-card-body { padding: 22px 22px 20px; }
+    .motion-card-body { padding: 64px 20px 18px; }
 }
 
 /* ============================================
@@ -948,21 +1006,27 @@ a, button, [role="button"],
 }
 
 /* ============================================
-   Modal
+   Modal — media card / pager
    ============================================ */
 .modal-overlay {
     position: fixed;
     inset: 0;
     z-index: 200;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 20px;
+    padding: 24px 16px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.35s ease;
+    /* Card width tracks the 16:9 video so the video + info always fit the
+       viewport: whatever's left after the pager and info panel. */
+    --modal-w: min(1040px, 100%, calc((100svh - 356px) * 16 / 9));
 }
 
 .modal-overlay.modal-open {
@@ -970,24 +1034,22 @@ a, button, [role="button"],
     pointer-events: auto;
 }
 
+/* Media card — non-scrolling shell so the close button stays pinned while
+   .modal-scroll (video + info + extra videos) scrolls underneath it. */
 .modal-content {
     position: relative;
-    width: 80%;
-    max-height: 85vh;
-    /* A step lighter than the page body (#000C19) so the modal reads as an
-       elevated surface, while keeping the same navy temperature as the rest
-       of the dark theme. */
-    background: #0F1B30;
-    border: none;
-    border-radius: 12px;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: max(var(--modal-w), min(560px, 100%));
+    min-height: 0;
+    flex: 0 1 auto;
+    background: var(--page-surface);
+    /* border: 1px solid rgba(255, 255, 255, 0.08); */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
     transform: translateY(30px) scale(0.96);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    scrollbar-width: none;
-}
-
-.modal-content::-webkit-scrollbar {
-    display: none;
 }
 
 .modal-overlay.modal-open .modal-content {
@@ -1000,73 +1062,173 @@ a, button, [role="button"],
     transition: none;
 }
 
+.modal-scroll {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+
+.modal-scroll::-webkit-scrollbar {
+    display: none;
+}
+
 .modal-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    border: none;
-    background: rgba(0, 0, 0, 0.06);
-    color: #030b2a;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: color-mix(in srgb, var(--page-bg) 55%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: var(--text-20);
     cursor: url('assets/pointer.cur'), pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, transform 0.16s ease;
     z-index: 10;
 }
 
 .modal-close:hover {
-    background: rgba(0, 0, 0, 0.12);
+    background: color-mix(in srgb, var(--page-bg) 80%, transparent);
 }
 
-.modal-body {
-    padding: 50px 80px 80px;
-    font-family: 'Parkinsans', sans-serif;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    line-height: 1.5;
-    font-size: var(--text-16);
+.modal-close:active {
+    transform: scale(0.94);
 }
 
-/* All modal labels (titles, section labels) — white against the dark
-   modal bg. Previously the default was purple (#AA37F2 for Neon Drift)
-   with a per-modal override to dark navy; both are now unified to white. */
-.modal-label {
-    color: #fff;
-    font-size: var(--text-16);
-    font-weight: 700;
-    margin-bottom: 0;
-}
-
-/* Reduce gap between title and video */
-.modal-label + .modal-video-target {
-    margin-top: -20px;
-}
-
-/* Target slot where the flying video lands */
+/* Target slot where the flying video lands — full-bleed top of the card */
 .modal-video-target {
+    position: relative;
     width: 100%;
-    border-radius: 4px;
+    aspect-ratio: 16 / 9;
+    background: #000;
     overflow: hidden;
 }
 
 .modal-video-target video {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
     display: block;
-    border-radius: 4px;
-    background: black;
+    background: #000;
+}
+
+/* Info panel */
+.modal-info {
+    padding: 28px 32px 30px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #fff;
+}
+
+.modal-info-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+}
+
+.modal-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: var(--text-22);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.modal-tag {
+    padding: 3px 10px;
+    border-radius: 8px;
+    background: rgba(17, 128, 249, 0.16);
+    color: #7cbcff;
+    font-size: var(--text-14);
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.modal-year {
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.modal-desc {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: var(--text-16);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 68ch;
+}
+
+.modal-built {
+    margin-top: 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.modal-built-label {
+    font-size: var(--text-16);
+    font-weight: 500;
+    color: #fff;
+}
+
+.modal-built-tools {
+    margin-top: 4px;
+    font-size: var(--text-16);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Overlapping tool-logo stack */
+.modal-tool-logos {
+    display: flex;
+    flex-shrink: 0;
+    padding-left: 10px;
+}
+
+.modal-tool-logo {
+    width: 38px;
+    height: 38px;
+    margin-left: -10px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--page-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-tool-logo img {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+/* Additional videos for multi-video projects — stacked below the info */
+.modal-extras {
+    padding: 0 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .modal-video-short {
     width: 100%;
-    background: #dde3ec;
-    border-radius: 4px;
+    background: #000;
+    border-radius: 10px;
     overflow: hidden;
 }
 
@@ -1074,10 +1236,80 @@ a, button, [role="button"],
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 4px;
 }
 
-/* Flying video — animates from card to modal */
+/* Pager — prev / count / next */
+.modal-pager {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* Prev/next are keycaps matching the nav; the count is a flat plate */
+.modal-pager-btn,
+.modal-pager-count {
+    height: 48px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-pager-btn {
+    width: 48px;
+    font-size: var(--text-20);
+    background: var(--page-surface-2);
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.35);
+    color: var(--page-muted);
+    cursor: url('assets/pointer.cur'), pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.12s ease, translate 0.12s ease;
+}
+
+.modal-pager-btn:hover {
+    background: color-mix(in srgb, var(--page-surface-2) 80%, white 6%);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+    color: #fff;
+    translate: 0 2px;
+}
+
+.modal-pager-btn:active {
+    background: #fff;
+    border-color: #fff;
+    color: var(--page-bg);
+}
+
+.modal-pager-btn:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+.modal-pager-count {
+    background: var(--page-surface);
+    border-color: var(--page-line);
+    color: var(--page-muted);
+    min-width: 72px;
+    padding: 0 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-16);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Pager drifts in with the overlay, and back out on close */
+.modal-pager {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.modal-open .modal-pager {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.15s;
+}
+
+/* Flying video — animates from card to modal (and back on close) */
 .flying-video {
     position: fixed;
     z-index: 300;
@@ -1089,12 +1321,14 @@ a, button, [role="button"],
     transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1),
                 top 0.5s cubic-bezier(0.16, 1, 0.3, 1),
                 width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .flying-video video {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     display: block;
     background: black;
 }
@@ -1111,48 +1345,60 @@ a, button, [role="button"],
     transform: translateY(0);
 }
 
-.modal-video-short p,
-.modal-video-large p {
-    font-size: var(--text-36);
-    font-weight: 400;
-}
+@media (max-width: 640px) {
+    .modal-overlay {
+        gap: 14px;
+        padding: 16px;
+        --modal-w: 100%;
+    }
 
-.modal-meta {
-    display: flex;
-    gap: 129px;
-    align-items: flex-start;
-}
+    .modal-content {
+        border-radius: 14px;
+    }
 
-.modal-meta-overview {
-    flex: 1;
-    min-width: 0;
-}
+    .modal-close {
+        top: 10px;
+        right: 10px;
+        width: 34px;
+        height: 34px;
+        font-size: var(--text-16);
+    }
 
-.modal-meta-overview p:not(.modal-label) {
-    margin-bottom: 8px;
-}
+    .modal-info {
+        padding: 20px 20px 22px;
+    }
 
-.modal-meta-sidebar {
-    width: 197px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 24px;
-}
+    .modal-title {
+        font-size: var(--text-18);
+    }
 
-.modal-meta-sidebar p:not(.modal-label) {
-    margin-bottom: 0;
-}
+    .modal-tag {
+        font-size: var(--text-12);
+    }
 
-.modal-video-large {
-    width: 100%;
-    height: 500px;
-    background: #dde3ec;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .modal-desc,
+    .modal-built-label,
+    .modal-built-tools {
+        font-size: var(--text-14);
+    }
+
+    .modal-built {
+        margin-top: 18px;
+    }
+
+    .modal-extras {
+        padding: 0 20px 20px;
+        gap: 14px;
+    }
+
+    .modal-pager-btn,
+    .modal-pager-count {
+        height: 42px;
+    }
+
+    .modal-pager-btn {
+        width: 42px;
+    }
 }
 
 /* ============================================
@@ -1292,53 +1538,6 @@ a, button, [role="button"],
 
     .social-links {
         display: none;
-    }
-
-    /* Modal — mobile scaling */
-    .modal-content {
-        width: 95%;
-        max-height: 90vh;
-        border-radius: 4px;
-    }
-
-    .modal-body {
-        padding: 40px 20px 32px;
-        gap: 24px;
-        font-size: var(--text-14);
-    }
-
-    .modal-label {
-        font-size: var(--text-14);
-    }
-
-    .modal-close {
-        top: 12px;
-        right: 12px;
-        width: 32px;
-        height: 32px;
-    }
-
-    .modal-close svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .modal-meta {
-        flex-direction: column;
-        gap: 24px;
-    }
-
-    .modal-meta-sidebar {
-        width: 100%;
-    }
-
-    .modal-video-short p,
-    .modal-video-large p {
-        font-size: var(--text-20);
-    }
-
-    .modal-label + .modal-video-target {
-        margin-top: -12px;
     }
 
     /* Hamburger button */

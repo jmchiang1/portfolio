@@ -269,7 +269,8 @@
     // Nocta=blue, ScriptChain=green, Robinhood=gold, SkillCat=orange,
     // Reveal=blue, NovaCore=violet, Mindscapes=pink
     var GLOW_COLORS = ['blue', 'green', 'gold', 'orange', 'blue', 'violet', 'pink'];
-    var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-far-left', 'pos-far-right', 'pos-hero-peek'];
+    var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-far-left', 'pos-far-right',
+                       'pos-hero-peek', 'pos-hero-peek-left', 'pos-hero-back', 'pos-back-left', 'pos-back-right'];
 
     var currentView = 'hero'; // 'hero' or 'carousel'
     var activeIndex = 0;
@@ -288,35 +289,29 @@
         POS_CLASSES.forEach(function (cls) { card.classList.remove(cls); });
     }
 
-    // Hero view: Nocta peeks from right, rest hidden right
+    // Cards ride a ring. In the hero view the ring sits on a half step, so no
+    // card is in front of the monitor: card 0 peeks right, the last card peeks
+    // left, the opposite card parks blurred behind the screen, the rest hide.
+    var RING_STEP = 360 / totalCards;
+
+    function heroAngle(i) {
+        var a = ((i + 0.5) * RING_STEP) % 360;
+        return a > 180 ? a - 360 : a;
+    }
+
+    // Shortest signed distance around the ring from the active card
+    function ringDiff(i) {
+        var d = ((i - activeIndex) % totalCards + totalCards) % totalCards;
+        return d > totalCards / 2 ? d - totalCards : d;
+    }
+
     function positionCardsForHero() {
         cards.forEach(function (card, i) {
             removePositions(card);
-            if (i === 0) card.classList.add('pos-hero-peek');
-            else card.classList.add('pos-far-right');
-        });
-    }
-
-    // Hero view after looping forward from last card:
-    // All cards exit left, then Nocta snaps to far-right and animates to hero-peek
-    function positionCardsForHeroLoopForward() {
-        cards.forEach(function (card, i) {
-            removePositions(card);
-            if (i === 0) {
-                // Snap Nocta to far-right instantly, then animate to hero-peek
-                card.style.transition = 'none';
-                card.classList.add('pos-far-right');
-                // Force reflow so the snap takes effect before re-enabling transitions
-                card.offsetHeight;
-                card.style.transition = '';
-                requestAnimationFrame(function () {
-                    card.classList.remove('pos-far-right');
-                    card.classList.add('pos-hero-peek');
-                });
-            } else {
-                // All other cards exit to the left
-                card.classList.add('pos-far-left');
-            }
+            var a = heroAngle(i);
+            if (Math.abs(a) <= RING_STEP / 2 + 0.01) card.classList.add(a > 0 ? 'pos-hero-peek' : 'pos-hero-peek-left');
+            else if (Math.abs(a) >= 180 - RING_STEP / 2 - 0.01) card.classList.add('pos-hero-back');
+            else card.classList.add(a > 0 ? 'pos-far-right' : 'pos-far-left');
         });
     }
 
@@ -324,12 +319,11 @@
         cards.forEach(function (card, i) {
             removePositions(card);
 
-            var diff = i - activeIndex;
+            var diff = ringDiff(i);
             if (diff === 0) card.classList.add('pos-center');
             else if (diff === -1) card.classList.add('pos-left');
             else if (diff === 1) card.classList.add('pos-right');
-            else if (diff < -1) card.classList.add('pos-far-left');
-            else card.classList.add('pos-far-right');
+            else card.classList.add(diff < 0 ? 'pos-back-left' : 'pos-back-right');
         });
     }
 
@@ -338,7 +332,7 @@
         glow.classList.add('glow-' + GLOW_COLORS[activeIndex % GLOW_COLORS.length]);
     }
 
-    function showHero(loopForward) {
+    function showHero() {
         currentView = 'hero';
         heroContent.classList.remove('hero-hidden');
         footerInfo.classList.remove('footer-hidden');
@@ -349,11 +343,7 @@
         setCounterVisible(false);
         setNavVisible(false);
 
-        if (loopForward) {
-            positionCardsForHeroLoopForward();
-        } else {
-            positionCardsForHero();
-        }
+        positionCardsForHero();
 
         // Keep carousel on top during exit animation, then drop it behind
         setTimeout(function () {
@@ -376,27 +366,6 @@
         setCounterVisible(true);
         setNavVisible(layoutMode === 'carousel');
 
-        // Cards that were on the left but need to be on the right (after a loop)
-        // should silently snap to far-right first, then animate to their target position.
-        var crossingCards = [];
-        cards.forEach(function (card, i) {
-            var wasLeft = card.classList.contains('pos-far-left') || card.classList.contains('pos-left');
-            var diff = i - activeIndex;
-            var willBeRight = diff >= 1;
-            if (wasLeft && willBeRight) {
-                crossingCards.push(card);
-                card.style.transition = 'none';
-                removePositions(card);
-                card.classList.add('pos-far-right');
-            }
-        });
-
-        // Force reflow so the snap to far-right takes effect
-        if (crossingCards.length) cards[0].offsetHeight;
-
-        // Re-enable transitions on snapped cards so they animate to their target
-        crossingCards.forEach(function (card) { card.style.transition = ''; });
-
         positionCards();
 
         updateGlow();
@@ -409,8 +378,8 @@
             updateGlow();
             updateCounter();
         } else {
-            // Last card → loop back to hero, continue left direction
-            showHero(true);
+            // Last card → the ring keeps turning back round to the hero
+            showHero();
         }
     }
 
@@ -421,16 +390,16 @@
             updateGlow();
             updateCounter();
         } else {
-            // First card → go back to hero, cards exit right
-            showHero(false);
+            // First card → turn back to the hero
+            showHero();
         }
     }
 
-    // Initial load: start ALL cards offscreen (including Nocta) so Nocta can
-    // animate in alongside the hero + footer entrance, instead of being pre-placed
-    cards.forEach(function (card) {
+    // Initial load: start every card offscreen on its own side of the ring so
+    // they swing into their hero spots alongside the monitor entrance
+    cards.forEach(function (card, i) {
         removePositions(card);
-        card.classList.add('pos-far-right');
+        card.classList.add(heroAngle(i) < 0 ? 'pos-far-left' : 'pos-far-right');
     });
 
     // After entrance animation, switch to class-driven state so transitions work
@@ -448,15 +417,12 @@
             swipeHint.removeEventListener('animationend', handler);
         });
     }
-    // Enable transitions after a frame, then animate Nocta in from offscreen
-    // to its hero-peek position alongside the hero content entrance
+    // Enable transitions after a frame, then swing the ring into its hero
+    // positions alongside the monitor entrance
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
             carouselSection.classList.add('carousel-ready');
-            setTimeout(function () {
-                cards[0].classList.remove('pos-far-right');
-                cards[0].classList.add('pos-hero-peek');
-            }, 400);
+            setTimeout(positionCardsForHero, 400);
         });
     });
 
@@ -565,8 +531,14 @@
         if (card.tagName !== 'A') return;
 
         card.addEventListener('click', function (e) {
-            // In carousel mode only the center card navigates; in grid mode any card does
-            if (layoutMode === 'carousel' && !card.classList.contains('pos-center')) return;
+            // In carousel mode only the center card navigates; a peeking card
+            // turns the ring toward itself instead. In grid mode any card navigates.
+            if (layoutMode === 'carousel' && !card.classList.contains('pos-center')) {
+                e.preventDefault();
+                if (card.matches('.pos-right, .pos-hero-peek')) stepCarousel(1);
+                else if (card.matches('.pos-left, .pos-hero-peek-left')) stepCarousel(-1);
+                return;
+            }
             // External links (target="_blank") just open natively — no page-exit transition
             if (card.getAttribute('target') === '_blank') return;
             e.preventDefault();
@@ -668,35 +640,97 @@
     }, { passive: true });
 })();
 
-// Hero name — typewriter animation on initial load
+// Hero monitor — types out the intro and the footer lines together
 (function () {
+    var monitor = document.querySelector('.hero-monitor');
+    if (monitor) {
+        // Hand off from the entrance keyframes so the hide/show transition works
+        monitor.addEventListener('animationend', function handler(e) {
+            if (e.target !== monitor) return;
+            monitor.classList.add('entered');
+            monitor.removeEventListener('animationend', handler);
+        });
+    }
+
     var heading = document.querySelector('.hero-heading');
     if (!heading) return;
-
-    var fullText = (heading.textContent || '').trim();
-    if (!fullText) return;
-
     // Preserve the name for screen readers regardless of typing state
-    heading.setAttribute('aria-label', fullText);
-    heading.innerHTML = '<span class="hero-typed"></span><span class="hero-cursor" aria-hidden="true">|</span>';
+    heading.setAttribute('aria-label', (heading.textContent || '').trim());
 
-    var typed = heading.querySelector('.hero-typed');
-    var START_DELAY_MS = 300;  // kicks in just as the hero entrance starts
-    var CHAR_MS = 67;          // ~1s total for "Jonathan Chiang" (15 chars × 67ms)
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    var cursor = heading.querySelector('.hero-cursor');
-    var i = 0;
-    function typeNext() {
-        if (i < fullText.length) {
-            typed.textContent = fullText.substring(0, i + 1);
-            i++;
-            setTimeout(typeNext, CHAR_MS);
-        } else {
-            // Typing complete — brief hold so the user reads the cursor blink, then fade.
-            setTimeout(function () {
-                if (cursor) cursor.classList.add('hero-cursor-hidden');
-            }, 280);
-        }
+    // The intro types first (name → tagline); once the tagline lands, both
+    // footer columns type in together. [element, ms per character, pause]
+    var intro = [[heading, 60, 450], [document.querySelector('.hero-tagline'), 24, 220]];
+    var footerColumns = Array.prototype.map.call(
+        document.querySelectorAll('.footer-info .footer-text'),
+        function (el) { return [[el, 16, 200]]; }
+    );
+
+    // Split each text node into a typed span + an invisible remainder so the
+    // final layout is reserved up front and nothing reflows while typing.
+    function prepare(el) {
+        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        var nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        return nodes.filter(function (n) { return n.nodeValue.length; }).map(function (n) {
+            var done = document.createElement('span');
+            var rest = document.createElement('span');
+            rest.className = 'type-rest';
+            rest.textContent = n.nodeValue;
+            n.parentNode.insertBefore(done, n);
+            n.parentNode.replaceChild(rest, n);
+            return { done: done, rest: rest, text: rest.textContent };
+        });
     }
-    setTimeout(typeNext, START_DELAY_MS);
+
+    function makeCaret() {
+        var caret = document.createElement('span');
+        caret.className = 'type-caret';
+        caret.setAttribute('aria-hidden', 'true');
+        return caret;
+    }
+
+    // Blank every line up front (so the footer stays empty while the intro
+    // types), returning a queue of lines ready to type.
+    function toQueue(lines) {
+        return lines
+            .filter(function (l) { return l[0] && l[0].offsetParent !== null; })
+            .map(function (l) { return { parts: prepare(l[0]), ms: l[1], delay: l[2] }; });
+    }
+
+    // Types a queue line by line. The intro keeps its caret blinking at the
+    // end; each footer caret is removed once its column finishes.
+    function runStream(queue, keepCaret, onDone) {
+        var caret = makeCaret();
+
+        function typeLine(li) {
+            if (li >= queue.length) {
+                if (!keepCaret && caret.parentNode) caret.parentNode.removeChild(caret);
+                if (onDone) onDone();
+                return;
+            }
+            var line = queue[li];
+            var pi = 0, ci = 0;
+            function step() {
+                if (pi >= line.parts.length) return typeLine(li + 1);
+                var part = line.parts[pi];
+                if (ci === 0) part.done.parentNode.insertBefore(caret, part.rest);
+                ci++;
+                part.done.textContent = part.text.slice(0, ci);
+                part.rest.textContent = part.text.slice(ci);
+                var ch = part.text.charAt(ci - 1);
+                if (ci >= part.text.length) { pi++; ci = 0; }
+                setTimeout(step, ch === ' ' ? line.ms * 0.5 : line.ms);
+            }
+            setTimeout(step, line.delay);
+        }
+        typeLine(0);
+    }
+
+    var introQueue = toQueue(intro);
+    var footerQueues = footerColumns.map(toQueue);
+    runStream(introQueue, true, function () {
+        footerQueues.forEach(function (q) { runStream(q, false); });
+    });
 })();

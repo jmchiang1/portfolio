@@ -649,21 +649,6 @@ a, button, [role="button"],
     color: #fff;
 }
 
-/* Typewriter cursor — blinks while name is being typed, then fades out */
-.hero-cursor {
-    display: inline-block;
-    color: #0082FA;
-    font-weight: 400;
-    margin-left: 0.08em;
-    animation: cursor-blink 1s step-end infinite;
-    transition: opacity 0.3s ease;
-}
-
-.hero-cursor.hero-cursor-hidden {
-    animation: none;
-    opacity: 0;
-}
-
 @keyframes cursor-blink {
     50% { opacity: 0; }
 }
@@ -856,7 +841,7 @@ a, button, [role="button"],
     height: 56px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(20, 22, 30, 0.45);
+    background: color-mix(in srgb, var(--page-surface) 45%, transparent);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     color: rgba(255, 255, 255, 0.9);
@@ -1033,6 +1018,8 @@ a.project-card {
 /* Enable transitions after initial positioning */
 .carousel-ready .project-card {
     transition: transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+                opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+                filter 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
                 z-index 0s linear 0.2s;
 }
 
@@ -1115,6 +1102,56 @@ a.project-card {
 
 .project-card.pos-far-right::after {
     background: rgba(0, 0, 0, 1);
+}
+
+/* ---- Orbit ring poses ----
+   Hero view sits on a half step of the ring: the first card peeks right
+   (pos-hero-peek), the last card mirrors it on the left, and the card
+   opposite them parks far behind the monitor, out of sight. */
+.project-card.pos-hero-peek-left {
+    transform: translateX(-105%) rotateY(30deg) scale(0.75);
+    z-index: 3;
+}
+
+.project-card.pos-hero-peek-left::after {
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.project-card.pos-hero-back {
+    transform: translateY(-4%) translateZ(-650px);
+    filter: blur(28px) saturate(1.2);
+    opacity: 0.75;
+    z-index: 0;
+}
+
+/* Carousel view: the far side of the ring, tucked behind the front card */
+.project-card.pos-back-left,
+.project-card.pos-back-right {
+    opacity: 0;
+    z-index: 0;
+}
+
+.project-card.pos-back-left {
+    transform: translateX(-55%) translateZ(-900px) rotateY(25deg);
+}
+
+.project-card.pos-back-right {
+    transform: translateX(55%) translateZ(-900px) rotateY(-25deg);
+}
+
+/* Peeking cards are clickable — they rotate the ring toward themselves */
+.project-card.pos-left,
+.project-card.pos-right,
+.project-card.pos-hero-peek,
+.project-card.pos-hero-peek-left {
+    pointer-events: auto;
+}
+
+.project-card.pos-left:hover::after,
+.project-card.pos-right:hover::after,
+.project-card.pos-hero-peek:hover::after,
+.project-card.pos-hero-peek-left:hover::after {
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .project-image {
@@ -1658,6 +1695,7 @@ body.grid-mode .project-card {
 /* In grid mode, cards are always visible regardless of view (standard portfolio layout) */
 body.grid-mode .project-card {
     opacity: 1 !important;
+    filter: none !important;
     pointer-events: auto;
 }
 
@@ -2582,3 +2620,233 @@ body.grid-mode .project-title {
     .kb-fly { display: none; }
 }
 
+
+/* ============================================
+   Hero monitor — a simple desktop screen around the intro.
+   Scoped to carousel layout; grid mode collapses the frame (see below).
+   ============================================ */
+body:not(.grid-mode) .section-hero {
+    /* Above the carousel so the back card sits behind the screen; clicks
+       pass through to the peeking cards everywhere except the monitor. */
+    z-index: 3;
+    pointer-events: none;
+    padding-top: 56px;
+}
+
+.hero-monitor {
+    --screen-w: min(1000px, 72vw, calc((100dvh - 230px) * 16 / 9));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    animation: monitor-enter 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+    transition: opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@keyframes monitor-enter {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hero-monitor.entered {
+    animation: none;
+    opacity: 1;
+    transform: none;
+}
+
+/* Carousel view — the monitor recedes and fades as the cards take over */
+.section-hero.section-hidden .hero-monitor {
+    opacity: 0;
+    transform: scale(0.92);
+    pointer-events: none;
+}
+
+.hero-screen {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: var(--screen-w);
+    aspect-ratio: 16 / 9;
+    border: 12px solid #242321;
+    border-radius: 18px;
+    background:
+        radial-gradient(80% 70% at 50% 45%, rgba(255, 255, 255, 0.035), transparent 70%),
+        var(--page-surface, #1f1e1c);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.07),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 40px 100px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.hero-screen-bar {
+    position: relative;
+    flex-shrink: 0;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hero-screen-dots {
+    position: absolute;
+    left: 14px;
+    display: flex;
+    gap: 7px;
+}
+
+.hero-screen-dots i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.hero-screen-title {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Content inside the screen — the monitor handles the entrance, so the
+   hero/footer skip their own scale/slide-in and just type out. */
+body:not(.grid-mode) .hero-screen .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: none;
+    padding: 0 48px;
+    animation: none;
+    opacity: 1;
+    transform: none;
+}
+
+body:not(.grid-mode) .hero-screen .hero-heading {
+    font-size: min(var(--text-88), calc(var(--screen-w) * 0.085));
+}
+
+/* Plain block text (not inline-flex) so the typing spans don't pick up
+   flex gaps between words */
+body:not(.grid-mode) .hero-screen .hero-tagline {
+    display: block;
+    font-size: min(var(--text-22), calc(var(--screen-w) * 0.024));
+}
+
+body:not(.grid-mode) .hero-screen .footer-info {
+    position: static;
+    flex-shrink: 0;
+    width: auto;
+    max-width: none;
+    margin: 0 40px 28px;
+    padding-top: 18px;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    gap: 32px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    animation: none;
+    opacity: 1;
+    transform: none;
+}
+
+body:not(.grid-mode) .hero-screen .footer-text {
+    font-size: min(var(--text-18), calc(var(--screen-w) * 0.018));
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Grid mode — drop the frame so hero + footer lay out exactly as before */
+body.grid-mode .hero-monitor,
+body.grid-mode .hero-screen {
+    display: contents;
+}
+
+body.grid-mode .hero-screen-bar {
+    display: none;
+}
+
+body.grid-mode .type-caret {
+    display: none;
+}
+
+/* Typewriter — each text node is split into a typed part and an invisible
+   remainder, so the final layout is reserved and nothing reflows. */
+.type-rest {
+    visibility: hidden;
+}
+
+.type-caret {
+    position: relative;
+    display: inline-block;
+    width: 0;
+    height: 1em;
+}
+
+.type-caret::after {
+    content: '';
+    position: absolute;
+    left: 0.05em;
+    bottom: -0.14em;
+    width: 0.07em;
+    min-width: 2px;
+    height: 1.05em;
+    background: #0082FA;
+    animation: cursor-blink 1s step-end infinite;
+}
+
+@media (max-width: 640px) {
+    body:not(.grid-mode) .section-hero {
+        padding-top: 40px;
+    }
+
+    .hero-monitor {
+        --screen-w: calc(100vw - 32px);
+    }
+
+    .hero-screen {
+        aspect-ratio: auto;
+        min-height: 56dvh;
+        border-width: 8px;
+        border-radius: 14px;
+    }
+
+    body:not(.grid-mode) .hero-screen .hero-content {
+        padding: 0 16px;
+    }
+
+    body:not(.grid-mode) .hero-screen .hero-heading {
+        font-size: var(--text-56);
+    }
+
+    body:not(.grid-mode) .hero-screen .hero-tagline {
+        font-size: var(--text-18);
+    }
+
+    /* Mobile cards are tall enough that the back card's blur spills out
+       above the screen — keep it fully hidden here */
+    .project-card.pos-hero-back {
+        opacity: 0;
+    }
+
+    /* Mobile footer has no visible lines — drop the divider + spacing */
+    body:not(.grid-mode) .hero-screen .footer-info {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-monitor {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}

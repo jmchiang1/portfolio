@@ -310,7 +310,7 @@ a, button, [role="button"],
     z-index: 1;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 140px 60px 80px;
+    padding: 128px 60px 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -520,7 +520,7 @@ a, button, [role="button"],
     width: 100%;
     padding: 36px 40px;
     background:
-        linear-gradient(to bottom, rgba(10, 10, 16, 0.45), rgba(10, 10, 16, 0.55)),
+        linear-gradient(to bottom, color-mix(in srgb, var(--page-surface) 45%, transparent), color-mix(in srgb, var(--page-surface) 55%, transparent)),
         rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 4px;
@@ -733,7 +733,7 @@ a, button, [role="button"],
     width: min(540px, 92vw);
     padding: 40px 36px;
     background:
-        linear-gradient(to bottom, rgba(14, 14, 20, 0.85), rgba(8, 8, 14, 0.9)),
+        linear-gradient(to bottom, color-mix(in srgb, var(--page-surface-2) 85%, transparent), color-mix(in srgb, var(--page-surface) 90%, transparent)),
         rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
@@ -797,7 +797,7 @@ a, button, [role="button"],
     width: min(520px, 92vw);
     padding: 40px 36px 32px;
     background:
-        linear-gradient(to bottom, rgba(14, 14, 20, 0.9), rgba(8, 8, 14, 0.92)),
+        linear-gradient(to bottom, color-mix(in srgb, var(--page-surface-2) 90%, transparent), color-mix(in srgb, var(--page-surface) 92%, transparent)),
         rgba(255, 255, 255, 0.02);
     /* Blue glow border — matches .text-display:focus-within */
     border: 1px solid rgba(17, 128, 249, 0.35);
@@ -1189,7 +1189,7 @@ a, button, [role="button"],
 
     /* Layout */
     .typing-layout {
-        padding: 110px 20px 40px;
+        padding: 112px 20px 40px;
         gap: 24px;
     }
 

@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="motion.css">
+    <link rel="stylesheet" href="shell.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
     <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
 
@@ -77,35 +78,67 @@
 
     <!-- Motion Content -->
     <main class="motion-layout">
-        <!-- Hero / Intro -->
-        <section class="motion-hero">
-        <div class="hero-title-wrap">
-            <span class="hero-logo-chip hero-logo-tl" aria-hidden="true">
-                <img src="https://api.iconify.design/logos/adobe-after-effects.svg" alt="" loading="lazy">
-            </span>
-            <span class="hero-logo-chip hero-logo-tr" aria-hidden="true">
-                <img src="https://cdn.simpleicons.org/figma/f24e1e" alt="" loading="lazy">
-            </span>
-            <span class="hero-logo-chip hero-logo-bl" aria-hidden="true">
-                <img src="https://api.iconify.design/logos/adobe-photoshop.svg" alt="" loading="lazy">
-            </span>
-            <span class="hero-logo-chip hero-logo-br" aria-hidden="true">
-                <img src="https://cdn.simpleicons.org/blender/e87d0d" alt="" loading="lazy">
-            </span>
-            <h1 class="motion-hero-title">
-                Motion<span class="motion-hero-title-accent">.</span>
-            </h1>
-        </div>
-    </section>
+        <h1 class="visually-hidden">Motion</h1>
 
     <!-- Project Grid -->
     <section class="motion-grid">
-        <!-- Card 0 — SkillCat -->
+        <!-- Card — American Express -->
+        <article class="motion-card" data-modal="amex-modal">
+            <div class="motion-card-preview motion-card-preview-light">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/American Express.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="motion-card-tags">
+                    <span>Product launch</span>
+                    <span class="motion-card-tag-divider" aria-hidden="true"></span>
+                    <span>2026</span>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">American Express</h2>
+                    </div>
+                </div>
+                <p class="motion-card-description">Launching the Amex Card Shop.</p>
+            </div>
+        </article>
+
+        <!-- Card — Robinhood -->
+        <article class="motion-card" data-modal="robinhood-product-modal">
+            <div class="motion-card-preview">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/Robinhood.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="motion-card-tags">
+                    <span>Product motion</span>
+                    <span class="motion-card-tag-divider" aria-hidden="true"></span>
+                    <span>2026</span>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">Robinhood</h2>
+                    </div>
+                </div>
+                <p class="motion-card-description">Portfolio growth, animated.</p>
+            </div>
+        </article>
+
+        <!-- Card — SkillCat -->
         <article class="motion-card" data-modal="skillcat-modal">
             <div class="motion-card-preview">
                 <div class="motion-card-frame">
                     <video class="project-video" src="assets/Motion/SkillCat.mp4" muted loop playsinline preload="metadata"></video>
                     <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="motion-card-tags">
+                    <span>Brand motion</span>
+                    <span class="motion-card-tag-divider" aria-hidden="true"></span>
+                    <span>2026</span>
                 </div>
             </div>
             <div class="motion-card-body">
@@ -113,20 +146,22 @@
                     <div class="motion-card-titlewrap">
                         <h2 class="motion-card-title">SkillCat</h2>
                     </div>
-                    <span class="motion-card-year">2026</span>
                 </div>
-                <p class="motion-card-description">
-                    A motion graphics piece for SkillCat, made with Claude.
-                </p>
+                <p class="motion-card-description">A promo for the SkillCat learning app.</p>
             </div>
         </article>
 
-        <!-- Card 1 — Neon Drift -->
+        <!-- Card — Neon Drift -->
         <article class="motion-card" data-modal="neon-drift-modal">
             <div class="motion-card-preview">
                 <div class="motion-card-frame">
                     <video class="project-video" src="assets/Motion/Neon Drift/neon-lights-logo.mp4" muted loop playsinline preload="metadata"></video>
                     <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="motion-card-tags">
+                    <span>Festival identity</span>
+                    <span class="motion-card-tag-divider" aria-hidden="true"></span>
+                    <span>2025</span>
                 </div>
             </div>
             <div class="motion-card-body">
@@ -134,41 +169,22 @@
                     <div class="motion-card-titlewrap">
                         <h2 class="motion-card-title">Neon Drift</h2>
                     </div>
-                    <span class="motion-card-year">2025</span>
                 </div>
-                <p class="motion-card-description">
-                    A music festival concept for chill pop and lofi — animated identity across posters, web, and social.
-                </p>
+                <p class="motion-card-description">Identity for a lofi music festival.</p>
             </div>
         </article>
 
-        <!-- Card 2 — Clarity -->
-        <article class="motion-card" data-modal="clarity-modal">
-            <div class="motion-card-preview">
-                <div class="motion-card-frame">
-                    <video class="project-video" src="assets/Motion/clarity-web.mp4" muted loop playsinline preload="metadata"></video>
-                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
-                </div>
-            </div>
-            <div class="motion-card-body">
-                <div class="motion-card-header">
-                    <div class="motion-card-titlewrap">
-                        <h2 class="motion-card-title">Clarity</h2>
-                    </div>
-                    <span class="motion-card-year">2025</span>
-                </div>
-                <p class="motion-card-description">
-                    A generative motion music video built with Space Type Generater and After Effects.
-                </p>
-            </div>
-        </article>
-
-        <!-- Card 3 — Momi -->
+        <!-- Card — Momi -->
         <article class="motion-card" data-modal="momi-modal">
             <div class="motion-card-preview">
                 <div class="motion-card-frame">
                     <video class="project-video" src="assets/Motion/momi logo.mp4" muted loop playsinline preload="metadata"></video>
                     <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="motion-card-tags">
+                    <span>Logo animation</span>
+                    <span class="motion-card-tag-divider" aria-hidden="true"></span>
+                    <span>2025</span>
                 </div>
             </div>
             <div class="motion-card-body">
@@ -176,20 +192,22 @@
                     <div class="motion-card-titlewrap">
                         <h2 class="motion-card-title">Museum of the Moving Image</h2>
                     </div>
-                    <span class="motion-card-year">2025</span>
                 </div>
-                <p class="motion-card-description">
-                    A logo animation for MoMI — bringing the museum's identity to life through motion and typography.
-                </p>
+                <p class="motion-card-description">The museum's logo, in motion.</p>
             </div>
         </article>
 
-        <!-- Card 4 — Robinhood Trim Path -->
+        <!-- Card — Robinhood Trim Path -->
         <article class="motion-card" data-modal="robinhood-modal">
             <div class="motion-card-preview motion-card-preview-light">
                 <div class="motion-card-frame">
                     <video class="project-video" src="assets/Motion/Robinhood Trim Path.mp4" muted loop playsinline preload="metadata"></video>
                     <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="motion-card-tags">
+                    <span>Logo animation</span>
+                    <span class="motion-card-tag-divider" aria-hidden="true"></span>
+                    <span>2025</span>
                 </div>
             </div>
             <div class="motion-card-body">
@@ -197,20 +215,22 @@
                     <div class="motion-card-titlewrap">
                         <h2 class="motion-card-title">Robinhood Legends</h2>
                     </div>
-                    <span class="motion-card-year">2025</span>
                 </div>
-                <p class="motion-card-description">
-                    A trim-path logo animation for Robinhood Legends — a bold, path-driven reveal.
-                </p>
+                <p class="motion-card-description">A trim-path logo reveal.</p>
             </div>
         </article>
 
-        <!-- Card 5 — ScriptChain Health Demo -->
+        <!-- Card — ScriptChain Health Demo -->
         <article class="motion-card" data-modal="scriptchain-modal">
             <div class="motion-card-preview">
                 <div class="motion-card-frame">
                     <video class="project-video" src="assets/Motion/Scriptchain Health Demo.mp4" muted loop playsinline preload="metadata"></video>
                     <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="motion-card-tags">
+                    <span>Product demo</span>
+                    <span class="motion-card-tag-divider" aria-hidden="true"></span>
+                    <span>2025</span>
                 </div>
             </div>
             <div class="motion-card-body">
@@ -218,240 +238,262 @@
                     <div class="motion-card-titlewrap">
                         <h2 class="motion-card-title">ScriptChain Health</h2>
                     </div>
-                    <span class="motion-card-year">2025</span>
                 </div>
-                <p class="motion-card-description">
-                    A product demo animation for ScriptChain Health — patient-facing dashboards and data viz workflows.
-                </p>
+                <p class="motion-card-description">Health dashboards, animated.</p>
+            </div>
+        </article>
+
+        <!-- Card — Clarity -->
+        <article class="motion-card" data-modal="clarity-modal">
+            <div class="motion-card-preview">
+                <div class="motion-card-frame">
+                    <video class="project-video" src="assets/Motion/clarity-web.mp4" muted loop playsinline preload="metadata"></video>
+                    <div class="motion-card-frame-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="motion-card-tags">
+                    <span>Music video</span>
+                    <span class="motion-card-tag-divider" aria-hidden="true"></span>
+                    <span>2025</span>
+                </div>
+            </div>
+            <div class="motion-card-body">
+                <div class="motion-card-header">
+                    <div class="motion-card-titlewrap">
+                        <h2 class="motion-card-title">Clarity</h2>
+                    </div>
+                </div>
+                <p class="motion-card-description">A generative type music video.</p>
             </div>
         </article>
         </section>
     </main>
 
-    <!-- SkillCat Modal -->
-    <div class="modal-overlay" id="skillcat-modal">
-        <div class="modal-content">
+    <!-- Project Modal — one shared shell. The opened card's video flies into
+         .modal-video-target; the matching .modal-panel (by data-project) is
+         shown underneath it. Prev/next steps through cards in grid order. -->
+    <div class="modal-overlay" id="motion-modal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true">
             <button class="modal-close" aria-label="Close">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <i class="hn hn-times" aria-hidden="true"></i>
             </button>
 
-            <div class="modal-body">
-                <p class="modal-label">SkillCat Motion Graphics</p>
-
-                <div class="modal-video-target" data-unmute></div>
-
-                <div class="modal-meta modal-fade-in">
-                    <div class="modal-meta-overview">
-                        <p class="modal-label">Project Overview</p>
-                        <p>A motion graphics video for SkillCat, created with Claude.</p>
-                    </div>
-                    <div class="modal-meta-sidebar">
-                        <div>
-                            <p class="modal-label">Tools</p>
-                            <p>Claude</p>
-                        </div>
-                        <div>
-                            <p class="modal-label">Timeline</p>
-                            <p>2026</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Neon Drift Modal -->
-    <div class="modal-overlay" id="neon-drift-modal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-
-            <div class="modal-body">
-                <p class="modal-label modal-fade-in">Neon Drift | Music Festival Concept</p>
-
+            <div class="modal-scroll">
                 <div class="modal-video-target"></div>
 
-                <div class="modal-meta modal-fade-in">
-                    <div class="modal-meta-overview">
-                        <p class="modal-label">Project Overview</p>
-                        <p>Ever since I could remember, I have loved chill pop music, and most recently lofi hip hop beats. But there aren't any music festivals that encompass this sub-genre of music, so I created a website for it and animated it!</p>
-                        <p>Music inspiration came from artists like Keshi, Joji, SZA, and Giveon. While visual inspiration came from Vaporwave and Synthwave aesthetics.</p>
-                    </div>
-                    <div class="modal-meta-sidebar">
-                        <div>
-                            <p class="modal-label">Tools</p>
-                            <p>Figma</p>
-                            <p>Adobe Illustrator</p>
-                            <p>Adobe After Effects</p>
-                            <p>Blender</p>
+                <!-- American Express -->
+                <div class="modal-panel" data-project="amex-modal" data-unmute hidden>
+                    <div class="modal-info modal-fade-in">
+                        <div class="modal-info-head">
+                            <h3 class="modal-title">American Express</h3>
+                            <span class="modal-tag">Motion graphics</span>
+                            <span class="modal-year">2026</span>
                         </div>
-                        <div>
-                            <p class="modal-label">Timeline</p>
-                            <p>Spring 2025</p>
+                        <div class="modal-desc">
+                            <p>A launch concept introducing the American Express Card Shop.</p>
+                        </div>
+                        <div class="modal-built">
+                            <div>
+                                <p class="modal-built-label">Built with</p>
+                                <p class="modal-built-tools">Claude</p>
+                            </div>
+                            <div class="modal-tool-logos" aria-hidden="true">
+                                <span class="modal-tool-logo"><img src="assets/skillcat/ai-logos/claude.svg" alt=""></span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="modal-video-short modal-fade-in">
-                    <video src="assets/Motion/Neon Drift/neon-lights-website.mp4" controls loop playsinline></video>
+                <!-- Robinhood -->
+                <div class="modal-panel" data-project="robinhood-product-modal" data-unmute hidden>
+                    <div class="modal-info modal-fade-in">
+                        <div class="modal-info-head">
+                            <h3 class="modal-title">Robinhood</h3>
+                            <span class="modal-tag">Motion graphics</span>
+                            <span class="modal-year">2026</span>
+                        </div>
+                        <div class="modal-desc">
+                            <p>Portfolio allocation and growth projections, brought to life.</p>
+                        </div>
+                        <div class="modal-built">
+                            <div>
+                                <p class="modal-built-label">Built with</p>
+                                <p class="modal-built-tools">Claude</p>
+                            </div>
+                            <div class="modal-tool-logos" aria-hidden="true">
+                                <span class="modal-tool-logo"><img src="assets/skillcat/ai-logos/claude.svg" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="modal-video-short modal-fade-in">
-                    <video src="assets/Motion/Neon Drift/neon-lights-posterboard.mp4" controls loop playsinline></video>
+                <!-- SkillCat -->
+                <div class="modal-panel" data-project="skillcat-modal" data-unmute hidden>
+                    <div class="modal-info modal-fade-in">
+                        <div class="modal-info-head">
+                            <h3 class="modal-title">SkillCat</h3>
+                            <span class="modal-tag">Motion graphics</span>
+                            <span class="modal-year">2026</span>
+                        </div>
+                        <div class="modal-desc">
+                            <p>A promo video for SkillCat, created with Claude.</p>
+                        </div>
+                        <div class="modal-built">
+                            <div>
+                                <p class="modal-built-label">Built with</p>
+                                <p class="modal-built-tools">Claude</p>
+                            </div>
+                            <div class="modal-tool-logos" aria-hidden="true">
+                                <span class="modal-tool-logo"><img src="assets/skillcat/ai-logos/claude.svg" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="modal-video-short modal-fade-in">
-                    <video src="assets/Motion/Neon Drift/neon-lights-phone.mp4" controls loop playsinline></video>
+                <!-- Neon Drift -->
+                <div class="modal-panel" data-project="neon-drift-modal" hidden>
+                    <div class="modal-info modal-fade-in">
+                        <div class="modal-info-head">
+                            <h3 class="modal-title">Neon Drift</h3>
+                            <span class="modal-tag">Motion graphics</span>
+                            <span class="modal-year">Spring 2025</span>
+                        </div>
+                        <div class="modal-desc">
+                            <p>A website and animated identity for a lofi music festival.</p>
+                        </div>
+                        <div class="modal-built">
+                            <div>
+                                <p class="modal-built-label">Built with</p>
+                                <p class="modal-built-tools">Figma, Adobe Illustrator, Adobe After Effects, Blender</p>
+                            </div>
+                            <div class="modal-tool-logos" aria-hidden="true">
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/figma.svg" alt=""></span>
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/adobe-illustrator.svg" alt=""></span>
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/adobe-after-effects.svg" alt=""></span>
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/blender.svg" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-extras">
+                        <div class="modal-video-short modal-fade-in">
+                            <video src="assets/Motion/Neon Drift/neon-lights-website.mp4" controls loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="modal-video-short modal-fade-in">
+                            <video src="assets/Motion/Neon Drift/neon-lights-posterboard.mp4" controls loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="modal-video-short modal-fade-in">
+                            <video src="assets/Motion/Neon Drift/neon-lights-phone.mp4" controls loop playsinline preload="metadata"></video>
+                        </div>
+                        <div class="modal-video-short modal-fade-in">
+                            <video src="assets/Motion/Neon Drift/neon-lights-ad.mp4" controls loop playsinline preload="metadata"></video>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="modal-video-short modal-fade-in">
-                    <video src="assets/Motion/Neon Drift/neon-lights-ad.mp4" controls loop playsinline></video>
+                <!-- Museum of the Moving Image -->
+                <div class="modal-panel" data-project="momi-modal" data-unmute hidden>
+                    <div class="modal-info modal-fade-in">
+                        <div class="modal-info-head">
+                            <h3 class="modal-title">Museum of the Moving Image</h3>
+                            <span class="modal-tag">Motion graphics</span>
+                            <span class="modal-year">Spring 2025</span>
+                        </div>
+                        <div class="modal-desc">
+                            <p>A logo animation for the Museum of the Moving Image.</p>
+                        </div>
+                        <div class="modal-built">
+                            <div>
+                                <p class="modal-built-label">Built with</p>
+                                <p class="modal-built-tools">Adobe After Effects, Figma</p>
+                            </div>
+                            <div class="modal-tool-logos" aria-hidden="true">
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/adobe-after-effects.svg" alt=""></span>
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/figma.svg" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Robinhood Legends -->
+                <div class="modal-panel" data-project="robinhood-modal" data-unmute hidden>
+                    <div class="modal-info modal-fade-in">
+                        <div class="modal-info-head">
+                            <h3 class="modal-title">Robinhood Legends</h3>
+                            <span class="modal-tag">Motion graphics</span>
+                            <span class="modal-year">Spring 2025</span>
+                        </div>
+                        <div class="modal-desc">
+                            <p>A trim-path animation that reveals the Robinhood Legends logo.</p>
+                        </div>
+                        <div class="modal-built">
+                            <div>
+                                <p class="modal-built-label">Built with</p>
+                                <p class="modal-built-tools">After Effects</p>
+                            </div>
+                            <div class="modal-tool-logos" aria-hidden="true">
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/adobe-after-effects.svg" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ScriptChain Health -->
+                <div class="modal-panel" data-project="scriptchain-modal" data-unmute hidden>
+                    <div class="modal-info modal-fade-in">
+                        <div class="modal-info-head">
+                            <h3 class="modal-title">ScriptChain Health</h3>
+                            <span class="modal-tag">Motion graphics</span>
+                            <span class="modal-year">2025</span>
+                        </div>
+                        <div class="modal-desc">
+                            <p>A product demo of ScriptChain Health's patient dashboards.</p>
+                        </div>
+                        <div class="modal-built">
+                            <div>
+                                <p class="modal-built-label">Built with</p>
+                                <p class="modal-built-tools">Adobe After Effects, Figma</p>
+                            </div>
+                            <div class="modal-tool-logos" aria-hidden="true">
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/adobe-after-effects.svg" alt=""></span>
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/figma.svg" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clarity -->
+                <div class="modal-panel" data-project="clarity-modal" data-unmute hidden>
+                    <div class="modal-info modal-fade-in">
+                        <div class="modal-info-head">
+                            <h3 class="modal-title">Clarity</h3>
+                            <span class="modal-tag">Generative motion</span>
+                            <span class="modal-year">Spring 2025</span>
+                        </div>
+                        <div class="modal-desc">
+                            <p>A generative music video made with Space Type Generator.</p>
+                        </div>
+                        <div class="modal-built">
+                            <div>
+                                <p class="modal-built-label">Built with</p>
+                                <p class="modal-built-tools">After Effects, Space Type Generater</p>
+                            </div>
+                            <div class="modal-tool-logos" aria-hidden="true">
+                                <span class="modal-tool-logo"><img src="https://api.iconify.design/logos/adobe-after-effects.svg" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Clarity Modal -->
-    <div class="modal-overlay" id="clarity-modal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+        <div class="modal-pager">
+            <button class="modal-pager-btn modal-prev" aria-label="Previous project">
+                <i class="hn hn-angle-left" aria-hidden="true"></i>
             </button>
-
-            <div class="modal-body">
-                <p class="modal-label">Clarity Generative Motion Music Video</p>
-
-                <div class="modal-video-target" data-unmute></div>
-
-                <div class="modal-meta modal-fade-in">
-                    <div class="modal-meta-overview">
-                        <p class="modal-label">Project Overview</p>
-                        <p>A generative motion music video created using Space Type Generater and After Effects.</p>
-                    </div>
-                    <div class="modal-meta-sidebar">
-                        <div>
-                            <p class="modal-label">Tools</p>
-                            <p>After Effects</p>
-                            <p>Space Type Generater</p>
-                        </div>
-                        <div>
-                            <p class="modal-label">Timeline</p>
-                            <p>Spring 2025</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Momi Modal -->
-    <div class="modal-overlay" id="momi-modal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+            <span class="modal-pager-count" aria-live="polite"></span>
+            <button class="modal-pager-btn modal-next" aria-label="Next project">
+                <i class="hn hn-angle-right" aria-hidden="true"></i>
             </button>
-
-            <div class="modal-body">
-                <p class="modal-label">Museum of the Moving Image</p>
-
-                <div class="modal-video-target" data-unmute></div>
-
-                <div class="modal-meta modal-fade-in">
-                    <div class="modal-meta-overview">
-                        <p class="modal-label">Project Overview</p>
-                        <p>A logo animation created for the Museum of the Moving Image (MoMI). The animation brings the museum's identity to life through dynamic motion and typography.</p>
-                    </div>
-                    <div class="modal-meta-sidebar">
-                        <div>
-                            <p class="modal-label">Tools</p>
-                            <p>Adobe After Effects</p>
-                            <p>Figma</p>
-                        </div>
-                        <div>
-                            <p class="modal-label">Timeline</p>
-                            <p>Spring 2025</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Robinhood Trim Path Modal -->
-    <div class="modal-overlay" id="robinhood-modal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-
-            <div class="modal-body">
-                <p class="modal-label">Robinhood Legends Logo Animation</p>
-
-                <div class="modal-video-target" data-unmute></div>
-
-                <div class="modal-meta modal-fade-in">
-                    <div class="modal-meta-overview">
-                        <p class="modal-label">Project Overview</p>
-                        <p>A simple trim path logo animation for Robinhood Legends. The animation reveals the logo through precise path animations, capturing the brand's bold and modern identity.</p>
-                    </div>
-                    <div class="modal-meta-sidebar">
-                        <div>
-                            <p class="modal-label">Tools</p>
-                            <p>After Effects</p>
-                        </div>
-                        <div>
-                            <p class="modal-label">Timeline</p>
-                            <p>Spring 2025</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ScriptChain Modal -->
-    <div class="modal-overlay" id="scriptchain-modal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-
-            <div class="modal-body">
-                <p class="modal-label">ScriptChain Health Product Demo</p>
-
-                <div class="modal-video-target" data-unmute></div>
-
-                <div class="modal-meta modal-fade-in">
-                    <div class="modal-meta-overview">
-                        <p class="modal-label">Project Overview</p>
-                        <p>A product demo animation for ScriptChain Health, showcasing patient-facing dashboards and data visualization tools designed to simplify complex medical data workflows.</p>
-                    </div>
-                    <div class="modal-meta-sidebar">
-                        <div>
-                            <p class="modal-label">Tools</p>
-                            <p>Adobe After Effects</p>
-                            <p>Figma</p>
-                        </div>
-                        <div>
-                            <p class="modal-label">Timeline</p>
-                            <p>2025</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
