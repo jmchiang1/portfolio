@@ -336,7 +336,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: none;
     background: none;
     color: #fff;
@@ -364,7 +364,7 @@ a, button, [role="button"],
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-12);
     font-weight: 500;
@@ -419,7 +419,7 @@ a, button, [role="button"],
     width: auto;
     height: auto;
     padding: 8px 14px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(8px);
@@ -539,7 +539,7 @@ a, button, [role="button"],
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-12);
     font-weight: 500;
@@ -1302,7 +1302,7 @@ a.project-card {
     left: 24px;
     width: 3rem;
     height: 3rem;
-    border-radius: 8px;
+    border-radius: 4px;
     object-fit: cover;
     z-index: 2;
 }
@@ -1424,7 +1424,7 @@ a.project-card {
     background: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-radius: 8px;
+    border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
     font-size: var(--text-20);
@@ -1473,7 +1473,7 @@ a.project-card {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1.5px solid rgba(255, 255, 255, 0.4);
-    border-radius: 8px;
+    border-radius: 4px;
     z-index: 5;
     opacity: 0;
     transition: opacity 0.3s ease, background 0.2s ease,
@@ -1502,7 +1502,7 @@ body.grid-mode .project-card:hover .project-external-icon {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-12);
     font-weight: 500;
@@ -2445,7 +2445,7 @@ body.grid-mode .project-title {
         justify-content: center;
         width: 56px;
         height: 56px;
-        border-radius: 8px;
+        border-radius: 4px;
         border: 1.5px solid rgba(255, 255, 255, 0.35);
         color: #fff;
         font-size: var(--text-24);
@@ -2537,7 +2537,7 @@ body.grid-mode .project-title {
 .kb-fly .build-card-brand { display: flex; flex-direction: column; gap: 4px; }
 .kb-fly .build-card-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: var(--text-20); letter-spacing: -0.02em; color: var(--case-text, #1c1c20); opacity: 0.95; }
 .kb-fly .build-card-meta { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(28,28,32,0.55)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-serial { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 600; color: var(--case-text-dim, rgba(28,28,32,0.55)); letter-spacing: 0.14em; padding: 3px 9px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--case-color, #f4f4f6) 60%, white 40%); }
+.kb-fly .build-card-serial { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 600; color: var(--case-text-dim, rgba(28,28,32,0.55)); letter-spacing: 0.14em; padding: 3px 9px; border-radius: 4px; border: 1px solid color-mix(in oklab, var(--case-color, #f4f4f6) 60%, white 40%); }
 .kb-fly .build-card-name { font-family: 'Space Mono', monospace; font-size: var(--text-20); font-weight: 700; color: var(--case-text, #1c1c20); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; min-height: 24px; line-height: 1.1; }
 .kb-fly .build-card-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; margin-bottom: 22px; }
 .kb-fly .build-card-spec-row { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
@@ -2620,7 +2620,7 @@ body:not(.grid-mode) .section-hero {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 18px;
+    border-radius: 4px;
     pointer-events: auto;
     opacity: 0;
     transform: translateY(24px) scale(0.97);
@@ -2698,7 +2698,7 @@ body:not(.grid-mode) .section-hero {
     width: var(--screen-w);
     aspect-ratio: 956 / 599;
     border: 12px solid #242321;
-    border-radius: 18px;
+    border-radius: 4px;
     background:
         radial-gradient(80% 70% at 50% 45%, rgba(255, 255, 255, 0.035), transparent 70%),
         var(--page-surface, #1f1e1c);
@@ -2848,7 +2848,7 @@ body.grid-mode .type-caret {
 @media (max-width: 640px) {
     .hero-monitor {
         --screen-w: 90vw;
-        border-radius: 14px;
+        border-radius: 4px;
     }
 
     .hero-monitor.entered.pos-left {
@@ -2866,7 +2866,7 @@ body.grid-mode .type-caret {
         aspect-ratio: auto;
         height: 70vh;
         border-width: 8px;
-        border-radius: 14px;
+        border-radius: 4px;
     }
 
     body:not(.grid-mode) .hero-screen .hero-content {
@@ -2881,8 +2881,29 @@ body.grid-mode .type-caret {
         font-size: var(--text-18);
     }
 
-    /* Mobile footer has no visible lines — drop the divider + spacing */
+    /* Footer sits at the bottom of the screen like desktop — the two
+       columns stack, and the desktop lines (hidden elsewhere on mobile)
+       show here. */
     body:not(.grid-mode) .hero-screen .footer-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 0 18px 20px;
+        padding-top: 14px;
+    }
+
+    body:not(.grid-mode) .hero-screen .footer-desktop {
+        display: block;
+    }
+
+    body:not(.grid-mode) .hero-screen .footer-text {
+        font-size: var(--text-14);
+        line-height: 1.45;
+    }
+
+    /* Each sentence flows as one line on mobile — drop the desktop break
+       (the markup keeps a space before each <br> so the words don't join) */
+    body:not(.grid-mode) .hero-screen .footer-text br {
         display: none;
     }
 }

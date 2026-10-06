@@ -98,6 +98,49 @@ body {
 @media (max-width: 640px) {
     .mobile-menu {
         background: color-mix(in srgb, var(--page-bg) 96%, transparent);
+        gap: 14px;
+    }
+
+    /* ---- Mobile menu — same keycaps as the desktop nav, stacked as a
+       column of wide keys. Hover/press uses `translate` so it doesn't fight
+       the menu's enter/exit `transform` animations. ---- */
+    .mobile-menu-link {
+        width: min(280px, 76vw);
+        padding: 16px 20px 19px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 8px;
+        background: var(--page-surface-2);
+        box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.35);
+        font-family: 'Space Mono', monospace;
+        font-size: var(--text-16);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-align: center;
+        color: var(--page-muted);
+        -webkit-tap-highlight-color: transparent;
+        transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.12s ease, translate 0.12s ease;
+    }
+
+    .mobile-menu-link:hover,
+    .mobile-menu-link:active {
+        background: color-mix(in srgb, var(--page-surface-2) 80%, white 6%);
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+        color: #fff;
+        translate: 0 3px;
+    }
+
+    .mobile-menu-link.active {
+        background: #fff;
+        border-color: #fff;
+        box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18);
+        color: var(--page-bg);
+        translate: 0 1px;
+    }
+
+    .mobile-menu-link:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.8);
+        outline-offset: 2px;
     }
 }
 

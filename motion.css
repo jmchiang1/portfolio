@@ -308,7 +308,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: none;
     background: none;
     color: #fff;
@@ -334,7 +334,7 @@ a, button, [role="button"],
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-12);
     font-weight: 500;
@@ -445,7 +445,7 @@ a, button, [role="button"],
     align-items: center;
     gap: 8px;
     padding: 7px 14px 7px 12px;
-    border-radius: 8px;
+    border-radius: 4px;
     background: rgba(17, 128, 249, 0.12);
     border: 1px solid rgba(17, 128, 249, 0.25);
     backdrop-filter: blur(8px);
@@ -572,14 +572,11 @@ a, button, [role="button"],
     display: flex;
     flex-direction: column;
     background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* border: 1px solid rgba(255, 255, 255, 0.08); */
     border-radius: 4px;
     overflow: hidden;
     cursor: url('assets/pointer.cur'), pointer;
-    /* resting "raised tile" block — card presses into it on hover */
-    box-shadow: 6px 6px 0 0 rgba(255, 255, 255, 0.10);
-    transition: transform 0.16s ease, box-shadow 0.16s ease,
-                background 0.3s ease, border-color 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease;
     opacity: 0;
     transform: translateY(28px);
     animation: motion-card-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -603,11 +600,8 @@ a, button, [role="button"],
 }
 
 .motion-card:hover {
-    /* press the card down into its block-shadow — a tactile keycap push */
-    transform: translate(6px, 6px);
     background: rgba(255, 255, 255, 0.04);
     border-color: rgba(255, 255, 255, 0.22);
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
 }
 
 .motion-card-preview {
@@ -721,7 +715,7 @@ a, button, [role="button"],
     align-items: center;
     gap: 10px;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: 4px;
     background: rgba(0, 0, 0, 0.35);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
@@ -826,7 +820,7 @@ a, button, [role="button"],
     max-width: 58%;
     height: 599px;
     max-height: 36.3vw;
-    border-radius: 8px;
+    border-radius: 4px;
     overflow: hidden;
     opacity: 0;
     transform: translateX(0) rotateY(0deg) scale(0.5);
@@ -911,7 +905,7 @@ a, button, [role="button"],
     inset: 0;
     width: 100%;
     height: 100%;
-    border-radius: 8px;
+    border-radius: 4px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -923,7 +917,7 @@ a, button, [role="button"],
     width: 100%;
     height: 100%;
     /* object-fit: cover; */
-    /* border-radius: 8px; */
+    /* border-radius: 4px; */
     z-index: 1;
     background: black;
 }
@@ -979,7 +973,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 48px;
     height: 48px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
     font-size: var(--text-24);
@@ -1021,7 +1015,7 @@ a, button, [role="button"],
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-12);
     font-weight: 500;
@@ -1077,7 +1071,7 @@ a, button, [role="button"],
     flex: 0 1 auto;
     background: var(--page-surface);
     /* border: 1px solid rgba(255, 255, 255, 0.08); */
-    border-radius: 20px;
+    border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
     transform: translateY(30px) scale(0.96);
@@ -1111,7 +1105,7 @@ a, button, [role="button"],
     right: 16px;
     width: 44px;
     height: 44px;
-    border-radius: 10px;
+    border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: color-mix(in srgb, var(--page-bg) 55%, transparent);
     backdrop-filter: blur(10px);
@@ -1213,7 +1207,7 @@ a, button, [role="button"],
 
 .modal-tag {
     padding: 3px 10px;
-    border-radius: 8px;
+    border-radius: 4px;
     background: rgba(17, 128, 249, 0.16);
     color: #7cbcff;
     font-size: var(--text-14);
@@ -1295,7 +1289,7 @@ a, button, [role="button"],
 .modal-video-short {
     width: 100%;
     background: #000;
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -1317,7 +1311,7 @@ a, button, [role="button"],
 .modal-pager-btn,
 .modal-pager-count {
     height: 48px;
-    border-radius: 6px;
+    border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.07);
     display: flex;
     align-items: center;
@@ -1420,7 +1414,7 @@ a, button, [role="button"],
     }
 
     .modal-content {
-        border-radius: 14px;
+        border-radius: 4px;
     }
 
     .modal-close {
@@ -1533,7 +1527,7 @@ a, button, [role="button"],
         height: 56px;
         margin-top: -28px;
         margin-left: -28px;
-        border-radius: 11px;
+        border-radius: 4px;
     }
 
     .hero-logo-chip img {
@@ -1765,7 +1759,7 @@ a, button, [role="button"],
         justify-content: center;
         width: 56px;
         height: 56px;
-        border-radius: 8px;
+        border-radius: 4px;
         border: 1.5px solid rgba(255, 255, 255, 0.35);
         color: #fff;
         font-size: var(--text-24);

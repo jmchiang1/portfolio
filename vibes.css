@@ -293,7 +293,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: none;
     background: none;
     color: #fff;
@@ -317,7 +317,7 @@ a, button, [role="button"],
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-12);
     font-weight: 500;
@@ -373,7 +373,7 @@ a, button, [role="button"],
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    border-radius: 8px;
+    border-radius: 4px;
     background: rgba(17, 128, 249, 0.08);
     border: 1px solid rgba(17, 128, 249, 0.2);
     font-family: 'Space Mono', monospace;
@@ -528,7 +528,7 @@ a, button, [role="button"],
     align-items: center;
     gap: 8px;
     padding: 7px 14px 7px 12px;
-    border-radius: 8px;
+    border-radius: 4px;
     background: rgba(17, 128, 249, 0.12);
     border: 1px solid rgba(17, 128, 249, 0.25);
     backdrop-filter: blur(8px);
@@ -599,7 +599,7 @@ a, button, [role="button"],
     gap: 8px;
     margin-top: 20px;
     padding: 7px 14px 7px 12px;
-    border-radius: 8px;
+    border-radius: 4px;
     background: rgba(17, 128, 249, 0.08);
     border: 1px solid rgba(17, 128, 249, 0.18);
     font-family: 'Space Mono', monospace;
@@ -644,15 +644,12 @@ a, button, [role="button"],
     display: flex;
     flex-direction: column;
     background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* border: 1px solid rgba(255, 255, 255, 0.08); */
     border-radius: 4px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    /* resting "raised tile" block — card presses into it on hover */
-    box-shadow: 6px 6px 0 0 rgba(255, 255, 255, 0.10);
-    transition: transform 0.16s ease, box-shadow 0.16s ease,
-                background 0.3s ease, border-color 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease;
     opacity: 0;
     transform: translateY(28px);
     animation: vibes-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -662,11 +659,8 @@ a, button, [role="button"],
 .vibes-card:nth-child(2) { animation-delay: 0.7s; }
 
 .vibes-card:hover {
-    /* press the card down into its block-shadow — a tactile keycap push */
-    transform: translate(6px, 6px);
     background: rgba(255, 255, 255, 0.04);
     border-color: rgba(255, 255, 255, 0.22);
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
 }
 
 /* ============================================
@@ -768,7 +762,7 @@ a, button, [role="button"],
     height: 28px;
     border: 2px solid rgba(255, 255, 255, 0.08);
     border-top-color: #1180f9;
-    border-radius: 8px;
+    border-radius: 4px;
     animation: vibes-spin 0.9s linear infinite;
 }
 
@@ -832,75 +826,30 @@ a, button, [role="button"],
     color: rgba(255, 255, 255, 0.65);
 }
 
-.vibes-card-stack {
+/* Tool logos — overlapping circles (same as the Motion modal), sitting
+   inline to the right of the Live site button */
+.vibes-tool-logos {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
+    flex-shrink: 0;
+    padding-left: 10px;
 }
 
-.vibes-chip {
-    position: relative;
-    display: inline-flex;
+.vibes-tool-logo {
+    width: 38px;
+    height: 38px;
+    margin-left: -10px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--page-surface);
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
-.vibes-chip img {
-    width: 18px;
-    height: 18px;
+.vibes-tool-logo img {
+    width: 20px;
+    height: 20px;
     display: block;
-    opacity: 0.85;
-    transition: opacity 0.2s ease;
-}
-
-.vibes-card:hover .vibes-chip {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.12);
-}
-
-.vibes-chip:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.vibes-chip:hover img {
-    opacity: 1;
-}
-
-/* Tooltip — appears above on hover, like the social-links pattern */
-.vibes-chip::after {
-    content: attr(data-label);
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    padding: 5px 10px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 6px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: var(--text-11);
-    font-weight: 500;
-    color: #fff;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 5;
-}
-
-.vibes-chip:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
 }
 
 /* ============================================
@@ -908,9 +857,10 @@ a, button, [role="button"],
    ============================================ */
 .vibes-card-actions {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
     margin-top: 8px;
-    flex-wrap: wrap;
 }
 
 .vibes-btn {
@@ -998,7 +948,7 @@ a, button, [role="button"],
     justify-content: center;
     width: 48px;
     height: 48px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
     font-size: var(--text-24);
@@ -1033,7 +983,7 @@ a, button, [role="button"],
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: var(--text-12);
     font-weight: 500;
@@ -1246,7 +1196,7 @@ a, button, [role="button"],
         justify-content: center;
         width: 48px;
         height: 48px;
-        border-radius: 8px;
+        border-radius: 4px;
         border: 1.5px solid rgba(255, 255, 255, 0.4);
         color: #fff;
         font-size: var(--text-24);
@@ -1297,6 +1247,17 @@ a, button, [role="button"],
         font-size: var(--text-14);
     }
 
+    /* Smaller circles so up to 7 logos fit beside the button */
+    .vibes-tool-logo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .vibes-tool-logo img {
+        width: 16px;
+        height: 16px;
+    }
+
     .browser-url {
         font-size: var(--text-10);
     }
@@ -1319,7 +1280,7 @@ a, button, [role="button"],
         height: 56px;
         margin-top: -28px;
         margin-left: -28px;
-        border-radius: 11px;
+        border-radius: 4px;
     }
 
     .hero-logo-chip img {
@@ -1352,17 +1313,14 @@ a, button, [role="button"],
         height: 26px;
     }
 
-    /* Live site + Code buttons sit side-by-side on mobile. */
+    /* Live site button + logo stack stay on one row on mobile */
     .vibes-card-actions {
-        flex-direction: row;
-        align-items: stretch;
-        flex-wrap: wrap;
+        gap: 12px;
     }
 
     .vibes-btn {
-        flex: 1 1 0;
+        flex: 0 0 auto;
         justify-content: center;
-        min-width: 0;
     }
 }
 
