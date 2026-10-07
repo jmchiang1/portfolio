@@ -98,8 +98,9 @@
         playQuietly(video);
     }
 
-    // Return a video to its card frame as a muted, looping thumbnail
-    function mountInCard(video, i) {
+    // Return a video to its card frame as a muted, looping thumbnail.
+    // While the modal is still open (prev/next) it goes back paused.
+    function mountInCard(video, i, paused) {
         var frame = cards[i].querySelector('.motion-card-frame');
         var overlay = frame.querySelector('.motion-card-frame-overlay');
         video.muted = true;
@@ -107,7 +108,22 @@
         fitToPanel(video, null);
         video.classList.add('project-video');
         frame.insertBefore(video, overlay);
-        playQuietly(video);
+        if (paused) video.pause();
+        else playQuietly(video);
+    }
+
+    // Grid thumbnails pause while a project is open, and resume on close
+    function gridVideos() {
+        return cards.map(function (card) { return card.querySelector('.motion-card-frame video'); })
+            .filter(Boolean);
+    }
+
+    function pauseGrid() {
+        gridVideos().forEach(function (v) { v.pause(); });
+    }
+
+    function resumeGrid() {
+        gridVideos().forEach(playQuietly);
     }
 
     function pauseExtras(panel) {
@@ -147,6 +163,10 @@
         currentIndex = i;
         var video = cardVideo(i);
         var fromRect = video.getBoundingClientRect();
+
+        // The opened video starts from the top; everything behind it stops
+        pauseGrid();
+        video.currentTime = 0;
 
         hideFadeItems();
         var panel = showPanel(i);
@@ -192,6 +212,7 @@
 
         fly(video, fromRect, frameRect, '0px', FLY_RADIUS, function (v) {
             mountInCard(v, i);
+            resumeGrid();
             document.body.style.overflow = '';
             currentIndex = -1;
             busy = false;
@@ -214,13 +235,14 @@
         out.onfinish = function () {
             pauseExtras(panelFor(prev));
             var oldVideo = target.querySelector('video');
-            if (oldVideo) mountInCard(oldVideo, prev);
+            if (oldVideo) mountInCard(oldVideo, prev, true);
 
             hideFadeItems();
             currentIndex = next;
             var panel = showPanel(next);
             var video = cardVideo(next);
             video.classList.remove('project-video');
+            video.currentTime = 0;
             mountInTarget(video, panel);
 
             var inAnim = modalContent.animate([
