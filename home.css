@@ -839,8 +839,9 @@ a, button, [role="button"],
     transform: translateY(-50%) scale(0.92);
     width: 56px;
     height: 56px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    /* squared off to match the side social buttons */
+    border-radius: 4px;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
     background: color-mix(in srgb, var(--page-surface) 45%, transparent);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -869,8 +870,8 @@ a, button, [role="button"],
 }
 
 .carousel-nav:hover {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.8);
     color: #fff;
 }
 .carousel-nav.nav-visible:hover {
@@ -1192,15 +1193,17 @@ a.project-card {
 
 /* ===========================================================================
    Nocta card — animated thumbnail. The nightly-summary walkthrough plays inside
-   a CSS iPhone mockup, centered on the branded navy backdrop (mirroring the
-   case-study hero), with soft peach bokeh scattered behind and in front for
-   depth. Sizing uses container units so the device + bokeh scale with the card.
+   a CSS iPhone mockup, set against a starry night sky that mirrors the app's
+   own: a faint milky-way haze, a scatter of twinkling pinpoint stars, and a
+   few of the app's 4-point sparkles. Sizing uses container units so the
+   device + sky scale with the card.
    =========================================================================== */
 .project-card--nocta {
     container-type: size;
     background:
-        radial-gradient(58% 62% at 50% 0%, rgba(243, 168, 124, 0.20), transparent 62%),
-        linear-gradient(180deg, #0e1424 0%, #060912 100%);
+        radial-gradient(70% 55% at 50% 0%, rgba(138, 160, 224, 0.16), transparent 70%),
+        radial-gradient(60% 40% at 50% 100%, rgba(243, 168, 124, 0.08), transparent 70%),
+        linear-gradient(180deg, #0c1222 0%, #060912 100%);
 }
 
 /* iPhone mockup */
@@ -1254,32 +1257,131 @@ a.project-card {
     transform: translate(-50%, -50%) scale(1.04);
 }
 
-/* Peach bokeh — soft out-of-focus orbs for depth */
-.nocta-bokeh {
+/* Starry sky — sits behind the device. The element paints the dim star field,
+   ::before the milky-way haze, ::after a brighter field that slowly twinkles. */
+.nocta-sky {
     position: absolute;
     inset: 0;
+    z-index: 0;
     pointer-events: none;
     overflow: hidden;
+    background-image:
+        radial-gradient(circle 1.5px at 45% 56%, rgba(238, 241, 251, 0.44) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 51% 58%, rgba(238, 241, 251, 0.45) 0 40%, transparent),
+        radial-gradient(circle 1.0px at 62% 78%, rgba(238, 241, 251, 0.39) 0 40%, transparent),
+        radial-gradient(circle 1.3px at 11% 79%, rgba(238, 241, 251, 0.31) 0 40%, transparent),
+        radial-gradient(circle 1.3px at 96% 94%, rgba(238, 241, 251, 0.48) 0 40%, transparent),
+        radial-gradient(circle 1.3px at 17% 4%, rgba(238, 241, 251, 0.32) 0 40%, transparent),
+        radial-gradient(circle 1.0px at 20% 26%, rgba(238, 241, 251, 0.44) 0 40%, transparent),
+        radial-gradient(circle 1.3px at 44% 82%, rgba(238, 241, 251, 0.49) 0 40%, transparent),
+        radial-gradient(circle 1.2px at 50% 65%, rgba(238, 241, 251, 0.38) 0 40%, transparent),
+        radial-gradient(circle 1.4px at 98% 97%, rgba(238, 241, 251, 0.51) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 32% 25%, rgba(238, 241, 251, 0.32) 0 40%, transparent),
+        radial-gradient(circle 1.4px at 76% 41%, rgba(238, 241, 251, 0.42) 0 40%, transparent),
+        radial-gradient(circle 1.0px at 94% 83%, rgba(238, 241, 251, 0.36) 0 40%, transparent),
+        radial-gradient(circle 1.5px at 89% 47%, rgba(238, 241, 251, 0.42) 0 40%, transparent),
+        radial-gradient(circle 1.4px at 9% 62%, rgba(238, 241, 251, 0.38) 0 40%, transparent),
+        radial-gradient(circle 1.5px at 10% 34%, rgba(238, 241, 251, 0.53) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 13% 26%, rgba(238, 241, 251, 0.32) 0 40%, transparent),
+        radial-gradient(circle 1.3px at 79% 20%, rgba(238, 241, 251, 0.43) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 20% 72%, rgba(238, 241, 251, 0.49) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 13% 43%, rgba(238, 241, 251, 0.38) 0 40%, transparent),
+        radial-gradient(circle 1.2px at 95% 79%, rgba(238, 241, 251, 0.57) 0 40%, transparent),
+        radial-gradient(circle 1.4px at 22% 40%, rgba(238, 241, 251, 0.49) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 12% 96%, rgba(238, 241, 251, 0.38) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 76% 34%, rgba(238, 241, 251, 0.32) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 11% 58%, rgba(238, 241, 251, 0.48) 0 40%, transparent),
+        radial-gradient(circle 1.5px at 38% 46%, rgba(238, 241, 251, 0.45) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 57% 84%, rgba(238, 241, 251, 0.35) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 89% 80%, rgba(238, 241, 251, 0.36) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 73% 91%, rgba(238, 241, 251, 0.59) 0 40%, transparent),
+        radial-gradient(circle 1.2px at 87% 60%, rgba(238, 241, 251, 0.33) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 6% 93%, rgba(238, 241, 251, 0.51) 0 40%, transparent),
+        radial-gradient(circle 1.3px at 27% 80%, rgba(238, 241, 251, 0.39) 0 40%, transparent),
+        radial-gradient(circle 1.0px at 19% 71%, rgba(238, 241, 251, 0.37) 0 40%, transparent),
+        radial-gradient(circle 1.3px at 56% 83%, rgba(238, 241, 251, 0.38) 0 40%, transparent),
+        radial-gradient(circle 1.0px at 90% 22%, rgba(238, 241, 251, 0.38) 0 40%, transparent),
+        radial-gradient(circle 1.1px at 45% 9%, rgba(238, 241, 251, 0.41) 0 40%, transparent),
+        radial-gradient(circle 1.2px at 57% 15%, rgba(238, 241, 251, 0.57) 0 40%, transparent),
+        radial-gradient(circle 1.3px at 96% 65%, rgba(238, 241, 251, 0.48) 0 40%, transparent),
+        radial-gradient(circle 1.0px at 15% 6%, rgba(238, 241, 251, 0.57) 0 40%, transparent),
+        radial-gradient(circle 1.0px at 69% 94%, rgba(238, 241, 251, 0.49) 0 40%, transparent);
 }
 
-.nocta-bokeh--back { z-index: 0; }
-.nocta-bokeh--front { z-index: 1; }
-
-.nocta-bokeh span {
+.nocta-sky::before {
+    content: '';
     position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%,
-        rgba(243, 168, 124, 0.55) 0%,
-        rgba(243, 168, 124, 0.30) 40%,
-        rgba(243, 168, 124, 0) 72%);
-    /* gentle, out-of-sync pulse; --o sets each orb's peak brightness */
-    opacity: var(--o, 1);
-    animation: nocta-bokeh-pulse var(--dur, 5s) ease-in-out var(--dly, 0s) infinite;
+    left: -20%;
+    top: 30%;
+    width: 140%;
+    height: 34%;
+    background: radial-gradient(50% 50% at 50% 50%,
+        rgba(170, 179, 205, 0.16) 0%,
+        rgba(138, 160, 224, 0.08) 45%,
+        transparent 100%);
+    filter: blur(3cqh);
+    transform: rotate(-16deg);
 }
 
-@keyframes nocta-bokeh-pulse {
-    0%, 100% { transform: scale(0.9);  opacity: calc(var(--o, 1) * 0.5); }
-    50%      { transform: scale(1.12); opacity: var(--o, 1); }
+.nocta-sky::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle 1.8px at 48% 72%, rgba(238, 241, 251, 0.95) 0 40%, transparent),
+        radial-gradient(circle 2.0px at 9% 54%, rgba(238, 241, 251, 0.93) 0 40%, transparent),
+        radial-gradient(circle 2.1px at 73% 69%, rgba(238, 241, 251, 0.93) 0 40%, transparent),
+        radial-gradient(circle 2.1px at 36% 67%, rgba(238, 241, 251, 0.92) 0 40%, transparent),
+        radial-gradient(circle 2.1px at 42% 77%, rgba(238, 241, 251, 0.86) 0 40%, transparent),
+        radial-gradient(circle 1.9px at 62% 39%, rgba(238, 241, 251, 0.87) 0 40%, transparent),
+        radial-gradient(circle 2.2px at 10% 63%, rgba(238, 241, 251, 0.93) 0 40%, transparent),
+        radial-gradient(circle 2.0px at 72% 40%, rgba(238, 241, 251, 0.87) 0 40%, transparent),
+        radial-gradient(circle 1.7px at 44% 82%, rgba(238, 241, 251, 0.9) 0 40%, transparent),
+        radial-gradient(circle 1.9px at 5% 60%, rgba(238, 241, 251, 0.8) 0 40%, transparent),
+        radial-gradient(circle 2.0px at 69% 50%, rgba(238, 241, 251, 0.93) 0 40%, transparent),
+        radial-gradient(circle 1.8px at 27% 4%, rgba(238, 241, 251, 0.89) 0 40%, transparent),
+        radial-gradient(circle 2.1px at 21% 19%, rgba(238, 241, 251, 0.88) 0 40%, transparent),
+        radial-gradient(circle 1.8px at 44% 87%, rgba(238, 241, 251, 0.88) 0 40%, transparent);
+    animation: nocta-twinkle 4.8s ease-in-out infinite;
+}
+
+@keyframes nocta-twinkle {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.35; }
+}
+
+/* 4-point sparkles, echoing the app's "Tonight" star */
+.nocta-sparkle {
+    position: absolute;
+    width: var(--s, 3cqh);
+    aspect-ratio: 1;
+    filter: drop-shadow(0 0 0.8cqh rgba(243, 168, 124, 0.7));
+    opacity: var(--o, 1);
+    animation: nocta-sparkle var(--dur, 5s) ease-in-out var(--dly, 0s) infinite;
+}
+
+.nocta-sparkle::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, #fff6ef 0%, #f6bf9c 45%, #f3a87c 100%);
+    clip-path: polygon(50% 0%, 56% 44%, 100% 50%, 56% 56%, 50% 100%, 44% 56%, 0% 50%, 44% 44%);
+}
+
+@keyframes nocta-sparkle {
+    0%, 100% { transform: scale(0.7) rotate(0deg);  opacity: calc(var(--o, 1) * 0.45); }
+    50%      { transform: scale(1)   rotate(12deg); opacity: var(--o, 1); }
+}
+
+.nocta-sparkle:nth-child(1) { top: 16%; left: 14%; --s: 3.4cqh; --dur: 5.2s; --dly: -0.6s; }
+.nocta-sparkle:nth-child(2) { top: 68%; left: 22%; --s: 2.2cqh; --o: 0.8;  --dur: 4.4s; --dly: -2.2s; }
+.nocta-sparkle:nth-child(3) { top: 24%; left: 78%; --s: 2.8cqh; --o: 0.9;  --dur: 6.0s; --dly: -3.1s; }
+.nocta-sparkle:nth-child(4) { top: 78%; left: 85%; --s: 2cqh;   --o: 0.75; --dur: 4.8s; --dly: -1.4s; }
+.nocta-sparkle:nth-child(5) { top: 8%;  left: 60%; --s: 1.6cqh; --o: 0.7;  --dur: 5.6s; --dly: -4.0s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .nocta-sky::after,
+    .nocta-sparkle { animation: none; }
 }
 
 /* ===========================================================================
@@ -1389,27 +1491,6 @@ a.project-card {
    the contained website capture (see the 640px breakpoint). */
 .project-card--scriptchain .sk-thumb-phone {
     display: none;
-}
-
-/* back layer — crisper, mid-size, scattered around the device */
-.nocta-bokeh--back span:nth-child(1) { width: 9cqh;  height: 9cqh;  top: 12%; left: 9%;  --dur: 4.6s; --dly: -0.4s; }
-.nocta-bokeh--back span:nth-child(2) { width: 14cqh; height: 14cqh; top: 60%; left: 15%; --o: 0.85; --dur: 6.2s; --dly: -2.1s; }
-.nocta-bokeh--back span:nth-child(3) { width: 11cqh; height: 11cqh; top: 26%; left: 80%; --dur: 5.4s; --dly: -3.3s; }
-.nocta-bokeh--back span:nth-child(4) { width: 7cqh;  height: 7cqh;  top: 72%; left: 84%; --o: 0.9;  --dur: 4.1s; --dly: -1.2s; }
-.nocta-bokeh--back span:nth-child(5) { width: 5cqh;  height: 5cqh;  top: 86%; left: 42%; --dur: 3.6s; --dly: -2.7s; }
-.nocta-bokeh--back span:nth-child(6) { width: 6cqh;  height: 6cqh;  top: 8%;  left: 62%; --o: 0.8;  --dur: 5.8s; --dly: -0.9s; }
-.nocta-bokeh--back span:nth-child(7) { width: 12cqh; height: 12cqh; top: 44%; left: 91%; --o: 0.7;  --dur: 6.8s; --dly: -4.0s; }
-
-/* front layer — larger, blurred, lower opacity, kept to the corners */
-.nocta-bokeh--front span {
-    filter: blur(0.9cqh);
-}
-.nocta-bokeh--front span:nth-child(1) { width: 20cqh; height: 20cqh; top: -5%; left: 3%;  --o: 0.5;  --dur: 7.4s; --dly: -1.6s; }
-.nocta-bokeh--front span:nth-child(2) { width: 26cqh; height: 26cqh; top: 80%; left: 86%; --o: 0.42; --dur: 8.2s; --dly: -3.8s; }
-.nocta-bokeh--front span:nth-child(3) { width: 15cqh; height: 15cqh; top: 76%; left: 4%;  --o: 0.45; --dur: 6.6s; --dly: -2.4s; }
-
-@media (prefers-reduced-motion: reduce) {
-    .nocta-bokeh span { animation: none; }
 }
 
 /* Tags pill (top-right) — hidden by default, revealed on hover */
