@@ -530,8 +530,9 @@ body::before {
 .nx-hero-title {
     font-family: var(--nx-serif);
     font-weight: 400;
-    font-size: clamp(3.25rem, 8vw, 6.5rem);
-    line-height: 0.98;
+    /* sized so the motto sits on two lines, like the app's splash */
+    font-size: clamp(2.75rem, 5.4vw, 4.75rem);
+    line-height: 1;
     letter-spacing: -0.035em;
     margin: 1.375rem 0 1.625rem;
 }
@@ -766,7 +767,7 @@ body::before {
 /* Keep the section heading at its previous readable width even though the
    head is now full-width (so the lead can span the page). */
 .nx-head .nx-h2 {
-    max-width: 47.5rem;
+    /* max-width: 47.5rem; */
 }
 
 .nx-head .nx-h2 {
@@ -1472,6 +1473,8 @@ body::before {
 
 .nx-gear-1 {
     width: max-content;
+    /* never wider than the column (it overflowed phones) */
+    max-width: 100%;
 }
 
 .nx-gear-img.is-square {
@@ -1755,25 +1758,6 @@ body::before {
     margin-bottom: 1.375rem;
 }
 
-.nx-swatches {
-    display: flex;
-    gap: 0.75rem;
-    flex: 1;
-}
-
-.nx-swatch {
-    flex: 1;
-    min-height: 7.5rem;
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: flex-end;
-    padding: 0.75rem;
-    font-family: var(--nx-mono);
-    font-size: var(--text-11);
-    letter-spacing: 0.04em;
-    border: 0.0625rem solid rgba(255, 255, 255, 0.06);
-}
-
 .nx-type-row {
     display: flex;
     flex-direction: column;
@@ -1794,7 +1778,7 @@ body::before {
 }
 
 .nx-type-spec-sans {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: var(--text-36);
     font-weight: 600;
     line-height: 1.05;
@@ -2099,8 +2083,11 @@ body::before {
    =========================================================================== */
 .nx-iter-toggle {
     position: relative;
-    display: flex;
-    width: max-content;
+    /* equal columns, so the sliding thumb (a fifth of the width) lines up */
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    /* width: max-content; */
     max-width: 100%;
     padding: 0.25rem;
     border-radius: 62.4375rem;
@@ -2115,7 +2102,7 @@ body::before {
     top: 0.25rem;
     bottom: 0.25rem;
     left: 0.25rem;
-    width: calc((100% - 0.5rem) / 3);
+    width: calc((100% - 0.5rem) / 5);
     border-radius: 62.4375rem;
     background: rgba(243, 168, 124, 0.14);
     border: 0.0625rem solid var(--nx-peach);
@@ -2126,8 +2113,8 @@ body::before {
 .nx-iter-btn {
     position: relative;
     z-index: 1;
-    flex: 1 0 auto;
     display: flex;
+    justify-content: center;
     align-items: baseline;
     gap: 0.4375rem;
     padding: 0.5625rem 1.25rem;
@@ -2222,6 +2209,23 @@ body::before {
         padding: 0.5rem 0.8125rem;
         gap: 0.3125rem;
         letter-spacing: 0.04em;
+    }
+}
+
+@media (max-width: 1100px) {
+    .nx-iter-btn {
+        padding: 0.5625rem 0.875rem;
+        letter-spacing: 0.04em;
+    }
+}
+
+/* five versions don't fit a tablet or phone with their names; keep just V1–V5 */
+@media (max-width: 900px) {
+    .nx-iter-word {
+        display: none;
+    }
+    .nx-iter-btn {
+        padding: 0.5rem 1.125rem;
     }
 }
 
@@ -2654,18 +2658,6 @@ body::before {
         gap: 2rem;
     }
 
-    /* Palette swatches: 5 fixed flex chips don't fit a phone width and were
-       forcing the whole page wider. Let them wrap into rows of three. */
-    .nx-swatches {
-        flex-wrap: wrap;
-    }
-
-    .nx-swatch {
-        flex: 1 1 28%;
-        min-width: 0;
-        min-height: 5rem;
-    }
-
     /* hamburger + mobile menu */
     .hamburger {
         display: flex;
@@ -2947,5 +2939,1133 @@ body::before {
         right: 1rem;
         top: 1.375rem;
         transform: none;
+    }
+}
+
+
+/* ===========================================================================
+   2026 UPDATE — project context, survey band, brand section, onboarding
+   strip, measurement. Same nx- language: surface panels, mono labels,
+   peach only where the product's own AI speaks.
+   =========================================================================== */
+
+/* ---- project context (under the meta row) ---- */
+.nx-context {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: 2rem;
+    padding: 2rem 2.25rem;
+    border-radius: 1.25rem;
+    background: var(--nx-surface);
+    border: 0.0625rem solid var(--nx-line);
+}
+
+.nx-context-k {
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--nx-peach);
+    padding-top: 0.25rem;
+}
+
+.nx-context-text {
+    font-size: var(--text-16);
+    line-height: 1.7;
+    color: var(--nx-fg-2);
+}
+
+.nx-context-list {
+    list-style: none;
+    margin-top: 1.125rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.625rem 2rem;
+}
+
+.nx-context-list li {
+    position: relative;
+    padding-left: 1.125rem;
+    font-size: var(--text-15);
+    line-height: 1.55;
+    color: var(--nx-fg-2);
+}
+
+.nx-context-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background: var(--nx-peach);
+}
+
+.nx-context-list b {
+    color: var(--nx-fg);
+    font-weight: 600;
+}
+
+.nx-context-list a {
+    color: var(--nx-peach);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+/* ---- survey band: four smaller stats ---- */
+.nx-stats.is-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.nx-stats.is-4 .nx-stat {
+    padding: 2.25rem 1.875rem;
+}
+
+.nx-stats.is-4 .nx-stat-num {
+    font-size: clamp(2.5rem, 4.4vw, 3.5rem);
+}
+
+.nx-stat-num span {
+    font-size: 0.42em;
+    color: var(--nx-fg-3);
+    letter-spacing: 0;
+    margin-left: 0.125rem;
+}
+
+/* ---- brand: shared ---- */
+.nx-sub {
+    font-family: var(--nx-serif);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--nx-fg);
+}
+
+.nx-brand-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.nx-brand-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 46rem;
+}
+
+.nx-brand-head p {
+    font-size: var(--text-16);
+    line-height: 1.7;
+    color: var(--nx-fg-2);
+}
+
+.nx-panel-note {
+    margin-top: 1.25rem;
+    font-size: var(--text-14);
+    line-height: 1.65;
+    color: var(--nx-fg-2);
+}
+
+.nx-panel-note b {
+    color: var(--nx-peach);
+    font-weight: 600;
+}
+
+/* ---- naming: one full-width card, the word and its root side by side ---- */
+.nx-name-word {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: end;
+    column-gap: 3rem;
+}
+
+.nx-name-word .nx-panel-k {
+    grid-column: 1 / -1;
+}
+
+.nx-name-big {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--nx-fg);
+}
+
+.nx-name-root {
+    font-family: var(--nx-mono);
+    font-size: var(--text-15);
+    letter-spacing: 0.04em;
+    color: var(--nx-fg-2);
+    padding-bottom: 0.625rem;
+}
+
+.nx-name-root b {
+    color: var(--nx-peach);
+    font-weight: 400;
+}
+
+/* ---- logo evolution ---- */
+.nx-evo {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.125rem;
+}
+
+/* the logo panel runs flush to the card's top and sides; only the text is inset */
+.nx-evo-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 1.5rem;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    background: var(--nx-surface);
+    border: 0.0625rem solid transparent;
+    min-width: 0;
+}
+
+.nx-evo-card.is-final {
+    border-color: rgba(243, 168, 124, 0.45);
+    background:
+        radial-gradient(90% 50% at 50% 0%, rgba(243, 168, 124, 0.1), transparent 70%),
+        var(--nx-surface);
+}
+
+.nx-evo-fig {
+    aspect-ratio: 1;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, #0f1429, #070b17);
+    margin-bottom: 1.25rem;
+}
+
+.nx-evo-fig img {
+    width: 72%;
+    height: auto;
+    display: block;
+}
+
+.nx-evo-fig.is-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nx-evo-quad {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0.75rem;
+}
+
+.nx-evo-quad img {
+    width: 92%;
+}
+
+.nx-evo-k,
+.nx-evo-title,
+.nx-evo-body {
+    padding: 0 1.25rem;
+}
+
+.nx-evo-k {
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nx-fg-3);
+}
+
+.nx-evo-card.is-final .nx-evo-k {
+    color: var(--nx-peach);
+}
+
+.nx-evo-title {
+    font-family: var(--nx-serif);
+    font-weight: 400;
+    font-size: var(--text-24);
+    margin: 0.375rem 0 0.625rem;
+}
+
+.nx-evo-body {
+    font-size: var(--text-14);
+    line-height: 1.65;
+    color: var(--nx-fg-2);
+}
+
+/* final mark at size + the splash that reveals it */
+.nx-mark {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.nx-mark-sizes {
+    padding: 2rem;
+    border-radius: 1.25rem;
+    background: var(--nx-surface);
+}
+
+/* the splash recording fills its card edge to edge, cropped to the sky */
+.nx-mark-splash {
+    position: relative;
+    overflow: hidden;
+    min-height: 28rem;
+    border-radius: 1.25rem;
+    background: #0b1020;
+}
+
+.nx-mark-splash video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+}
+
+.nx-mark-splash-k {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.75rem;
+    z-index: 1;
+    margin: 0;
+    color: var(--nx-fg-2);
+}
+
+.nx-mark-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nx-app-icon {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 1.4rem;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(70% 60% at 30% 20%, rgba(74, 99, 168, 0.55), transparent 70%),
+        linear-gradient(160deg, #141b38 0%, #070b17 100%);
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12),
+        0 1.125rem 2.25rem -1.125rem rgba(0, 0, 0, 0.9);
+}
+
+.nx-app-icon img {
+    width: 74%;
+    height: auto;
+}
+
+.nx-mark-48 {
+    width: 3rem;
+    height: auto;
+}
+
+.nx-mark-28 {
+    width: 1.75rem;
+    height: auto;
+}
+
+.nx-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+    margin: 2.25rem 0 1.75rem;
+    padding: 2rem 1rem;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, #0f1429, #070b17);
+}
+
+.nx-lockup img {
+    width: 9rem;
+    height: auto;
+}
+
+.nx-lockup span {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: var(--text-28);
+    letter-spacing: -0.03em;
+    color: var(--nx-fg);
+}
+
+.nx-mark-note {
+    font-size: var(--text-14);
+    line-height: 1.65;
+    color: var(--nx-fg-2);
+}
+
+/* ---- Nox: its four states, each animated the way the app animates it ---- */
+.nx-nox {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+    padding: 2.5rem;
+    border-radius: 1.25rem;
+    background:
+        radial-gradient(60% 80% at 50% 70%, rgba(243, 168, 124, 0.1), transparent 70%),
+        var(--nx-surface);
+}
+
+.nx-nox-head .nx-panel-k {
+    margin-bottom: 0.75rem;
+}
+
+.nx-nox-states {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.nx-nox-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 0;
+}
+
+.nx-nox-state figcaption {
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--nx-fg-2);
+}
+
+.nx-mascot {
+    width: 7.5rem;
+    height: 7.5rem;
+    overflow: visible;
+    filter: drop-shadow(0 0 1.75rem rgba(243, 168, 124, 0.3));
+}
+
+.nx-mascot .nx-mc-body,
+.nx-mascot .nx-mc-eyes,
+.nx-mascot .nx-mc-open {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.nx-mascot .nx-mc-body {
+    transform-origin: 50% 85%;
+}
+
+.nx-mascot .nx-mc-open {
+    fill: #1a1424;
+}
+
+.nx-mascot .nx-mc-shut,
+.nx-mascot .nx-mc-happy {
+    fill: none;
+    stroke: #1a1424;
+    stroke-width: 3.6;
+    stroke-linecap: round;
+}
+
+/* idle: long stillness, then a glance left, up-right, down, with blinks */
+.nx-mascot.is-idle .nx-mc-eyes { animation: nxMcGlance 9s ease-in-out 1s infinite; }
+.nx-mascot.is-idle .nx-mc-open { animation: nxMcBlink 9s ease-in-out 1s infinite; }
+/* thinking: eyes drift up while it types, a small bob */
+.nx-mascot.is-thinking .nx-mc-eyes { transform: translate(4px, -5px); }
+.nx-mascot.is-thinking .nx-mc-body { animation: nxMcBob 2.4s ease-in-out infinite; }
+/* asleep: eyes closed, a slow breath while last night syncs */
+.nx-mascot.is-asleep .nx-mc-body { animation: nxMcBreathe 6.4s ease-in-out infinite; }
+/* pleased: happy eyes and a little hop (in the app it plays once; looped here) */
+.nx-mascot.is-pleased .nx-mc-body { animation: nxMcHop 2.6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite; }
+
+@keyframes nxMcGlance {
+    0%, 14% { transform: translate(0, 0); }
+    17%, 27% { transform: translate(-8px, 1px); }
+    30%, 46% { transform: translate(0, 0); }
+    49%, 58% { transform: translate(8px, -7px); }
+    61%, 74% { transform: translate(0, 0); }
+    77%, 85% { transform: translate(3px, 8px); }
+    88%, 100% { transform: translate(0, 0); }
+}
+
+@keyframes nxMcBlink {
+    0%, 37%, 39.5%, 92%, 94.5%, 100% { transform: scaleY(1); }
+    38.2%, 93.2% { transform: scaleY(0.1); }
+}
+
+@keyframes nxMcBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px) rotate(-2deg); }
+}
+
+@keyframes nxMcBreathe {
+    0%, 100% { transform: scale(1, 1); }
+    45% { transform: scale(1.035, 1.045); }
+}
+
+@keyframes nxMcHop {
+    0%, 55%, 100% { transform: translateY(0) scale(1, 1); }
+    12% { transform: translateY(-9px) scale(1.03, 0.98); }
+    24% { transform: translateY(0) scale(1, 1); }
+}
+
+/* ---- palette: proportional strip + legend ---- */
+.nx-palette-bar {
+    display: flex;
+    flex: 1;
+    min-height: 6rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 0.0625rem var(--nx-line);
+}
+
+.nx-palette-bar span {
+    flex: var(--w) 1 0;
+    background: var(--c);
+}
+
+.nx-palette-list {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+}
+
+.nx-palette-list li {
+    display: grid;
+    grid-template-columns: 0.875rem 6.5rem 1fr auto;
+    align-items: center;
+    column-gap: 0.875rem;
+    padding: 0.625rem 0;
+    border-bottom: 0.0625rem solid var(--nx-line);
+    font-size: var(--text-14);
+}
+
+.nx-palette-list li:last-child {
+    border-bottom: none;
+}
+
+.nx-palette-list i {
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    background: var(--c);
+    box-shadow: inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.14);
+}
+
+.nx-palette-list b {
+    color: var(--nx-fg);
+    font-weight: 600;
+}
+
+.nx-palette-list span {
+    color: var(--nx-fg-3);
+}
+
+.nx-palette-list code {
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.04em;
+    color: var(--nx-fg-3);
+}
+
+/* ---- skies ---- */
+.nx-skies {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.125rem;
+}
+
+.nx-skies figure {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    min-width: 0;
+}
+
+.nx-skies img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1.125rem;
+    border: 0.0625rem solid var(--nx-line);
+}
+
+.nx-skies figcaption {
+    font-size: var(--text-14);
+    color: var(--nx-fg-3);
+}
+
+.nx-skies figcaption b {
+    color: var(--nx-fg);
+    font-weight: 600;
+}
+
+/* ---- voice ---- */
+.nx-voice {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.125rem;
+}
+
+.nx-voice-card {
+    padding: 1.75rem;
+    border-radius: 1.125rem;
+    background: var(--nx-surface);
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.nx-voice-k {
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nx-fg-3);
+}
+
+.nx-voice-no,
+.nx-voice-yes {
+    position: relative;
+    padding-left: 1.75rem;
+    font-size: var(--text-16);
+    line-height: 1.5;
+}
+
+.nx-voice-no {
+    color: var(--nx-fg-3);
+    text-decoration: line-through;
+    text-decoration-color: rgba(229, 130, 112, 0.6);
+}
+
+.nx-voice-yes {
+    color: var(--nx-fg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: var(--text-18);
+}
+
+.nx-voice-no::before,
+.nx-voice-yes::before {
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    font-family: var(--nx-mono);
+    font-size: var(--text-13);
+}
+
+.nx-voice-no::before {
+    content: "✕";
+    color: var(--nx-coral);
+}
+
+.nx-voice-yes::before {
+    content: "✓";
+    color: var(--nx-good);
+}
+
+/* ---- measurement ---- */
+.nx-measure {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.nx-measure-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.125rem;
+}
+
+.nx-measure-card {
+    padding: 1.75rem 1.5rem;
+    border-radius: 1.125rem;
+    background: var(--nx-surface);
+    border: 0.0625rem solid transparent;
+}
+
+.nx-measure-card.is-north {
+    border-color: rgba(243, 168, 124, 0.45);
+}
+
+.nx-measure-k {
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nx-peach);
+    margin-bottom: 0.875rem;
+}
+
+.nx-measure-v {
+    font-size: var(--text-15);
+    line-height: 1.65;
+    color: var(--nx-fg-2);
+}
+
+.nx-team {
+    padding: 2rem 2.25rem;
+    border-radius: 1.25rem;
+    border: 0.0625rem solid var(--nx-line);
+}
+
+.nx-team-list {
+    list-style: none;
+    counter-reset: nxteam;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2.5rem;
+}
+
+.nx-team-list li {
+    counter-increment: nxteam;
+    position: relative;
+    padding-left: 2.25rem;
+    font-size: var(--text-15);
+    line-height: 1.6;
+    color: var(--nx-fg-2);
+}
+
+.nx-team-list li::before {
+    content: "0" counter(nxteam);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    color: var(--nx-peach);
+}
+
+.nx-team-list b {
+    color: var(--nx-fg);
+    font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nx-mascot .nx-mc-body,
+    .nx-mascot .nx-mc-eyes,
+    .nx-mascot .nx-mc-open {
+        animation: none !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .nx-evo {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .nx-mark {
+        grid-template-columns: 1fr;
+    }
+    .nx-measure-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .nx-context {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .nx-stats.is-4 {
+        grid-template-columns: 1fr 1fr;
+    }
+    .nx-stats.is-4 .nx-stat {
+        border-left: none;
+        border-top: 0.0625rem solid var(--nx-line);
+    }
+    .nx-stats.is-4 .nx-stat:nth-child(-n+2) {
+        border-top: none;
+    }
+    .nx-stats.is-4 .nx-stat:nth-child(even) {
+        border-left: 0.0625rem solid var(--nx-line);
+    }
+    .nx-nox-states {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .nx-name-word {
+        grid-template-columns: 1fr;
+        row-gap: 1rem;
+    }
+    .nx-skies,
+    .nx-voice {
+        grid-template-columns: 1fr;
+    }
+    .nx-skies {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.625rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .nx-context {
+        padding: 1.5rem 1.375rem;
+    }
+    .nx-context-list,
+    .nx-team-list {
+        grid-template-columns: 1fr;
+    }
+    .nx-stats.is-4 .nx-stat {
+        padding: 1.5rem 1.125rem;
+    }
+    .nx-evo,
+    .nx-measure-grid {
+        grid-template-columns: 1fr;
+    }
+    .nx-mark-sizes,
+    .nx-nox,
+    .nx-team {
+        padding: 1.5rem 1.375rem;
+    }
+    .nx-mark-splash {
+        min-height: 24rem;
+    }
+    .nx-mascot {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+    .nx-skies {
+        grid-template-columns: 1fr;
+    }
+    .nx-palette-list li {
+        grid-template-columns: 0.875rem 5.25rem 1fr auto;
+        column-gap: 0.625rem;
+    }
+}
+
+/* ---- onboarding feature: key decisions as a compact list ---- */
+.nx-feature-list {
+    margin-top: 1.25rem;
+}
+
+.nx-feature-list li {
+    font-size: var(--text-15);
+}
+
+/* ---- testing: at a glance ---- */
+.nx-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.nx-test-glance {
+    display: grid;
+    grid-template-columns: 1fr 22rem;
+    gap: 1.25rem;
+}
+
+.nx-test-people,
+.nx-test-stats {
+    padding: 2rem 2.25rem;
+    border-radius: 1.25rem;
+    background: var(--nx-surface);
+}
+
+.nx-test-roster {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+}
+
+.nx-test-roster li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+}
+
+.nx-test-roster b {
+    margin-top: 0.5rem;
+    font-weight: 500;
+    font-size: var(--text-16);
+    color: var(--nx-fg);
+}
+
+.nx-test-roster i {
+    font-style: normal;
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.06em;
+    color: var(--nx-fg-3);
+}
+
+/* a participant's colour chip (their sticky-note colour on the testing board) */
+.nx-test-av {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--p);
+    color: #10131f;
+    font-family: var(--nx-mono);
+    font-size: var(--text-13);
+    font-weight: 700;
+}
+
+.nx-test-bar {
+    display: flex;
+    gap: 0.1875rem;
+    height: 0.625rem;
+    margin-top: 1.75rem;
+}
+
+.nx-test-bar span {
+    background: var(--p);
+    border-radius: 0.25rem;
+    opacity: 0.85;
+}
+
+.nx-test-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    gap: 1rem;
+}
+
+.nx-test-stats div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.nx-test-stats b {
+    font-family: var(--nx-serif);
+    font-weight: 400;
+    font-size: clamp(2.25rem, 4vw, 3rem);
+    line-height: 1;
+    color: var(--nx-fg);
+}
+
+.nx-test-stats div:last-child b {
+    color: var(--nx-peach);
+}
+
+.nx-test-stats span {
+    font-size: var(--text-13);
+    color: var(--nx-fg-3);
+}
+
+/* ---- testing: signal matrix ---- */
+.nx-signal-wrap {
+    /* the table scrolls inside its card on phones instead of widening the page */
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 1.25rem;
+    background: var(--nx-surface);
+    padding: 0.75rem 1.75rem 1rem;
+    overflow-x: auto;
+}
+
+.nx-signal {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.nx-signal th,
+.nx-signal td {
+    padding: 0.875rem 0.5rem;
+    border-bottom: 0.0625rem solid var(--nx-line);
+    text-align: center;
+}
+
+.nx-signal tbody tr:last-child th,
+.nx-signal tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.nx-signal thead th {
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--nx-fg-3);
+}
+
+.nx-signal thead th:first-child,
+.nx-signal tbody th {
+    text-align: left;
+    padding-left: 0;
+}
+
+.nx-signal thead .nx-test-av {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: var(--text-11);
+}
+
+.nx-signal tbody th {
+    font-weight: 400;
+    font-size: var(--text-15);
+    color: var(--nx-fg);
+    width: 44%;
+}
+
+/* a raised theme is a filled dot in the tester's colour; silence is an empty ring */
+.nx-signal tbody td:not(.nx-signal-n)::before {
+    content: "";
+    display: inline-block;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    border: 0.0625rem solid var(--nx-line-2);
+    vertical-align: middle;
+}
+
+.nx-signal tbody td.on::before {
+    background: var(--p);
+    border-color: var(--p);
+}
+
+.nx-signal-n {
+    width: 7.5rem;
+    text-align: left !important;
+    font-family: var(--nx-mono);
+    font-size: var(--text-13);
+    color: var(--nx-fg-2);
+    white-space: nowrap;
+}
+
+.nx-signal-n span {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(var(--n) * 0.875rem);
+    height: 0.375rem;
+    border-radius: 0.25rem;
+    background: var(--nx-peach);
+    opacity: calc(0.35 + var(--n) * 0.13);
+    margin-right: 0.625rem;
+}
+
+/* ---- testing: quotes + counts on the ship cards ---- */
+.nx-ship-count {
+    margin-left: 0.5rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 62rem;
+    border: 0.0625rem solid var(--nx-line-2);
+    color: var(--nx-fg-2);
+    letter-spacing: 0.08em;
+}
+
+.nx-quote {
+    margin-top: 0.875rem;
+    padding-left: 1rem;
+    border-left: 0.1875rem solid var(--p);
+    font-family: 'DM Sans', sans-serif;
+    font-size: var(--text-16);
+    line-height: 1.55;
+    color: var(--nx-fg);
+}
+
+.nx-quote cite {
+    display: block;
+    margin-top: 0.375rem;
+    font-style: normal;
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nx-fg-3);
+}
+
+/* ---- testing: asked for, not built ---- */
+.nx-cut {
+    display: flex;
+    flex-direction: column;
+}
+
+.nx-cut-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.125rem;
+}
+
+.nx-cut-card {
+    padding: 1.75rem;
+    border-radius: 1.125rem;
+    border: 0.0625rem dashed var(--nx-line-2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.nx-cut-ask {
+    font-family: 'DM Sans', sans-serif;
+    font-size: var(--text-18);
+    line-height: 1.4;
+    color: var(--nx-fg);
+}
+
+.nx-cut-why {
+    font-size: var(--text-14);
+    line-height: 1.65;
+    color: var(--nx-fg-2);
+}
+
+.nx-cut-why b {
+    color: var(--nx-peach);
+    font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+    .nx-test-glance {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .nx-cut-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .nx-test-people,
+    .nx-test-stats {
+        padding: 1.5rem 1.375rem;
+    }
+    .nx-test-roster {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 1.25rem;
+    }
+    .nx-signal-wrap {
+        padding: 0.5rem 1rem 0.75rem;
+    }
+    /* phones: theme, five dots and the count fit without the bar */
+    .nx-signal th,
+    .nx-signal td {
+        padding: 0.75rem 0.1875rem;
+    }
+    .nx-signal tbody th {
+        font-size: var(--text-13);
+        line-height: 1.4;
+        width: auto;
+    }
+    .nx-signal thead th:first-child,
+    .nx-signal thead th:last-child {
+        font-size: var(--text-10);
+        letter-spacing: 0.08em;
+    }
+    .nx-signal thead .nx-test-av {
+        width: 1.375rem;
+        height: 1.375rem;
+        font-size: var(--text-10);
+    }
+    .nx-signal tbody td:not(.nx-signal-n)::before {
+        width: 0.625rem;
+        height: 0.625rem;
+    }
+    .nx-signal-n {
+        width: auto;
+        text-align: center !important;
+    }
+    .nx-signal-n span {
+        display: none;
     }
 }
