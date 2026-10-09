@@ -824,7 +824,7 @@
                             <span class="nx-type-spec-sans">Inter</span>
                             <span class="nx-type-note">Body &amp; UI, 17pt minimum for tired eyes</span>
                         </div>
-                        <p class="nx-panel-note">These replaced the capstone's Chennai and Noto Sans. Chennai's rounded shapes read playful at headline size, and its numerals weren't built for data.</p>
+                        <!-- <p class="nx-panel-note">These replaced the capstone's Chennai and Noto Sans. Chennai's rounded shapes read playful at headline size, and its numerals weren't built for data.</p> -->
                     </div>
                 </div>
 
@@ -921,7 +921,36 @@
                         </ul>
                     </div>
                     <div class="nx-feature-media">
-                        <div class="nx-device"><video src="assets/nocta/v3/flow-onboarding.mp4" poster="assets/nocta/v3/ob-splash.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+                        <!-- Presenter deck. Step through with the buttons either side of it, the ← → keys while
+                             it's on screen, by clicking the phone (left third goes back), or by swiping. -->
+                        <div class="nx-deck-wrap">
+                            <button class="nx-deck-btn is-prev" type="button" data-step="-1" aria-label="Previous screen" disabled>
+                                <i class="hn hn-angle-left" aria-hidden="true"></i>
+                            </button>
+                            <div class="nx-device nx-deck" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Onboarding, 14 screens. Use the left and right arrow keys to step through them.">
+                                <div class="nx-deck-track">
+                                    <img class="nx-deck-slide is-active" src="assets/nocta/v3/onboarding/01-splash.jpg" alt="Splash: the constellation logo above “Sleep better, knowingly.” and a Get started button" loading="lazy">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/02-goals.jpg" alt="Step 1 of 11, goals: “What brings you here?” with Understand my data and Fix mask leaks picked" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/03-about.jpg" alt="Step 2, about you: birth year, sex, weight and height, all optional" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/04-position.jpg" alt="Step 3, sleeping position: “How do you usually sleep?” with On my back picked" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/05-conditions.jpg" alt="Step 4, other conditions: Insomnia picked, each option with an info icon" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/06-health.jpg" alt="Step 5, health data: choose a watch or ring to connect, or Not now" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/07-cpap.jpg" alt="Step 6, CPAP data: connect SleepHQ, or use sample data for now" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/08-mask.jpg" alt="Step 7, mask and supplies: ResMed AirFit P30i, size Medium, cushion replaced within the last week" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/09-compliance.jpg" alt="Step 8, insurance and compliance: “Yes, in my first 90 days” picked" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/10-expect.jpg" alt="Step 9, tomorrow morning: a preview of the nightly insight, marked Example" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/11-nox.jpg" alt="Step 10, meet Nox: the sleep coach introduces itself and says it won’t change your pressure or name a condition" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/12-notify.jpg" alt="Step 11, a gentle morning nudge: a lock-screen preview of the 7:00 check-in reminder" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/13-disclaimer.jpg" alt="One important thing: Nocta is a wellness companion, not a medical device" loading="lazy" aria-hidden="true">
+                                    <img class="nx-deck-slide" src="assets/nocta/v3/onboarding/14-welcome.jpg" alt="You’re all set, Jonathan: AirSense 11 and AirFit P30i connected, check-in at 7:00 AM" loading="lazy" aria-hidden="true">
+                                </div>
+                                <p class="nx-deck-status" aria-live="polite"></p>
+                            </div>
+                            <button class="nx-deck-btn is-next" type="button" data-step="1" aria-label="Next screen">
+                                <i class="hn hn-angle-right" aria-hidden="true"></i>
+                            </button>
+                            <span class="nx-deck-count" aria-hidden="true"><span class="nx-deck-now">01</span> / 14</span>
+                        </div>
                     </div>
                 </div>
 
@@ -940,6 +969,18 @@
                 <div class="nx-feature">
                     <div class="nx-feature-text">
                         <p class="nx-feature-idx">03</p>
+                        <h3 class="nx-feature-title">The full night, one chart at a time</h3>
+                        <p class="nx-feature-body">The detail layer: events by type on the night's real clock, sleep stages from your watch, and the machine's four signals (flow, pressure, leak and snore).</p>
+                        <p class="nx-feature-body">Tap any chart for its own page, like Apple Health: the key number, the graph at full size, and a plain-language “About.”</p>
+                    </div>
+                    <div class="nx-feature-media">
+                        <div class="nx-device"><video src="assets/nocta/v3/flow-fullnight.mp4" poster="assets/nocta/v3/fullnight.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+                    </div>
+                </div>
+
+                <div class="nx-feature is-reverse">
+                    <div class="nx-feature-text">
+                        <p class="nx-feature-idx">04</p>
                         <h3 class="nx-feature-title">A 20-second morning check-in</h3>
                         <p class="nx-feature-body">How you felt and what happened that day is half of what Nox learns from, so the check-in sits right under tonight's suggestion. The first question is answerable in place: tap “Tired” and the rest opens with it already picked.</p>
                         <p class="nx-feature-body">Four questions, with back and skip on every step. Once it's logged, it folds down to a single slim line.</p>
@@ -949,27 +990,15 @@
                     </div>
                 </div>
 
-                <div class="nx-feature is-reverse">
+                <div class="nx-feature">
                     <div class="nx-feature-text">
-                        <p class="nx-feature-idx">04</p>
+                        <p class="nx-feature-idx">05</p>
                         <h3 class="nx-feature-title">Ask Nox</h3>
                         <p class="nx-feature-body">Nox opens already knowing what you were looking at. From the horizon it starts with last night's numbers and offers three follow-ups; from Trends or a chart, it starts there instead.</p>
                         <p class="nx-feature-body">Its limits are part of the design. Ask it to change your pressure and it says that's your doctor's call, then offers to prepare a summary for them.</p>
                     </div>
                     <div class="nx-feature-media">
                         <div class="nx-device"><video src="assets/nocta/v3/flow-coach.mp4" poster="assets/nocta/v3/coach.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
-                    </div>
-                </div>
-
-                <div class="nx-feature">
-                    <div class="nx-feature-text">
-                        <p class="nx-feature-idx">05</p>
-                        <h3 class="nx-feature-title">The full night, one chart at a time</h3>
-                        <p class="nx-feature-body">The detail layer: events by type on the night's real clock, sleep stages from your watch, and the machine's four signals (flow, pressure, leak and snore).</p>
-                        <p class="nx-feature-body">Tap any chart for its own page, like Apple Health: the key number, the graph at full size, and a plain-language “About.”</p>
-                    </div>
-                    <div class="nx-feature-media">
-                        <div class="nx-device"><video src="assets/nocta/v3/flow-fullnight.mp4" poster="assets/nocta/v3/fullnight.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
                     </div>
                 </div>
 
@@ -1179,7 +1208,7 @@
                 </div>
 
                 <!-- what testing asked for that I chose not to build -->
-                <div class="nx-cut">
+                <!-- <div class="nx-cut">
                     <p class="nx-panel-k">Asked for, deliberately not built</p>
                     <div class="nx-cut-grid nx-stagger">
                         <div class="nx-cut-card">
@@ -1195,7 +1224,7 @@
                             <p class="nx-cut-why"><b>Never.</b> That would make Nocta a regulated medical device, and it isn't the app's call to make.</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
 

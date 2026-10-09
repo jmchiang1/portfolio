@@ -281,3 +281,90 @@
     });
 })();
 
+
+// ============================================
+// Onboarding deck — a presenter's carousel. The prev/next buttons under the
+// phone step through the screens, and so do ← / → whenever the deck is on
+// screen (no need to click it first), clicking the phone (its left third steps
+// back), and a horizontal swipe on touch. Stops at both ends, where that
+// button dims.
+// ============================================
+(function () {
+    var deck = document.querySelector('.nx-deck');
+    if (!deck) return;
+    var slides = Array.prototype.slice.call(deck.querySelectorAll('.nx-deck-slide'));
+    var status = deck.querySelector('.nx-deck-status');
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.nx-deck-btn'));
+    var now = document.querySelector('.nx-deck-now');
+    var current = 0;
+    var onScreen = false;
+
+    function go(i) {
+        if (i < 0 || i >= slides.length || i === current) return;
+        current = i;
+        slides.forEach(function (s, k) {
+            s.classList.toggle('is-active', k === i);
+            if (k === i) s.removeAttribute('aria-hidden');
+            else s.setAttribute('aria-hidden', 'true');
+        });
+        if (now) now.textContent = (i < 9 ? '0' : '') + (i + 1);
+        btns.forEach(function (b) {
+            var step = parseInt(b.getAttribute('data-step'), 10);
+            b.disabled = i + step < 0 || i + step >= slides.length;
+        });
+        if (status) status.textContent = 'Screen ' + (i + 1) + ' of ' + slides.length + '. ' + slides[i].alt;
+    }
+
+    // all fourteen share one spot, so fetch them together before the first step
+    slides.forEach(function (s) { s.loading = 'eager'; });
+
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+            onScreen = entries[0].intersectionRatio >= 0.5;
+        }, { threshold: [0, 0.5, 1] }).observe(deck);
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+        if (!onScreen && document.activeElement !== deck) return;
+        var t = e.target;
+        // leave arrows alone where they already mean something
+        if (t !== deck && t.closest && t.closest('input, textarea, select, [contenteditable], [role="tab"], [role="tablist"], .nx-iter-btn')) return;
+        var lb = document.getElementById('nx-lightbox');
+        if (lb && !lb.hasAttribute('hidden')) return;
+        e.preventDefault();
+        go(current + (e.key === 'ArrowRight' ? 1 : -1));
+    });
+
+    btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+            go(current + parseInt(b.getAttribute('data-step'), 10));
+        });
+    });
+
+    var swiped = false;
+    deck.addEventListener('click', function (e) {
+        if (swiped) { swiped = false; return; }
+        var r = deck.getBoundingClientRect();
+        go(current + (e.clientX - r.left < r.width / 3 ? -1 : 1));
+    });
+
+    var x0 = null;
+    var y0 = null;
+    deck.addEventListener('touchstart', function (e) {
+        x0 = e.touches[0].clientX;
+        y0 = e.touches[0].clientY;
+    }, { passive: true });
+    deck.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        var dy = e.changedTouches[0].clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+            swiped = true;
+            go(current + (dx < 0 ? 1 : -1));
+            setTimeout(function () { swiped = false; }, 400);
+        }
+    });
+})();
