@@ -645,12 +645,10 @@ body::before {
     height: auto;
 }
 
-/* iPhone mockup frame — applied only to devices holding a VIDEO or the
-   onboarding deck (still-image devices keep the plain frame above). Mirrors the
-   home-page nocta thumbnail: a metallic bezel, a rounded screen, and a
-   dynamic-island pill. */
-.nx-device:has(video),
-.nx-device.nx-deck {
+/* iPhone mockup frame — applied only to devices holding a VIDEO (still-image
+   devices keep the plain frame above). Mirrors the home-page nocta thumbnail:
+   a metallic bezel, a rounded screen, and a dynamic-island pill. */
+.nx-device:has(video) {
     position: relative;
     padding: 0.45rem;
     border: none;
@@ -660,14 +658,12 @@ body::before {
                 inset 0 0 0 0.09rem rgba(255, 255, 255, 0.06);
 }
 
-.nx-device:has(video) video,
-.nx-deck-track {
+.nx-device:has(video) video {
     border-radius: 2.45rem;
 }
 
 /* Dynamic Island */
-.nx-device:has(video)::before,
-.nx-device.nx-deck::before {
+.nx-device:has(video)::before {
     content: "";
     position: absolute;
     top: 1.05rem;
@@ -1927,160 +1923,6 @@ body::before {
     filter: drop-shadow(0 2.5rem 4.375rem rgba(0, 0, 0, 0.55));
 }
 
-/* Onboarding deck — a presenter's carousel with prev/next buttons either side
-   of the phone and a counter under it (nocta.js).
-   Every screen sits in the same grid cell. Stepping crossfades: the incoming
-   screen fades in on top while the outgoing one holds underneath until it's
-   covered, so nothing dips through. The screenshots share one status bar, so
-   the top of the phone stays perfectly still — only the content changes. The
-   same motion plays stepping either way. */
-.nx-deck {
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-}
-
-.nx-deck:focus-visible {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07),
-                inset 0 0 0 0.09rem rgba(255, 255, 255, 0.06),
-                0 0 0 0.25rem var(--nx-peach);
-}
-
-.nx-deck-track {
-    display: grid;
-    overflow: hidden;
-    /* only ever shows if a screen hasn't loaded yet */
-    background: #0b0f1c;
-    isolation: isolate;
-}
-
-.nx-device .nx-deck-slide {
-    grid-area: 1 / 1;
-    opacity: 0;
-    transition: opacity 0s linear 0.42s;
-    pointer-events: none;
-    -webkit-user-drag: none;
-}
-
-.nx-device .nx-deck-slide.is-active {
-    opacity: 1;
-    z-index: 1;
-    transition: opacity 0.42s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-/* prev · phone · next in a row, the counter under the phone. The row
-   shrink-wraps, so it stays a unit even where the phone sits left-aligned. */
-.nx-deck-wrap {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-areas:
-        "prev phone next"
-        ".    count .";
-    align-items: center;
-    column-gap: 1rem;
-    row-gap: 1.25rem;
-    width: fit-content;
-}
-
-.nx-deck-wrap .nx-deck { grid-area: phone; }
-.nx-deck-btn.is-prev { grid-area: prev; }
-.nx-deck-btn.is-next { grid-area: next; }
-.nx-deck-count { grid-area: count; }
-
-/* the buttons widen this row's media column; let the copy give a little room */
-.nx-feature:has(.nx-deck) {
-    grid-template-columns: minmax(0, 26rem) auto;
-    gap: 3.5rem;
-}
-
-.nx-deck-count {
-    justify-self: center;
-    font-family: var(--nx-mono);
-    font-size: var(--text-13);
-    letter-spacing: 0.2em;
-    color: var(--nx-fg-3);
-    font-feature-settings: "tnum" 1;
-}
-
-.nx-deck-now {
-    color: var(--nx-peach);
-}
-
-.nx-deck-btn {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    border: 0.0625rem solid var(--nx-line-2);
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--nx-fg);
-    font-size: 1.375rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease, opacity 0.2s ease, transform 0.15s ease;
-}
-
-.nx-deck-btn:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.14);
-}
-
-.nx-deck-btn:active:not(:disabled) {
-    transform: scale(0.94);
-}
-
-.nx-deck-btn:focus-visible {
-    outline: 0.125rem solid var(--nx-peach);
-    outline-offset: 0.1875rem;
-}
-
-/* at either end of the deck, that direction rests dimmed */
-.nx-deck-btn:disabled {
-    opacity: 0.3;
-    cursor: default;
-}
-
-.nx-deck-status {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-}
-
-@media (max-width: 900px) {
-    .nx-feature:has(.nx-deck) {
-        grid-template-columns: 1fr;
-        gap: 2.25rem;
-    }
-}
-
-/* small phones: tighter buttons, and the phone gives up width before the row
-   overflows (6rem of buttons + gaps, 2.75rem of page gutters) */
-@media (max-width: 640px) {
-    .nx-deck-wrap {
-        column-gap: 0.5rem;
-    }
-
-    .nx-deck-btn {
-        width: 2.5rem;
-        height: 2.5rem;
-        font-size: 1.125rem;
-    }
-
-    .nx-device.nx-deck {
-        width: min(15rem, calc(100vw - 8.75rem));
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .nx-device .nx-deck-slide,
-    .nx-device .nx-deck-slide.is-active {
-        transition: none;
-    }
-}
 
 /* ===========================================================================
    SAFETY RAILS
