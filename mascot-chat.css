@@ -1,0 +1,598 @@
+/* ==========================================================================
+   mascot-chat.css — Bit, the pixel keycap who answers questions about
+   Jonathan. Markup is injected by mascot-chat.js; everything is scoped
+   under .mc-root so it drops onto any page (shell or case study) cleanly.
+
+   Bit lives in the bottom-left corner, on the site's 40px gutter.
+   ========================================================================== */
+
+.mc-root {
+    --mc-bg: #1f1e1c;
+    --mc-surface: #2a2927;
+    --mc-surface-hi: #34332f;
+    --mc-line: rgba(255, 255, 255, 0.09);
+    --mc-text: #f4f2ee;
+    --mc-muted: rgba(255, 255, 255, 0.58);
+    --mc-accent: #1180f9;
+    --mc-key: #fafaf7;
+    --mc-key-shade: #c3bfb6;
+    --mc-ink: #161514;
+    --mc-size: 60px;
+    --mc-bottom: 40px;
+    --mc-left: 40px;
+    --mc-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --mc-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    color: var(--mc-text);
+    -webkit-font-smoothing: antialiased;
+}
+
+.mc-root button,
+.mc-root a {
+    cursor: url('assets/pointer.cur'), pointer;
+}
+
+.mc-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   The mascot SVG — shared by the launcher and the panel header
+   -------------------------------------------------------------------------- */
+.mc-bot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    shape-rendering: crispEdges;
+}
+
+.mc-bot .mc-face { fill: var(--mc-key); }
+.mc-bot .mc-skirt { fill: var(--mc-key-shade); }
+.mc-bot .mc-ink { fill: var(--mc-ink); }
+.mc-bot .mc-blush { fill: #ff9fb3; opacity: 0.85; }
+.mc-bot .mc-stem { fill: var(--mc-key-shade); }
+.mc-bot .mc-tip { fill: var(--mc-accent); animation: mc-tip 2.6s steps(1) infinite; }
+
+.mc-bot .mc-look { transition: transform 0.25s var(--mc-ease-out); }
+.mc-bot .mc-eyes { transition: transform 0.3s var(--mc-ease-out); }
+.mc-bot .mc-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: mc-blink 5s infinite;
+}
+.mc-bot .mc-eye:nth-of-type(2) { animation-delay: 0.04s; }
+.mc-bot .mc-happy { opacity: 0; }
+.mc-bot .mc-mouth {
+    transform-box: fill-box;
+    transform-origin: center top;
+}
+
+/* Thinking — eyes drift up and to the side, antenna pings faster */
+.mc-root.is-thinking .mc-bot .mc-eyes { transform: translate(0.6px, -0.7px); }
+.mc-root.is-thinking .mc-bot .mc-tip { animation-duration: 0.5s; }
+
+/* Talking — mouth chatters while a reply streams in */
+.mc-root.is-talking .mc-bot .mc-mouth { animation: mc-talk 0.22s steps(2) infinite alternate; }
+
+@keyframes mc-blink {
+    0%, 93%, 100% { transform: scaleY(1); }
+    95.5% { transform: scaleY(0.12); }
+}
+
+@keyframes mc-tip {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+@keyframes mc-talk {
+    from { transform: scaleY(1); }
+    to { transform: scaleY(2.4); }
+}
+
+/* --------------------------------------------------------------------------
+   Launcher — Bit himself, a keycap you can press
+   -------------------------------------------------------------------------- */
+.mc-launcher {
+    position: fixed;
+    left: var(--mc-left);
+    bottom: var(--mc-bottom);
+    z-index: 120;
+    width: var(--mc-size);
+    height: var(--mc-size);
+    padding: 0;
+    border: 0;
+    background: none;
+    -webkit-tap-highlight-color: transparent;
+    animation: mc-pop-in 0.7s var(--mc-ease-spring) 0.9s both;
+    transition: opacity 0.25s ease, scale 0.25s var(--mc-ease-out);
+}
+
+.mc-launcher-body {
+    display: block;
+    width: 100%;
+    height: 100%;
+    animation: mc-bob 3.2s ease-in-out infinite;
+}
+
+.mc-launcher-press {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: translate 0.12s ease;
+}
+
+/* Soft floor shadow that shrinks as Bit bobs up */
+.mc-launcher::after {
+    content: '';
+    position: absolute;
+    left: 22%;
+    right: 22%;
+    bottom: -7px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.45);
+    filter: blur(2px);
+    animation: mc-shadow 3.2s ease-in-out infinite;
+    z-index: -1;
+}
+
+.mc-launcher:hover .mc-launcher-press,
+.mc-launcher:active .mc-launcher-press { translate: 0 3px; }
+.mc-launcher:hover .mc-bot .mc-eye,
+.mc-launcher:focus-visible .mc-bot .mc-eye { opacity: 0; }
+.mc-launcher:hover .mc-bot .mc-happy,
+.mc-launcher:focus-visible .mc-bot .mc-happy { opacity: 1; }
+
+.mc-launcher:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 6px;
+    border-radius: 12px;
+}
+
+/* While the panel is open Bit tucks away; he lives in the panel header */
+.mc-root.is-open .mc-launcher {
+    opacity: 0;
+    scale: 0.6;
+    pointer-events: none;
+}
+
+@keyframes mc-pop-in {
+    from { opacity: 0; transform: translateY(18px) scale(0.6); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes mc-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+@keyframes mc-shadow {
+    0%, 100% { transform: scaleX(1); opacity: 1; }
+    50% { transform: scaleX(0.78); opacity: 0.6; }
+}
+
+/* --------------------------------------------------------------------------
+   Greeting bubble — says hi once per session
+   -------------------------------------------------------------------------- */
+.mc-bubble {
+    position: fixed;
+    left: calc(var(--mc-left) + var(--mc-size) + 12px);
+    bottom: calc(var(--mc-bottom) + var(--mc-size) * 0.45);
+    z-index: 120;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    max-width: 230px;
+    padding: 11px 8px 11px 14px;
+    border: 1px solid var(--mc-line);
+    border-radius: 14px 14px 14px 4px;
+    background: var(--mc-surface);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    font-size: var(--text-14);
+    line-height: 1.4;
+    transform-origin: bottom left;
+}
+
+.mc-bubble[hidden] { display: none; }
+.mc-bubble.is-entering { animation: mc-bubble-in 0.4s var(--mc-ease-spring) both; }
+.mc-bubble.is-leaving { animation: mc-bubble-in 0.2s ease-in reverse both; }
+
+.mc-bubble-text {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+}
+
+.mc-bubble-text strong { font-weight: 600; }
+
+.mc-bubble-close {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    margin-top: -2px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--mc-muted);
+}
+
+.mc-bubble-close:hover { background: var(--mc-surface-hi); color: var(--mc-text); }
+
+@keyframes mc-bubble-in {
+    from { opacity: 0; transform: translate(-8px, 6px) scale(0.85); }
+    to { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Panel
+   -------------------------------------------------------------------------- */
+.mc-panel {
+    position: fixed;
+    left: var(--mc-left);
+    bottom: var(--mc-bottom);
+    z-index: 121;
+    display: flex;
+    flex-direction: column;
+    width: min(380px, calc(100vw - 32px));
+    height: min(580px, calc(100dvh - var(--mc-bottom) - 96px));
+    border: 1px solid var(--mc-line);
+    border-radius: 18px;
+    background: var(--mc-bg);
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.5),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transform-origin: bottom left;
+}
+
+.mc-panel[hidden] { display: none; }
+.mc-panel.is-entering { animation: mc-panel-in 0.42s var(--mc-ease-out) both; }
+.mc-panel.is-leaving { animation: mc-panel-out 0.22s cubic-bezier(0.4, 0, 1, 1) both; }
+
+@keyframes mc-panel-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.9); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes mc-panel-out {
+    from { opacity: 1; transform: none; }
+    to { opacity: 0; transform: translateY(12px) scale(0.92); }
+}
+
+/* Header */
+.mc-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 12px 14px 16px;
+    border-bottom: 1px solid var(--mc-line);
+}
+
+.mc-head-bot {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+    border-radius: 10px;
+    background: var(--mc-surface);
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.mc-head-text { flex: 1; min-width: 0; }
+
+.mc-name {
+    margin: 0;
+    font-family: 'DotGothic16', 'Space Mono', monospace;
+    font-size: var(--text-18);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+}
+
+.mc-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 3px 0 0;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-11);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mc-muted);
+}
+
+.mc-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #3ecf8e;
+}
+
+.mc-root.is-thinking .mc-status::before { background: var(--mc-accent); animation: mc-tip 0.5s steps(1) infinite; }
+
+/* Small keycap-style icon buttons (reset, close) */
+.mc-icon-btn {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0 0 2px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    background: var(--mc-surface);
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.35);
+    color: var(--mc-muted);
+    transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.12s ease, translate 0.12s ease;
+}
+
+.mc-icon-btn:hover {
+    background: var(--mc-surface-hi);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+    color: var(--mc-text);
+    translate: 0 2px;
+}
+
+.mc-icon-btn:focus-visible,
+.mc-chip:focus-visible,
+.mc-send:focus-visible,
+.mc-bubble-close:focus-visible,
+.mc-bubble-text:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+.mc-icon-btn svg,
+.mc-send svg,
+.mc-bubble-close svg {
+    display: block;
+    shape-rendering: crispEdges;
+}
+
+/* Message log */
+.mc-log {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 16px 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mc-surface-hi) transparent;
+}
+
+.mc-msg {
+    max-width: 86%;
+    padding: 10px 13px;
+    font-size: var(--text-14);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    animation: mc-msg-in 0.32s var(--mc-ease-out) both;
+}
+
+.mc-msg-bot {
+    align-self: flex-start;
+    border: 1px solid var(--mc-line);
+    border-radius: 4px 14px 14px 14px;
+    background: var(--mc-surface);
+}
+
+/* Visitor messages are the white "active key" from the nav */
+.mc-msg-user {
+    align-self: flex-end;
+    border-radius: 14px 4px 14px 14px;
+    background: var(--mc-key);
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.14);
+    color: var(--mc-ink);
+    white-space: pre-wrap;
+}
+
+.mc-msg-error {
+    border-color: rgba(255, 120, 120, 0.25);
+    color: #ffc9c9;
+}
+
+.mc-msg p { margin: 0; }
+.mc-msg p + p,
+.mc-msg p + ul,
+.mc-msg ul + p { margin-top: 8px; }
+.mc-msg ul { margin: 0; padding-left: 18px; }
+.mc-msg li + li { margin-top: 3px; }
+.mc-msg strong { font-weight: 600; color: #fff; }
+
+.mc-msg a {
+    color: #8ec3ff;
+    text-decoration: underline;
+    text-decoration-color: rgba(142, 195, 255, 0.4);
+    text-underline-offset: 2px;
+}
+
+.mc-msg a:hover { text-decoration-color: currentColor; }
+
+@keyframes mc-msg-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* Typing indicator — three pixel squares hopping */
+.mc-typing {
+    display: flex;
+    gap: 5px;
+    padding: 14px 15px;
+}
+
+.mc-typing span {
+    width: 6px;
+    height: 6px;
+    background: var(--mc-muted);
+    animation: mc-hop 1s ease-in-out infinite;
+}
+
+.mc-typing span:nth-child(2) { animation-delay: 0.15s; }
+.mc-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes mc-hop {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Suggested questions */
+.mc-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 16px 12px;
+}
+
+.mc-chips[hidden] { display: none; }
+
+.mc-chip {
+    padding: 7px 11px 9px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    background: var(--mc-surface);
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.35);
+    color: var(--mc-text);
+    font-family: inherit;
+    font-size: var(--text-13);
+    line-height: 1.2;
+    text-align: left;
+    animation: mc-msg-in 0.32s var(--mc-ease-out) both;
+    transition: background-color 0.2s ease, box-shadow 0.12s ease, translate 0.12s ease;
+}
+
+.mc-chip:nth-child(2) { animation-delay: 0.05s; }
+.mc-chip:nth-child(3) { animation-delay: 0.1s; }
+.mc-chip:nth-child(4) { animation-delay: 0.15s; }
+
+.mc-chip:hover {
+    background: var(--mc-surface-hi);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+    translate: 0 2px;
+}
+
+/* Composer */
+.mc-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin: 0 12px;
+    padding: 6px 6px 6px 14px;
+    border: 1px solid var(--mc-line);
+    border-radius: 12px;
+    background: var(--mc-surface);
+    transition: border-color 0.2s ease;
+}
+
+.mc-form:focus-within { border-color: rgba(255, 255, 255, 0.28); }
+
+.mc-input {
+    flex: 1;
+    min-width: 0;
+    max-height: 104px;
+    padding: 7px 0;
+    border: 0;
+    background: none;
+    color: var(--mc-text);
+    font-family: inherit;
+    font-size: var(--text-14);
+    line-height: 1.45;
+    resize: none;
+    outline: none;
+}
+
+.mc-input::placeholder { color: var(--mc-muted); }
+
+.mc-send {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0 0 2px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    background: var(--mc-key);
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+    color: var(--mc-ink);
+    transition: opacity 0.2s ease, box-shadow 0.12s ease, translate 0.12s ease;
+}
+
+.mc-send:hover:not(:disabled) {
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    translate: 0 2px;
+}
+
+.mc-send:disabled { opacity: 0.35; }
+
+.mc-foot {
+    margin: 0;
+    padding: 8px 16px 12px;
+    font-size: var(--text-11);
+    line-height: 1.4;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Phones — the panel becomes a bottom sheet
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    .mc-root {
+        --mc-size: 54px;
+        --mc-bottom: 18px;
+        --mc-left: 18px;
+    }
+
+    .mc-panel {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        width: auto;
+        height: min(620px, calc(100dvh - 80px));
+        transform-origin: bottom center;
+    }
+
+    /* 16px keeps iOS Safari from zooming into the field */
+    .mc-input { font-size: var(--text-16); }
+    .mc-msg { max-width: 90%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mc-launcher,
+    .mc-launcher-body,
+    .mc-launcher::after,
+    .mc-bot .mc-eye,
+    .mc-bot .mc-tip,
+    .mc-typing span,
+    .mc-msg,
+    .mc-chip {
+        animation: none;
+    }
+
+    .mc-root.is-talking .mc-bot .mc-mouth { animation: none; }
+    .mc-panel.is-entering,
+    .mc-bubble.is-entering { animation: mc-fade 0.15s ease both; }
+    .mc-panel.is-leaving,
+    .mc-bubble.is-leaving { animation: mc-fade 0.15s ease reverse both; }
+}
+
+@keyframes mc-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
