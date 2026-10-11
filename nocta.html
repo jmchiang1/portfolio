@@ -202,7 +202,7 @@
                     </div>
 
                     <!-- Fun aside — what the mask makes you look like -->
-                    <figure class="nx-cpap-aside">
+                    <!-- <figure class="nx-cpap-aside">
                         <div class="nx-cpap-photo">
                             <img src="assets/nocta/jon-cpap/jon.png" alt="The designer wearing a CPAP mask" loading="lazy">
                             <div class="nx-cpap-sticker nx-cpap-sticker--elephant">
@@ -214,8 +214,7 @@
                                 <span>…part Top Gun</span>
                             </div>
                         </div>
-                        <!-- <figcaption class="nx-cpap-cap">Full disclosure — I'm a CPAP user myself. This one's personal.</figcaption> -->
-                    </figure>
+                    </figure> -->
                 </div>
 
                 <!-- Part 3 — Compliance -->
@@ -244,23 +243,28 @@
             <div class="nx-wrap">
                 <div class="nx-head">
                     <p class="nx-eyebrow"><span class="nx-idx">01</span> Desk Research</p>
-                    <h2 class="nx-h2">The numbers were bleak.</h2>
-                    <p class="nx-lead">Secondary research across the National Library of Medicine, BMC Pulmonary Medicine, and the Journal of the American Heart Association painted a clear gap between diagnosis and follow-through.</p>
+                    <h2 class="nx-h2">The pattern is set in <em>the first month.</em></h2>
+                    <p class="nx-lead">Sleep apnea affects an estimated 3 to 9% of adults, close to a billion people worldwide. CPAP, the gold-standard treatment, has an adherence problem: a 20-year review found adherence hasn't meaningfully improved, despite better machines and coaching programs.</p>
                 </div>
-                <div class="nx-stats nx-stagger">
+                <div class="nx-stats is-4 nx-stagger">
                     <div class="nx-stat">
-                        <div class="nx-stat-num">30M</div>
-                        <p class="nx-stat-desc">Americans are suspected of having sleep apnea</p>
+                        <div class="nx-stat-num">3–9%</div>
+                        <p class="nx-stat-desc">of adults are estimated to have sleep apnea</p>
                     </div>
                     <div class="nx-stat">
-                        <div class="nx-stat-num">25–34%</div>
-                        <p class="nx-stat-desc">stay on CPAP therapy past the one-year mark</p>
+                        <div class="nx-stat-num">~1B</div>
+                        <p class="nx-stat-desc">people affected worldwide</p>
+                    </div>
+                    <div class="nx-stat">
+                        <div class="nx-stat-num">&lt;50%</div>
+                        <p class="nx-stat-desc">still met the insurer standard (4+ hours on 70% of nights) two years in</p>
                     </div>
                     <div class="nx-stat is-hot">
-                        <div class="nx-stat-num">6.8%</div>
-                        <p class="nx-stat-desc">are both diagnosed <em>and</em> stick with treatment long-term</p>
+                        <div class="nx-stat-num">~80%</div>
+                        <p class="nx-stat-desc">of patients on track in their first month were still on track two years later</p>
                     </div>
                 </div>
+                <!-- <p class="nx-research-turn">So if you can help someone in that first month, you can change the long-term outcome.</p> -->
             </div>
         </section>
 
@@ -270,7 +274,7 @@
                 <div class="nx-head">
                     <p class="nx-eyebrow">Community Research</p>
                     <h2 class="nx-h2">The same story, <em>hundreds of times.</em></h2>
-                    <p class="nx-lead">Beyond the studies, I read through r/CPAP and r/SleepApnea — the human side of that 6.8%. Post after post described the same struggle: drowning in raw numbers, fighting clunky tools like <strong>OSCAR</strong>, and just wanting someone to explain what it all means.</p>
+                    <p class="nx-lead">Beyond the studies, I read through r/CPAP and r/SleepApnea — the human side of those numbers. Post after post described the same struggle: drowning in raw numbers, fighting clunky tools like <strong>OSCAR</strong>, and just wanting someone to explain what it all means.</p>
                 </div>
 
                 <!-- Each column's posts are duplicated (second set aria-hidden) so the
@@ -335,8 +339,8 @@
                             <p class="nx-stat-desc">rated mask comfort as the #1 thing they'd change</p>
                         </div>
                         <div class="nx-stat is-hot">
-                            <div class="nx-stat-num">4<span>/14</span></div>
-                            <p class="nx-stat-desc">said the data in their CPAP app isn't useful to them</p>
+                            <div class="nx-stat-num">9<span>/14</span></div>
+                            <p class="nx-stat-desc">wanted more guidance and better tracking on therapy</p>
                         </div>
                     </div>
                 </div>
@@ -1232,6 +1236,34 @@
                         <div class="nx-browser-screen"><img src="assets/nocta/v3/desk-you.jpg" alt="Nocta desktop dashboard — You" loading="lazy"></div>
                         <figcaption><span class="nx-desk-cap-k">You</span> Profile and tabbed settings in one focused, readable column.</figcaption>
                     </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== OSCAR VS NOCTA ===================== -->
+        <!-- Before: a real OSCAR 2.0 Daily view (my own data, Mar 15 2025). After: the Nocta mobile
+             home screen and full-night view from the prototype. Different nights; the comparison is the shape of the answer. -->
+        <section id="compare" class="cs-section">
+            <div class="nx-wrap">
+                <div class="nx-head">
+                    <p class="nx-eyebrow">Side by side</p>
+                    <h2 class="nx-h2">One question, <em>two answers.</em></h2>
+                    <!-- <p class="nx-lead">Every morning starts with the same question: how did I sleep? Drag the slider to see how <strong>OSCAR</strong>, the desktop tool power users rely on, answers it, then how Nocta's home screen and full-night view do. Both start from the same machine data. One hands you all of it; the other tells you what it means.</p> -->
+                </div>
+
+                <!-- before/after slider: drag (or arrow-key the range) to wipe OSCAR away -->
+                <div class="nx-ba" style="--pos: 20%">
+                    <div class="nx-ba-after">
+                        <div class="nx-device"><img src="assets/nocta/v3/tonight.jpg" alt="Nocta's home screen: AHI doubled, 10.5 an hour, up from your usual 4.6, a curve of the night's events, and one thing to try tonight: start on your side" loading="lazy" draggable="false"></div>
+                        <div class="nx-device"><img src="assets/nocta/v3/fullnight.jpg" alt="Nocta's full-night view: 10.5 AHI, 65 events and 6.2 hours, events by type across the night, and sleep stages from Apple Watch" loading="lazy" draggable="false"></div>
+                    </div>
+                    <span class="nx-ba-tag is-after">Nocta</span>
+                    <div class="nx-ba-before">
+                        <img class="nx-ba-img" src="assets/nocta/competition/oscar/oscar-1.png" alt="OSCAR's Daily view: AHI 0.94 at the top of a sidebar of event, statistics and device-setting tables, beside stacked graphs of event flags, flow rate, pressure, leak rate and flow limitation" loading="lazy" draggable="false">
+                        <span class="nx-ba-tag">OSCAR</span>
+                    </div>
+                    <div class="nx-ba-handle" aria-hidden="true"><span><i class="hn hn-arrow-left"></i><i class="hn hn-arrow-right"></i></span></div>
+                    <input class="nx-ba-range" type="range" min="0" max="100" value="20" aria-label="Drag to compare OSCAR with Nocta">
                 </div>
             </div>
         </section>

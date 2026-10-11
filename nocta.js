@@ -280,3 +280,38 @@
         if (e.key === 'Escape' && !lb.hasAttribute('hidden')) close();
     });
 })();
+
+// ============================================
+// OSCAR vs Nocta before/after slider — drag anywhere on the frame to move the
+// wipe. The hidden range input mirrors the position for keyboard users.
+// ============================================
+(function () {
+    var ba = document.querySelector('.nx-ba');
+    if (!ba) return;
+    var range = ba.querySelector('.nx-ba-range');
+
+    function set(pct) {
+        pct = Math.max(0, Math.min(100, pct));
+        ba.style.setProperty('--pos', pct + '%');
+        range.value = Math.round(pct);
+    }
+
+    function fromPointer(e) {
+        var r = ba.getBoundingClientRect();
+        set((e.clientX - r.left) / r.width * 100);
+    }
+
+    ba.addEventListener('pointerdown', function (e) {
+        if (e.button !== 0) return;
+        ba.setPointerCapture(e.pointerId);
+        ba.classList.add('is-dragging');
+        fromPointer(e);
+    });
+    ba.addEventListener('pointermove', function (e) {
+        if (ba.classList.contains('is-dragging')) fromPointer(e);
+    });
+    ['pointerup', 'pointercancel'].forEach(function (t) {
+        ba.addEventListener(t, function () { ba.classList.remove('is-dragging'); });
+    });
+    range.addEventListener('input', function () { set(+range.value); });
+})();
