@@ -232,7 +232,7 @@
                             <span class="nx-cf-op">within</span>
                             <div class="nx-cf-item"><b>30</b><span>days</span></div>
                         </div>
-                        <p class="nx-compliance-warn">Miss that bar and you can lose insurance coverage entirely — paying out of pocket for the machine, the mask, and every replacement supply. The pressure to “pass” often matters more to people than the therapy itself.</p>
+                        <!-- <p class="nx-compliance-warn">Miss that bar and you can lose insurance coverage entirely — paying out of pocket for the machine, the mask, and every replacement supply. The pressure to “pass” often matters more to people than the therapy itself.</p> -->
                     </div>
                 </div>
             </div>
@@ -248,12 +248,12 @@
                 </div>
                 <div class="nx-stats is-4 nx-stagger">
                     <div class="nx-stat">
-                        <div class="nx-stat-num">3–9%</div>
-                        <p class="nx-stat-desc">of adults are estimated to have sleep apnea</p>
-                    </div>
-                    <div class="nx-stat">
                         <div class="nx-stat-num">~1B</div>
                         <p class="nx-stat-desc">people affected worldwide</p>
+                    </div>
+                    <div class="nx-stat">
+                        <div class="nx-stat-num">~425m</div>
+                        <p class="nx-stat-desc">adults have moderate - severe sleep apnea</p>
                     </div>
                     <div class="nx-stat">
                         <div class="nx-stat-num">&lt;50%</div>
@@ -1293,39 +1293,38 @@
                     </div>
                 </div>
 
-                <!-- No launch, so no results: the metrics I'd hold it to, from the capstone's business-metrics plan -->
+                <!-- No launch, so no results: the metrics I'd hold it to, and how I'd validate them -->
                 <div class="nx-measure">
                     <div class="nx-brand-head">
                         <h3 class="nx-sub">How I'd measure it</h3>
-                        <p>Nocta hasn't launched, so I won't claim results. These are the metrics I set out in my capstone to judge it by, plus one guardrail the AI makes necessary.</p>
+                        <p>Nocta isn't a live product yet, so I won't claim results. If I launched it, these are the numbers I'd watch. I'm not optimizing for time in the app; I'm optimizing for time on the machine.</p>
                     </div>
                     <div class="nx-measure-grid nx-stagger">
-                        <div class="nx-measure-card">
-                            <p class="nx-measure-k">Activation</p>
-                            <p class="nx-measure-v">Share of new users who finish onboarding, complete a first check-in and open their first insight.</p>
-                        </div>
                         <div class="nx-measure-card is-north">
-                            <p class="nx-measure-k">North star · Compliance</p>
-                            <p class="nx-measure-v">Share of users who reach 4+ hours on 70% of nights within 30 days, compared with people using only their machine's app.</p>
+                            <p class="nx-measure-k">North star · Day-30 compliance</p>
+                            <p class="nx-measure-v">How many new users meet the insurance standard (4+ hours on 70% of nights) in their first month. The research showed the first month predicts whether someone is still on therapy two years later.</p>
                         </div>
                         <div class="nx-measure-card">
-                            <p class="nx-measure-k">Engagement</p>
-                            <p class="nx-measure-v">Which surfaces earn repeat use (check-ins, Ask Nox, doctor exports), and which don't.</p>
+                            <p class="nx-measure-k">Core idea · Follow-through</p>
+                            <p class="nx-measure-v">Whether people actually try the why horizon's suggestion, and whether their next night improves. That tells me if interpretation over data is working.</p>
                         </div>
                         <div class="nx-measure-card">
-                            <p class="nx-measure-k">Guardrail · Safety</p>
-                            <p class="nx-measure-v">Zero insights that suggest a pressure change or name a condition, and how often a “talk to your doctor” flag leads to a visit.</p>
+                            <p class="nx-measure-k">Success signal · Fewer suggestions</p>
+                            <p class="nx-measure-v">If therapy is working, Nox should have less to say. Fewer suggestions paired with steady compliance is a sign of success, not disengagement.</p>
+                        </div>
+                        <div class="nx-measure-card">
+                            <p class="nx-measure-k">Guardrail · Harm</p>
+                            <p class="nx-measure-v">How often a “talk to your doctor” alert was actually warranted, and whether people quit after a hard message.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="nx-team">
-                    <p class="nx-panel-k">With a team, next I would</p>
+                    <p class="nx-panel-k">With a full team, I'd validate it in phases</p>
                     <ol class="nx-team-list">
-                        <li><b>Have a sleep physician review the AI's language and escalation rules</b> before any real user sees an insight.</li>
-                        <li><b>Run a 30-night diary study</b> with new CPAP users, to see whether the morning insight actually changes behavior.</li>
-                        <li><b>Test the why horizon with users 50 to 75</b>, the core audience, for legibility and trust at a glance.</li>
-                        <li><b>Work with engineering on the SleepHQ and OpenAI integrations</b>, and the privacy model for health data.</li>
+                        <li><b>Run a 30-day study</b> comparing Nocta users with people using only their manufacturer's app.</li>
+                        <li><b>Test the why horizon itself</b>, like one suggestion versus three.</li>
+                        <li><b>Work with device makers like ResMed on direct data access</b>, so users don't need a third-party sync.</li>
                     </ol>
                 </div>
             </div>
