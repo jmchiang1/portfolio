@@ -2294,6 +2294,40 @@ button,
     transform: scale(1.08);
 }
 
+/* Name label: fades + lifts in on hover, and reverses on the way out. */
+.sk-posmap-pt::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    padding: 5px 10px;
+    border: 1px solid var(--sk-border);
+    border-radius: 6px;
+    background: var(--sk-bg);
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-12);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    color: #fff;
+    opacity: 0;
+    transform: translate(-50%, 4px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+}
+
+.sk-posmap-pt:hover::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sk-posmap-pt::after {
+        transition: opacity 0.2s ease;
+        transform: translate(-50%, 0);
+    }
+}
+
 .sk-posmap-pt--us {
     width: calc(var(--logo) * 1.3);
     height: calc(var(--logo) * 1.3);
@@ -5478,7 +5512,7 @@ button,
 .sk-bk-title {
     font-family: 'Fira Sans', sans-serif;
     font-weight: 800;
-    font-size: clamp(2.5rem, 5.6vw, 4.5rem);
+    font-size: clamp(2.5rem, 3.5rem, 4.5rem);
     line-height: 0.95;
     letter-spacing: -0.015em;
     color: #fff;

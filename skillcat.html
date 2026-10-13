@@ -1,520 +1,1158 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>SkillCat — Case Study | Jonathan Chiang</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="apple-touch-icon" href="assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="apple-touch-icon" href="assets/favicon.svg" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&family=Kode+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&family=Kode+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="tokens.css">
-    <link rel="stylesheet" href="cs-nav.css">
-    <link rel="stylesheet" href="skillcat.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
-    <link rel="stylesheet" href="mascot-chat.css">
-</head>
-<body>
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="cs-nav.css" />
+    <link rel="stylesheet" href="skillcat.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css"
+    />
+    <link rel="stylesheet" href="mascot-chat.css" />
+  </head>
+  <body>
     <!-- Cover — visible from first paint to prevent flash between pages -->
     <div class="page-transition-cover"></div>
 
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="/" class="nav-logo">
-            <img src="assets/logo.png" alt="JC" />
-        </a>
-        <div class="nav-links cs-nav-links">
-            <a href="#brief" class="nav-link">Brief</a>
-            <a href="#research" class="nav-link">Research</a>
-            <a href="#journey" class="nav-link">Journey</a>
-            <a href="#brand" class="nav-link">Brand</a>
-            <a href="#iterations" class="nav-link">Iterate</a>
-            <a href="#learner" class="nav-link">Learner</a>
-            <a href="#reflection" class="nav-link">Reflection</a>
-        </div>
-        <button class="hamburger" aria-label="Menu">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
+      <a href="/" class="nav-logo">
+        <img src="assets/logo.png" alt="JC" />
+      </a>
+      <div class="nav-links cs-nav-links">
+        <a href="#brief" class="nav-link">Brief</a>
+        <a href="#research" class="nav-link">Research</a>
+        <a href="#journey" class="nav-link">Journey</a>
+        <a href="#brand" class="nav-link">Brand</a>
+        <a href="#iterations" class="nav-link">Iterate</a>
+        <a href="#learner" class="nav-link">Learner</a>
+        <a href="#reflection" class="nav-link">Reflection</a>
+      </div>
+      <button class="hamburger" aria-label="Menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </nav>
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu">
-        <a href="/" class="mobile-menu-link active">UX/UI</a>
-        <a href="motion.html" class="mobile-menu-link">Motion</a>
-        <a href="vibes.html" class="mobile-menu-link">Vibes</a>
-        <a href="about.html" class="mobile-menu-link">About</a>
-        <a href="visitors.html" class="mobile-menu-link">Visitors</a>
+      <a href="/" class="mobile-menu-link active">UX/UI</a>
+      <a href="motion.html" class="mobile-menu-link">Motion</a>
+      <a href="vibes.html" class="mobile-menu-link">Vibes</a>
+      <a href="about.html" class="mobile-menu-link">About</a>
+      <a href="visitors.html" class="mobile-menu-link">Visitors</a>
 
-        <div class="mobile-menu-socials">
-            <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="LinkedIn">
-                <i class="hn hn-linkedin"></i>
-            </a>
-            <a href="https://github.com/jmchiang1" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="GitHub">
-                <i class="hn hn-github"></i>
-            </a>
-            <a href="assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="Resume">
-                <i class="hn hn-notebook"></i>
-            </a>
-        </div>
+      <div class="mobile-menu-socials">
+        <a
+          href="https://www.linkedin.com/in/jmchiang5/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mobile-menu-social"
+          aria-label="LinkedIn"
+        >
+          <i class="hn hn-linkedin"></i>
+        </a>
+        <a
+          href="https://github.com/jmchiang1"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mobile-menu-social"
+          aria-label="GitHub"
+        >
+          <i class="hn hn-github"></i>
+        </a>
+        <a
+          href="assets/Jonathan-Chiang-Design-Resume-2026.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mobile-menu-social"
+          aria-label="Resume"
+        >
+          <i class="hn hn-notebook"></i>
+        </a>
+      </div>
     </div>
 
     <!-- Back to top button -->
     <a href="#top" class="back-to-top" aria-label="Back to top">
-        <i class="hn hn-arrow-up" aria-hidden="true" style="font-size:20px"></i>
+      <i class="hn hn-arrow-up" aria-hidden="true" style="font-size: 20px"></i>
     </a>
 
     <main id="top" class="case-study">
-        <!-- ============================================================
+      <!-- ============================================================
              Hero
              ============================================================ -->
-        <section class="cs-header">
-            <div class="cs-hero-inner">
-                <div class="cs-header-text">
-                    <p class="cs-label">SkillCat · Online Learning</p>
-                    <h1 class="cs-title">An all-in-one <em>HVAC learning platform</em>.</h1>
-                    <p class="cs-hero-sub">The learner mobile app, and the decisions behind it.</p>
-                </div>
+      <section class="cs-header">
+        <div class="cs-hero-inner">
+          <div class="cs-header-text">
+            <p class="cs-label">SkillCat · Online Learning</p>
+            <h1 class="cs-title">
+              An all-in-one <em>HVAC learning platform</em>.
+            </h1>
+            <p class="cs-hero-sub">
+              The learner mobile app, and the decisions behind it.
+            </p>
+          </div>
 
-                <div class="cs-hero-media">
-                    <div class="cs-hero-desktop">
-                        <video src="assets/skillcat/B2B/hero.mp4" poster="assets/skillcat/B2B/poster-hero.jpg" autoplay muted loop playsinline preload="metadata"></video>
-                    </div>
-                    <div class="cs-hero-phone">
-                        <video src="assets/skillcat/Complete-Task.mp4" poster="assets/skillcat/poster-complete-task.jpg" autoplay muted loop playsinline preload="metadata"></video>
-                    </div>
-                </div>
+          <div class="cs-hero-media">
+            <div class="cs-hero-desktop">
+              <video
+                src="assets/skillcat/B2B/hero.mp4"
+                poster="assets/skillcat/B2B/poster-hero.jpg"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+              ></video>
             </div>
-
-            <!-- At a glance -->
-            <div class="sk-meta">
-                <div class="sk-meta-item sk-meta-wide">
-                    <p class="sk-meta-label">Company</p>
-                    <p class="sk-meta-value">SkillCat</p>
-                </div>
-                <div class="sk-meta-item">
-                    <p class="sk-meta-label">My role</p>
-                    <p class="sk-meta-value">Design Engineer</p>
-                </div>
-                <div class="sk-meta-item sk-meta-wide">
-                    <p class="sk-meta-label">Surfaces</p>
-                    <p class="sk-meta-value">iOS / Android mobile · Desktop Web</p>
-                </div>
-                <div class="sk-meta-item">
-                    <p class="sk-meta-label">Timeline</p>
-                    <p class="sk-meta-value"><span>September 2025 - June 2026</span></p>
-                </div>
-                <div class="sk-meta-item sk-meta-wide">
-                    <p class="sk-meta-label">What I owned</p>
-                    <p class="sk-meta-value">Desktop Screens · Design System · B2B Dashboard · Written specs &amp; handoff</p>
-                </div>
-                <div class="sk-meta-item">
-                    <p class="sk-meta-label">Team Size</p>
-                    <p class="sk-meta-value"><span >Head of Design, Product Owner, &amp; Design Engineer</span></p>
-                </div>
+            <div class="cs-hero-phone">
+              <video
+                src="assets/skillcat/Complete-Task.mp4"
+                poster="assets/skillcat/poster-complete-task.jpg"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+              ></video>
             </div>
-        </section>
+          </div>
+        </div>
 
+        <!-- At a glance -->
+        <div class="sk-meta">
+          <div class="sk-meta-item sk-meta-wide">
+            <p class="sk-meta-label">Company</p>
+            <p class="sk-meta-value">SkillCat</p>
+          </div>
+          <div class="sk-meta-item">
+            <p class="sk-meta-label">My role</p>
+            <p class="sk-meta-value">Design Engineer</p>
+          </div>
+          <div class="sk-meta-item sk-meta-wide">
+            <p class="sk-meta-label">Surfaces</p>
+            <p class="sk-meta-value">iOS / Android mobile · Desktop Web</p>
+          </div>
+          <div class="sk-meta-item">
+            <p class="sk-meta-label">Timeline</p>
+            <p class="sk-meta-value"><span>September 2025 - June 2026</span></p>
+          </div>
+          <div class="sk-meta-item sk-meta-wide">
+            <p class="sk-meta-label">What I owned</p>
+            <p class="sk-meta-value">
+              Desktop Screens · Design System · B2B Dashboard · Written specs
+              &amp; handoff
+            </p>
+          </div>
+          <div class="sk-meta-item">
+            <p class="sk-meta-label">Team Size</p>
+            <p class="sk-meta-value">
+              <span>Head of Design, Product Owner, &amp; Design Engineer</span>
+            </p>
+          </div>
+        </div>
+      </section>
 
-
-
-        <!-- ============================================================
+      <!-- ============================================================
              The App — short summary before the story starts
              ============================================================ -->
-        <section id="about" class="cs-section">
-            <p class="sk-about-summary">SkillCat is a mobile training app for HVAC, electrical and plumbing. Learners earn the certifications that get them hired, and employers use it to train their teams.</p>
-        </section>
+      <section id="about" class="cs-section">
+        <p class="sk-about-summary">
+          SkillCat is a mobile training app for HVAC, electrical and plumbing.
+          Learners earn the certifications that get them hired, and employers
+          use it to train their teams.
+        </p>
+      </section>
 
-
-
-
-        <!-- ============================================================
+      <!-- ============================================================
              01 — The Brief
              ============================================================ -->
-        <section id="brief" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">The Brief</h2>
-                <p class="sk-section-summary">Learners were <strong>signing up, then stalling before their first certificate</strong>, and working pros had little reason to come back. The goal was <strong>one clear path</strong> from sign-up to first cert to first job.</p>
-            </div>
+      <section id="brief" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">The Brief</h2>
+          <p class="sk-section-summary">
+            Learners were
+            <strong
+              >signing up, then stalling before their first certificate</strong
+            >, and working pros had little reason to come back. The goal was
+            <strong>one clear path</strong> from sign-up to first cert to first
+            job.
+          </p>
+        </div>
 
-            <div class="sk-goals">
-                <div class="sk-goal-card">
-                    <p class="sk-brief-label">Business goals</p>
-                    <ul class="sk-goal-list">
-                        <li><span class="sk-goal-key">Activation</span><span class="sk-goal-val">First lesson within 7 days</span></li>
-                        <li><span class="sk-goal-key">Conversion</span><span class="sk-goal-val">Free → certificate → Premium</span></li>
-                        <li><span class="sk-goal-key">B2B growth</span><span class="sk-goal-val">Team plans with cert tracking</span></li>
-                    </ul>
-                </div>
-                <div class="sk-goal-card">
-                    <p class="sk-brief-label">Design goals</p>
-                    <ul class="sk-goal-list">
-                        <li><span class="sk-goal-key">One path</span><span class="sk-goal-val">Sign-up → first cert → first job</span></li>
-                        <li><span class="sk-goal-key">Credibility</span><span class="sk-goal-val">Accreditation visible at decision points</span></li>
-                        <li><span class="sk-goal-key">One system</span><span class="sk-goal-val">Works for beginners, pros and managers</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="sk-goal-card">
-                <p class="sk-brief-label">Problem statement</p>
-                <ul class="sk-goal-list">
-                    <li><span class="sk-goal-key">Learners</span><span class="sk-goal-val">Sign up, then stall before their first certificate</span></li>
-                    <li><span class="sk-goal-key">Pros</span><span class="sk-goal-val">Working techs and managers have little reason to come back</span></li>
-                    <li><span class="sk-goal-key">Unknown</span><span class="sk-goal-val">Which barrier matters most for each audience</span></li>
-                </ul>
-            </div>
-        </section>
+        <div class="sk-goals">
+          <div class="sk-goal-card">
+            <p class="sk-brief-label">Business goals</p>
+            <ul class="sk-goal-list">
+              <li>
+                <span class="sk-goal-key">Activation</span
+                ><span class="sk-goal-val">Free lesson within 7 days</span>
+              </li>
+              <li>
+                <span class="sk-goal-key">Conversion</span
+                ><span class="sk-goal-val">Free → certificate → Premium</span>
+              </li>
+              <li>
+                <span class="sk-goal-key">B2B growth</span
+                ><span class="sk-goal-val">Company manager dashboard</span>
+              </li>
+            </ul>
+          </div>
+          <div class="sk-goal-card">
+            <p class="sk-brief-label">Design goals</p>
+            <ul class="sk-goal-list">
+              <li>
+                <span class="sk-goal-key">One path</span
+                ><span class="sk-goal-val"
+                  >Sign-up → first cert → first job</span
+                >
+              </li>
+              <li>
+                <span class="sk-goal-key">Credibility</span
+                ><span class="sk-goal-val"
+                  >Certifications visible at decision points</span
+                >
+              </li>
+              <li>
+                <span class="sk-goal-key">One system</span
+                ><span class="sk-goal-val"
+                  >Works for beginners, pros and managers</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="sk-goal-card">
+          <p class="sk-brief-label">Problem statement</p>
+          <ul class="sk-goal-list">
+            <li>
+              <span class="sk-goal-key">Learners</span
+              ><span class="sk-goal-val"
+                >Unsure which course to start as an aspiring technician</span
+              >
+            </li>
+            <li>
+              <span class="sk-goal-key">Pros</span
+              ><span class="sk-goal-val"
+                >Working techs have little reason to come back after being
+                certified</span
+              >
+            </li>
+            <li>
+              <span class="sk-goal-key">Unknown</span
+              ><span class="sk-goal-val"
+                >Which barrier matters most for each audience?</span
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
 
-
-        <!-- ============================================================
+      <!-- ============================================================
              02 — App Audit
              ============================================================ -->
-        <section id="starting-point" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">App Audit</h2>
-                <p class="sk-section-summary">The courses and certifications were all there, but the app was <strong>catalog-first</strong>. Learners landed in a wall of categories and had to <strong>build their own route</strong> to the credential that gets them hired.</p>
-            </div>
+      <section id="starting-point" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">App Audit</h2>
+          <p class="sk-section-summary">
+            The courses and certifications were all there, but the app was
+            <strong>catalog-first</strong>. Learners landed in a wall of
+            categories and had to <strong>build their own route</strong> to the
+            credential that gets them hired.
+          </p>
+        </div>
 
-            <!-- <div class="cs-two-col">
+        <!-- <div class="cs-two-col">
                 <div class="cs-content">
                     <p>The library and the certifications were all there, but the experience was catalog-first. Learners landed in a wall of categories and had to assemble their own route to the credential that actually gets them hired.</p>
                 </div>
             </div> -->
 
-            <div class="sk-strip">
-                <img src="assets/skillcat/comparison/original/onboarding.png" alt="Original app — onboarding" loading="lazy">
-                <img src="assets/skillcat/comparison/original/home.png" alt="Original app — home" loading="lazy">
-                <img src="assets/skillcat/comparison/original/overview.png" alt="Original app — course overview" loading="lazy">
-                <img src="assets/skillcat/comparison/original/course-tree.png" alt="Original app — course path" loading="lazy">
-                <img src="assets/skillcat/comparison/original/task-complete.png" alt="Original app — task complete" loading="lazy">
-                <img src="assets/skillcat/comparison/original/portfolio.png" alt="Original app — portfolio" loading="lazy">
-            </div>
+        <div class="sk-strip">
+          <img
+            src="assets/skillcat/comparison/original/onboarding.png"
+            alt="Original app — onboarding"
+            loading="lazy"
+          />
+          <img
+            src="assets/skillcat/comparison/original/home.png"
+            alt="Original app — home"
+            loading="lazy"
+          />
+          <img
+            src="assets/skillcat/comparison/original/overview.png"
+            alt="Original app — course overview"
+            loading="lazy"
+          />
+          <img
+            src="assets/skillcat/comparison/original/course-tree.png"
+            alt="Original app — course path"
+            loading="lazy"
+          />
+          <img
+            src="assets/skillcat/comparison/original/task-complete.png"
+            alt="Original app — task complete"
+            loading="lazy"
+          />
+          <img
+            src="assets/skillcat/comparison/original/portfolio.png"
+            alt="Original app — portfolio"
+            loading="lazy"
+          />
+        </div>
+      </section>
 
-        </section>
-
-
-        <!-- ============================================================
+      <!-- ============================================================
              03 — Research
              ============================================================ -->
-        <section id="research" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Texting Study</h2>
-                <p class="sk-section-summary">I texted trade learners to hear what they actually wanted. They're <strong>outcome-driven</strong>: a cert matters because it leads to <strong>a job and a raise</strong>, not points or streaks.</p>
-            </div>
+      <section id="research" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Texting Study</h2>
+          <p class="sk-section-summary">
+            I texted trade learners to hear what they actually wanted. They're
+            <strong>outcome-driven</strong>: a cert matters because it leads to
+            <strong>a job and a raise</strong>, not points or streaks.
+          </p>
+        </div>
 
-            <!-- Texting showcase: a live thread on a phone, framed by a wall of anonymized threads.
+        <!-- Texting showcase: a live thread on a phone, framed by a wall of anonymized threads.
                  Replies are redacted bars: participant privacy, and nothing invented. -->
-            <div class="sk-sms" aria-label="Texting research: one live thread and a wall of anonymized conversations">
-                <div class="sk-sms-wall" aria-hidden="true">
-                    <div class="sk-sms-row" data-dir="left"></div>
-                    <div class="sk-sms-row" data-dir="right"></div>
-                    <div class="sk-sms-row" data-dir="left"></div>
-                </div>
-                <div class="sk-sms-phone">
-                    <div class="sk-sms-status" aria-hidden="true"><span class="sk-sms-time">9:41</span><span class="sk-sms-island"></span><span class="sk-sms-icons"><svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="11" rx="3.5" opacity="0.45"/><rect x="2.5" y="2.5" width="16" height="7" rx="2" fill="currentColor" stroke="none"/><path d="M24.5 4.5v3" stroke-linecap="round" opacity="0.45"/></svg></span></div>
-                    <div class="sk-sms-head"><span class="sk-sms-avatar" aria-hidden="true"></span><span class="sk-sms-who"><span class="sk-redact-name" style="--w:120px" aria-label="Name redacted"></span></span><span class="sk-sms-when">Day 3 · 4:12 PM</span></div>
-                    <div class="sk-sms-thread">
-                        <!-- PLACEHOLDER replies: swap in real (anonymized) replies from the texting study -->
-                        <p class="sk-bubble sk-bubble--me" style="--i:0">Hey, it’s Jonathan from SkillCat, quick check-in: are you here to land your first HVAC job or just to pass a certification / level up?</p>
-                        <p class="sk-bubble sk-bubble--them" style="--i:1">first job. been doing warehouse for years and want something better</p>
-                        <p class="sk-bubble sk-bubble--me" style="--i:2">Perfect, and have you faced any challenges concerning the job search so far?</p>
-                        <p class="sk-bubble sk-bubble--them" style="--i:3">every posting says 1-2 years experience required</p>
-                        <p class="sk-bubble sk-bubble--me" style="--i:4">What’s been the hardest part about that?</p>
-                        <p class="sk-bubble sk-bubble--them sk-bubble--typing" style="--i:5"><span></span><span></span><span></span></p>
-                    </div>
-                    <div class="sk-sms-input" aria-hidden="true"><span class="sk-sms-plus">+</span><span class="sk-sms-field">Text Message</span></div>
-                    <span class="sk-sms-home" aria-hidden="true"></span>
-                </div>
+        <div
+          class="sk-sms"
+          aria-label="Texting research: one live thread and a wall of anonymized conversations"
+        >
+          <div class="sk-sms-wall" aria-hidden="true">
+            <div class="sk-sms-row" data-dir="left"></div>
+            <div class="sk-sms-row" data-dir="right"></div>
+            <div class="sk-sms-row" data-dir="left"></div>
+          </div>
+          <div class="sk-sms-phone">
+            <div class="sk-sms-status" aria-hidden="true">
+              <span class="sk-sms-time">9:41</span
+              ><span class="sk-sms-island"></span
+              ><span class="sk-sms-icons"
+                ><svg viewBox="0 0 18 12" fill="currentColor">
+                  <rect x="0" y="8" width="3" height="4" rx="1" />
+                  <rect x="5" y="5.5" width="3" height="6.5" rx="1" />
+                  <rect x="10" y="3" width="3" height="9" rx="1" />
+                  <rect x="15" y="0" width="3" height="12" rx="1" /></svg
+                ><svg viewBox="0 0 26 12" fill="none" stroke="currentColor">
+                  <rect
+                    x="0.5"
+                    y="0.5"
+                    width="22"
+                    height="11"
+                    rx="3.5"
+                    opacity="0.45"
+                  />
+                  <rect
+                    x="2.5"
+                    y="2.5"
+                    width="16"
+                    height="7"
+                    rx="2"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                  <path
+                    d="M24.5 4.5v3"
+                    stroke-linecap="round"
+                    opacity="0.45"
+                  /></svg
+              ></span>
             </div>
-            <!-- <p class="sk-caption sk-sms-note">~30 trade workers texted daily for 2 weeks · names redacted</p> -->
-
-            <p class="sk-block-label">What I learned</p>
-            <div class="sk-threads sk-threads--detail sk-threads--visual">
-                <div class="sk-thread"><svg class="sk-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><p class="sk-thread-title">Outcome-driven</p><p class="sk-thread-desc">Cert → job → raise. Not points or streaks.</p><p class="sk-thread-so"><span>So</span>Lead with the job it unlocks.</p></div>
-                <div class="sk-thread"><svg class="sk-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg><p class="sk-thread-title">Learn by doing</p><p class="sk-thread-desc">On the job, YouTube, Reddit. Not school.</p><p class="sk-thread-so"><span>So</span>Short lessons, practice built in.</p></div>
-                <div class="sk-thread"><svg class="sk-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="19" r="2"/><path d="M12 17v-5M12 12 6 6M12 12l6-6M6 6v3M6 6h3M18 6v3M18 6h-3"/></svg><p class="sk-thread-title">“...then what?”</p><p class="sk-thread-desc">“Will finishing actually get me hired?”</p><p class="sk-thread-so"><span>So</span>Always show the next step.</p></div>
+            <div class="sk-sms-head">
+              <span class="sk-sms-avatar" aria-hidden="true"></span
+              ><span class="sk-sms-who"
+                ><span
+                  class="sk-redact-name"
+                  style="--w: 120px"
+                  aria-label="Name redacted"
+                ></span></span
+              ><span class="sk-sms-when">Day 3 · 4:12 PM</span>
             </div>
+            <div class="sk-sms-thread">
+              <!-- PLACEHOLDER replies: swap in real (anonymized) replies from the texting study -->
+              <p class="sk-bubble sk-bubble--me" style="--i: 0">
+                Hey, it’s Jonathan from SkillCat, quick check-in: are you here
+                to land your first HVAC job or just to pass a certification /
+                level up?
+              </p>
+              <p class="sk-bubble sk-bubble--them" style="--i: 1">
+                first job. been doing warehouse for years and want something
+                better
+              </p>
+              <p class="sk-bubble sk-bubble--me" style="--i: 2">
+                Perfect, and have you faced any challenges concerning the job
+                search so far?
+              </p>
+              <p class="sk-bubble sk-bubble--them" style="--i: 3">
+                every posting says 1-2 years experience required
+              </p>
+              <p class="sk-bubble sk-bubble--me" style="--i: 4">
+                What’s been the hardest part about that?
+              </p>
+              <p
+                class="sk-bubble sk-bubble--them sk-bubble--typing"
+                style="--i: 5"
+              >
+                <span></span><span></span><span></span>
+              </p>
+            </div>
+            <div class="sk-sms-input" aria-hidden="true">
+              <span class="sk-sms-plus">+</span
+              ><span class="sk-sms-field">Text Message</span>
+            </div>
+            <span class="sk-sms-home" aria-hidden="true"></span>
+          </div>
+        </div>
+        <!-- <p class="sk-caption sk-sms-note">~30 trade workers texted daily for 2 weeks · names redacted</p> -->
 
-            </section>
+        <p class="sk-block-label">What I learned</p>
+        <div class="sk-threads sk-threads--detail sk-threads--visual">
+          <div class="sk-thread">
+            <svg
+              class="sk-ico"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="7" width="18" height="13" rx="2" />
+              <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" />
+            </svg>
+            <p class="sk-thread-title">Outcome-driven</p>
+            <p class="sk-thread-desc">
+              Cert → job → raise. Not points or streaks.
+            </p>
+            <p class="sk-thread-so">
+              <span>So</span>Lead with the job it unlocks.
+            </p>
+          </div>
+          <div class="sk-thread">
+            <svg
+              class="sk-ico"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"
+              />
+            </svg>
+            <p class="sk-thread-title">Learn by doing</p>
+            <p class="sk-thread-desc">
+              On the job, YouTube, Reddit. Not school.
+            </p>
+            <p class="sk-thread-so">
+              <span>So</span>Short lessons, practice built in.
+            </p>
+          </div>
+          <div class="sk-thread">
+            <svg
+              class="sk-ico"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="19" r="2" />
+              <path
+                d="M12 17v-5M12 12 6 6M12 12l6-6M6 6v3M6 6h3M18 6v3M18 6h-3"
+              />
+            </svg>
+            <p class="sk-thread-title">“...then what?”</p>
+            <p class="sk-thread-desc">
+              “Will finishing actually get me hired?”
+            </p>
+            <p class="sk-thread-so">
+              <span>So</span>Always show the next step.
+            </p>
+          </div>
+        </div>
+      </section>
 
-
-        <!-- ============================================================
+      <!-- ============================================================
              04 — Journey Map
              ============================================================ -->
-        <section id="journey" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Journey Map</h2>
-                <p class="sk-section-summary">I mapped an aspiring tradesperson from discovery to first job. The low point comes <strong>after the cert</strong>, in the job search, so the path has to reach <strong>the first job</strong>.</p>
+      <section id="journey" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Journey Map</h2>
+          <p class="sk-section-summary">
+            I mapped an aspiring tradesperson from discovery to first job. The
+            low point comes <strong>after the cert</strong>, in the job search,
+            so the path has to reach <strong>the first job</strong>.
+          </p>
+        </div>
+
+        <div class="sk-jr-wrap">
+          <div class="sk-jr" style="--n: 6">
+            <div class="sk-jr-rowlabels" aria-hidden="true">
+              <span>Stage</span><span>Doing</span><span>Feeling</span
+              ><span>Thinking</span><span>Breaks</span><span>Opportunity</span>
             </div>
+            <svg
+              class="sk-jr-curve"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <polyline
+                points="8.33,50.00 25.00,50.00 41.67,25.00 58.33,75.00 75.00,100.00 91.67,0.00"
+                vector-effect="non-scaling-stroke"
+              />
+            </svg>
+            <ol class="sk-jr-stages" aria-label="Aspiring tradesperson journey">
+              <li class="sk-jr-stage" style="--f: 3">
+                <span class="sk-jr-name">Discover</span
+                ><span class="sk-jr-do"
+                  >Searches “HVAC training”, finds SkillCat</span
+                ><span class="sk-jr-dot" aria-hidden="true"></span
+                ><span class="sk-jr-think">Is this legit?</span
+                ><span class="sk-jr-pain">Is it legit?</span
+                ><span class="sk-jr-opp">Prove it counts</span>
+              </li>
+              <li class="sk-jr-stage" style="--f: 3">
+                <span class="sk-jr-name">Sign up</span
+                ><span class="sk-jr-do"
+                  >Makes an account, answers setup questions</span
+                ><span class="sk-jr-dot" aria-hidden="true"></span
+                ><span class="sk-jr-think">Why all the questions?</span
+                ><span class="sk-jr-pain">Questions first</span
+                ><span class="sk-jr-opp">Value first</span>
+              </li>
+              <li class="sk-jr-stage" style="--f: 4">
+                <span class="sk-jr-name">First lesson</span
+                ><span class="sk-jr-do">Watches a short video on a break</span
+                ><span class="sk-jr-dot" aria-hidden="true"></span
+                ><span class="sk-jr-think">OK, I can do this.</span
+                ><span class="sk-jr-pain">No clear next step</span
+                ><span class="sk-jr-opp">One path</span>
+              </li>
+              <li class="sk-jr-stage" style="--f: 2">
+                <span class="sk-jr-name">First cert</span
+                ><span class="sk-jr-do">Books the EPA 608 exam</span
+                ><span class="sk-jr-dot" aria-hidden="true"></span
+                ><span class="sk-jr-think">Where do I even test?</span
+                ><span class="sk-jr-pain">Exam logistics</span
+                ><span class="sk-jr-opp">Exam in the app</span>
+              </li>
+              <li class="sk-jr-stage is-low" style="--f: 1">
+                <span class="sk-jr-name">Job search</span
+                ><span class="sk-jr-do">Applies to posting after posting</span
+                ><span class="sk-jr-dot" aria-hidden="true"></span
+                ><span class="sk-jr-think">They all want experience.</span
+                ><span class="sk-jr-pain">No experience</span
+                ><span class="sk-jr-opp">Job-ready tools</span>
+              </li>
+              <li class="sk-jr-stage" style="--f: 5">
+                <span class="sk-jr-name">First job</span
+                ><span class="sk-jr-do">Starts as an apprentice</span
+                ><span class="sk-jr-dot" aria-hidden="true"></span
+                ><span class="sk-jr-think">It actually paid off.</span
+                ><span class="sk-jr-pain">—</span
+                ><span class="sk-jr-opp">Share the win</span>
+              </li>
+            </ol>
+            <p class="sk-jr-takeaway">
+              <span>Takeaway</span>The low point comes <em>after</em> the cert,
+              so the path has to reach the first job.
+            </p>
+          </div>
+        </div>
+      </section>
 
-            <div class="sk-jr-wrap">
-                <div class="sk-jr" style="--n:6">
-                    <div class="sk-jr-rowlabels" aria-hidden="true"><span>Stage</span><span>Doing</span><span>Feeling</span><span>Thinking</span><span>Breaks</span><span>Opportunity</span></div>
-                    <svg class="sk-jr-curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="8.33,50.00 25.00,50.00 41.67,25.00 58.33,75.00 75.00,100.00 91.67,0.00" vector-effect="non-scaling-stroke"/></svg>
-                    <ol class="sk-jr-stages" aria-label="Aspiring tradesperson journey">
-                        <li class="sk-jr-stage" style="--f:3"><span class="sk-jr-name">Discover</span><span class="sk-jr-do">Searches “HVAC training”, finds SkillCat</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">Is this legit?</span><span class="sk-jr-pain">Is it legit?</span><span class="sk-jr-opp">Prove it counts</span></li>
-                        <li class="sk-jr-stage" style="--f:3"><span class="sk-jr-name">Sign up</span><span class="sk-jr-do">Makes an account, answers setup questions</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">Why all the questions?</span><span class="sk-jr-pain">Questions first</span><span class="sk-jr-opp">Value first</span></li>
-                        <li class="sk-jr-stage" style="--f:4"><span class="sk-jr-name">First lesson</span><span class="sk-jr-do">Watches a short video on a break</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">OK, I can do this.</span><span class="sk-jr-pain">No clear next step</span><span class="sk-jr-opp">One path</span></li>
-                        <li class="sk-jr-stage" style="--f:2"><span class="sk-jr-name">First cert</span><span class="sk-jr-do">Books the EPA 608 exam</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">Where do I even test?</span><span class="sk-jr-pain">Exam logistics</span><span class="sk-jr-opp">Exam in the app</span></li>
-                        <li class="sk-jr-stage is-low" style="--f:1"><span class="sk-jr-name">Job search</span><span class="sk-jr-do">Applies to posting after posting</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">They all want experience.</span><span class="sk-jr-pain">No experience</span><span class="sk-jr-opp">Job-ready tools</span></li>
-                        <li class="sk-jr-stage" style="--f:5"><span class="sk-jr-name">First job</span><span class="sk-jr-do">Starts as an apprentice</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">It actually paid off.</span><span class="sk-jr-pain">—</span><span class="sk-jr-opp">Share the win</span></li>
-                    </ol>
-                    <p class="sk-jr-takeaway"><span>Takeaway</span>The low point comes <em>after</em> the cert, so the path has to reach the first job.</p>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- ============================================================
+      <!-- ============================================================
              05 — Competitor Audit
              ============================================================ -->
-        <section id="landscape" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Competitor Audit</h2>
-                <p class="sk-section-summary">I audited 7 trade schools and learning apps. Trade schools felt credible but dated; consumer apps felt modern but casual. <strong>None were both</strong>, and that's the gap SkillCat could fill.</p>
+      <section id="landscape" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Competitor Audit</h2>
+          <p class="sk-section-summary">
+            I audited 7 trade schools and learning apps. Trade schools felt
+            credible but dated; consumer apps felt modern but casual.
+            <strong>None were both</strong>, and that's the gap SkillCat could
+            fill.
+          </p>
+        </div>
+
+        <figure
+          class="sk-posmap"
+          aria-label="Competitor positioning map: credibility versus modernity"
+        >
+          <!-- Within each quadrant, --x (0–1) runs dated → modern and --y (0–1) runs credible → casual -->
+          <div class="sk-posmap-grid">
+            <div class="sk-posmap-q">
+              <p class="sk-posmap-q-label">
+                Direct · trade schools &amp; cert providers
+              </p>
+              <ul class="sk-posmap-plot">
+                <li
+                  class="sk-posmap-pt"
+                  style="--x: 0.4; --y: 0.05"
+                  data-name="Penn Foster"
+                >
+                  <img
+                    src="assets/skillcat/process/logos/penn-foster.png"
+                    alt="Penn Foster"
+                    loading="lazy"
+                  />
+                </li>
+                <li
+                  class="sk-posmap-pt"
+                  style="--x: 0.05; --y: 0.5"
+                  data-name="New England Trade School"
+                >
+                  <img
+                    src="assets/skillcat/process/logos/new-england.png"
+                    alt="New England Trade School"
+                    loading="lazy"
+                  />
+                </li>
+                <li
+                  class="sk-posmap-pt"
+                  style="--x: 0.92; --y: 0.38"
+                  data-name="Interplay Learning"
+                >
+                  <img
+                    src="assets/skillcat/process/logos/interplay.png"
+                    alt="Interplay Learning"
+                    loading="lazy"
+                  />
+                </li>
+                <li
+                  class="sk-posmap-pt"
+                  style="--x: 0.55; --y: 0.95"
+                  data-name="HVAC School"
+                >
+                  <img
+                    src="assets/skillcat/process/logos/hvac-school.png"
+                    alt="HVAC School"
+                    loading="lazy"
+                  />
+                </li>
+              </ul>
             </div>
+            <div class="sk-posmap-q sk-posmap-q--target">
+              <p class="sk-posmap-q-label">The opening</p>
+              <ul class="sk-posmap-plot">
+                <li
+                  class="sk-posmap-pt sk-posmap-pt--us"
+                  style="--x: 0.62; --y: 0.35"
+                  data-name="SkillCat"
+                >
+                  <img
+                    src="assets/skillcat/process/logos/skillcat.png"
+                    alt="SkillCat"
+                    loading="lazy"
+                  />
+                </li>
+              </ul>
+            </div>
+            <div class="sk-posmap-q" aria-hidden="true"></div>
+            <div class="sk-posmap-q">
+              <p class="sk-posmap-q-label">Indirect · consumer learning apps</p>
+              <ul class="sk-posmap-plot">
+                <li
+                  class="sk-posmap-pt"
+                  style="--x: 0.1; --y: 0.1"
+                  data-name="Coursera"
+                >
+                  <img
+                    src="assets/skillcat/process/logos/coursera.png"
+                    alt="Coursera"
+                    loading="lazy"
+                  />
+                </li>
+                <li
+                  class="sk-posmap-pt"
+                  style="--x: 0.8; --y: 0.3"
+                  data-name="Skillshare"
+                >
+                  <img
+                    src="assets/skillcat/process/logos/skillshare.png"
+                    alt="Skillshare"
+                    loading="lazy"
+                  />
+                </li>
+                <li
+                  class="sk-posmap-pt"
+                  style="--x: 0.42; --y: 0.92"
+                  data-name="Duolingo"
+                >
+                  <img
+                    src="assets/skillcat/process/logos/duolingo.png"
+                    alt="Duolingo"
+                    loading="lazy"
+                  />
+                </li>
+              </ul>
+            </div>
+            <span class="sk-posmap-axis sk-posmap-axis--top">↑ Credible</span>
+            <span class="sk-posmap-axis sk-posmap-axis--bottom">↓ Casual</span>
+            <span class="sk-posmap-axis sk-posmap-axis--left">← Dated</span>
+            <span class="sk-posmap-axis sk-posmap-axis--right">Modern →</span>
+          </div>
+        </figure>
 
-            <figure class="sk-posmap" aria-label="Competitor positioning map: credibility versus modernity">
-                <!-- Within each quadrant, --x (0–1) runs dated → modern and --y (0–1) runs credible → casual -->
-                <div class="sk-posmap-grid">
-                    <div class="sk-posmap-q">
-                        <p class="sk-posmap-q-label">Direct · trade schools &amp; cert providers</p>
-                        <ul class="sk-posmap-plot">
-                            <li class="sk-posmap-pt" style="--x: 0.40; --y: 0.05;"><img src="assets/skillcat/process/logos/penn-foster.png" alt="Penn Foster" title="Penn Foster" loading="lazy"></li>
-                            <li class="sk-posmap-pt" style="--x: 0.05; --y: 0.50;"><img src="assets/skillcat/process/logos/new-england.png" alt="New England Trade School" title="New England Trade School" loading="lazy"></li>
-                            <li class="sk-posmap-pt" style="--x: 0.92; --y: 0.38;"><img src="assets/skillcat/process/logos/interplay.png" alt="Interplay Learning" title="Interplay Learning" loading="lazy"></li>
-                            <li class="sk-posmap-pt" style="--x: 0.55; --y: 0.95;"><img src="assets/skillcat/process/logos/hvac-school.png" alt="HVAC School" title="HVAC School" loading="lazy"></li>
-                        </ul>
-                    </div>
-                    <div class="sk-posmap-q sk-posmap-q--target">
-                        <p class="sk-posmap-q-label">The opening</p>
-                        <ul class="sk-posmap-plot">
-                            <li class="sk-posmap-pt sk-posmap-pt--us" style="--x: 0.62; --y: 0.35;"><img src="assets/skillcat/process/logos/skillcat.png" alt="SkillCat" title="SkillCat" loading="lazy"></li>
-                        </ul>
-                    </div>
-                    <div class="sk-posmap-q" aria-hidden="true"></div>
-                    <div class="sk-posmap-q">
-                        <p class="sk-posmap-q-label">Indirect · consumer learning apps</p>
-                        <ul class="sk-posmap-plot">
-                            <li class="sk-posmap-pt" style="--x: 0.10; --y: 0.10;"><img src="assets/skillcat/process/logos/coursera.png" alt="Coursera" title="Coursera" loading="lazy"></li>
-                            <li class="sk-posmap-pt" style="--x: 0.80; --y: 0.30;"><img src="assets/skillcat/process/logos/skillshare.png" alt="Skillshare" title="Skillshare" loading="lazy"></li>
-                            <li class="sk-posmap-pt" style="--x: 0.42; --y: 0.92;"><img src="assets/skillcat/process/logos/duolingo.png" alt="Duolingo" title="Duolingo" loading="lazy"></li>
-                        </ul>
-                    </div>
-                    <span class="sk-posmap-axis sk-posmap-axis--top">↑ Credible</span>
-                    <span class="sk-posmap-axis sk-posmap-axis--bottom">↓ Casual</span>
-                    <span class="sk-posmap-axis sk-posmap-axis--left">← Dated</span>
-                    <span class="sk-posmap-axis sk-posmap-axis--right">Modern →</span>
-                </div>
-            </figure>
-
-            <!-- Full brand audit boards collapsed by default -->
-            <!-- <button class="sk-collapse-toggle" type="button" aria-expanded="false" aria-controls="competitor-audit">
+        <!-- Full brand audit boards collapsed by default -->
+        <!-- <button class="sk-collapse-toggle" type="button" aria-expanded="false" aria-controls="competitor-audit">
                 <span class="sk-collapse-label">View full brand audit</span>
                 <i class="hn hn-angle-down sk-collapse-caret" aria-hidden="true"></i>
             </button> -->
 
-            <div class="sk-collapse" id="competitor-audit">
-            <div class="sk-collapse-inner" inert>
-                <p class="sk-caption">Direct, trade schools &amp; cert providers: logos, type, palettes, and product screens.</p>
-                <figure class="sk-shot">
-                    <img src="assets/skillcat/process/direct-comp.png" alt="Direct competitor analysis — trade schools and certification providers" loading="lazy">
-                </figure>
+        <div class="sk-collapse" id="competitor-audit">
+          <div class="sk-collapse-inner" inert>
+            <p class="sk-caption">
+              Direct, trade schools &amp; cert providers: logos, type, palettes,
+              and product screens.
+            </p>
+            <figure class="sk-shot">
+              <img
+                src="assets/skillcat/process/direct-comp.png"
+                alt="Direct competitor analysis — trade schools and certification providers"
+                loading="lazy"
+              />
+            </figure>
 
-                <p class="sk-caption">Indirect, consumer learning apps: logos, type, palettes, and product screens.</p>
-                <figure class="sk-shot">
-                    <img src="assets/skillcat/process/indirect-comp.png" alt="Indirect competitor analysis — consumer learning apps" loading="lazy">
-                </figure>
-            </div>
-            </div>
-        </section>
+            <p class="sk-caption">
+              Indirect, consumer learning apps: logos, type, palettes, and
+              product screens.
+            </p>
+            <figure class="sk-shot">
+              <img
+                src="assets/skillcat/process/indirect-comp.png"
+                alt="Indirect competitor analysis — consumer learning apps"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
 
-
-        <!-- ============================================================
+      <!-- ============================================================
              06 — Target Users
              ============================================================ -->
-        <section id="audiences" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Target Users</h2>
-                <p class="sk-section-summary">I designed for <strong>aspiring tradespeople</strong> first and <strong>working technicians</strong> second. Managers and team leads were out of scope for the learner app.</p>
-            </div>
+      <section id="audiences" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Target Users</h2>
+          <p class="sk-section-summary">
+            I designed for <strong>aspiring tradespeople</strong> first and
+            <strong>working technicians</strong> second. Managers and team leads
+            were out of scope for the learner app.
+          </p>
+        </div>
 
-            <div class="sk-aud">
-                <figure class="sk-aud-card">
-                    <img src="assets/skillcat/research/audience-aspiring.jpg" alt="Apprentice in a hi-vis vest shadowing an HVAC technician" loading="lazy">
-                    <figcaption><span class="sk-aud-tag">Primary</span><span class="sk-aud-name">Aspiring tradespeople</span><span class="sk-aud-words"><span>First job</span><span>Career change</span><span>EPA 608</span></span></figcaption>
-                </figure>
-                <figure class="sk-aud-card">
-                    <img src="assets/skillcat/research/audience-technician.jpg" alt="HVAC technician reading manifold gauges at a condenser" loading="lazy">
-                    <figcaption><span class="sk-aud-tag">Secondary</span><span class="sk-aud-name">Working technicians</span><span class="sk-aud-words"><span>Between calls</span><span>CEUs</span><span>NATE</span></span></figcaption>
-                </figure>
-                <figure class="sk-aud-card sk-aud-card--muted">
-                    <img src="assets/skillcat/research/audience-manager.jpg" alt="Service manager at a dispatch board" loading="lazy">
-                    <figcaption><span class="sk-aud-tag">Out of scope · B2B</span><span class="sk-aud-name">Managers &amp; team leads</span><span class="sk-aud-words"><span>Crews</span><span>Compliance</span><span>Onboarding</span></span></figcaption>
-                </figure>
-            </div>
-        </section>
+        <div class="sk-aud">
+          <figure class="sk-aud-card">
+            <img
+              src="assets/skillcat/research/audience-aspiring.jpg"
+              alt="Apprentice in a hi-vis vest shadowing an HVAC technician"
+              loading="lazy"
+            />
+            <figcaption>
+              <span class="sk-aud-tag">Primary</span
+              ><span class="sk-aud-name">Aspiring tradespeople</span
+              ><span class="sk-aud-words"
+                ><span>First job</span><span>Career change</span
+                ><span>EPA 608</span></span
+              >
+            </figcaption>
+          </figure>
+          <figure class="sk-aud-card">
+            <img
+              src="assets/skillcat/research/audience-technician.jpg"
+              alt="HVAC technician reading manifold gauges at a condenser"
+              loading="lazy"
+            />
+            <figcaption>
+              <span class="sk-aud-tag">Secondary</span
+              ><span class="sk-aud-name">Working technicians</span
+              ><span class="sk-aud-words"
+                ><span>Between calls</span><span>CEUs</span
+                ><span>NATE</span></span
+              >
+            </figcaption>
+          </figure>
+          <figure class="sk-aud-card sk-aud-card--muted">
+            <img
+              src="assets/skillcat/research/audience-manager.jpg"
+              alt="Service manager at a dispatch board"
+              loading="lazy"
+            />
+            <figcaption>
+              <span class="sk-aud-tag">Out of scope · B2B</span
+              ><span class="sk-aud-name">Managers &amp; team leads</span
+              ><span class="sk-aud-words"
+                ><span>Crews</span><span>Compliance</span
+                ><span>Onboarding</span></span
+              >
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-
-        <!-- ============================================================
+      <!-- ============================================================
              07 — Prioritization
              ============================================================ -->
-        <section id="priorities" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Prioritization</h2>
-                <p class="sk-section-summary">I ranked every opportunity by <strong>impact and effort</strong>. Quick wins like accreditation up front came first; the social feed and simulations tab were <strong>cut</strong>.</p>
-            </div>
+      <section id="priorities" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Prioritization</h2>
+          <p class="sk-section-summary">
+            I ranked every opportunity by <strong>impact and effort</strong>.
+            Quick wins like certifications up front came first; the social feed
+            and simulations tab were <strong>cut</strong>.
+          </p>
+        </div>
 
-            <div class="sk-matrix" aria-label="Opportunity matrix: impact versus effort">
-                <div class="sk-matrix-q sk-matrix-q--win"><p class="sk-matrix-title">Quick wins</p><ul><li>Accreditation up front</li><li>Certs one tap away</li><li>One clear next step</li><li>Practice exams</li></ul></div>
-                <div class="sk-matrix-q sk-matrix-q--bet"><p class="sk-matrix-title">Big bets</p><ul><li>Path-first navigation</li><li>Proctored exams in-app</li><li>Job-ready tools</li></ul></div>
-                <div class="sk-matrix-q"><p class="sk-matrix-title">Fill-ins</p><ul><li>Study reminders</li></ul></div>
-                <div class="sk-matrix-q sk-matrix-q--pit"><p class="sk-matrix-title">Cut</p><ul><li class="is-cut">Social feed</li><li class="is-cut">Simulations tab</li></ul></div>
-                <span class="sk-matrix-axis sk-matrix-axis--y">Impact ↑</span>
-                <span class="sk-matrix-axis sk-matrix-axis--x">Effort →</span>
-            </div>
-        </section>
+        <div
+          class="sk-matrix"
+          aria-label="Opportunity matrix: impact versus effort"
+        >
+          <div class="sk-matrix-q sk-matrix-q--win">
+            <p class="sk-matrix-title">Quick wins</p>
+            <ul>
+              <li>Certifications up front</li>
+              <li>Certs one tap away</li>
+              <li>Clear next steps</li>
+              <li>Personalized onboarding</li>
+            </ul>
+          </div>
+          <div class="sk-matrix-q sk-matrix-q--bet">
+            <p class="sk-matrix-title">Big bets</p>
+            <ul>
+              <li>Job placement tools</li>
+              <li>Proctored exams in-app</li>
+              <li>Job finding tools</li>
+            </ul>
+          </div>
+          <div class="sk-matrix-q">
+            <p class="sk-matrix-title">Fill-ins</p>
+            <ul>
+              <li>Study reminders</li>
+              <li>Resume builder</li>
+              <li>Portfolio builder</li>
+            </ul>
+          </div>
+          <div class="sk-matrix-q sk-matrix-q--pit">
+            <p class="sk-matrix-title">Cut</p>
+            <ul>
+              <li class="is-cut">Social media</li>
+              <li class="is-cut">Simulations tab</li>
+              <li class="is-cut">Practice exams</li>
+            </ul>
+          </div>
+          <span class="sk-matrix-axis sk-matrix-axis--y">Impact ↑</span>
+          <span class="sk-matrix-axis sk-matrix-axis--x">Effort →</span>
+        </div>
+      </section>
 
-
-        
-
-
-
-
-        <!-- ============================================================
+      <!-- ============================================================
              08 — Brand Identity (Mobile V1)
              ============================================================ -->
-        <section id="brand" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <!-- <h2 class="sk-section-title">Brand Identity</h2> -->
-                <!-- <p class="sk-section-summary">I built an <strong>industrial brand</strong> drawn from trade equipment: Flame orange, graphite and gunmetal neutrals, <strong>Fira Sans with IBM Plex Mono</strong>, and a gold finish for earned certificates.</p>
+      <section id="brand" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <!-- <h2 class="sk-section-title">Brand Identity</h2> -->
+          <!-- <p class="sk-section-summary">I built an <strong>industrial brand</strong> drawn from trade equipment: Flame orange, graphite and gunmetal neutrals, <strong>Fira Sans with IBM Plex Mono</strong>, and a gold finish for earned certificates.</p>
             -->
+        </div>
+
+        <div class="sk-bk">
+          <div class="sk-bk-tile sk-bk-type">
+            <div>
+              <p class="sk-bk-title">Break into the Trades</p>
+              <!-- <p class="sk-bk-tag">EPA · OSHA · NATE &amp; More</p> -->
             </div>
+            <p class="sk-bk-fonts">
+              <span>Fira Sans</span><span class="sk-bk-x">×</span
+              ><span class="is-mono">IBM Plex Mono</span>
+            </p>
+          </div>
+          <div class="sk-bk-tile sk-bk-mark">
+            <video
+              src="assets/Motion/skillcat-badge-flip.mp4"
+              poster="assets/skillcat/poster-badge-flip.jpg"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="The SkillCat metal badge flips in and lights up orange"
+            ></video>
+          </div>
+          <div class="sk-bk-tile sk-bk-motion">
+            <video
+              src="assets/Motion/SkillCat%20Certificate%20Spin.mp4"
+              poster="assets/skillcat/poster-cert-spin.jpg"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="Certificate earned animation: the EPA 608 card spins"
+            ></video>
+          </div>
+          <div
+            class="sk-bk-tile sk-bk-color"
+            role="img"
+            aria-label="Palette: Flame #F05523 for action; neutrals Coal, Graphite, Iron, Fog and White"
+          >
+            <span class="sk-band" style="background: #0d0d0d"
+              ><em>Coal</em><b>#0D0D0D</b></span
+            ><span class="sk-band" style="background: #484747"
+              ><em>Graphite</em><b>#484747</b></span
+            ><span class="sk-band" style="background: #737373"
+              ><em>Iron</em><b>#737373</b></span
+            ><span class="sk-band is-light" style="background: #a8a8a8"
+              ><em>Fog</em><b>#A8A8A8</b></span
+            ><span class="sk-band is-light" style="background: #ffffff"
+              ><em>White</em><b>#FFFFFF</b></span
+            >
+            <span class="sk-band is-flame"><em>Flame</em><b>#F05523</b></span>
+          </div>
+        </div>
+      </section>
 
-            <div class="sk-bk">
-                <div class="sk-bk-tile sk-bk-type">
-                    <div>
-                        <p class="sk-bk-title">Train like a Pro.</p>
-                        <!-- <p class="sk-bk-tag">EPA · OSHA · NATE &amp; More</p> -->
-                    </div>
-                    <p class="sk-bk-fonts"><span>Fira Sans</span><span class="sk-bk-x">×</span><span class="is-mono">IBM Plex Mono</span></p>
-                </div>
-                <div class="sk-bk-tile sk-bk-mark">
-                    <video src="assets/Motion/skillcat-badge-flip.mp4" poster="assets/skillcat/poster-badge-flip.jpg" autoplay muted loop playsinline preload="metadata" aria-label="The SkillCat metal badge flips in and lights up orange"></video>
-                </div>
-                <div class="sk-bk-tile sk-bk-motion">
-                    <video src="assets/Motion/SkillCat%20Certificate%20Spin.mp4" poster="assets/skillcat/poster-cert-spin.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Certificate earned animation: the EPA 608 card spins"></video>
-                </div>
-                <div class="sk-bk-tile sk-bk-color" role="img" aria-label="Palette: Flame #F05523 for action; neutrals Coal, Graphite, Iron, Fog and White">
-                    <span class="sk-band" style="background:#0D0D0D"><em>Coal</em><b>#0D0D0D</b></span><span class="sk-band" style="background:#484747"><em>Graphite</em><b>#484747</b></span><span class="sk-band" style="background:#737373"><em>Iron</em><b>#737373</b></span><span class="sk-band is-light" style="background:#A8A8A8"><em>Fog</em><b>#A8A8A8</b></span><span class="sk-band is-light" style="background:#FFFFFF"><em>White</em><b>#FFFFFF</b></span>
-                    <span class="sk-band is-flame"><em>Flame</em><b>#F05523</b></span>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- ============================================================
+      <!-- ============================================================
              Showcase — The brand, applied (full-bleed phone lineup)
              ============================================================ -->
-        <section class="cs-section sk-showcase" aria-label="The redesigned screens">
-            <div class="sk-section-head sk-showcase-head">
-                <p class="cs-label">The Redesign</p>
-                <div class="sk-device-toggle" role="tablist" aria-label="Device">
-                    <span class="sk-device-thumb" aria-hidden="true"></span>
-                    <button class="sk-device-btn is-active" type="button" role="tab" aria-selected="true" data-device="mobile">Mobile</button>
-                    <button class="sk-device-btn" type="button" role="tab" aria-selected="false" tabindex="-1" data-device="desktop">Desktop</button>
-                </div>
+      <section
+        class="cs-section sk-showcase"
+        aria-label="The redesigned screens"
+      >
+        <div class="sk-section-head sk-showcase-head">
+          <p class="cs-label">The Redesign</p>
+          <div class="sk-device-toggle" role="tablist" aria-label="Device">
+            <span class="sk-device-thumb" aria-hidden="true"></span>
+            <button
+              class="sk-device-btn is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-device="mobile"
+            >
+              Mobile
+            </button>
+            <button
+              class="sk-device-btn"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              tabindex="-1"
+              data-device="desktop"
+            >
+              Desktop
+            </button>
+          </div>
+        </div>
+
+        <div class="sk-lineup sk-device-view is-active" data-device="mobile">
+          <figure class="sk-lineup-phone">
+            <div class="sk-lineup-frame">
+              <img
+                src="assets/skillcat/comparison/updated/onboarding.png"
+                alt="Redesigned onboarding screen"
+                loading="lazy"
+              />
             </div>
-
-            <div class="sk-lineup sk-device-view is-active" data-device="mobile">
-                <figure class="sk-lineup-phone">
-                    <div class="sk-lineup-frame"><img src="assets/skillcat/comparison/updated/onboarding.png" alt="Redesigned onboarding screen" loading="lazy"></div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">01</span> Onboarding</figcaption>
-                </figure>
-                <figure class="sk-lineup-phone">
-                    <div class="sk-lineup-frame"><img src="assets/skillcat/comparison/updated/home.png" alt="Redesigned home screen" loading="lazy"></div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">02</span> Home</figcaption>
-                </figure>
-                <figure class="sk-lineup-phone">
-                    <div class="sk-lineup-frame"><img src="assets/skillcat/comparison/updated/overview.png" alt="Redesigned course overview screen" loading="lazy"></div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">03</span> Overview</figcaption>
-                </figure>
-                <figure class="sk-lineup-phone">
-                    <div class="sk-lineup-frame"><img src="assets/skillcat/process/evolution/course-v4.png" alt="Redesigned course path screen" loading="lazy"></div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">04</span> The path</figcaption>
-                </figure>
-                <figure class="sk-lineup-phone">
-                    <div class="sk-lineup-frame"><img src="assets/skillcat/comparison/updated/task-complete.png" alt="Redesigned task complete screen" loading="lazy"></div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">05</span> Task complete</figcaption>
-                </figure>
-                <figure class="sk-lineup-phone">
-                    <div class="sk-lineup-frame"><img src="assets/skillcat/comparison/updated/portfolio.png" alt="Redesigned portfolio screen" loading="lazy"></div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">06</span> Portfolio</figcaption>
-                </figure>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">01</span> Onboarding
+            </figcaption>
+          </figure>
+          <figure class="sk-lineup-phone">
+            <div class="sk-lineup-frame">
+              <img
+                src="assets/skillcat/comparison/updated/home.png"
+                alt="Redesigned home screen"
+                loading="lazy"
+              />
             </div>
-
-            <!-- Desktop view — fanned deck of browser windows, swaps in via the toggle -->
-            <div class="sk-deck sk-device-view" data-device="desktop" hidden>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/home.png" alt="Redesigned home screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">01</span> Home</figcaption>
-                </figure>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/overview.png" alt="Redesigned course overview screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">02</span> Overview</figcaption>
-                </figure>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/course-tree.png" alt="Redesigned course path screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">03</span> The path</figcaption>
-                </figure>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/task-complete.png" alt="Redesigned task complete screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">04</span> Task complete</figcaption>
-                </figure>
-                <figure class="sk-deck-window">
-                    <div class="sk-deck-frame">
-                        <div class="sk-deck-bar"><span></span><span></span><span></span></div>
-                        <div class="sk-deck-screen"><img src="assets/skillcat/comparison/updated-desktop/portfolio.png" alt="Redesigned portfolio screen on desktop" loading="lazy"></div>
-                    </div>
-                    <figcaption class="sk-lineup-cap"><span class="sk-lineup-num">05</span> Portfolio</figcaption>
-                </figure>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">02</span> Home
+            </figcaption>
+          </figure>
+          <figure class="sk-lineup-phone">
+            <div class="sk-lineup-frame">
+              <img
+                src="assets/skillcat/comparison/updated/overview.png"
+                alt="Redesigned course overview screen"
+                loading="lazy"
+              />
             </div>
-        </section>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">03</span> Overview
+            </figcaption>
+          </figure>
+          <figure class="sk-lineup-phone">
+            <div class="sk-lineup-frame">
+              <img
+                src="assets/skillcat/process/evolution/course-v4.png"
+                alt="Redesigned course path screen"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">04</span> The path
+            </figcaption>
+          </figure>
+          <figure class="sk-lineup-phone">
+            <div class="sk-lineup-frame">
+              <img
+                src="assets/skillcat/comparison/updated/task-complete.png"
+                alt="Redesigned task complete screen"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">05</span> Task complete
+            </figcaption>
+          </figure>
+          <figure class="sk-lineup-phone">
+            <div class="sk-lineup-frame">
+              <img
+                src="assets/skillcat/comparison/updated/portfolio.png"
+                alt="Redesigned portfolio screen"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">06</span> Portfolio
+            </figcaption>
+          </figure>
+        </div>
 
+        <!-- Desktop view — fanned deck of browser windows, swaps in via the toggle -->
+        <div class="sk-deck sk-device-view" data-device="desktop" hidden>
+          <figure class="sk-deck-window">
+            <div class="sk-deck-frame">
+              <div class="sk-deck-bar">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="sk-deck-screen">
+                <img
+                  src="assets/skillcat/comparison/updated-desktop/home.png"
+                  alt="Redesigned home screen on desktop"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">01</span> Home
+            </figcaption>
+          </figure>
+          <figure class="sk-deck-window">
+            <div class="sk-deck-frame">
+              <div class="sk-deck-bar">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="sk-deck-screen">
+                <img
+                  src="assets/skillcat/comparison/updated-desktop/overview.png"
+                  alt="Redesigned course overview screen on desktop"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">02</span> Overview
+            </figcaption>
+          </figure>
+          <figure class="sk-deck-window">
+            <div class="sk-deck-frame">
+              <div class="sk-deck-bar">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="sk-deck-screen">
+                <img
+                  src="assets/skillcat/comparison/updated-desktop/course-tree.png"
+                  alt="Redesigned course path screen on desktop"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">03</span> The path
+            </figcaption>
+          </figure>
+          <figure class="sk-deck-window">
+            <div class="sk-deck-frame">
+              <div class="sk-deck-bar">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="sk-deck-screen">
+                <img
+                  src="assets/skillcat/comparison/updated-desktop/task-complete.png"
+                  alt="Redesigned task complete screen on desktop"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">04</span> Task complete
+            </figcaption>
+          </figure>
+          <figure class="sk-deck-window">
+            <div class="sk-deck-frame">
+              <div class="sk-deck-bar">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="sk-deck-screen">
+                <img
+                  src="assets/skillcat/comparison/updated-desktop/portfolio.png"
+                  alt="Redesigned portfolio screen on desktop"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption class="sk-lineup-cap">
+              <span class="sk-lineup-num">05</span> Portfolio
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-        <!-- ============================================================
+      <!-- ============================================================
              09 — Design Iterations
              ============================================================ -->
-        <section id="iterations" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Design Iterations</h2>
-                <p class="sk-section-summary">Each core screen went through <strong>up to 4 rounds</strong>. Switch between versions to see what changed at every step.</p>
-            </div>
+      <section id="iterations" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Design Iterations</h2>
+          <p class="sk-section-summary">
+            Each core screen went through <strong>dozens of iterations</strong>.
+            Here are the best ones. 
+          </p>
+        </div>
 
-
-
-
-            <!-- <div class="sk-beforeafter">
+        <!-- <div class="sk-beforeafter">
                 <div class="sk-ba-card sk-ba-before">
                     <p class="sk-ba-tag">Before · V1</p>
                     <p class="sk-ba-title">Form-first signup</p>
@@ -536,76 +1174,289 @@
                 </div>
             </div> -->
 
-            <!-- Per-screen tab switcher: each moment = a title + description + V1/V2/V3 pills.
+        <!-- Per-screen tab switcher: each moment = a title + description + V1/V2/V3 pills.
                  Layout alternates: odd rows put text on the left, even rows flip with --reverse. -->
 
-            <div class="sk-feature-switch sk-feature-switch--versions">
-                <div class="sk-feature-info">
-                    <h3 class="sk-feature-screen-title">Home</h3>
-                    <p class="sk-feature-screen-desc">The home screen shows learners where they are and what to do next.</p>
-                    <div class="sk-version-tabs" role="tablist" aria-label="Home — versions">
-                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="home-panel-1" id="home-tab-1" data-flow="1">V1</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="home-panel-2" id="home-tab-2" data-flow="2">V2</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="home-panel-3" id="home-tab-3" data-flow="3">V3</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="home-panel-4" id="home-tab-4" data-flow="4">V4</button>
-                    </div>
-                </div>
-                <!-- Phone + on-screen hotspots. Each dot reveals a yellow sticky-note bubble
-                     on hover/focus; dots are positioned along the phone's vertical axis. -->
-                <div class="sk-feature-stage">
-                    <div class="sk-feature-panel is-active" id="home-panel-1" role="tabpanel" aria-labelledby="home-tab-1" data-flow="1">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/process/evolution/home-v1.png" alt="Home — V1" loading="lazy">
-                            </div>
-                            <ul class="sk-hotspots" aria-label="Home V1 — what's wrong">
-                                <li class="sk-hot" style="top:25%"><button class="sk-hot-dot" type="button" aria-label="Annotation 1"></button><span class="sk-hot-note">Learning plan cards are too tall.</span></li>
-                                <li class="sk-hot" style="top:50%"><button class="sk-hot-dot" type="button" aria-label="Annotation 2"></button><span class="sk-hot-note">What if a user has 5+ learning plans? Stacking on the home page overflows.</span></li>
-                                <li class="sk-hot" style="top:90%"><button class="sk-hot-dot" type="button" aria-label="Annotation 3"></button><span class="sk-hot-note">Navigation bar is modern but runs into legibility issues.</span></li>
-                            </ul>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="home-panel-2" role="tabpanel" aria-labelledby="home-tab-2" data-flow="2">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/process/evolution/home-v2.png" alt="Home — V2" loading="lazy">
-                            </div>
-                            <ul class="sk-hotspots" aria-label="Home V2 — what changed">
-                                <li class="sk-hot" style="top:37.2%;left:50.2%"><button class="sk-hot-dot" type="button" aria-label="Annotation 1"></button><span class="sk-hot-note">Learning plans now look visually different from regular courses.</span></li>
-                                <li class="sk-hot" style="top:19.8%;left:81.7%"><button class="sk-hot-dot" type="button" aria-label="Annotation 2"></button><span class="sk-hot-note">Simplified the learning path: one single path stacked on the backend.</span></li>
-                                <li class="sk-hot" style="top:90%"><button class="sk-hot-dot" type="button" aria-label="Annotation 3"></button><span class="sk-hot-note">Simplified the navigation bar.</span></li>
-                            </ul>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="home-panel-3" role="tabpanel" aria-labelledby="home-tab-3" data-flow="3">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/process/evolution/home-v3.png" alt="Home — V3" loading="lazy">
-                            </div>
-                            <ul class="sk-hotspots" aria-label="Home V3 — what changed">
-                                <li class="sk-hot" style="top:10%"><button class="sk-hot-dot" type="button" aria-label="Annotation 1"></button><span class="sk-hot-note">Simplified the header billing status.</span></li>
-                                <li class="sk-hot" style="top:24.1%;left:29.5%"><button class="sk-hot-dot" type="button" aria-label="Annotation 2"></button><span class="sk-hot-note">Simplified the iconography.</span></li>
-                                <li class="sk-hot" style="top:55%"><button class="sk-hot-dot" type="button" aria-label="Annotation 3"></button><span class="sk-hot-note">Added a full-width banner for new courses.</span></li>
-                                <li class="sk-hot" style="top:90%"><button class="sk-hot-dot" type="button" aria-label="Annotation 4"></button><span class="sk-hot-note">Reverted to a traditional navigation bar.</span></li>
-                            </ul>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="home-panel-4" role="tabpanel" aria-labelledby="home-tab-4" data-flow="4">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/process/evolution/home-v4.png" alt="Home — V4" loading="lazy">
-                            </div>
-                            <ul class="sk-hotspots" aria-label="Home V4 — what changed">
-                                <li class="sk-hot" style="top:11.2%;left:68.3%"><button class="sk-hot-dot" type="button" aria-label="Annotation 1"></button><span class="sk-hot-note">Moved Search up into the header.</span></li>
-                                <li class="sk-hot" style="top:21.9%;left:84.8%"><button class="sk-hot-dot" type="button" aria-label="Annotation 2"></button><span class="sk-hot-note">Collapsed Start Learning into one card with the course + current task title.</span></li>
-                                <li class="sk-hot" style="top:87.3%;left:29.8%"><button class="sk-hot-dot" type="button" aria-label="Annotation 3"></button><span class="sk-hot-note">Added "Path" to the nav: direct entry to the Course Tree.</span></li>
-                            </ul>
-                        </figure>
-                    </div>
-                </div>
+        <div class="sk-feature-switch sk-feature-switch--versions">
+          <div class="sk-feature-info">
+            <h3 class="sk-feature-screen-title">Home</h3>
+            <p class="sk-feature-screen-desc">
+              The home screen shows learners where they are and what to do next.
+            </p>
+            <div
+              class="sk-version-tabs"
+              role="tablist"
+              aria-label="Home — versions"
+            >
+              <button
+                class="sk-feature-btn sk-version-btn is-active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="home-panel-1"
+                id="home-tab-1"
+                data-flow="1"
+              >
+                V1
+              </button>
+              <button
+                class="sk-feature-btn sk-version-btn"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="home-panel-2"
+                id="home-tab-2"
+                data-flow="2"
+              >
+                V2
+              </button>
+              <button
+                class="sk-feature-btn sk-version-btn"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="home-panel-3"
+                id="home-tab-3"
+                data-flow="3"
+              >
+                V3
+              </button>
+              <button
+                class="sk-feature-btn sk-version-btn"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="home-panel-4"
+                id="home-tab-4"
+                data-flow="4"
+              >
+                V4
+              </button>
             </div>
+          </div>
+          <!-- Phone + on-screen hotspots. Each dot reveals a yellow sticky-note bubble
+                     on hover/focus; dots are positioned along the phone's vertical axis. -->
+          <div class="sk-feature-stage">
+            <div
+              class="sk-feature-panel is-active"
+              id="home-panel-1"
+              role="tabpanel"
+              aria-labelledby="home-tab-1"
+              data-flow="1"
+            >
+              <figure class="sk-video sk-video--mobile">
+                <div class="sk-video-frame">
+                  <img
+                    class="sk-embed-img"
+                    src="assets/skillcat/process/evolution/home-v1.png"
+                    alt="Home — V1"
+                    loading="lazy"
+                  />
+                </div>
+                <ul class="sk-hotspots" aria-label="Home V1 — what's wrong">
+                  <li class="sk-hot" style="top: 25%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 1"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Learning plan cards are too tall.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 50%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 2"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >What if a user has 5+ learning plans? Stacking on the
+                      home page overflows.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 90%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 3"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Navigation bar is modern but runs into legibility
+                      issues.</span
+                    >
+                  </li>
+                </ul>
+              </figure>
+            </div>
+            <div
+              class="sk-feature-panel"
+              id="home-panel-2"
+              role="tabpanel"
+              aria-labelledby="home-tab-2"
+              data-flow="2"
+            >
+              <figure class="sk-video sk-video--mobile">
+                <div class="sk-video-frame">
+                  <img
+                    class="sk-embed-img"
+                    src="assets/skillcat/process/evolution/home-v2.png"
+                    alt="Home — V2"
+                    loading="lazy"
+                  />
+                </div>
+                <ul class="sk-hotspots" aria-label="Home V2 — what changed">
+                  <li class="sk-hot" style="top: 37.2%; left: 50.2%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 1"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Learning plans now look visually different from regular
+                      courses.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 19.8%; left: 81.7%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 2"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Simplified the learning path: one single path stacked on
+                      the backend.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 90%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 3"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Simplified the navigation bar.</span
+                    >
+                  </li>
+                </ul>
+              </figure>
+            </div>
+            <div
+              class="sk-feature-panel"
+              id="home-panel-3"
+              role="tabpanel"
+              aria-labelledby="home-tab-3"
+              data-flow="3"
+            >
+              <figure class="sk-video sk-video--mobile">
+                <div class="sk-video-frame">
+                  <img
+                    class="sk-embed-img"
+                    src="assets/skillcat/process/evolution/home-v3.png"
+                    alt="Home — V3"
+                    loading="lazy"
+                  />
+                </div>
+                <ul class="sk-hotspots" aria-label="Home V3 — what changed">
+                  <li class="sk-hot" style="top: 10%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 1"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Simplified the header billing status.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 24.1%; left: 29.5%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 2"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Simplified the iconography.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 55%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 3"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Added a full-width banner for new courses.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 90%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 4"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Reverted to a traditional navigation bar.</span
+                    >
+                  </li>
+                </ul>
+              </figure>
+            </div>
+            <div
+              class="sk-feature-panel"
+              id="home-panel-4"
+              role="tabpanel"
+              aria-labelledby="home-tab-4"
+              data-flow="4"
+            >
+              <figure class="sk-video sk-video--mobile">
+                <div class="sk-video-frame">
+                  <img
+                    class="sk-embed-img"
+                    src="assets/skillcat/process/evolution/home-v4.png"
+                    alt="Home — V4"
+                    loading="lazy"
+                  />
+                </div>
+                <ul class="sk-hotspots" aria-label="Home V4 — what changed">
+                  <li class="sk-hot" style="top: 11.2%; left: 68.3%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 1"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Moved Search up into the header.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 21.9%; left: 84.8%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 2"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Collapsed Start Learning into one card with the course +
+                      current task title.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 87.3%; left: 29.8%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 3"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Added "Path" to the nav: direct entry to the Course
+                      Tree.</span
+                    >
+                  </li>
+                </ul>
+              </figure>
+            </div>
+          </div>
+        </div>
 
-            <!-- Hidden: Course overview flow
+        <!-- Hidden: Course overview flow
             <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--reverse">
                 <div class="sk-feature-info">
                     <h3 class="sk-feature-screen-title">Course overview</h3>
@@ -674,7 +1525,7 @@
             </div>
             -->
 
-            <!-- Hidden: Portfolio flow
+        <!-- Hidden: Portfolio flow
             <div class="sk-feature-switch sk-feature-switch--versions">
                 <div class="sk-feature-info">
                     <h3 class="sk-feature-screen-title">Portfolio</h3>
@@ -725,108 +1576,418 @@
             </div>
             -->
 
-            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--reverse">
-                <div class="sk-feature-info">
-                    <h3 class="sk-feature-screen-title">Course view</h3>
-                    <p class="sk-feature-screen-desc">The course view lays out a course's lessons and tracks progress through them.</p>
-                    <div class="sk-version-tabs" role="tablist" aria-label="Course view — versions">
-                        <button class="sk-feature-btn sk-version-btn sk-version-btn--range is-active" type="button" role="tab" aria-selected="true" aria-controls="course-panel-explore" id="course-tab-explore" data-flow="explore">V0.1 - V0.99</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="course-panel-1" id="course-tab-1" data-flow="1">V1</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="course-panel-2" id="course-tab-2" data-flow="2">V2</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="course-panel-3" id="course-tab-3" data-flow="3">V3</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="course-panel-4" id="course-tab-4" data-flow="4">V4</button>
-                    </div>
-                </div>
-                <div class="sk-feature-stage">
-                    <div class="sk-feature-panel" id="course-panel-1" role="tabpanel" aria-labelledby="course-tab-1" data-flow="1">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-v1.png" alt="Course view — V1" loading="lazy">
-                            </div>
-                            <ul class="sk-hotspots" aria-label="Course view V1 — initial design">
-                                <li class="sk-hot" style="top:24.4%;left:88.6%"><button class="sk-hot-dot" type="button" aria-label="Annotation 1"></button><span class="sk-hot-note">Progress noted on the top banner bar.</span></li>
-                                <li class="sk-hot" style="top:10.7%;left:83%"><button class="sk-hot-dot" type="button" aria-label="Annotation 2"></button><span class="sk-hot-note">Military motifs gamify the path: badges, trophies, streaks.</span></li>
-                                <li class="sk-hot" style="top:30%;left:26.1%"><button class="sk-hot-dot" type="button" aria-label="Annotation 3"></button><span class="sk-hot-note">Each node = a full course, with all sub-tasks, quizzes, and finals listed inside.</span></li>
-                                <li class="sk-hot" style="top:49.5%;left:84.8%"><button class="sk-hot-dot" type="button" aria-label="Annotation 4"></button><span class="sk-hot-note">Users must complete every step before moving to the next node.</span></li>
-                            </ul>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel is-active" id="course-panel-explore" role="tabpanel" aria-labelledby="course-tab-explore" data-flow="explore">
-                        <figure class="sk-video sk-video--mobile sk-stack" aria-roledescription="carousel" aria-label="Course view — 8 early explorations between V1 and V2">
-                            <div class="sk-stack-pile" tabindex="0" title="Next exploration">
-                                <div class="sk-stack-card" >
-                                    <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-1.png" alt="Course view exploration 1 of 8: Zig-zag path of nodes, stats bar on top." loading="lazy">
-                                </div>
-                                <div class="sk-stack-card">
-                                    <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-2.png" alt="Course view exploration 2 of 8: Split view: lesson rail on the left, a winding star path on the right." loading="lazy">
-                                </div>
-                                <div class="sk-stack-card">
-                                    <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-3.png" alt="Course view exploration 3 of 8: Collapsible list: each lesson row expands to show its hours." loading="lazy">
-                                </div>
-                                <div class="sk-stack-card">
-                                    <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-4.png" alt="Course view exploration 4 of 8: Lessons grouped into octagon loops." loading="lazy">
-                                </div>
-                                <div class="sk-stack-card">
-                                    <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-5.png" alt="Course view exploration 5 of 8: Stars sit between flag nodes on a serpentine path." loading="lazy">
-                                </div>
-                                <div class="sk-stack-card">
-                                    <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-6.png" alt="Course view exploration 6 of 8: Each lesson becomes its own horizontal track of stars." loading="lazy">
-                                </div>
-                                <div class="sk-stack-card">
-                                    <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-7.png" alt="Course view exploration 7 of 8: Every lesson opens into a loop of star tasks." loading="lazy">
-                                </div>
-                                <div class="sk-stack-card">
-                                    <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-8.png" alt="Course view exploration 8 of 8: Zoomed into one lesson as a closed loop of tasks." loading="lazy">
-                                </div>
-                            </div>
-                            <figcaption class="sk-stack-controls">
-                                <button class="sk-stack-nav" type="button" data-dir="-1" aria-label="Previous exploration">&lsaquo;</button>
-                                <span class="sk-stack-count" aria-hidden="true"><span class="sk-stack-index">1</span> / 8</span>
-                                <button class="sk-stack-nav" type="button" data-dir="1" aria-label="Next exploration">&rsaquo;</button>
-                                <p class="sk-stack-caption" aria-live="polite">Zig-zag path of nodes, stats bar on top.</p>
-                            </figcaption>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="course-panel-2" role="tabpanel" aria-labelledby="course-tab-2" data-flow="2">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-v2.png" alt="Course view — V2" loading="lazy">
-                            </div>
-                            <ul class="sk-hotspots" aria-label="Course view V2 — what changed">
-                                <li class="sk-hot" style="top:37.4%;left:78.9%"><button class="sk-hot-dot" type="button" aria-label="Annotation 1"></button><span class="sk-hot-note">Updated the course tree UI.</span></li>
-                                <li class="sk-hot" style="top:9.2%;left:88.3%"><button class="sk-hot-dot" type="button" aria-label="Annotation 2"></button><span class="sk-hot-note">Simplified the trophy system.</span></li>
-                                <li class="sk-hot" style="top:66.1%;left:61.7%"><button class="sk-hot-dot" type="button" aria-label="Annotation 3"></button><span class="sk-hot-note">Each node now = a single lesson with its tasks inside.</span></li>
-                                <li class="sk-hot" style="top:82.4%;left:48.9%"><button class="sk-hot-dot" type="button" aria-label="Annotation 4"></button><span class="sk-hot-note">Added a bottom modal for more info.</span></li>
-                            </ul>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="course-panel-3" role="tabpanel" aria-labelledby="course-tab-3" data-flow="3">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-v3.png" alt="Course view — V3" loading="lazy">
-                            </div>
-                            <ul class="sk-hotspots" aria-label="Course view V3 — what changed">
-                                <li class="sk-hot" style="top:20.6%;left:73%"><button class="sk-hot-dot" type="button" aria-label="Annotation 1"></button><span class="sk-hot-note">Banner now includes the user's progress.</span></li>
-                                <li class="sk-hot" style="top:11.4%;left:54.8%"><button class="sk-hot-dot" type="button" aria-label="Annotation 2"></button><span class="sk-hot-note">Removed the gamifying features.</span></li>
-                                <li class="sk-hot" style="top:73.4%;left:35.2%"><button class="sk-hot-dot" type="button" aria-label="Annotation 3"></button><span class="sk-hot-note">Simplified the node descriptions.</span></li>
-                            </ul>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="course-panel-4" role="tabpanel" aria-labelledby="course-tab-4" data-flow="4">
-                        <figure class="sk-video sk-video--mobile">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/process/evolution/course-v4.png" alt="Course view — V4" loading="lazy">
-                            </div>
-                            <ul class="sk-hotspots" aria-label="Course view V4 — what changed">
-                                <li class="sk-hot" style="top:11.4%;left:55.2%"><button class="sk-hot-dot" type="button" aria-label="Annotation 1"></button><span class="sk-hot-note">Simplified the header: now shows the certification name.</span></li>
-                                <li class="sk-hot" style="top:20.9%;left:81.4%"><button class="sk-hot-dot" type="button" aria-label="Annotation 2"></button><span class="sk-hot-note">Removed the top banner entirely for a simpler section header.</span></li>
-                            </ul>
-                        </figure>
-                    </div>
-                </div>
+        <div
+          class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--reverse"
+        >
+          <div class="sk-feature-info">
+            <h3 class="sk-feature-screen-title">Course view</h3>
+            <p class="sk-feature-screen-desc">
+              The course view lays out a course's lessons and tracks progress
+              through them.
+            </p>
+            <div
+              class="sk-version-tabs"
+              role="tablist"
+              aria-label="Course view — versions"
+            >
+              <button
+                class="sk-feature-btn sk-version-btn sk-version-btn--range is-active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="course-panel-explore"
+                id="course-tab-explore"
+                data-flow="explore"
+              >
+                V0.1 - V0.99
+              </button>
+              <button
+                class="sk-feature-btn sk-version-btn"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="course-panel-1"
+                id="course-tab-1"
+                data-flow="1"
+              >
+                V1
+              </button>
+              <button
+                class="sk-feature-btn sk-version-btn"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="course-panel-2"
+                id="course-tab-2"
+                data-flow="2"
+              >
+                V2
+              </button>
+              <button
+                class="sk-feature-btn sk-version-btn"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="course-panel-3"
+                id="course-tab-3"
+                data-flow="3"
+              >
+                V3
+              </button>
+              <button
+                class="sk-feature-btn sk-version-btn"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="course-panel-4"
+                id="course-tab-4"
+                data-flow="4"
+              >
+                V4
+              </button>
             </div>
+          </div>
+          <div class="sk-feature-stage">
+            <div
+              class="sk-feature-panel"
+              id="course-panel-1"
+              role="tabpanel"
+              aria-labelledby="course-tab-1"
+              data-flow="1"
+            >
+              <figure class="sk-video sk-video--mobile">
+                <div class="sk-video-frame">
+                  <img
+                    class="sk-embed-img"
+                    src="assets/skillcat/process/evolution/course-v1.png"
+                    alt="Course view — V1"
+                    loading="lazy"
+                  />
+                </div>
+                <ul
+                  class="sk-hotspots"
+                  aria-label="Course view V1 — initial design"
+                >
+                  <li class="sk-hot" style="top: 24.4%; left: 88.6%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 1"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Progress noted on the top banner bar.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 10.7%; left: 83%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 2"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Military motifs gamify the path: badges, trophies,
+                      streaks.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 30%; left: 26.1%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 3"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Each node = a full course, with all sub-tasks, quizzes,
+                      and finals listed inside.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 49.5%; left: 84.8%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 4"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Users must complete every step before moving to the next
+                      node.</span
+                    >
+                  </li>
+                </ul>
+              </figure>
+            </div>
+            <div
+              class="sk-feature-panel is-active"
+              id="course-panel-explore"
+              role="tabpanel"
+              aria-labelledby="course-tab-explore"
+              data-flow="explore"
+            >
+              <figure
+                class="sk-video sk-video--mobile sk-stack"
+                aria-roledescription="carousel"
+                aria-label="Course view — 8 early explorations between V1 and V2"
+              >
+                <div
+                  class="sk-stack-pile"
+                  tabindex="0"
+                  title="Next exploration"
+                >
+                  <div class="sk-stack-card">
+                    <img
+                      class="sk-embed-img"
+                      src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-1.png"
+                      alt="Course view exploration 1 of 8: Zig-zag path of nodes, stats bar on top."
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="sk-stack-card">
+                    <img
+                      class="sk-embed-img"
+                      src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-2.png"
+                      alt="Course view exploration 2 of 8: Split view: lesson rail on the left, a winding star path on the right."
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="sk-stack-card">
+                    <img
+                      class="sk-embed-img"
+                      src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-3.png"
+                      alt="Course view exploration 3 of 8: Collapsible list: each lesson row expands to show its hours."
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="sk-stack-card">
+                    <img
+                      class="sk-embed-img"
+                      src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-4.png"
+                      alt="Course view exploration 4 of 8: Lessons grouped into octagon loops."
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="sk-stack-card">
+                    <img
+                      class="sk-embed-img"
+                      src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-5.png"
+                      alt="Course view exploration 5 of 8: Stars sit between flag nodes on a serpentine path."
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="sk-stack-card">
+                    <img
+                      class="sk-embed-img"
+                      src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-6.png"
+                      alt="Course view exploration 6 of 8: Each lesson becomes its own horizontal track of stars."
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="sk-stack-card">
+                    <img
+                      class="sk-embed-img"
+                      src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-7.png"
+                      alt="Course view exploration 7 of 8: Every lesson opens into a loop of star tasks."
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="sk-stack-card">
+                    <img
+                      class="sk-embed-img"
+                      src="assets/skillcat/process/evolution/course-view-initial-iterations/explore-8.png"
+                      alt="Course view exploration 8 of 8: Zoomed into one lesson as a closed loop of tasks."
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <figcaption class="sk-stack-controls">
+                  <button
+                    class="sk-stack-nav"
+                    type="button"
+                    data-dir="-1"
+                    aria-label="Previous exploration"
+                  >
+                    &lsaquo;
+                  </button>
+                  <span class="sk-stack-count" aria-hidden="true"
+                    ><span class="sk-stack-index">1</span> / 8</span
+                  >
+                  <button
+                    class="sk-stack-nav"
+                    type="button"
+                    data-dir="1"
+                    aria-label="Next exploration"
+                  >
+                    &rsaquo;
+                  </button>
+                  <p class="sk-stack-caption" aria-live="polite">
+                    Zig-zag path of nodes, stats bar on top.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+            <div
+              class="sk-feature-panel"
+              id="course-panel-2"
+              role="tabpanel"
+              aria-labelledby="course-tab-2"
+              data-flow="2"
+            >
+              <figure class="sk-video sk-video--mobile">
+                <div class="sk-video-frame">
+                  <img
+                    class="sk-embed-img"
+                    src="assets/skillcat/process/evolution/course-v2.png"
+                    alt="Course view — V2"
+                    loading="lazy"
+                  />
+                </div>
+                <ul
+                  class="sk-hotspots"
+                  aria-label="Course view V2 — what changed"
+                >
+                  <li class="sk-hot" style="top: 37.4%; left: 78.9%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 1"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Updated the course tree UI.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 9.2%; left: 88.3%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 2"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Simplified the trophy system.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 66.1%; left: 61.7%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 3"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Each node now = a single lesson with its tasks
+                      inside.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 82.4%; left: 48.9%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 4"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Added a bottom modal for more info.</span
+                    >
+                  </li>
+                </ul>
+              </figure>
+            </div>
+            <div
+              class="sk-feature-panel"
+              id="course-panel-3"
+              role="tabpanel"
+              aria-labelledby="course-tab-3"
+              data-flow="3"
+            >
+              <figure class="sk-video sk-video--mobile">
+                <div class="sk-video-frame">
+                  <img
+                    class="sk-embed-img"
+                    src="assets/skillcat/process/evolution/course-v3.png"
+                    alt="Course view — V3"
+                    loading="lazy"
+                  />
+                </div>
+                <ul
+                  class="sk-hotspots"
+                  aria-label="Course view V3 — what changed"
+                >
+                  <li class="sk-hot" style="top: 20.6%; left: 73%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 1"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Banner now includes the user's progress.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 11.4%; left: 54.8%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 2"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Removed the gamifying features.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 73.4%; left: 35.2%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 3"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Simplified the node descriptions.</span
+                    >
+                  </li>
+                </ul>
+              </figure>
+            </div>
+            <div
+              class="sk-feature-panel"
+              id="course-panel-4"
+              role="tabpanel"
+              aria-labelledby="course-tab-4"
+              data-flow="4"
+            >
+              <figure class="sk-video sk-video--mobile">
+                <div class="sk-video-frame">
+                  <img
+                    class="sk-embed-img"
+                    src="assets/skillcat/process/evolution/course-v4.png"
+                    alt="Course view — V4"
+                    loading="lazy"
+                  />
+                </div>
+                <ul
+                  class="sk-hotspots"
+                  aria-label="Course view V4 — what changed"
+                >
+                  <li class="sk-hot" style="top: 11.4%; left: 55.2%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 1"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Simplified the header: now shows the certification
+                      name.</span
+                    >
+                  </li>
+                  <li class="sk-hot" style="top: 20.9%; left: 81.4%">
+                    <button
+                      class="sk-hot-dot"
+                      type="button"
+                      aria-label="Annotation 2"
+                    ></button
+                    ><span class="sk-hot-note"
+                      >Removed the top banner entirely for a simpler section
+                      header.</span
+                    >
+                  </li>
+                </ul>
+              </figure>
+            </div>
+          </div>
+        </div>
 
-            <!-- Hidden: Task Completion flow
+        <!-- Hidden: Task Completion flow
             <div class="sk-feature-switch sk-feature-switch--versions">
                 <div class="sk-feature-info">
                     <h3 class="sk-feature-screen-title">Task Completion</h3>
@@ -877,321 +2038,764 @@
                 </div>
             </div>
             -->
+      </section>
 
-        </section>
-
-
-        <!-- ============================================================
+      <!-- ============================================================
              10 — Final Learner Flows
              ============================================================ -->
-        <section id="learner" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Final Learner Flows</h2>
-                <p class="sk-section-summary">Five flows carry a learner from <strong>adding a course</strong> to <strong>earning an EPA 608 certification</strong>.</p>
+      <section id="learner" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Final Learner Flows</h2>
+          <p class="sk-section-summary">
+            Five flows carry a learner from <strong>adding a course</strong> to
+            <strong>earning an EPA 608 certification</strong>.
+          </p>
+        </div>
+
+        <!-- The journey in five flows, side by side; clips autoplay while the row is on screen -->
+        <div class="sk-phone-row">
+          <figure class="sk-video sk-video--mobile sk-phone-row-item">
+            <div class="sk-video-frame">
+              <video
+                class="sk-video-el"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="assets/skillcat/poster-add-course.jpg"
+                aria-label="Flow 01: Add a course"
+              >
+                <source src="assets/skillcat/Add-Course.mp4" type="video/mp4" />
+              </video>
             </div>
-
-            <!-- The journey in five flows, side by side; clips autoplay while the row is on screen -->
-            <div class="sk-phone-row">
-                <figure class="sk-video sk-video--mobile sk-phone-row-item">
-                    <div class="sk-video-frame">
-                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-add-course.jpg" aria-label="Flow 01: Add a course">
-                            <source src="assets/skillcat/Add-Course.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">01</span>Add a course</figcaption>
-                </figure>
-                <figure class="sk-video sk-video--mobile sk-phone-row-item">
-                    <div class="sk-video-frame">
-                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-complete-task.jpg" aria-label="Flow 02: Start a lesson">
-                            <source src="assets/skillcat/Complete-Task.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">02</span>Start a lesson</figcaption>
-                </figure>
-                <figure class="sk-video sk-video--mobile sk-phone-row-item">
-                    <div class="sk-video-frame">
-                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-start-exam.jpg" aria-label="Flow 03: Start the final exam">
-                            <source src="assets/skillcat/Start-Exam.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">03</span>Start an exam</figcaption>
-                </figure>
-                <figure class="sk-video sk-video--mobile sk-phone-row-item">
-                    <div class="sk-video-frame">
-                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-complete-exam.jpg" aria-label="Flow 04: Take &amp; pass the exam">
-                            <source src="assets/skillcat/Complete-Exam.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">04</span>Pass an exam</figcaption>
-                </figure>
-                <figure class="sk-video sk-video--mobile sk-phone-row-item">
-                    <div class="sk-video-frame">
-                        <video class="sk-video-el" muted loop playsinline preload="none" poster="assets/skillcat/poster-get-epacard.jpg" aria-label="Flow 05: Get the EPA card">
-                            <source src="assets/skillcat/Get-EPACard.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <figcaption class="sk-phone-row-cap"><span class="sk-phone-row-num">05</span>Get the EPA card</figcaption>
-                </figure>
+            <figcaption class="sk-phone-row-cap">
+              <span class="sk-phone-row-num">01</span>Add a course
+            </figcaption>
+          </figure>
+          <figure class="sk-video sk-video--mobile sk-phone-row-item">
+            <div class="sk-video-frame">
+              <video
+                class="sk-video-el"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="assets/skillcat/poster-complete-task.jpg"
+                aria-label="Flow 02: Start a lesson"
+              >
+                <source
+                  src="assets/skillcat/Complete-Task.mp4"
+                  type="video/mp4"
+                />
+              </video>
             </div>
-        </section>
+            <figcaption class="sk-phone-row-cap">
+              <span class="sk-phone-row-num">02</span>Start a lesson
+            </figcaption>
+          </figure>
+          <figure class="sk-video sk-video--mobile sk-phone-row-item">
+            <div class="sk-video-frame">
+              <video
+                class="sk-video-el"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="assets/skillcat/poster-start-exam.jpg"
+                aria-label="Flow 03: Start the final exam"
+              >
+                <source src="assets/skillcat/Start-Exam.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <figcaption class="sk-phone-row-cap">
+              <span class="sk-phone-row-num">03</span>Start an exam
+            </figcaption>
+          </figure>
+          <figure class="sk-video sk-video--mobile sk-phone-row-item">
+            <div class="sk-video-frame">
+              <video
+                class="sk-video-el"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="assets/skillcat/poster-complete-exam.jpg"
+                aria-label="Flow 04: Take &amp; pass the exam"
+              >
+                <source
+                  src="assets/skillcat/Complete-Exam.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <figcaption class="sk-phone-row-cap">
+              <span class="sk-phone-row-num">04</span>Pass an exam
+            </figcaption>
+          </figure>
+          <figure class="sk-video sk-video--mobile sk-phone-row-item">
+            <div class="sk-video-frame">
+              <video
+                class="sk-video-el"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="assets/skillcat/poster-get-epacard.jpg"
+                aria-label="Flow 05: Get the EPA card"
+              >
+                <source
+                  src="assets/skillcat/Get-EPACard.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <figcaption class="sk-phone-row-cap">
+              <span class="sk-phone-row-num">05</span>Get the EPA card
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-
-        <!-- ============================================================
+      <!-- ============================================================
              Before & After — drag a single line across six screens to wipe
              between the original SkillCat app and the redesign. This is the
              B2C learner app, so it sits with the rest of the consumer-app work,
              before the case study moves on to the B2B admin dashboard.
              ============================================================ -->
-        <section id="comparison" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Before &amp; After</h2>
-                <p class="sk-section-summary">The original app next to the redesign, <strong>screen for screen</strong>.</p>
-            </div>
+      <section id="comparison" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Before &amp; After</h2>
+          <p class="sk-section-summary">
+            The original app next to the redesign,
+            <strong>screen for screen</strong>.
+          </p>
+        </div>
 
-            <figure class="sk-compare" data-pos="50">
-                <!-- After (redesign) — bottom layer, fully visible. -->
-                <div class="sk-compare-row sk-compare-row--after" aria-hidden="true">
-                    <img src="assets/skillcat/comparison/updated/onboarding.png"  alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/home.png"        alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/overview.png"    alt="" loading="lazy">
-                    <img src="assets/skillcat/process/evolution/course-v4.png" alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/portfolio.png"   alt="" loading="lazy">
-                    <img src="assets/skillcat/comparison/updated/task-complete.png" alt="" loading="lazy">
-                </div>
+        <figure class="sk-compare" data-pos="50">
+          <!-- After (redesign) — bottom layer, fully visible. -->
+          <div class="sk-compare-row sk-compare-row--after" aria-hidden="true">
+            <img
+              src="assets/skillcat/comparison/updated/onboarding.png"
+              alt=""
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/updated/home.png"
+              alt=""
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/updated/overview.png"
+              alt=""
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/process/evolution/course-v4.png"
+              alt=""
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/updated/portfolio.png"
+              alt=""
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/updated/task-complete.png"
+              alt=""
+              loading="lazy"
+            />
+          </div>
 
-                <!-- Before (original) — top layer, clipped from the right by the wipe. -->
-                <div class="sk-compare-row sk-compare-row--before">
-                    <img src="assets/skillcat/comparison/original/onboarding.png"  alt="Original SkillCat onboarding" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/home.png"        alt="Original SkillCat home" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/overview.png"    alt="Original SkillCat course overview" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/course-tree.png" alt="Original SkillCat course tree" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/portfolio.png"   alt="Original SkillCat portfolio" loading="lazy">
-                    <img src="assets/skillcat/comparison/original/task-complete.png" alt="Original SkillCat task complete" loading="lazy">
-                </div>
+          <!-- Before (original) — top layer, clipped from the right by the wipe. -->
+          <div class="sk-compare-row sk-compare-row--before">
+            <img
+              src="assets/skillcat/comparison/original/onboarding.png"
+              alt="Original SkillCat onboarding"
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/original/home.png"
+              alt="Original SkillCat home"
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/original/overview.png"
+              alt="Original SkillCat course overview"
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/original/course-tree.png"
+              alt="Original SkillCat course tree"
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/original/portfolio.png"
+              alt="Original SkillCat portfolio"
+              loading="lazy"
+            />
+            <img
+              src="assets/skillcat/comparison/original/task-complete.png"
+              alt="Original SkillCat task complete"
+              loading="lazy"
+            />
+          </div>
 
-                <!-- Corner labels — orient the viewer to which side is which. -->
-                <span class="sk-compare-label sk-compare-label--before" aria-hidden="true">Before</span>
-                <span class="sk-compare-label sk-compare-label--after"  aria-hidden="true">After</span>
+          <!-- Corner labels — orient the viewer to which side is which. -->
+          <span
+            class="sk-compare-label sk-compare-label--before"
+            aria-hidden="true"
+            >Before</span
+          >
+          <span
+            class="sk-compare-label sk-compare-label--after"
+            aria-hidden="true"
+            >After</span
+          >
 
-                <!-- Wipe handle — vertical line + knob. Position driven by --pos CSS var. -->
-                <div class="sk-compare-handle" aria-hidden="true">
-                    <span class="sk-compare-line"></span>
-                    <span class="sk-compare-knob">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M7 5 L2 10 L7 15"  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                            <path d="M13 5 L18 10 L13 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                        </svg>
-                    </span>
-                </div>
+          <!-- Wipe handle — vertical line + knob. Position driven by --pos CSS var. -->
+          <div class="sk-compare-handle" aria-hidden="true">
+            <span class="sk-compare-line"></span>
+            <span class="sk-compare-knob">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M7 5 L2 10 L7 15"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  fill="none"
+                />
+                <path
+                  d="M13 5 L18 10 L13 15"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  fill="none"
+                />
+              </svg>
+            </span>
+          </div>
 
-                <!-- Native range input drives the wipe — invisible but handles drag + keyboard.
+          <!-- Native range input drives the wipe — invisible but handles drag + keyboard.
                      Starts at 0 so the full Before strip is visible until the user drags. -->
-                <input type="range" min="0" max="100" value="0" step="0.1" class="sk-compare-input" aria-label="Drag right to reveal the redesign">
-            </figure>
-        </section>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            step="0.1"
+            class="sk-compare-input"
+            aria-label="Drag right to reveal the redesign"
+          />
+        </figure>
+      </section>
 
-
-        <!-- ============================================================
+      <!-- ============================================================
              Section 2 — The Admin Dashboard
              ============================================================ -->
-        <section id="dashboard" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Admin Dashboard</h2>
-                <p class="sk-section-summary">The employer side, in brief: a dashboard where managers <strong>track team training</strong>, approve hands-on work, and manage their people.</p>
-            </div>
+      <section id="dashboard" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Admin Dashboard</h2>
+          <p class="sk-section-summary">
+            The employer side, in brief: a dashboard where managers
+            <strong>track team training</strong>, approve hands-on work, and
+            manage their people.
+          </p>
+        </div>
 
+        <!-- Dashboard work collapsed by default to keep the focus on the B2C learner app -->
+        <button
+          class="sk-collapse-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="dashboard-details"
+        >
+          <span class="sk-collapse-label">View the admin dashboard work</span>
+          <i class="hn hn-angle-down sk-collapse-caret" aria-hidden="true"></i>
+        </button>
 
-            <!-- Dashboard work collapsed by default to keep the focus on the B2C learner app -->
-            <button class="sk-collapse-toggle" type="button" aria-expanded="false" aria-controls="dashboard-details">
-                <span class="sk-collapse-label">View the admin dashboard work</span>
-                <i class="hn hn-angle-down sk-collapse-caret" aria-hidden="true"></i>
-            </button>
-
-            <div class="sk-collapse" id="dashboard-details">
-            <div class="sk-collapse-inner" inert>
-
+        <div class="sk-collapse" id="dashboard-details">
+          <div class="sk-collapse-inner" inert>
             <!-- Per-screen version iterations: Home, Inbox, People -->
             <!-- <p class="sk-block-label">Iterations</p> -->
             <div class="sk-dash-iterations">
-            <!-- HOME — V1 was the old Dashboard; V2 is the redesigned Home -->
-            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
+              <!-- HOME — V1 was the old Dashboard; V2 is the redesigned Home -->
+              <div
+                class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk"
+              >
                 <div class="sk-feature-info">
-                    <h3 class="sk-feature-screen-title">Home</h3>
-                    <p class="sk-feature-screen-desc">Where an admin lands. V1 was a static grid of quick actions and reports; the redesign turns it into a live overview of team training that admins can customize.</p>
-                    <div class="sk-version-tabs" role="tablist" aria-label="Home — versions">
-                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-home-panel-1" id="dash-home-tab-1" data-flow="1">V1</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-home-panel-2" id="dash-home-tab-2" data-flow="2">V2</button>
-                    </div>
+                  <h3 class="sk-feature-screen-title">Home</h3>
+                  <p class="sk-feature-screen-desc">
+                    Where an admin lands. V1 was a static grid of quick actions
+                    and reports; the redesign turns it into a live overview of
+                    team training that admins can customize.
+                  </p>
+                  <div
+                    class="sk-version-tabs"
+                    role="tablist"
+                    aria-label="Home — versions"
+                  >
+                    <button
+                      class="sk-feature-btn sk-version-btn is-active"
+                      type="button"
+                      role="tab"
+                      aria-selected="true"
+                      aria-controls="dash-home-panel-1"
+                      id="dash-home-tab-1"
+                      data-flow="1"
+                    >
+                      V1
+                    </button>
+                    <button
+                      class="sk-feature-btn sk-version-btn"
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      aria-controls="dash-home-panel-2"
+                      id="dash-home-tab-2"
+                      data-flow="2"
+                    >
+                      V2
+                    </button>
+                  </div>
                 </div>
                 <div class="sk-feature-stage">
-                    <div class="sk-feature-panel is-active" id="dash-home-panel-1" role="tabpanel" aria-labelledby="dash-home-tab-1" data-flow="1">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%201.svg" alt="Home — V1" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="dash-home-panel-2" role="tabpanel" aria-labelledby="dash-home-tab-2" data-flow="2">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/home%202.jpg" alt="Home — V2" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
+                  <div
+                    class="sk-feature-panel is-active"
+                    id="dash-home-panel-1"
+                    role="tabpanel"
+                    aria-labelledby="dash-home-tab-1"
+                    data-flow="1"
+                  >
+                    <figure class="sk-video sk-video--desktop">
+                      <div class="sk-video-frame">
+                        <img
+                          class="sk-embed-img"
+                          src="assets/skillcat/B2B/dashboard-iterations/inbox%201.svg"
+                          alt="Home — V1"
+                          loading="lazy"
+                        />
+                      </div>
+                    </figure>
+                  </div>
+                  <div
+                    class="sk-feature-panel"
+                    id="dash-home-panel-2"
+                    role="tabpanel"
+                    aria-labelledby="dash-home-tab-2"
+                    data-flow="2"
+                  >
+                    <figure class="sk-video sk-video--desktop">
+                      <div class="sk-video-frame">
+                        <img
+                          class="sk-embed-img"
+                          src="assets/skillcat/B2B/dashboard-iterations/home%202.jpg"
+                          alt="Home — V2"
+                          loading="lazy"
+                        />
+                      </div>
+                    </figure>
+                  </div>
                 </div>
-            </div>
+              </div>
 
-            <!-- INBOX — got its own screen in V2 -->
-            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
+              <!-- INBOX — got its own screen in V2 -->
+              <div
+                class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk"
+              >
                 <div class="sk-feature-info">
-                    <h3 class="sk-feature-screen-title">Inbox</h3>
-                    <p class="sk-feature-screen-desc">The admin's command center. Every approval, assignment, and pending action lands in one role-aware queue.</p>
-                    <div class="sk-version-tabs" role="tablist" aria-label="Inbox — versions">
-                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-inbox-panel-2" id="dash-inbox-tab-2" data-flow="2">V2</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-inbox-panel-3" id="dash-inbox-tab-3" data-flow="3">V3</button>
-                    </div>
+                  <h3 class="sk-feature-screen-title">Inbox</h3>
+                  <p class="sk-feature-screen-desc">
+                    The admin's command center. Every approval, assignment, and
+                    pending action lands in one role-aware queue.
+                  </p>
+                  <div
+                    class="sk-version-tabs"
+                    role="tablist"
+                    aria-label="Inbox — versions"
+                  >
+                    <button
+                      class="sk-feature-btn sk-version-btn is-active"
+                      type="button"
+                      role="tab"
+                      aria-selected="true"
+                      aria-controls="dash-inbox-panel-2"
+                      id="dash-inbox-tab-2"
+                      data-flow="2"
+                    >
+                      V2
+                    </button>
+                    <button
+                      class="sk-feature-btn sk-version-btn"
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      aria-controls="dash-inbox-panel-3"
+                      id="dash-inbox-tab-3"
+                      data-flow="3"
+                    >
+                      V3
+                    </button>
+                  </div>
                 </div>
                 <div class="sk-feature-stage">
-                    <div class="sk-feature-panel is-active" id="dash-inbox-panel-2" role="tabpanel" aria-labelledby="dash-inbox-tab-2" data-flow="2">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%202.svg" alt="Inbox — V2" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="dash-inbox-panel-3" role="tabpanel" aria-labelledby="dash-inbox-tab-3" data-flow="3">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/inbox%203.svg" alt="Inbox — V3" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
+                  <div
+                    class="sk-feature-panel is-active"
+                    id="dash-inbox-panel-2"
+                    role="tabpanel"
+                    aria-labelledby="dash-inbox-tab-2"
+                    data-flow="2"
+                  >
+                    <figure class="sk-video sk-video--desktop">
+                      <div class="sk-video-frame">
+                        <img
+                          class="sk-embed-img"
+                          src="assets/skillcat/B2B/dashboard-iterations/inbox%202.svg"
+                          alt="Inbox — V2"
+                          loading="lazy"
+                        />
+                      </div>
+                    </figure>
+                  </div>
+                  <div
+                    class="sk-feature-panel"
+                    id="dash-inbox-panel-3"
+                    role="tabpanel"
+                    aria-labelledby="dash-inbox-tab-3"
+                    data-flow="3"
+                  >
+                    <figure class="sk-video sk-video--desktop">
+                      <div class="sk-video-frame">
+                        <img
+                          class="sk-embed-img"
+                          src="assets/skillcat/B2B/dashboard-iterations/inbox%203.svg"
+                          alt="Inbox — V3"
+                          loading="lazy"
+                        />
+                      </div>
+                    </figure>
+                  </div>
                 </div>
-            </div>
+              </div>
 
-            <!-- PEOPLE — 4 versions (taller 1280×865 frame) -->
-            <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
+              <!-- PEOPLE — 4 versions (taller 1280×865 frame) -->
+              <div
+                class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk"
+              >
                 <div class="sk-feature-info">
-                    <h3 class="sk-feature-screen-title">People</h3>
-                    <p class="sk-feature-screen-desc">Managing the whole team: roles, progress, and bulk actions. Each round pushed it to scale well past a handful of employees.</p>
-                    <div class="sk-version-tabs" role="tablist" aria-label="People — versions">
-                        <button class="sk-feature-btn sk-version-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="dash-people-panel-1" id="dash-people-tab-1" data-flow="1">V1</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-people-panel-2" id="dash-people-tab-2" data-flow="2">V2</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-people-panel-3" id="dash-people-tab-3" data-flow="3">V3</button>
-                        <button class="sk-feature-btn sk-version-btn" type="button" role="tab" aria-selected="false" aria-controls="dash-people-panel-4" id="dash-people-tab-4" data-flow="4">V4</button>
-                    </div>
+                  <h3 class="sk-feature-screen-title">People</h3>
+                  <p class="sk-feature-screen-desc">
+                    Managing the whole team: roles, progress, and bulk actions.
+                    Each round pushed it to scale well past a handful of
+                    employees.
+                  </p>
+                  <div
+                    class="sk-version-tabs"
+                    role="tablist"
+                    aria-label="People — versions"
+                  >
+                    <button
+                      class="sk-feature-btn sk-version-btn is-active"
+                      type="button"
+                      role="tab"
+                      aria-selected="true"
+                      aria-controls="dash-people-panel-1"
+                      id="dash-people-tab-1"
+                      data-flow="1"
+                    >
+                      V1
+                    </button>
+                    <button
+                      class="sk-feature-btn sk-version-btn"
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      aria-controls="dash-people-panel-2"
+                      id="dash-people-tab-2"
+                      data-flow="2"
+                    >
+                      V2
+                    </button>
+                    <button
+                      class="sk-feature-btn sk-version-btn"
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      aria-controls="dash-people-panel-3"
+                      id="dash-people-tab-3"
+                      data-flow="3"
+                    >
+                      V3
+                    </button>
+                    <button
+                      class="sk-feature-btn sk-version-btn"
+                      type="button"
+                      role="tab"
+                      aria-selected="false"
+                      aria-controls="dash-people-panel-4"
+                      id="dash-people-tab-4"
+                      data-flow="4"
+                    >
+                      V4
+                    </button>
+                  </div>
                 </div>
                 <div class="sk-feature-stage">
-                    <div class="sk-feature-panel is-active" id="dash-people-panel-1" role="tabpanel" aria-labelledby="dash-people-tab-1" data-flow="1">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame" style="aspect-ratio: 1280 / 865;">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/people%201.svg" alt="People — V1" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="dash-people-panel-2" role="tabpanel" aria-labelledby="dash-people-tab-2" data-flow="2">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame" style="aspect-ratio: 1280 / 865;">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/people%202.svg" alt="People — V2" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="dash-people-panel-3" role="tabpanel" aria-labelledby="dash-people-tab-3" data-flow="3">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame" style="aspect-ratio: 1280 / 865;">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/people%203.svg" alt="People — V3" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="sk-feature-panel" id="dash-people-panel-4" role="tabpanel" aria-labelledby="dash-people-tab-4" data-flow="4">
-                        <figure class="sk-video sk-video--desktop">
-                            <div class="sk-video-frame" style="aspect-ratio: 1280 / 865;">
-                                <img class="sk-embed-img" src="assets/skillcat/B2B/dashboard-iterations/people%204.svg" alt="People — V4" loading="lazy">
-                            </div>
-                        </figure>
-                    </div>
+                  <div
+                    class="sk-feature-panel is-active"
+                    id="dash-people-panel-1"
+                    role="tabpanel"
+                    aria-labelledby="dash-people-tab-1"
+                    data-flow="1"
+                  >
+                    <figure class="sk-video sk-video--desktop">
+                      <div
+                        class="sk-video-frame"
+                        style="aspect-ratio: 1280 / 865"
+                      >
+                        <img
+                          class="sk-embed-img"
+                          src="assets/skillcat/B2B/dashboard-iterations/people%201.svg"
+                          alt="People — V1"
+                          loading="lazy"
+                        />
+                      </div>
+                    </figure>
+                  </div>
+                  <div
+                    class="sk-feature-panel"
+                    id="dash-people-panel-2"
+                    role="tabpanel"
+                    aria-labelledby="dash-people-tab-2"
+                    data-flow="2"
+                  >
+                    <figure class="sk-video sk-video--desktop">
+                      <div
+                        class="sk-video-frame"
+                        style="aspect-ratio: 1280 / 865"
+                      >
+                        <img
+                          class="sk-embed-img"
+                          src="assets/skillcat/B2B/dashboard-iterations/people%202.svg"
+                          alt="People — V2"
+                          loading="lazy"
+                        />
+                      </div>
+                    </figure>
+                  </div>
+                  <div
+                    class="sk-feature-panel"
+                    id="dash-people-panel-3"
+                    role="tabpanel"
+                    aria-labelledby="dash-people-tab-3"
+                    data-flow="3"
+                  >
+                    <figure class="sk-video sk-video--desktop">
+                      <div
+                        class="sk-video-frame"
+                        style="aspect-ratio: 1280 / 865"
+                      >
+                        <img
+                          class="sk-embed-img"
+                          src="assets/skillcat/B2B/dashboard-iterations/people%203.svg"
+                          alt="People — V3"
+                          loading="lazy"
+                        />
+                      </div>
+                    </figure>
+                  </div>
+                  <div
+                    class="sk-feature-panel"
+                    id="dash-people-panel-4"
+                    role="tabpanel"
+                    aria-labelledby="dash-people-tab-4"
+                    data-flow="4"
+                  >
+                    <figure class="sk-video sk-video--desktop">
+                      <div
+                        class="sk-video-frame"
+                        style="aspect-ratio: 1280 / 865"
+                      >
+                        <img
+                          class="sk-embed-img"
+                          src="assets/skillcat/B2B/dashboard-iterations/people%204.svg"
+                          alt="People — V4"
+                          loading="lazy"
+                        />
+                      </div>
+                    </figure>
+                  </div>
                 </div>
-            </div>
+              </div>
             </div>
 
             <!-- Final walkthroughs, feature by feature -->
             <!-- <p class="sk-block-label" id="dashboard-features">Feature by feature · team summary to grading the work</p> -->
             <div class="sk-feature-switch sk-feature-switch--wide">
-                <!-- Top: feature tabs -->
-                <div class="sk-feature-list" role="tablist" aria-label="Admin dashboard features">
-                    <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="admin-panel-2" id="admin-tab-2" data-flow="2">
-                        <span class="sk-feature-btn-title">Check progress across date ranges</span>
-                    </button>
-                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-4" id="admin-tab-4" data-flow="4">
-                        <span class="sk-feature-btn-title">Filter the team &amp; open a profile</span>
-                    </button>
-                    <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-3" id="admin-tab-3" data-flow="3">
-                        <span class="sk-feature-btn-title">Review &amp; approve a hands-on project</span>
-                    </button>
+              <!-- Top: feature tabs -->
+              <div
+                class="sk-feature-list"
+                role="tablist"
+                aria-label="Admin dashboard features"
+              >
+                <button
+                  class="sk-feature-btn is-active"
+                  type="button"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="admin-panel-2"
+                  id="admin-tab-2"
+                  data-flow="2"
+                >
+                  <span class="sk-feature-btn-title"
+                    >Check progress across date ranges</span
+                  >
+                </button>
+                <button
+                  class="sk-feature-btn"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="admin-panel-4"
+                  id="admin-tab-4"
+                  data-flow="4"
+                >
+                  <span class="sk-feature-btn-title"
+                    >Filter the team &amp; open a profile</span
+                  >
+                </button>
+                <button
+                  class="sk-feature-btn"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="admin-panel-3"
+                  id="admin-tab-3"
+                  data-flow="3"
+                >
+                  <span class="sk-feature-btn-title"
+                    >Review &amp; approve a hands-on project</span
+                  >
+                </button>
+              </div>
+
+              <!-- Below: full-width capture that swaps to match the selected tab -->
+              <div class="sk-feature-stage">
+                <!-- HOME — date ranges -->
+                <div
+                  class="sk-feature-panel is-active"
+                  id="admin-panel-2"
+                  role="tabpanel"
+                  aria-labelledby="admin-tab-2"
+                  data-flow="2"
+                >
+                  <figure class="sk-video sk-video--desktop sk-video--wide">
+                    <div class="sk-video-frame">
+                      <video
+                        class="sk-video-el"
+                        controls
+                        playsinline
+                        preload="none"
+                        poster="assets/skillcat/B2B/poster-home.jpg"
+                      >
+                        <source
+                          src="assets/skillcat/B2B/home.mp4"
+                          type="video/mp4"
+                        />
+                      </video>
+                      <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                        <span class="sk-video-ph-name"
+                          >Home: team progress by date range</span
+                        >
+                        <span class="sk-video-ph-path"
+                          >assets/skillcat/B2B/home.mp4</span
+                        >
+                      </div>
+                    </div>
+                  </figure>
                 </div>
 
-                <!-- Below: full-width capture that swaps to match the selected tab -->
-                <div class="sk-feature-stage">
-
-                    <!-- HOME — date ranges -->
-                    <div class="sk-feature-panel is-active" id="admin-panel-2" role="tabpanel" aria-labelledby="admin-tab-2" data-flow="2">
-                        <figure class="sk-video sk-video--desktop sk-video--wide">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-home.jpg">
-                                    <source src="assets/skillcat/B2B/home.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">Home: team progress by date range</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/B2B/home.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
+                <!-- OTJ FEATURE -->
+                <div
+                  class="sk-feature-panel"
+                  id="admin-panel-3"
+                  role="tabpanel"
+                  aria-labelledby="admin-tab-3"
+                  data-flow="3"
+                >
+                  <figure class="sk-video sk-video--desktop sk-video--wide">
+                    <div class="sk-video-frame">
+                      <video
+                        class="sk-video-el"
+                        controls
+                        playsinline
+                        preload="none"
+                        poster="assets/skillcat/B2B/poster-otj.jpg"
+                      >
+                        <source
+                          src="assets/skillcat/B2B/OTJ.mp4"
+                          type="video/mp4"
+                        />
+                      </video>
+                      <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                        <span class="sk-video-ph-name"
+                          >On-the-job photo review &amp; grading</span
+                        >
+                        <span class="sk-video-ph-path"
+                          >assets/skillcat/B2B/OTJ.mp4</span
+                        >
+                      </div>
                     </div>
-
-                    <!-- OTJ FEATURE -->
-                    <div class="sk-feature-panel" id="admin-panel-3" role="tabpanel" aria-labelledby="admin-tab-3" data-flow="3">
-                        <figure class="sk-video sk-video--desktop sk-video--wide">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-otj.jpg">
-                                    <source src="assets/skillcat/B2B/OTJ.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">On-the-job photo review &amp; grading</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/B2B/OTJ.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
-                    </div>
-
-                    <!-- PEOPLE FEATURE -->
-                    <div class="sk-feature-panel" id="admin-panel-4" role="tabpanel" aria-labelledby="admin-tab-4" data-flow="4">
-                        <figure class="sk-video sk-video--desktop sk-video--wide">
-                            <div class="sk-video-frame">
-                                <video class="sk-video-el" controls playsinline preload="none" poster="assets/skillcat/B2B/poster-people.jpg">
-                                    <source src="assets/skillcat/B2B/people.mp4" type="video/mp4">
-                                </video>
-                                <div class="sk-video-ph" aria-hidden="true">
-                                    <span class="sk-video-ph-tag">▶ Walkthrough</span>
-                                    <span class="sk-video-ph-name">People management system</span>
-                                    <span class="sk-video-ph-path">assets/skillcat/B2B/people.mp4</span>
-                                </div>
-                            </div>
-                        </figure>
-                    </div>
+                  </figure>
                 </div>
-            </div>
 
+                <!-- PEOPLE FEATURE -->
+                <div
+                  class="sk-feature-panel"
+                  id="admin-panel-4"
+                  role="tabpanel"
+                  aria-labelledby="admin-tab-4"
+                  data-flow="4"
+                >
+                  <figure class="sk-video sk-video--desktop sk-video--wide">
+                    <div class="sk-video-frame">
+                      <video
+                        class="sk-video-el"
+                        controls
+                        playsinline
+                        preload="none"
+                        poster="assets/skillcat/B2B/poster-people.jpg"
+                      >
+                        <source
+                          src="assets/skillcat/B2B/people.mp4"
+                          type="video/mp4"
+                        />
+                      </video>
+                      <div class="sk-video-ph" aria-hidden="true">
+                        <span class="sk-video-ph-tag">▶ Walkthrough</span>
+                        <span class="sk-video-ph-name"
+                          >People management system</span
+                        >
+                        <span class="sk-video-ph-path"
+                          >assets/skillcat/B2B/people.mp4</span
+                        >
+                      </div>
+                    </div>
+                  </figure>
+                </div>
+              </div>
             </div>
-            </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-
-        <!-- ============================================================
+      <!-- ============================================================
              Section 4 — Specs & Handoff
              ============================================================ -->
-        <!-- <section id="specs" class="cs-section">
+      <!-- <section id="specs" class="cs-section">
             <div class="sk-section-head">
                 <p class="cs-label">04 · Specs &amp; Handoff</p>
                 <h2 class="sk-section-title">Design decisions only matter <em>if they ship</em>.</h2>
@@ -1225,57 +2829,111 @@
             </figure>
         </section> -->
 
-        <!-- ============================================================
+      <!-- ============================================================
              12 — Reflection (closes the case study)
              ============================================================ -->
-        <section id="reflection" class="cs-section">
-            <div class="sk-section-head sk-section-head--split">
-                <h2 class="sk-section-title">Reflection</h2>
-            </div>
+      <section id="reflection" class="cs-section">
+        <div class="sk-section-head sk-section-head--split">
+          <h2 class="sk-section-title">Reflection</h2>
+        </div>
 
-            <div class="sk-threads">
-                <div class="sk-thread"><p class="sk-thread-num">01</p><p class="sk-thread-title">Decide on evidence, and say how sure you are</p></div>
-                <div class="sk-thread"><p class="sk-thread-num">02</p><p class="sk-thread-title">A design is never done</p></div>
-                <div class="sk-thread"><p class="sk-thread-num">03</p><p class="sk-thread-title">Designing and coding at the same time</p></div>
-            </div>
+        <div class="sk-threads">
+          <div class="sk-thread">
+            <p class="sk-thread-num">01</p>
+            <p class="sk-thread-title">
+              Decide on evidence, and say how sure you are
+            </p>
+            <p class="sk-thread-desc">
+              The texting study was small, so I treated what I heard as a
+              strong signal, not proof. When I made a call, I named what it
+              rested on and how confident I was, so the team knew which
+              decisions were settled and which were worth revisiting.
+            </p>
+          </div>
+          <div class="sk-thread">
+            <p class="sk-thread-num">02</p>
+            <p class="sk-thread-title">A design is never done</p>
+            <p class="sk-thread-desc">
+              Several times we thought we had the final iteration, then
+              testing with more users surfaced new ways to improve. I learned
+              to treat iteration as continuous and never settle on a design as
+              finished.
+            </p>
+          </div>
+          <div class="sk-thread">
+            <p class="sk-thread-num">03</p>
+            <p class="sk-thread-title">Designing and coding at the same time</p>
+            <p class="sk-thread-desc">
+              Prototyping in code while designing often showed me a screen was
+              too complex to build, or that transitional screens were missing
+              entirely, since our visual designer focused on the core screens.
+              Raising these with the team before engineering handoff headed off
+              problems and sped up the product lifecycle.
+            </p>
+          </div>
+        </div>
 
-
-            <!-- <p class="sk-block-label">What this case study shows about how I work</p>
+        <!-- <p class="sk-block-label">What this case study shows about how I work</p>
             <ul class="sk-decisions">
                 <li>I reframe problems at the model level before touching layout: the admin dashboard is the clearest example.</li>
                 <li>I design complete state systems, which is what makes my work clean to build and quick to ship.</li>
                 <li>I care about craft and emotion, down to easing curves, because in a learning product those details drive whether people come back.</li>
                 <li>I can carry work from first concept all the way to engineering handoff.</li>
             </ul> -->
-        </section>
-
+      </section>
     </main>
 
     <!-- More case studies — cross-links to two other case studies -->
     <footer class="cs-next" aria-label="More case studies">
-        <h2 class="cs-next-heading">More case studies</h2>
-        <div class="cs-next-grid">
-            <a class="cs-next-card cs-next-card--scriptchain" href="scriptchain.html">
-                <div class="sk-thumb">
-                    <div class="sk-thumb-desktop">
-                        <video class="sk-thumb-video" autoplay loop muted playsinline preload="metadata" poster="assets/scriptchain/poster-scriptchain-website.jpg" aria-label="ScriptChain Health dashboard">
-                            <source src="assets/scriptchain/scriptchain-website.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-                <div class="cs-next-info">
-                    <span class="cs-next-tags">0-1 Design · Health · 2025</span>
-                    <h3 class="cs-next-name">ScriptChain Health <span class="cs-next-arrow" aria-hidden="true">→</span></h3>
-                </div>
-            </a>
-            <a class="cs-next-card" href="robinhood.html">
-                <img class="cs-next-thumb" src="assets/robinhood-mockup.png" alt="Robinhood Mirror case study" loading="lazy">
-                <div class="cs-next-info">
-                    <span class="cs-next-tags">Feature Add-On · Finance · 2024</span>
-                    <h3 class="cs-next-name">Robinhood Mirror <span class="cs-next-arrow" aria-hidden="true">→</span></h3>
-                </div>
-            </a>
-        </div>
+      <h2 class="cs-next-heading">More case studies</h2>
+      <div class="cs-next-grid">
+        <a
+          class="cs-next-card cs-next-card--scriptchain"
+          href="scriptchain.html"
+        >
+          <div class="sk-thumb">
+            <div class="sk-thumb-desktop">
+              <video
+                class="sk-thumb-video"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                poster="assets/scriptchain/poster-scriptchain-website.jpg"
+                aria-label="ScriptChain Health dashboard"
+              >
+                <source
+                  src="assets/scriptchain/scriptchain-website.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+          <div class="cs-next-info">
+            <span class="cs-next-tags">0-1 Design · Health · 2025</span>
+            <h3 class="cs-next-name">
+              ScriptChain Health
+              <span class="cs-next-arrow" aria-hidden="true">→</span>
+            </h3>
+          </div>
+        </a>
+        <a class="cs-next-card" href="robinhood.html">
+          <img
+            class="cs-next-thumb"
+            src="assets/robinhood-mockup.png"
+            alt="Robinhood Mirror case study"
+            loading="lazy"
+          />
+          <div class="cs-next-info">
+            <span class="cs-next-tags">Feature Add-On · Finance · 2024</span>
+            <h3 class="cs-next-name">
+              Robinhood Mirror
+              <span class="cs-next-arrow" aria-hidden="true">→</span>
+            </h3>
+          </div>
+        </a>
+      </div>
     </footer>
 
     <script src="transitions.js"></script>
@@ -1284,5 +2942,5 @@
     <script src="skillcat-edit.js"></script>
     <script src="cs-nav.js"></script>
     <script src="mascot-chat.js" defer></script>
-</body>
+  </body>
 </html>
