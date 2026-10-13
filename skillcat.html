@@ -13,7 +13,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Parkinsans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DotGothic16&family=Kode+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="cs-nav.css">
@@ -31,13 +31,12 @@
             <img src="assets/logo.png" alt="JC" />
         </a>
         <div class="nav-links cs-nav-links">
-            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#brief" class="nav-link">Brief</a>
             <a href="#research" class="nav-link">Research</a>
+            <a href="#journey" class="nav-link">Journey</a>
             <a href="#brand" class="nav-link">Brand</a>
             <a href="#iterations" class="nav-link">Iterate</a>
-            <a href="#testing" class="nav-link">Testing</a>
             <a href="#learner" class="nav-link">Learner</a>
-            <a href="#dashboard" class="nav-link">Dashboard</a>
             <a href="#reflection" class="nav-link">Reflection</a>
         </div>
         <button class="hamburger" aria-label="Menu">
@@ -82,7 +81,7 @@
                 <div class="cs-header-text">
                     <p class="cs-label">SkillCat · Online Learning</p>
                     <h1 class="cs-title">An all-in-one <em>HVAC learning platform</em>.</h1>
-                    <p class="cs-hero-sub">One platform, two surfaces; the consumer mobile app learners use to earn a credential, and the B2B web dashboard employers use to train their teams.</p>
+                    <p class="cs-hero-sub">The learner mobile app, and the decisions behind it.</p>
                 </div>
 
                 <div class="cs-hero-media">
@@ -125,26 +124,63 @@
         </section>
 
 
+
+
         <!-- ============================================================
-             Overview
+             The App — short summary before the story starts
              ============================================================ -->
-        <section id="overview" class="cs-section">
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>SkillCat is a skilled-trades training platform: people learn HVAC, electrical, or plumbing to earn the certifications that get them hired, and employers use it to train their teams.</p>
-                    <p>I worked across both surfaces as a product designer (the mobile + desktop learner redesign and a new admin dashboard for employers) and wrote the specs that translated those decisions into something engineering could build.</p>
+        <section id="about" class="cs-section">
+            <p class="sk-about-summary">SkillCat is a mobile training app for HVAC, electrical and plumbing. Learners earn the certifications that get them hired, and employers use it to train their teams.</p>
+        </section>
+
+
+
+
+        <!-- ============================================================
+             01 — The Brief
+             ============================================================ -->
+        <section id="brief" class="cs-section">
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">The Brief</h2>
+                <p class="sk-section-summary">Learners were <strong>signing up, then stalling before their first certificate</strong>, and working pros had little reason to come back. The goal was <strong>one clear path</strong> from sign-up to first cert to first job.</p>
+            </div>
+
+            <div class="sk-goals">
+                <div class="sk-goal-card">
+                    <p class="sk-brief-label">Business goals</p>
+                    <ul class="sk-goal-list">
+                        <li><span class="sk-goal-key">Activation</span><span class="sk-goal-val">First lesson within 7 days</span></li>
+                        <li><span class="sk-goal-key">Conversion</span><span class="sk-goal-val">Free → certificate → Premium</span></li>
+                        <li><span class="sk-goal-key">B2B growth</span><span class="sk-goal-val">Team plans with cert tracking</span></li>
+                    </ul>
                 </div>
+                <div class="sk-goal-card">
+                    <p class="sk-brief-label">Design goals</p>
+                    <ul class="sk-goal-list">
+                        <li><span class="sk-goal-key">One path</span><span class="sk-goal-val">Sign-up → first cert → first job</span></li>
+                        <li><span class="sk-goal-key">Credibility</span><span class="sk-goal-val">Accreditation visible at decision points</span></li>
+                        <li><span class="sk-goal-key">One system</span><span class="sk-goal-val">Works for beginners, pros and managers</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sk-goal-card">
+                <p class="sk-brief-label">Problem statement</p>
+                <ul class="sk-goal-list">
+                    <li><span class="sk-goal-key">Learners</span><span class="sk-goal-val">Sign up, then stall before their first certificate</span></li>
+                    <li><span class="sk-goal-key">Pros</span><span class="sk-goal-val">Working techs and managers have little reason to come back</span></li>
+                    <li><span class="sk-goal-key">Unknown</span><span class="sk-goal-val">Which barrier matters most for each audience</span></li>
+                </ul>
             </div>
         </section>
 
 
         <!-- ============================================================
-             01 — The Starting Point
+             02 — App Audit
              ============================================================ -->
         <section id="starting-point" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">01 · The Starting Point</p>
-                <h2 class="sk-section-title"><em>Original app</em>: deep catalog with no clear path.</h2>
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">App Audit</h2>
+                <p class="sk-section-summary">The courses and certifications were all there, but the app was <strong>catalog-first</strong>. Learners landed in a wall of categories and had to <strong>build their own route</strong> to the credential that gets them hired.</p>
             </div>
 
             <!-- <div class="cs-two-col">
@@ -161,83 +197,91 @@
                 <img src="assets/skillcat/comparison/original/task-complete.png" alt="Original app — task complete" loading="lazy">
                 <img src="assets/skillcat/comparison/original/portfolio.png" alt="Original app — portfolio" loading="lazy">
             </div>
-            <p class="sk-block-label">What wasn't working</p>
-            <ul class="sk-problems">
-                <li class="sk-problem"><span class="sk-problem-num">01</span><p>Catalog-first: learners landed in categories (EPA 608, Trade School Diplomas…) with no guided path.</p></li>
-                <li class="sk-problem"><span class="sk-problem-num">02</span><p>The credential that gets you hired was hard to find among everything else on offer.</p></li>
-                <li class="sk-problem"><span class="sk-problem-num">03</span><p>Little sense of progress or "what's next": easy to enroll, easy to drift.</p></li>
-                <li class="sk-problem"><span class="sk-problem-num">04</span><p>A five-tab nav (Social, Skill Check, Class, Simulations, Profile) split attention away from the goal.</p></li>
-            </ul>
 
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="hn hn-sparkles sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <span class="sk-ai-note-tools">
-                        <img src="assets/skillcat/ai-logos/claude.svg" alt="Claude" title="Claude" loading="lazy">
-                        <img src="assets/skillcat/ai-logos/chatgpt.svg" alt="ChatGPT" title="ChatGPT" loading="lazy">
-                        <img src="assets/skillcat/ai-logos/gemini.svg" alt="Google Gemini" title="Google Gemini" loading="lazy">
-                    </span>
-                    <i class="hn hn-angle-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">I used <strong>Claude, ChatGPT and Google Gemini</strong> to audit the original app end-to-end, pressure-testing my own read of where the catalog-first structure and five-tab nav were losing learners before they ever reached a credential.</p>
-                </div>
-            </aside>
         </section>
 
 
         <!-- ============================================================
-             02 — Research & The Landscape
+             03 — Research
              ============================================================ -->
         <section id="research" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">02 · Research &amp; The Landscape</p>
-                <h2 class="sk-section-title">Trade learners are <em>outcome-driven</em>.</h2>
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Texting Study</h2>
+                <p class="sk-section-summary">I texted trade learners to hear what they actually wanted. They're <strong>outcome-driven</strong>: a cert matters because it leads to <strong>a job and a raise</strong>, not points or streaks.</p>
             </div>
 
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>Trade learners study HVAC, electrical, or plumbing to earn a certification and a better paycheck, often early-mid career and learning on the job. Step one: get the vocabulary right (OJT, EPA 608, HVAC) so the product sounds like the trade, not edtech.</p>
+            <!-- Texting showcase: a live thread on a phone, framed by a wall of anonymized threads.
+                 Replies are redacted bars: participant privacy, and nothing invented. -->
+            <div class="sk-sms" aria-label="Texting research: one live thread and a wall of anonymized conversations">
+                <div class="sk-sms-wall" aria-hidden="true">
+                    <div class="sk-sms-row" data-dir="left"></div>
+                    <div class="sk-sms-row" data-dir="right"></div>
+                    <div class="sk-sms-row" data-dir="left"></div>
+                </div>
+                <div class="sk-sms-phone">
+                    <div class="sk-sms-status" aria-hidden="true"><span class="sk-sms-time">9:41</span><span class="sk-sms-island"></span><span class="sk-sms-icons"><svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="11" rx="3.5" opacity="0.45"/><rect x="2.5" y="2.5" width="16" height="7" rx="2" fill="currentColor" stroke="none"/><path d="M24.5 4.5v3" stroke-linecap="round" opacity="0.45"/></svg></span></div>
+                    <div class="sk-sms-head"><span class="sk-sms-avatar" aria-hidden="true"></span><span class="sk-sms-who"><span class="sk-redact-name" style="--w:120px" aria-label="Name redacted"></span></span><span class="sk-sms-when">Day 3 · 4:12 PM</span></div>
+                    <div class="sk-sms-thread">
+                        <!-- PLACEHOLDER replies: swap in real (anonymized) replies from the texting study -->
+                        <p class="sk-bubble sk-bubble--me" style="--i:0">Hey, it’s Jonathan from SkillCat, quick check-in: are you here to land your first HVAC job or just to pass a certification / level up?</p>
+                        <p class="sk-bubble sk-bubble--them" style="--i:1">first job. been doing warehouse for years and want something better</p>
+                        <p class="sk-bubble sk-bubble--me" style="--i:2">Perfect, and have you faced any challenges concerning the job search so far?</p>
+                        <p class="sk-bubble sk-bubble--them" style="--i:3">every posting says 1-2 years experience required</p>
+                        <p class="sk-bubble sk-bubble--me" style="--i:4">What’s been the hardest part about that?</p>
+                        <p class="sk-bubble sk-bubble--them sk-bubble--typing" style="--i:5"><span></span><span></span><span></span></p>
+                    </div>
+                    <div class="sk-sms-input" aria-hidden="true"><span class="sk-sms-plus">+</span><span class="sk-sms-field">Text Message</span></div>
+                    <span class="sk-sms-home" aria-hidden="true"></span>
                 </div>
             </div>
+            <!-- <p class="sk-caption sk-sms-note">~30 trade workers texted daily for 2 weeks · names redacted</p> -->
 
-            <!-- User research: texting + Zoom interviews -->
-            <p class="sk-block-label">Talking to the trades</p>
-
-            <div class="sk-stats">
-                <div class="sk-stat"><p class="sk-stat-num">~30/day</p><p class="sk-stat-label">Trade workers &amp; active users texted, every day for two weeks</p></div>
-                <div class="sk-stat"><p class="sk-stat-num">100%</p><p class="sk-stat-label">Async by design: replies came on their own time, between jobs</p></div>
-                <div class="sk-stat"><p class="sk-stat-num">2</p><p class="sk-stat-label">In-depth Zoom interviews for the full story</p></div>
+            <p class="sk-block-label">What I learned</p>
+            <div class="sk-threads sk-threads--detail sk-threads--visual">
+                <div class="sk-thread"><svg class="sk-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><p class="sk-thread-title">Outcome-driven</p><p class="sk-thread-desc">Cert → job → raise. Not points or streaks.</p><p class="sk-thread-so"><span>So</span>Lead with the job it unlocks.</p></div>
+                <div class="sk-thread"><svg class="sk-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg><p class="sk-thread-title">Learn by doing</p><p class="sk-thread-desc">On the job, YouTube, Reddit. Not school.</p><p class="sk-thread-so"><span>So</span>Short lessons, practice built in.</p></div>
+                <div class="sk-thread"><svg class="sk-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="19" r="2"/><path d="M12 17v-5M12 12 6 6M12 12l6-6M6 6v3M6 6h3M18 6v3M18 6h-3"/></svg><p class="sk-thread-title">“...then what?”</p><p class="sk-thread-desc">“Will finishing actually get me hired?”</p><p class="sk-thread-so"><span>So</span>Always show the next step.</p></div>
             </div>
 
-            <!-- <div class="sk-interviews">
-                <figure class="sk-interview">
-                    <blockquote>"Get the certification and land a job right away: quick, easy, and usable, so I can get back to work. The safety trainings I've done are archaic, boring videos you click through, not absorb."</blockquote>
-                    <figcaption>
-                        <span class="sk-interview-name">Sam Park</span>
-                        <span class="sk-interview-role">Multi-trade laborer · construction, road marking, warehousing</span>
-                    </figcaption>
-                </figure>
-                <figure class="sk-interview">
-                    <blockquote>"On-the-job experience can't be replaced by videos. When I'm stuck it's manuals first, then Reddit, but experience is what narrows a problem from 30 possible causes down to 3."</blockquote>
-                    <figcaption>
-                        <span class="sk-interview-name">Winson Chan</span>
-                        <span class="sk-interview-role">Fire alarm technician · 2.5 years in the field</span>
-                    </figcaption>
-                </figure>
-            </div> -->
+            </section>
 
-            <p class="sk-block-label">What I heard</p>
-            <div class="sk-threads">
-                <div class="sk-thread"><p class="sk-thread-num">01</p><p class="sk-thread-title">Outcome-driven</p><p class="sk-thread-desc">Get the cert, get the job, get the raise. Learning is a means to a paycheck and seniority, not points or streaks for their own sake.</p></div>
-                <div class="sk-thread"><p class="sk-thread-num">02</p><p class="sk-thread-title">Learn by doing</p><p class="sk-thread-desc">Skills come from the job, plus YouTube, manuals, Reddit, and a mentor. Formal school is slow and pricey, and "archaic" videos lose them fast.</p></div>
-                <div class="sk-thread"><p class="sk-thread-num">03</p><p class="sk-thread-title">"...then what?"</p><p class="sk-thread-desc">The loudest anxiety: does finishing the courses actually get me hired? The path from learning to resume to job isn't closed in their heads.</p></div>
+
+        <!-- ============================================================
+             04 — Journey Map
+             ============================================================ -->
+        <section id="journey" class="cs-section">
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Journey Map</h2>
+                <p class="sk-section-summary">I mapped an aspiring tradesperson from discovery to first job. The low point comes <strong>after the cert</strong>, in the job search, so the path has to reach <strong>the first job</strong>.</p>
             </div>
 
-            <!-- Competitive positioning — direct competitors cluster credible-but-dated,
-                 indirect ones modern-but-light; SkillCat targets the empty credible + modern quadrant. -->
-            <p class="sk-block-label">Where the market sits</p>
+            <div class="sk-jr-wrap">
+                <div class="sk-jr" style="--n:6">
+                    <div class="sk-jr-rowlabels" aria-hidden="true"><span>Stage</span><span>Doing</span><span>Feeling</span><span>Thinking</span><span>Breaks</span><span>Opportunity</span></div>
+                    <svg class="sk-jr-curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="8.33,50.00 25.00,50.00 41.67,25.00 58.33,75.00 75.00,100.00 91.67,0.00" vector-effect="non-scaling-stroke"/></svg>
+                    <ol class="sk-jr-stages" aria-label="Aspiring tradesperson journey">
+                        <li class="sk-jr-stage" style="--f:3"><span class="sk-jr-name">Discover</span><span class="sk-jr-do">Searches “HVAC training”, finds SkillCat</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">Is this legit?</span><span class="sk-jr-pain">Is it legit?</span><span class="sk-jr-opp">Prove it counts</span></li>
+                        <li class="sk-jr-stage" style="--f:3"><span class="sk-jr-name">Sign up</span><span class="sk-jr-do">Makes an account, answers setup questions</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">Why all the questions?</span><span class="sk-jr-pain">Questions first</span><span class="sk-jr-opp">Value first</span></li>
+                        <li class="sk-jr-stage" style="--f:4"><span class="sk-jr-name">First lesson</span><span class="sk-jr-do">Watches a short video on a break</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">OK, I can do this.</span><span class="sk-jr-pain">No clear next step</span><span class="sk-jr-opp">One path</span></li>
+                        <li class="sk-jr-stage" style="--f:2"><span class="sk-jr-name">First cert</span><span class="sk-jr-do">Books the EPA 608 exam</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">Where do I even test?</span><span class="sk-jr-pain">Exam logistics</span><span class="sk-jr-opp">Exam in the app</span></li>
+                        <li class="sk-jr-stage is-low" style="--f:1"><span class="sk-jr-name">Job search</span><span class="sk-jr-do">Applies to posting after posting</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">They all want experience.</span><span class="sk-jr-pain">No experience</span><span class="sk-jr-opp">Job-ready tools</span></li>
+                        <li class="sk-jr-stage" style="--f:5"><span class="sk-jr-name">First job</span><span class="sk-jr-do">Starts as an apprentice</span><span class="sk-jr-dot" aria-hidden="true"></span><span class="sk-jr-think">It actually paid off.</span><span class="sk-jr-pain">—</span><span class="sk-jr-opp">Share the win</span></li>
+                    </ol>
+                    <p class="sk-jr-takeaway"><span>Takeaway</span>The low point comes <em>after</em> the cert, so the path has to reach the first job.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             05 — Competitor Audit
+             ============================================================ -->
+        <section id="landscape" class="cs-section">
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Competitor Audit</h2>
+                <p class="sk-section-summary">I audited 7 trade schools and learning apps. Trade schools felt credible but dated; consumer apps felt modern but casual. <strong>None were both</strong>, and that's the gap SkillCat could fill.</p>
+            </div>
+
             <figure class="sk-posmap" aria-label="Competitor positioning map: credibility versus modernity">
                 <!-- Within each quadrant, --x (0–1) runs dated → modern and --y (0–1) runs credible → casual -->
                 <div class="sk-posmap-grid">
@@ -291,138 +335,88 @@
                 </figure>
             </div>
             </div>
-
-            <!-- <p class="sk-block-label">What the scan told me</p>
-            <ul class="sk-decisions">
-                <li><strong>Duolingo</strong> is playful and habit-forming, but too cartoony to feel credible for older trades users.</li>
-                <li><strong>Airbnb</strong> uses modern 3D illustration sparingly: warmth without noise, a model worth borrowing.</li>
-                <li>Trade-school brands skew corporate and dated: a clear opening for something modern and trustworthy.</li>
-                <li>Most edtech is light and gentle; the trades read as practical and high-contrast: a chance to look different and earned.</li>
-            </ul> -->
-
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="hn hn-sparkles sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <i class="hn hn-angle-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">AI sped up the groundwork: drafting <strong>research plans</strong>, generating early <strong>color, typography, and vibe directions</strong> to react against, and helping <strong>synthesize raw user findings</strong> into the threads above.</p>
-                </div>
-            </aside>
         </section>
 
 
         <!-- ============================================================
-             03 — Finding The Brand
+             06 — Target Users
+             ============================================================ -->
+        <section id="audiences" class="cs-section">
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Target Users</h2>
+                <p class="sk-section-summary">I designed for <strong>aspiring tradespeople</strong> first and <strong>working technicians</strong> second. Managers and team leads were out of scope for the learner app.</p>
+            </div>
+
+            <div class="sk-aud">
+                <figure class="sk-aud-card">
+                    <img src="assets/skillcat/research/audience-aspiring.jpg" alt="Apprentice in a hi-vis vest shadowing an HVAC technician" loading="lazy">
+                    <figcaption><span class="sk-aud-tag">Primary</span><span class="sk-aud-name">Aspiring tradespeople</span><span class="sk-aud-words"><span>First job</span><span>Career change</span><span>EPA 608</span></span></figcaption>
+                </figure>
+                <figure class="sk-aud-card">
+                    <img src="assets/skillcat/research/audience-technician.jpg" alt="HVAC technician reading manifold gauges at a condenser" loading="lazy">
+                    <figcaption><span class="sk-aud-tag">Secondary</span><span class="sk-aud-name">Working technicians</span><span class="sk-aud-words"><span>Between calls</span><span>CEUs</span><span>NATE</span></span></figcaption>
+                </figure>
+                <figure class="sk-aud-card sk-aud-card--muted">
+                    <img src="assets/skillcat/research/audience-manager.jpg" alt="Service manager at a dispatch board" loading="lazy">
+                    <figcaption><span class="sk-aud-tag">Out of scope · B2B</span><span class="sk-aud-name">Managers &amp; team leads</span><span class="sk-aud-words"><span>Crews</span><span>Compliance</span><span>Onboarding</span></span></figcaption>
+                </figure>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             07 — Prioritization
+             ============================================================ -->
+        <section id="priorities" class="cs-section">
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Prioritization</h2>
+                <p class="sk-section-summary">I ranked every opportunity by <strong>impact and effort</strong>. Quick wins like accreditation up front came first; the social feed and simulations tab were <strong>cut</strong>.</p>
+            </div>
+
+            <div class="sk-matrix" aria-label="Opportunity matrix: impact versus effort">
+                <div class="sk-matrix-q sk-matrix-q--win"><p class="sk-matrix-title">Quick wins</p><ul><li>Accreditation up front</li><li>Certs one tap away</li><li>One clear next step</li><li>Practice exams</li></ul></div>
+                <div class="sk-matrix-q sk-matrix-q--bet"><p class="sk-matrix-title">Big bets</p><ul><li>Path-first navigation</li><li>Proctored exams in-app</li><li>Job-ready tools</li></ul></div>
+                <div class="sk-matrix-q"><p class="sk-matrix-title">Fill-ins</p><ul><li>Study reminders</li></ul></div>
+                <div class="sk-matrix-q sk-matrix-q--pit"><p class="sk-matrix-title">Cut</p><ul><li class="is-cut">Social feed</li><li class="is-cut">Simulations tab</li></ul></div>
+                <span class="sk-matrix-axis sk-matrix-axis--y">Impact ↑</span>
+                <span class="sk-matrix-axis sk-matrix-axis--x">Effort →</span>
+            </div>
+        </section>
+
+
+        
+
+
+
+
+        <!-- ============================================================
+             08 — Brand Identity (Mobile V1)
              ============================================================ -->
         <section id="brand" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">03 · Finding The Brand</p>
-                <h2 class="sk-section-title">Three brand <em>directions</em> explored</h2>
+            <div class="sk-section-head sk-section-head--split">
+                <!-- <h2 class="sk-section-title">Brand Identity</h2> -->
+                <!-- <p class="sk-section-summary">I built an <strong>industrial brand</strong> drawn from trade equipment: Flame orange, graphite and gunmetal neutrals, <strong>Fira Sans with IBM Plex Mono</strong>, and a gold finish for earned certificates.</p>
+            -->
             </div>
 
-            <!-- <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>Three directions: bright and playful, light and corporate, dark and industrial. The bright one felt too casual; the corporate one blended in. The dark <strong> + safety-orange</strong> system felt practical and ownable, closer to the gear and worksites the audience already trusts.</p>
-                </div>
-            </div> -->
-
-            <div class="sk-brand-options">
-                <figure class="sk-brand-option sk-brand-option--muted">
-                    <div class="sk-brand-frame"><img src="assets/skillcat/process/brand1.jpg" alt="Brand exploration — direction 1" loading="lazy"></div>
-                    <figcaption class="sk-brand-cap">Direction 01</figcaption>
-                </figure>
-                <figure class="sk-brand-option sk-brand-option--muted">
-                    <div class="sk-brand-frame"><img src="assets/skillcat/process/brand2.jpg" alt="Brand exploration — direction 2" loading="lazy"></div>
-                    <figcaption class="sk-brand-cap">Direction 02</figcaption>
-                </figure>
-                <figure class="sk-brand-option sk-brand-option--picked">
-                    <div class="sk-brand-frame">
-                        <img src="assets/skillcat/process/brand3.jpg" alt="Brand exploration — direction 3, the chosen dark navy + orange system" loading="lazy">
+            <div class="sk-bk">
+                <div class="sk-bk-tile sk-bk-type">
+                    <div>
+                        <p class="sk-bk-title">Train like a Pro.</p>
+                        <!-- <p class="sk-bk-tag">EPA · OSHA · NATE &amp; More</p> -->
                     </div>
-                    <figcaption class="sk-brand-cap">Direction 03 · Chosen</figcaption>
-                </figure>
-            </div>
-
-            <p class="sk-block-label">The chosen system</p>
-            <div class="sk-swatches">
-                <div class="sk-swatch">
-                    <div class="sk-swatch-chip" style="background:#F05523"></div>
-                    <span class="sk-swatch-name">Primary</span>
-                    <span class="sk-swatch-hex">#F05523</span>
+                    <p class="sk-bk-fonts"><span>Fira Sans</span><span class="sk-bk-x">×</span><span class="is-mono">IBM Plex Mono</span></p>
                 </div>
-                <div class="sk-swatch">
-                    <div class="sk-swatch-chip" style="background: linear-gradient(180deg, #F05523 0%, #8A3114 100%);"></div>
-                    <span class="sk-swatch-name">Primary Gradient</span>
-                    <span class="sk-swatch-hex">#F05523 → #8A3114</span>
+                <div class="sk-bk-tile sk-bk-mark">
+                    <video src="assets/Motion/skillcat-badge-flip.mp4" poster="assets/skillcat/poster-badge-flip.jpg" autoplay muted loop playsinline preload="metadata" aria-label="The SkillCat metal badge flips in and lights up orange"></video>
                 </div>
-                <div class="sk-swatch">
-                    <div class="sk-swatch-chip" style="background: linear-gradient(180deg, #0D0D0D 0%, #A8A8A8 100%);"></div>
-                    <span class="sk-swatch-name">Background Gradient</span>
-                    <span class="sk-swatch-hex">#0D0D0D → #A8A8A8</span>
+                <div class="sk-bk-tile sk-bk-motion">
+                    <video src="assets/Motion/SkillCat%20Certificate%20Spin.mp4" poster="assets/skillcat/poster-cert-spin.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Certificate earned animation: the EPA 608 card spins"></video>
                 </div>
-                <div class="sk-swatch">
-                    <div class="sk-swatch-chip" style="background:#A8A8A8"></div>
-                    <span class="sk-swatch-name">Neutral</span>
-                    <span class="sk-swatch-hex">#A8A8A8</span>
+                <div class="sk-bk-tile sk-bk-color" role="img" aria-label="Palette: Flame #F05523 for action; neutrals Coal, Graphite, Iron, Fog and White">
+                    <span class="sk-band" style="background:#0D0D0D"><em>Coal</em><b>#0D0D0D</b></span><span class="sk-band" style="background:#484747"><em>Graphite</em><b>#484747</b></span><span class="sk-band" style="background:#737373"><em>Iron</em><b>#737373</b></span><span class="sk-band is-light" style="background:#A8A8A8"><em>Fog</em><b>#A8A8A8</b></span><span class="sk-band is-light" style="background:#FFFFFF"><em>White</em><b>#FFFFFF</b></span>
+                    <span class="sk-band is-flame"><em>Flame</em><b>#F05523</b></span>
                 </div>
-                <div class="sk-swatch">
-                    <div class="sk-swatch-chip" style="background:#7A7A7A"></div>
-                    <span class="sk-swatch-name">Neutral</span>
-                    <span class="sk-swatch-hex">#7A7A7A</span>
-                </div>
-                <div class="sk-swatch">
-                    <div class="sk-swatch-chip" style="background:#404040"></div>
-                    <span class="sk-swatch-name">Neutral</span>
-                    <span class="sk-swatch-hex">#404040</span>
-                </div>
-            </div>
-
-            <div class="sk-typescale">
-                <div class="sk-type-row">
-                    <p class="sk-type-meta">Display · Fira Sans</p>
-                    <p class="sk-type-display"> SkillCat, An all-in-one HVAC learning platform.</p>
-                </div>
-                <div class="sk-type-row">
-                    <p class="sk-type-meta">Body · IBM Plex Mono</p>
-                    <p class="sk-type-body">For $10/month- Access Self-Paced Trade School Programs & Certifications designed to get you job-ready in just a few weeks </p>
-                </div>
-            </div>
-
-            <!-- <p class="sk-block-label">Voice</p>
-            <div class="sk-steps">
-                <div class="sk-step"><p class="sk-step-num">01</p><p class="sk-step-title">Practical &amp; direct</p><p class="sk-step-desc">Say the next thing to do, plainly. No fluff between the learner and the goal.</p></div>
-                <div class="sk-step"><p class="sk-step-num">02</p><p class="sk-step-title">Speaks the trade</p><p class="sk-step-desc">Uses the field's own language so it reads as built by people who get it.</p></div>
-                <div class="sk-step"><p class="sk-step-num">03</p><p class="sk-step-title">Encouraging, not childish</p><p class="sk-step-desc">Celebrates real progress toward a paycheck — without cartoon mascots.</p></div>
-            </div> -->
-
-            <p class="sk-block-label">Badge — six iterations</p>
-            <div class="sk-badges">
-                <figure class="sk-badge">
-                    <div class="sk-badge-chip"><img src="assets/skillcat/badges/1st.svg" alt="Badge iteration 1" loading="lazy"></div>
-                    <figcaption class="sk-badge-cap">01</figcaption>
-                </figure>
-                <figure class="sk-badge">
-                    <div class="sk-badge-chip"><img src="assets/skillcat/badges/2nd.svg" alt="Badge iteration 2" loading="lazy"></div>
-                    <figcaption class="sk-badge-cap">02</figcaption>
-                </figure>
-                <figure class="sk-badge">
-                    <div class="sk-badge-chip"><img src="assets/skillcat/badges/3rd.svg" alt="Badge iteration 3" loading="lazy"></div>
-                    <figcaption class="sk-badge-cap">03</figcaption>
-                </figure>
-                <figure class="sk-badge">
-                    <div class="sk-badge-chip"><img src="assets/skillcat/badges/4th.svg" alt="Badge iteration 4" loading="lazy"></div>
-                    <figcaption class="sk-badge-cap">04</figcaption>
-                </figure>
-                <figure class="sk-badge">
-                    <div class="sk-badge-chip"><img src="assets/skillcat/badges/5th.svg" alt="Badge iteration 5" loading="lazy"></div>
-                    <figcaption class="sk-badge-cap">05</figcaption>
-                </figure>
-                <figure class="sk-badge sk-badge--final">
-                    <div class="sk-badge-chip"><img src="assets/skillcat/badges/6th.svg" alt="Badge iteration 6 — the final badge" loading="lazy"></div>
-                    <figcaption class="sk-badge-cap">06 · Final</figcaption>
-                </figure>
             </div>
         </section>
 
@@ -509,35 +503,16 @@
 
 
         <!-- ============================================================
-             04 — Iterating The Experience
+             09 — Design Iterations
              ============================================================ -->
         <section id="iterations" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">04 · Iterating The Experience</p>
-                <h2 class="sk-section-title">4 main <em>iterations</em>: what changed at every step.</h2>
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Design Iterations</h2>
+                <p class="sk-section-summary">Each core screen went through <strong>up to 4 rounds</strong>. Switch between versions to see what changed at every step.</p>
             </div>
 
 
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>Onboarding shifted from a form-first signup to a few guided questions that build a personalized path. Home shifted from a flat catalog to a clear "path to a paycheck." Each round cut friction and made the next action harder to miss.</p>
-                </div>
-            </div>
 
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="hn hn-sparkles sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <span class="sk-ai-note-tools">
-                        <img src="assets/skillcat/ai-logos/claude.svg" alt="Claude" title="Claude" loading="lazy">
-                        <img src="assets/skillcat/ai-logos/recraft.png" alt="ReCraft" title="ReCraft" loading="lazy">
-                    </span>
-                    <i class="hn hn-angle-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">In the design phase I used various AI tools as a sparring partner: generating <strong>badge concepts</strong> with ReCraft and <strong>alternate starting layouts with Claude Design </strong> to choose from, then <strong>auditing my own screens</strong> for inconsistencies before committing to a direction.</p>
-                </div>
-            </aside>
 
             <!-- <div class="sk-beforeafter">
                 <div class="sk-ba-card sk-ba-before">
@@ -630,6 +605,7 @@
                 </div>
             </div>
 
+            <!-- Hidden: Course overview flow
             <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--reverse">
                 <div class="sk-feature-info">
                     <h3 class="sk-feature-screen-title">Course overview</h3>
@@ -696,7 +672,9 @@
                     </div>
                 </div>
             </div>
+            -->
 
+            <!-- Hidden: Portfolio flow
             <div class="sk-feature-switch sk-feature-switch--versions">
                 <div class="sk-feature-info">
                     <h3 class="sk-feature-screen-title">Portfolio</h3>
@@ -745,6 +723,7 @@
                     </div>
                 </div>
             </div>
+            -->
 
             <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--reverse">
                 <div class="sk-feature-info">
@@ -847,6 +826,7 @@
                 </div>
             </div>
 
+            <!-- Hidden: Task Completion flow
             <div class="sk-feature-switch sk-feature-switch--versions">
                 <div class="sk-feature-info">
                     <h3 class="sk-feature-screen-title">Task Completion</h3>
@@ -896,180 +876,18 @@
                     </div>
                 </div>
             </div>
+            -->
 
         </section>
 
 
         <!-- ============================================================
-             05 — Testing & Insights
-             ============================================================ -->
-        <section id="testing" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">05 · Testing &amp; Insights</p>
-                <h2 class="sk-section-title">Heat Map Testing: <em>7 participants, 3 flows</em>, and one clear weak point.</h2>
-            </div>
-
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>An unmoderated Maze study, 7 participants, three core flows: Create Account, Start Course, Edit Path. Starting a course landed cleanly. Editing the path broke down.</p>
-                </div>
-            </div>
-
-            <!-- Details collapsed by default; the button expands the heatmaps, insights and fixes -->
-            <button class="sk-collapse-toggle" type="button" aria-expanded="false" aria-controls="testing-details">
-                <span class="sk-collapse-label">View testing details</span>
-                <i class="hn hn-angle-down sk-collapse-caret" aria-hidden="true"></i>
-            </button>
-
-            <div class="sk-collapse" id="testing-details">
-            <div class="sk-collapse-inner" inert>
-
-            <!-- Per-flow tabs: each card is a tab. Click one to swap the heatmap panel below.
-                 Default: Flow 01 (Create Account) so the case study reads in flow order. -->
-            <!-- <div class="sk-flow-results" role="tablist" aria-label="Testing flows">
-                <button type="button" class="sk-flow-result is-active" role="tab" data-flow="1" aria-selected="true" aria-controls="flow-panel-1" id="flow-tab-1" tabindex="0">
-                    <p class="sk-flow-result-tag">Flow 01 · Create Account</p>
-                    <div class="sk-flow-result-bars">
-                        <div class="sk-flow-bar"><span class="sk-flow-bar-label">Success</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill" style="width:71.4%"></div></div><span class="sk-flow-bar-num">71.4%</span></div>
-                        <div class="sk-flow-bar"><span class="sk-flow-bar-label">Mis-click</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill sk-flow-bar-fill--miss" style="width:26.6%"></div></div><span class="sk-flow-bar-num">26.6%</span></div>
-                    </div>
-                </button>
-                <button type="button" class="sk-flow-result" role="tab" data-flow="2" aria-selected="false" aria-controls="flow-panel-2" id="flow-tab-2" tabindex="-1">
-                    <p class="sk-flow-result-tag">Flow 02 · Start Course</p>
-                    <div class="sk-flow-result-bars">
-                        <div class="sk-flow-bar"><span class="sk-flow-bar-label">Success</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill" style="width:100%"></div></div><span class="sk-flow-bar-num">100%</span></div>
-                        <div class="sk-flow-bar"><span class="sk-flow-bar-label">Mis-click</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill sk-flow-bar-fill--miss" style="width:78%"></div></div><span class="sk-flow-bar-num">78%</span></div>
-                    </div>
-                </button>
-                <button type="button" class="sk-flow-result" role="tab" data-flow="3" aria-selected="false" aria-controls="flow-panel-3" id="flow-tab-3" tabindex="-1">
-                    <p class="sk-flow-result-tag">Flow 03 · Edit Path</p>
-                    <div class="sk-flow-result-bars">
-                        <div class="sk-flow-bar"><span class="sk-flow-bar-label">Success</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill" style="width:33.3%"></div></div><span class="sk-flow-bar-num">33.3%</span></div>
-                        <div class="sk-flow-bar"><span class="sk-flow-bar-label">Mis-click</span><div class="sk-flow-bar-track"><div class="sk-flow-bar-fill sk-flow-bar-fill--miss" style="width:64.9%"></div></div><span class="sk-flow-bar-num">64.9%</span></div>
-                    </div>
-                </button>
-            </div> -->
-
-            <!-- One panel visible at a time, swapped by the tab click above. -->
-            <div class="sk-flow-panels">
-
-                <!-- Flow 01: three heatmaps tracing the registration journey —
-                     splash → onboarding question → free trial. Clicks land on the
-                     intended CTA at each step. -->
-                <div class="sk-flow-panel is-active" role="tabpanel" id="flow-panel-1" aria-labelledby="flow-tab-1" data-flow="1">
-                    <div class="sk-heat-grid sk-heat-grid--3">
-                        <figure class="sk-heat">
-                            <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow1-splash.png" alt="Splash heatmap — clicks land on Get Started" loading="lazy"></div>
-                            <!-- <figcaption>Splash → clicks land on <em>Get Started</em>. The entry point reads.</figcaption> -->
-                        </figure>
-                        <figure class="sk-heat">
-                            <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow1-goal.png" alt="Goal question heatmap — clicks land on the first trade option and Continue" loading="lazy"></div>
-                            <!-- <figcaption>Goal question → users pick "Looking for my first trades job" and hit <em>Continue</em>.</figcaption> -->
-                        </figure>
-                        <figure class="sk-heat">
-                            <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow1-trial.png" alt="Free Trial heatmap — clicks scan included items, then hit Continue with Free Trial" loading="lazy"></div>
-                            <!-- <figcaption>Free Trial → users scan what's included, then commit on <em>Continue with Free Trial</em>.</figcaption> -->
-                        </figure>
-                    </div>
-                </div>
-
-                <!-- Flow 02 (default visible): success heatmaps -->
-                <div class="sk-flow-panel" role="tabpanel" id="flow-panel-2" aria-labelledby="flow-tab-2" data-flow="2" hidden>
-                    <div class="sk-heat-grid">
-                        <figure class="sk-heat">
-                            <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow2-home-success.png" alt="Home heatmap — clicks land on the Start Learning card" loading="lazy"></div>
-                            <figcaption>Home → clicks land on the "Start Learning" card, exactly where the next step lives.</figcaption>
-                        </figure>
-                        <figure class="sk-heat">
-                            <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow2-tree-success.png" alt="Path tree heatmap — clicks land on Introduction and the next node" loading="lazy"></div>
-                            <figcaption>Path tree → clicks step from <em>Introduction</em> to the next node: the path reads as intended.</figcaption>
-                        </figure>
-                    </div>
-                </div>
-
-                <!-- Flow 03: confusion heatmaps -->
-                <div class="sk-flow-panel" role="tabpanel" id="flow-panel-3" aria-labelledby="flow-tab-3" data-flow="3" hidden>
-                    <div class="sk-heat-grid">
-                        <figure class="sk-heat">
-                            <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow3-edit-corners.png" alt="Path heatmap — clicks scattered across the top corners hunting for an edit affordance" loading="lazy"></div>
-                            <figcaption>Path → clicks scatter across the top corners and stops: users hunting for an edit affordance that wasn't there.</figcaption>
-                        </figure>
-                        <figure class="sk-heat">
-                            <div class="sk-heat-frame"><img src="assets/skillcat/process/testing/flow3-edit-misclick.png" alt="Edit Path heatmap — users tap a course card instead of using hold-and-drag" loading="lazy"></div>
-                            <figcaption>Edit Path → users tap course cards before discovering hold-and-drag. The affordance was hidden.</figcaption>
-                        </figure>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Insights — what the heatmaps surfaced -->
-            <p class="sk-block-label">Insights</p>
-            <div class="sk-rails">
-                <div class="sk-rail">
-                    <i class="hn hn-question sk-rail-icon" aria-hidden="true"></i>
-                    <h3 class="sk-rail-title">Tree-map nav isn't intuitive</h3>
-                    <p class="sk-rail-body">Users weren't sure where to start, or how to preview a path before committing to it.</p>
-                </div>
-                <div class="sk-rail">
-                    <i class="hn hn-shuffle sk-rail-icon" aria-hidden="true"></i>
-                    <h3 class="sk-rail-title">They click everywhere but the path</h3>
-                    <p class="sk-rail-body">Most users hit the nav bar or home course cards before they ever found the path module.</p>
-                </div>
-                <div class="sk-rail">
-                    <i class="hn hn-refresh sk-rail-icon" aria-hidden="true"></i>
-                    <h3 class="sk-rail-title">Mobile stalled at Edit Path</h3>
-                    <p class="sk-rail-body">Path flows froze and reloaded on mobile. A Maze prototype flaw, but it cost real frustration.</p>
-                </div>
-                <div class="sk-rail">
-                    <i class="hn hn-octagon-times sk-rail-icon" aria-hidden="true"></i>
-                    <h3 class="sk-rail-title">Swipe-to-remove stayed hidden</h3>
-                    <p class="sk-rail-body">Some users tapped path cards over and over before discovering the swipe-to-delete gesture.</p>
-                </div>
-            </div>
-
-            <!-- Potential fixes -->
-            <p class="sk-block-label">Potential fixes</p>
-            <div class="sk-rails">
-                <div class="sk-rail">
-                    <i class="hn hn-notebook sk-rail-icon" aria-hidden="true"></i>
-                    <h3 class="sk-rail-title">Teach the path on arrival</h3>
-                    <p class="sk-rail-body">A short first-run walkthrough of the tree map, so the structure clicks before users dive in.</p>
-                </div>
-                <div class="sk-rail">
-                    <i class="hn hn-arrow-right sk-rail-icon" aria-hidden="true"></i>
-                    <h3 class="sk-rail-title">Strengthen the first step</h3>
-                    <p class="sk-rail-body">Boost the CTA on the first course module so the starting point is impossible to miss.</p>
-                </div>
-            </div>
-
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="hn hn-sparkles sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <span class="sk-ai-note-tools">
-                        <img src="assets/skillcat/ai-logos/claude.svg" alt="Claude Code" title="Claude Code" loading="lazy">
-                        <img src="assets/skillcat/ai-logos/cursor.svg" alt="Cursor" title="Cursor" loading="lazy">
-                        <img src="assets/skillcat/ai-logos/chatgpt.svg" alt="Codex" title="Codex" loading="lazy">
-                    </span>
-                    <i class="hn hn-angle-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">I used Claude Code, Cursor and Codex to <strong>convert the Figma designs into fully functional prototypes</strong> to test without needing engineering support, and to analyze the heatmap results.</p>
-                </div>
-            </aside>
-            </div>
-            </div>
-        </section>
-
-
-        <!-- ============================================================
-             06 — The Learner Redesign
+             10 — Final Learner Flows
              ============================================================ -->
         <section id="learner" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">06 · The Learner Redesign</p>
-                <h2 class="sk-section-title">Carry a learner from <em>adding a course</em> to earning an EPA 608 certification.</h2>
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Final Learner Flows</h2>
+                <p class="sk-section-summary">Five flows carry a learner from <strong>adding a course</strong> to <strong>earning an EPA 608 certification</strong>.</p>
             </div>
 
             <!-- The journey in five flows, side by side; clips autoplay while the row is on screen -->
@@ -1125,9 +943,9 @@
              before the case study moves on to the B2B admin dashboard.
              ============================================================ -->
         <section id="comparison" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">Before &amp; After</p>
-                <h2 class="sk-section-title">Full <em>redesigned</em> comparsion</h2>
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Before &amp; After</h2>
+                <p class="sk-section-summary">The original app next to the redesign, <strong>screen for screen</strong>.</p>
             </div>
 
             <figure class="sk-compare" data-pos="50">
@@ -1177,24 +995,23 @@
              Section 2 — The Admin Dashboard
              ============================================================ -->
         <section id="dashboard" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">07 · The Admin Dashboard</p>
-                <h2 class="sk-section-title">Valuable insights for <em>admins</em> too</h2>
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Admin Dashboard</h2>
+                <p class="sk-section-summary">The employer side, in brief: a dashboard where managers <strong>track team training</strong>, approve hands-on work, and manage their people.</p>
             </div>
 
-            <!-- <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>Employers use SkillCat to train their teams. Admins need to assign training to multiple people and track completion — but the existing flow treated everything as flat, one-off selections, which broke down against how training actually works.</p>
-                </div>
-            </div> -->
 
-            <div class="cs-two-col">
-                <div class="cs-content">
-                    <p>I helped redesign the employer side as a full dashboard for running training across a team. Assigning courses was reframed from a flat list into a structured plan: pick employees, stack courses in order, set a due date on each.</p>
-                </div>
-            </div>
+            <!-- Dashboard work collapsed by default to keep the focus on the B2C learner app -->
+            <button class="sk-collapse-toggle" type="button" aria-expanded="false" aria-controls="dashboard-details">
+                <span class="sk-collapse-label">View the admin dashboard work</span>
+                <i class="hn hn-angle-down sk-collapse-caret" aria-hidden="true"></i>
+            </button>
+
+            <div class="sk-collapse" id="dashboard-details">
+            <div class="sk-collapse-inner" inert>
 
             <!-- Per-screen version iterations: Home, Inbox, People -->
+            <!-- <p class="sk-block-label">Iterations</p> -->
             <div class="sk-dash-iterations">
             <!-- HOME — V1 was the old Dashboard; V2 is the redesigned Home -->
             <div class="sk-feature-switch sk-feature-switch--versions sk-feature-switch--versions-desk">
@@ -1296,29 +1113,20 @@
                 </div>
             </div>
             </div>
-        </section>
 
-
-        <!-- ============================================================
-             08 — The Dashboard, Feature by Feature (final walkthroughs)
-             ============================================================ -->
-        <section id="dashboard-features" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">08 · Feature by Feature</p>
-                <h2 class="sk-section-title">Team summary to <em>grading</em> the work.</h2>
-            </div>
-            
+            <!-- Final walkthroughs, feature by feature -->
+            <!-- <p class="sk-block-label" id="dashboard-features">Feature by feature · team summary to grading the work</p> -->
             <div class="sk-feature-switch sk-feature-switch--wide">
                 <!-- Top: feature tabs -->
                 <div class="sk-feature-list" role="tablist" aria-label="Admin dashboard features">
                     <button class="sk-feature-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="admin-panel-2" id="admin-tab-2" data-flow="2">
-                        <span class="sk-feature-btn-num">01</span><span class="sk-feature-btn-title">Check progress across date ranges</span>
+                        <span class="sk-feature-btn-title">Check progress across date ranges</span>
                     </button>
                     <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-4" id="admin-tab-4" data-flow="4">
-                        <span class="sk-feature-btn-num">02</span><span class="sk-feature-btn-title">Filter the team &amp; open a profile</span>
+                        <span class="sk-feature-btn-title">Filter the team &amp; open a profile</span>
                     </button>
                     <button class="sk-feature-btn" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-3" id="admin-tab-3" data-flow="3">
-                        <span class="sk-feature-btn-num">03</span><span class="sk-feature-btn-title">Review &amp; approve a hands-on project</span>
+                        <span class="sk-feature-btn-title">Review &amp; approve a hands-on project</span>
                     </button>
                 </div>
 
@@ -1375,6 +1183,8 @@
                 </div>
             </div>
 
+            </div>
+            </div>
         </section>
 
 
@@ -1416,31 +1226,19 @@
         </section> -->
 
         <!-- ============================================================
-             09 — Reflection (closes the case study)
+             12 — Reflection (closes the case study)
              ============================================================ -->
         <section id="reflection" class="cs-section">
-            <div class="sk-section-head">
-                <p class="cs-label">09 · Reflection</p>
+            <div class="sk-section-head sk-section-head--split">
+                <h2 class="sk-section-title">Reflection</h2>
             </div>
 
-            <div class="sk-threads sk-threads--two">
-                <div class="sk-thread"><p class="sk-thread-num">01</p><p class="sk-thread-title">A design is never done</p><p class="sk-thread-desc">Several times we thought we had the final iteration, then testing with more users surfaced new ways to improve. I learned to treat iteration as continuous and never settle on a design as finished.</p></div>
-                <div class="sk-thread"><p class="sk-thread-num">02</p><p class="sk-thread-title">Designing and coding at the same time</p><p class="sk-thread-desc">Prototyping in code while designing often showed me a screen was too complex to build, or that transitional screens were missing entirely, since our visual designer focused on the core screens. Raising these with the team before engineering handoff headed off problems and sped up the product lifecycle.</p></div>
+            <div class="sk-threads">
+                <div class="sk-thread"><p class="sk-thread-num">01</p><p class="sk-thread-title">Decide on evidence, and say how sure you are</p></div>
+                <div class="sk-thread"><p class="sk-thread-num">02</p><p class="sk-thread-title">A design is never done</p></div>
+                <div class="sk-thread"><p class="sk-thread-num">03</p><p class="sk-thread-title">Designing and coding at the same time</p></div>
             </div>
 
-            <aside class="sk-ai-note">
-                <button class="sk-ai-note-toggle" type="button" aria-expanded="false">
-                    <i class="hn hn-sparkles sk-ai-note-mark" aria-hidden="true"></i>
-                    <span class="sk-ai-note-label">AI in the process</span>
-                    <span class="sk-ai-note-tools">
-                        <img src="assets/skillcat/ai-logos/claude.svg" alt="Claude" title="Claude" loading="lazy">
-                    </span>
-                    <i class="hn hn-angle-right sk-ai-note-caret" aria-hidden="true"></i>
-                </button>
-                <div class="sk-ai-note-reveal">
-                    <p class="sk-ai-note-body">When writing specs, I had Claude <strong>audit my revisions</strong>, catching <strong>missing references and edge-case states</strong> (empty, error, fail-retry) before anything reached engineering handoff.</p>
-                </div>
-            </aside>
 
             <!-- <p class="sk-block-label">What this case study shows about how I work</p>
             <ul class="sk-decisions">

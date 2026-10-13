@@ -705,3 +705,52 @@
         }, { threshold: 0.25 }).observe(row);
     });
 })();
+
+
+// ============================================
+// Texting showcase — fills the background wall with anonymized threads
+// (script lines from the real texting flows, replies redacted) and plays
+// the phone thread once it scrolls into view.
+// ============================================
+(function () {
+    var sms = document.querySelector('.sk-sms');
+    if (!sms) return;
+
+    // Script lines from the real texting flows, each paired with a reply.
+    // PLACEHOLDER replies: swap in real (anonymized) replies from the study.
+    var pairs = [
+        ['👋 Hi, this is Jonathan from SkillCat! How’s your first experience with the app so far?', 'pretty good so far, the videos are short so i watch on lunch'],
+        ['Hey, it’s Jonathan from SkillCat, quick check-in: are you here to land your first HVAC job or just to pass a certification?', 'first job, switching careers'],
+        ['Have you run into any roadblocks or frustrations yet?', 'the pressure temp charts are confusing'],
+        ['If we made one thing this week, what would be the most helpful?', 'a list of companies that hire helpers'],
+        ['What’s been the hardest part about that?', 'so many job titles, idk which ones i qualify for'],
+        ['Got it, which certifications are you aiming for right now?', 'EPA 608 universal'],
+        ['Are you getting stuck anywhere in the process?', 'applied to like 20 places and heard nothing'],
+        ['And do you have any blockers right now?', 'how much is the real exam?']
+    ];
+
+    sms.querySelectorAll('.sk-sms-row').forEach(function (row, r) {
+        var html = '';
+        for (var k = 0; k < 9; k++) {
+            var n = (r * 9 + k) * 13 % 420 + 1;
+            var day = (r * 5 + k * 3) % 14 + 1;
+            var nameW = 70 + (n * 29) % 60;
+            var pair = pairs[(r * 3 + k) % pairs.length];
+            html += '<div class="sk-mini">' +
+                '<p class="sk-mini-head"><span class="sk-redact-name" style="--w:' + nameW + 'px"></span><span>Day ' + day + '</span></p>' +
+                '<p class="sk-mini-me">' + pair[0] + '</p>' +
+                '<p class="sk-mini-them">' + pair[1] + '</p>' +
+                '</div>';
+        }
+        // duplicated so the marquee loops seamlessly at -50%
+        row.innerHTML = '<div class="sk-sms-track">' + html + html + '</div>';
+    });
+
+    if (!('IntersectionObserver' in window)) { sms.classList.add('is-live'); return; }
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+            if (e.isIntersecting) { sms.classList.add('is-live'); io.disconnect(); }
+        });
+    }, { threshold: 0.35 });
+    io.observe(sms);
+})();
