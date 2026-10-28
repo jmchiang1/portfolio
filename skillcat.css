@@ -2214,6 +2214,25 @@ button,
     /* max-width: 72ch; */
 }
 
+/* Brand film — full-width 16:9 player closing the brand section. */
+.sk-film {
+    margin: 0;
+}
+
+.sk-film video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    border: 1px solid var(--sk-border);
+    background: #000;
+    object-fit: cover;
+}
+
+.sk-film .sk-caption {
+    margin: 12px 0 0;
+}
+
 /* Competitor positioning map — a 2×2 whose 1px grid gap draws the crosshair.
    Axis labels sit on the ends of the axes; the empty credible + modern
    quadrant is SkillCat's target. */
