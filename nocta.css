@@ -1907,7 +1907,6 @@ body::before {
     font-size: var(--text-16);
     line-height: 1.72;
     color: var(--nx-fg-2);
-    max-width: 46ch;
 }
 
 .nx-feature-body+.nx-feature-body {
@@ -2110,7 +2109,9 @@ body::before {
     background: rgba(243, 168, 124, 0.14);
     border: 0.0625rem solid var(--nx-peach);
     transform: translateX(calc(var(--i) * 100%));
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nx-iter-btn {
@@ -2181,12 +2182,7 @@ body::before {
     .nx-iter-view .nx-device { width: calc((100% - 1rem) / 2); }
 }
 
-.nx-iter-view .nx-device:hover {
-    transform: translateY(-0.5rem);
-    border-color: var(--nx-peach);
-    box-shadow: 0 0 0 0.0625rem var(--nx-peach),
-        0 0 2.625rem -0.5rem rgba(243, 168, 124, 0.4);
-}
+/* the version screens are pictures, not buttons: no hover (2026-11-05) */
 
 /* hidden → shown (display:none → flex) restarts this, so the phones stagger
    in each time you switch versions */
@@ -4431,12 +4427,6 @@ body::before {
     background: var(--nx-surface);
 }
 
-.nx-band-cell:last-child {
-    border: 0.0625rem solid rgba(243, 168, 124, 0.28);
-    background:
-        radial-gradient(110% 130% at 50% 0%, rgba(243, 168, 124, 0.1), transparent 62%),
-        var(--nx-surface);
-}
 
 .nx-band-title {
     font-family: var(--nx-serif);
@@ -4602,4 +4592,1200 @@ body::before {
     font-size: var(--text-12);
     letter-spacing: 0.04em;
     color: var(--nx-fg-3);
+}
+
+
+/* ===========================================================================
+   2026-11-05: logo row of three, a flat palette, sketch tiles, beta feedback
+   =========================================================================== */
+.nx-evo.is-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 640px) {
+    .nx-evo.is-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* the palette as one row of swatches, so its card is no taller than Type */
+.nx-palette-list.is-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+}
+
+.nx-palette-list.is-row li,
+.nx-palette-list.is-row li:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.375rem;
+    padding: 0;
+    border-bottom: none;
+    min-width: 0;
+}
+
+.nx-palette-list.is-row i {
+    width: 1.375rem;
+    height: 1.375rem;
+}
+
+@media (max-width: 640px) {
+    .nx-palette-list.is-row {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 1.125rem;
+    }
+    .nx-palette-list.is-row li {
+        grid-template-columns: none;
+    }
+}
+
+/* V0: the paper sketches as even tiles, each whole inside its frame, no edge */
+.nx-iter-view .nx-device.is-sketch {
+    border: 0;
+    aspect-ratio: 4 / 5;
+    align-self: stretch;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    background: var(--nx-surface);
+}
+
+.nx-iter-view .nx-device.is-sketch img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ---- beta: what people said ---- */
+.nx-quotes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.125rem;
+}
+
+.nx-quote {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.875rem;
+    border-radius: 1.125rem;
+    background: var(--nx-surface);
+    border-left: 0.1875rem solid var(--nx-line);
+}
+
+.nx-quote.is-warm {
+    border-left-color: var(--nx-peach);
+}
+
+.nx-quote.is-cold {
+    border-left-color: rgba(255, 255, 255, 0.28);
+}
+
+.nx-quote blockquote {
+    margin: 0;
+    font-family: var(--nx-serif);
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    line-height: 1.4;
+    color: var(--nx-fg);
+}
+
+.nx-quote figcaption {
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.08em;
+    color: var(--nx-fg-3);
+}
+
+@media (max-width: 900px) {
+    .nx-quotes {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- beta: what I heard → what shipped ---- */
+.nx-heard {
+    display: flex;
+    flex-direction: column;
+    background: var(--nx-surface);
+    border-radius: 1.125rem;
+    padding: 1.75rem 1.875rem 0.5rem;
+}
+
+.nx-heard .nx-comp-label {
+    margin-bottom: 0.5rem;
+}
+
+.nx-heard-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5rem 1.35fr;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.375rem 0;
+    border-top: 0.0625rem solid var(--nx-line);
+}
+
+.nx-heard-q {
+    font-family: var(--nx-serif);
+    font-style: italic;
+    font-size: var(--text-16);
+    line-height: 1.55;
+    color: var(--nx-fg-2);
+}
+
+.nx-heard-arrow {
+    color: var(--nx-peach);
+    font-size: var(--text-18);
+    margin-top: 0.125rem;
+}
+
+.nx-heard-a p {
+    font-size: var(--text-15);
+    line-height: 1.6;
+    color: var(--nx-fg);
+}
+
+.nx-heard-when {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nx-peach);
+}
+
+@media (max-width: 760px) {
+    .nx-heard {
+        padding: 1.375rem 1.375rem 0.25rem;
+    }
+    .nx-heard-row {
+        grid-template-columns: 1fr;
+        gap: 0.625rem;
+    }
+    .nx-heard-arrow {
+        transform: rotate(90deg);
+        justify-self: start;
+    }
+}
+
+/* ===========================================================================
+   2026-11-05 (b): how insights are made, and an image-led beta
+   =========================================================================== */
+/* what goes in: five inputs in a row */
+.nx-inputs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+}
+
+.nx-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    border-radius: 1.125rem;
+    background: var(--nx-surface);
+}
+
+.nx-input .nx-rail-icon {
+    margin-bottom: 0.5rem;
+}
+
+.nx-input-title {
+    font-family: var(--nx-serif);
+    font-weight: 400;
+    font-size: var(--text-20);
+}
+
+.nx-input-body {
+    font-size: var(--text-14);
+    line-height: 1.55;
+    color: var(--nx-fg-2);
+}
+
+/* how one suggestion comes out: four steps, numbered */
+.nx-steps {
+    list-style: none;
+    counter-reset: step;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 0;
+    margin: 0;
+}
+
+.nx-steps li {
+    counter-increment: step;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1.125rem;
+    border-top: 0.0625rem solid var(--nx-line);
+}
+
+.nx-steps li::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.12em;
+    color: var(--nx-peach);
+}
+
+.nx-steps b {
+    font-family: var(--nx-serif);
+    font-weight: 400;
+    font-size: var(--text-22);
+    color: var(--nx-fg);
+}
+
+.nx-steps span {
+    font-size: var(--text-14);
+    line-height: 1.55;
+    color: var(--nx-fg-2);
+}
+
+@media (max-width: 1100px) {
+    .nx-inputs {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .nx-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .nx-inputs,
+    .nx-steps {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* beta: three stats */
+.nx-stats.is-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.nx-beta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* a screenshot, framed like the app's own cards */
+.nx-shot {
+    overflow: hidden;
+    border-radius: 1.125rem;
+    background: #0b0f1c;
+    border: 0.0625rem solid rgba(255, 255, 255, 0.08);
+}
+
+.nx-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+/* what they liked: three phone screens, a quote under each */
+.nx-liked-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.nx-liked {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nx-liked .nx-shot {
+    aspect-ratio: 4 / 5;
+}
+
+.nx-liked figcaption,
+.nx-fix figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.nx-liked figcaption b {
+    font-family: var(--nx-serif);
+    font-weight: 400;
+    font-size: var(--text-18);
+    color: var(--nx-fg);
+}
+
+.nx-liked figcaption span {
+    font-family: var(--nx-serif);
+    font-style: italic;
+    font-size: var(--text-15);
+    line-height: 1.5;
+    color: var(--nx-fg-2);
+}
+
+/* what worried them → what shipped: four screens in two rows */
+.nx-fix-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+}
+
+.nx-fix {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nx-fix .nx-shot {
+    aspect-ratio: 16 / 10;
+}
+
+.nx-fix .nx-shot.is-phone img {
+    object-position: center 15%;
+}
+
+/* a wide screen shows whole, on the card's own colour */
+.nx-fix .nx-shot:not(.is-phone) img {
+    object-fit: contain;
+    object-position: center;
+}
+
+/* the "Was this right?" tile: the rating, not the sky above it */
+.nx-fix .nx-shot.is-rating img {
+    object-position: center 58%;
+}
+
+.nx-fix-q {
+    font-family: var(--nx-serif);
+    font-style: italic;
+    font-size: var(--text-16);
+    color: var(--nx-fg-2);
+}
+
+.nx-fix-a {
+    font-size: var(--text-15);
+    line-height: 1.55;
+    color: var(--nx-fg);
+}
+
+.nx-fix-a::before {
+    content: '→ ';
+    color: var(--nx-peach);
+}
+
+@media (max-width: 900px) {
+    .nx-liked-row,
+    .nx-fix-grid,
+    .nx-stats.is-3 {
+        grid-template-columns: 1fr;
+    }
+    .nx-liked .nx-shot {
+        aspect-ratio: 4 / 4;
+    }
+}
+
+
+/* ---- beta: before and after (2026-11-05 d) ----
+   Two frames of the same size. Before is grey and dim; after is in colour
+   with a peach edge, so the change reads without labels. */
+.nx-ba-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.nx-ba-text {
+    font-size: var(--text-18);
+    line-height: 1.5;
+    color: var(--nx-fg);
+}
+
+.nx-ba-pair {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.nx-ba-pair.is-phone {
+    grid-template-columns: minmax(0, 22rem) auto minmax(0, 22rem);
+    justify-content: start;
+}
+
+.nx-ba-frame {
+    aspect-ratio: 16 / 10;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #0b0f1c;
+    display: grid;
+    place-items: center;
+}
+
+.nx-ba-pair.is-phone .nx-ba-frame {
+    aspect-ratio: 9 / 10;
+}
+
+.nx-ba-frame {
+    position: relative;
+}
+
+.nx-ba-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.nx-ba-frame.is-before img {
+    filter: grayscale(1) brightness(0.85);
+    opacity: 0.8;
+}
+
+.nx-ba-arrow {
+    font-size: var(--text-22);
+    color: var(--nx-peach);
+}
+
+.nx-ba-note {
+    font-size: var(--text-16);
+    line-height: 1.6;
+    color: var(--nx-fg-2);
+}
+
+@media (max-width: 760px) {
+    .nx-ba-pair,
+    .nx-ba-pair.is-phone {
+        grid-template-columns: 1fr;
+    }
+    .nx-ba-arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+    }
+}
+
+/* ---- how insights are made: one flow, left to right ---- */
+.nx-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 17.5rem;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* 1 and 2: the same size as each other, centred against the phone */
+.nx-flow-pair {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: stretch;
+    gap: 1.5rem;
+}
+
+.nx-flow-pair .nx-flow-arrow {
+    align-self: center;
+}
+
+.nx-flow-out {
+    margin: 0;
+}
+
+.nx-flow-out .nx-device {
+    width: 17.5rem;
+    filter: drop-shadow(0 1.875rem 3.75rem rgba(0, 0, 0, 0.5));
+}
+
+.nx-flow-step {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1.75rem;
+    border-radius: 1.125rem;
+    background: var(--nx-surface);
+}
+
+.nx-flow-step.is-out {
+    padding: 0;
+    background: none;
+    align-items: center;
+}
+
+.nx-flow-step.is-out .nx-device {
+    width: 17.5rem;
+    filter: drop-shadow(0 1.875rem 3.75rem rgba(0, 0, 0, 0.5));
+}
+
+.nx-flow-k {
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nx-peach);
+}
+
+.nx-flow-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.nx-flow-list li,
+.nx-flow-body {
+    font-size: var(--text-16);
+    line-height: 1.55;
+    color: var(--nx-fg);
+}
+
+.nx-flow-list li::before {
+    content: '';
+    display: inline-block;
+    width: 0.375rem;
+    height: 0.375rem;
+    margin: 0 0.625rem 0.15rem 0;
+    border-radius: 50%;
+    background: var(--nx-fg-3);
+}
+
+.nx-flow-arrow {
+    font-size: var(--text-22);
+    color: var(--nx-peach);
+}
+
+@media (max-width: 1100px) {
+    .nx-flow,
+    .nx-flow-pair {
+        grid-template-columns: 1fr;
+        justify-items: stretch;
+    }
+    .nx-flow-out {
+        justify-self: center;
+    }
+    .nx-flow-arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+    }
+}
+
+/* ---- logo: just the three drawings ---- */
+.nx-evo.is-bare {
+    list-style: none;
+    padding: 0;
+    gap: 1.5rem;
+}
+
+.nx-evo.is-bare li {
+    margin: 0;
+    aspect-ratio: 1;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, #0f1429, #070b17);
+}
+
+.nx-evo.is-bare li img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.nx-evo.is-bare li.is-final img {
+    width: 72%;
+    height: auto;
+}
+
+
+/* ---- inside one rule: the code with its inputs pinned (2026-11-05 e) ---- */
+.nx-anno {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.nx-anno-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+.nx-code-anno pre {
+    counter-reset: pin;
+}
+
+.nx-code-anno .ln {
+    display: block;
+    position: relative;
+    padding: 0 2.5rem 0 0.75rem;
+    margin: 0 -0.75rem;
+    border-left: 0.125rem solid transparent;
+}
+
+/* a pinned line: lit, with its number at the end */
+.nx-code-anno .ln.is-pin {
+    background: rgba(243, 168, 124, 0.09);
+    border-left-color: var(--nx-peach);
+}
+
+.nx-code-anno .ln.is-pin::after {
+    content: attr(data-pin);
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--nx-peach);
+    color: #1a1208;
+    font-family: var(--nx-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1.25rem;
+    text-align: center;
+}
+
+.nx-anno-list {
+    list-style: none;
+    counter-reset: anno;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+}
+
+.nx-anno-list li {
+    counter-increment: anno;
+    position: relative;
+    padding-left: 2.25rem;
+    font-size: var(--text-15);
+    line-height: 1.6;
+    color: var(--nx-fg-2);
+}
+
+.nx-anno-list li::before {
+    content: counter(anno);
+    position: absolute;
+    left: 0;
+    top: 0.125rem;
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--nx-peach);
+    color: #1a1208;
+    font-family: var(--nx-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.nx-anno-list b {
+    font-weight: 500;
+    color: var(--nx-fg);
+}
+
+.nx-anno-list code {
+    font-family: var(--nx-mono);
+    font-size: 0.85em;
+    padding: 0.0625rem 0.3125rem;
+    border-radius: 0.25rem;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--nx-fg);
+}
+
+@media (max-width: 900px) {
+    .nx-anno-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- how insights are made: one annotated function (2026-11-05 h) ----
+   One code panel, like an editor. Lines with a note are lit with a peach
+   edge, and a dashed leader runs from the panel's edge to the note on the
+   same line. Notes are kept to about a line so the code never spreads out.
+   What the function writes sits in its own card below. */
+.nx-ac {
+    --ac-line: 1.625rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: start;
+}
+
+.nx-ac-file {
+    grid-column: 1;
+    margin: 0;
+    padding: 0.875rem 1.5rem;
+    border-radius: 1.125rem 1.125rem 0 0;
+    background: #0a0f1d;
+    border-bottom: 0.0625rem solid var(--nx-line);
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.06em;
+    color: var(--nx-fg-3);
+}
+
+.nx-ac-row {
+    display: contents;
+}
+
+.nx-ac-code {
+    grid-column: 1;
+    align-self: stretch;
+    margin: 0;
+    padding: 0 1.5rem 0 1.25rem;
+    background: var(--nx-panel);
+    border-left: 0.1875rem solid transparent;
+    font-family: var(--nx-mono);
+    font-size: var(--text-14);
+    line-height: var(--ac-line);
+    color: var(--nx-fg-2);
+    white-space: pre;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.nx-ac-row:nth-child(2) .nx-ac-code {
+    padding-top: 0.875rem;
+}
+
+.nx-ac-row:nth-last-child(2) .nx-ac-code {
+    padding-bottom: 1rem;
+    border-radius: 0 0 1.125rem 1.125rem;
+}
+
+.nx-ac-row.is-hl .nx-ac-code {
+    background:
+        linear-gradient(90deg, rgba(243, 168, 124, 0.1), rgba(243, 168, 124, 0.02)),
+        var(--nx-panel);
+    border-left-color: var(--nx-peach);
+    color: var(--nx-fg);
+}
+
+.nx-ac-code .k { color: var(--nx-blue); }
+.nx-ac-code .f { color: var(--nx-fg); }
+
+.nx-ac-side {
+    grid-column: 2;
+    position: relative;
+    padding-left: 2.75rem;
+}
+
+/* the leader, on the row's first line */
+.nx-ac-row.is-hl .nx-ac-side::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: calc(var(--ac-line) / 2);
+    width: 2rem;
+    border-top: 0.0625rem dashed rgba(243, 168, 124, 0.7);
+}
+
+.nx-ac-row.is-hl .nx-ac-side::after {
+    content: '';
+    position: absolute;
+    left: 1.875rem;
+    top: calc(var(--ac-line) / 2 - 0.25rem);
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--nx-peach);
+}
+
+.nx-ac-row:nth-child(2) .nx-ac-side {
+    padding-top: 0.875rem;
+}
+
+.nx-ac-row:nth-child(2).is-hl .nx-ac-side::before {
+    top: calc(0.875rem + var(--ac-line) / 2);
+}
+
+.nx-ac-row:nth-child(2).is-hl .nx-ac-side::after {
+    top: calc(0.875rem + var(--ac-line) / 2 - 0.25rem);
+}
+
+.nx-ac-note {
+    margin: 0;
+    font-size: var(--text-15);
+    line-height: var(--ac-line);
+    color: var(--nx-fg-2);
+}
+
+.nx-ac-note b {
+    font-weight: 500;
+    color: var(--nx-peach);
+}
+
+/* what the function writes: the headline, set as it appears on Tonight */
+.nx-ac-out {
+    grid-column: 1 / -1;
+    margin-top: 1.75rem;
+    padding: 1.75rem 2rem;
+    border-radius: 1.125rem;
+    background:
+        radial-gradient(120% 140% at 15% 0%, rgba(120, 140, 210, 0.22), transparent 60%),
+        linear-gradient(180deg, #1a2140, #0d1226);
+    box-shadow: 0 1.5rem 3rem -1.5rem rgba(0, 0, 0, 0.6);
+}
+
+.nx-ac-out-k {
+    margin: 0 0 0.75rem;
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--nx-fg-3);
+}
+
+.nx-ac-head {
+    margin: 0;
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.625rem, 3vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #f4f6fb;
+}
+
+.nx-ac-head em {
+    font-style: italic;
+    color: var(--nx-peach);
+}
+
+.nx-ac-sub {
+    margin: 0.625rem 0 0;
+    font-size: var(--text-15);
+    color: var(--nx-fg-2);
+}
+
+/* narrow screens: one column; each note follows its line inside the panel */
+@media (max-width: 900px) {
+    .nx-ac {
+        grid-template-columns: 1fr;
+    }
+    .nx-ac-code {
+        font-size: var(--text-12);
+        padding: 0 1rem 0 0.875rem;
+    }
+    .nx-ac-row:nth-last-child(2) .nx-ac-code {
+        border-radius: 0;
+    }
+    .nx-ac-side {
+        grid-column: 1;
+        padding: 0 1rem 0.5rem 1.375rem;
+        background: var(--nx-panel);
+    }
+    .nx-ac-row.is-hl .nx-ac-side {
+        border-left: 0.1875rem solid var(--nx-peach);
+        background:
+            linear-gradient(90deg, rgba(243, 168, 124, 0.1), rgba(243, 168, 124, 0.02)),
+            var(--nx-panel);
+    }
+    .nx-ac-row:nth-child(2) .nx-ac-side {
+        padding-top: 0;
+    }
+    .nx-ac-row:nth-last-child(2) .nx-ac-side {
+        padding-bottom: 1rem;
+        border-radius: 0 0 1.125rem 1.125rem;
+    }
+    .nx-ac-note {
+        font-size: var(--text-13);
+        line-height: 1.5;
+        color: var(--nx-peach);
+        opacity: 0.9;
+    }
+    .nx-ac-note::before {
+        content: '// ';
+    }
+    .nx-ac-row.is-hl .nx-ac-side::before,
+    .nx-ac-row.is-hl .nx-ac-side::after {
+        display: none;
+    }
+}
+
+/* ---- beta: the security changes, before → after ---- */
+.nx-sec {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1.875rem;
+    border-radius: 1.125rem;
+    background: var(--nx-surface);
+}
+
+.nx-sec-row {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr) auto minmax(0, 1.4fr);
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.125rem 0;
+    border-top: 0.0625rem solid var(--nx-line);
+}
+
+.nx-sec-row:first-child {
+    border-top: none;
+}
+
+.nx-sec-k {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-15);
+    font-weight: 500;
+    color: var(--nx-fg);
+}
+
+.nx-sec-k .hn {
+    font-size: var(--text-20);
+    color: var(--nx-peach);
+}
+
+.nx-sec-then {
+    font-size: var(--text-15);
+    color: var(--nx-fg-3);
+}
+
+.nx-sec-arrow {
+    color: var(--nx-peach);
+}
+
+.nx-sec-now {
+    font-size: var(--text-15);
+    color: var(--nx-fg);
+}
+
+@media (max-width: 760px) {
+    .nx-sec {
+        padding: 0.25rem 1.25rem;
+    }
+    .nx-sec-row {
+        grid-template-columns: auto 1fr;
+        gap: 0.375rem 0.75rem;
+    }
+    .nx-sec-k {
+        grid-column: 1 / -1;
+    }
+    .nx-sec-arrow {
+        grid-column: 1;
+        grid-row: 3;
+    }
+    .nx-sec-then {
+        grid-column: 1 / -1;
+    }
+    .nx-sec-now {
+        grid-column: 2;
+        grid-row: 3;
+    }
+}
+
+/* ---- beta: where a night goes, and what protects it (2026-11-05 i) ---- */
+.nx-path {
+    display: grid;
+    grid-template-columns: 1fr minmax(4rem, 0.6fr) 1fr minmax(4rem, 0.6fr) 1fr;
+    align-items: center;
+}
+
+.nx-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 2rem 1.25rem;
+    border-radius: 1.25rem;
+    background: var(--nx-surface);
+    text-align: center;
+}
+
+.nx-node .hn {
+    font-size: 2.25rem;
+    color: var(--nx-fg-3);
+    margin-bottom: 0.5rem;
+}
+
+.nx-node.is-new {
+    background:
+        radial-gradient(120% 100% at 50% 0%, rgba(243, 168, 124, 0.14), transparent 70%),
+        var(--nx-surface);
+}
+
+.nx-node.is-new .hn {
+    color: var(--nx-peach);
+}
+
+.nx-node-k {
+    font-family: var(--nx-serif);
+    font-size: var(--text-20);
+    color: var(--nx-fg);
+}
+
+.nx-node-v {
+    font-size: var(--text-14);
+    line-height: 1.5;
+    color: var(--nx-fg-2);
+}
+
+/* the wire between two stops, with what protects it */
+.nx-link {
+    position: relative;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+}
+
+.nx-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    border-top: 0.125rem dashed var(--nx-line);
+}
+
+.nx-link.is-new::before {
+    border-top-color: rgba(243, 168, 124, 0.6);
+}
+
+.nx-link-tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.3125rem 0.75rem;
+    border-radius: 62rem;
+    background: var(--nx-bg);
+    border: 0.0625rem solid var(--nx-line);
+    font-family: var(--nx-mono);
+    font-size: var(--text-11);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--nx-fg-2);
+}
+
+.nx-link.is-new .nx-link-tag {
+    border-color: rgba(243, 168, 124, 0.6);
+    color: var(--nx-peach);
+}
+
+.nx-guards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.nx-guard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1.5rem;
+    border-radius: 1.125rem;
+    background: var(--nx-surface);
+}
+
+.nx-guard .hn {
+    font-size: 1.75rem;
+    color: var(--nx-peach);
+}
+
+.nx-guard p {
+    font-size: var(--text-14);
+    line-height: 1.55;
+    color: var(--nx-fg-2);
+}
+
+@media (max-width: 900px) {
+    .nx-path {
+        grid-template-columns: 1fr;
+    }
+    .nx-link {
+        height: 3.5rem;
+    }
+    .nx-link::before {
+        left: 50%;
+        right: auto;
+        top: 0;
+        bottom: 0;
+        border-top: none;
+        border-left: 0.125rem dashed var(--nx-line);
+    }
+    .nx-link.is-new::before {
+        border-left-color: rgba(243, 168, 124, 0.6);
+    }
+    .nx-guards {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .nx-guards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- the headline card: on the app's night sky, stars and all ---- */
+.nx-ac-out {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 8% 22%, rgba(255, 255, 255, 0.9) 0, rgba(255, 255, 255, 0.9) 1.4px, transparent 2px),
+        radial-gradient(circle at 17% 70%, rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 0.6) 1.4px, transparent 2px),
+        radial-gradient(circle at 29% 38%, rgba(255, 255, 255, 0.85) 0, rgba(255, 255, 255, 0.85) 1.4px, transparent 2px),
+        radial-gradient(circle at 41% 84%, rgba(255, 255, 255, 0.5) 0, rgba(255, 255, 255, 0.5) 1.4px, transparent 2px),
+        radial-gradient(circle at 53% 16%, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.7) 1.4px, transparent 2px),
+        radial-gradient(circle at 64% 58%, rgba(255, 255, 255, 0.8) 0, rgba(255, 255, 255, 0.8) 1.4px, transparent 2px),
+        radial-gradient(circle at 72% 28%, rgba(255, 255, 255, 0.55) 0, rgba(255, 255, 255, 0.55) 1.4px, transparent 2px),
+        radial-gradient(circle at 81% 76%, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.7) 1.4px, transparent 2px),
+        radial-gradient(circle at 90% 40%, rgba(255, 255, 255, 0.9) 0, rgba(255, 255, 255, 0.9) 1.4px, transparent 2px),
+        radial-gradient(circle at 96% 12%, rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 0.6) 1.4px, transparent 2px),
+        radial-gradient(circle at 35% 12%, rgba(255, 255, 255, 0.45) 0, rgba(255, 255, 255, 0.45) 1.4px, transparent 2px),
+        radial-gradient(circle at 58% 90%, rgba(255, 255, 255, 0.5) 0, rgba(255, 255, 255, 0.5) 1.4px, transparent 2px),
+        radial-gradient(60% 90% at 85% 0%, rgba(110, 125, 200, 0.28), transparent 70%),
+        radial-gradient(50% 80% at 10% 100%, rgba(80, 90, 170, 0.22), transparent 70%),
+        linear-gradient(180deg, #0a0f24 0%, #121a3a 55%, #1a1f45 100%);
+}
+
+
+/* the return line points down to what it writes: the leader runs out of the
+   panel, then drops to the headline card, landing on a dot */
+.nx-ac-row.is-out .nx-ac-side::after {
+    display: none;
+}
+
+.nx-ac-drop {
+    position: absolute;
+    left: 2rem;
+    top: calc(var(--ac-line) / 2);
+    height: calc(var(--ac-line) / 2 + var(--ac-line) + 1rem + 1.75rem);
+    border-left: 0.0625rem dashed rgba(243, 168, 124, 0.7);
+}
+
+.nx-ac-drop::after {
+    content: '';
+    position: absolute;
+    left: -0.28125rem;
+    bottom: -0.25rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--nx-peach);
+}
+
+@media (max-width: 900px) {
+    .nx-ac-row.is-out .nx-ac-side {
+        display: none;
+    }
 }

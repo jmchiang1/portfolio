@@ -181,6 +181,17 @@
     var btns = Array.prototype.slice.call(toggle.querySelectorAll('.nx-iter-btn'));
     var views = Array.prototype.slice.call(section.querySelectorAll('.nx-iter-view'));
 
+    // the thumb sits exactly under the active tab, measured (the tabs aren't
+    // all one width: the longer labels widen their own column)
+    var thumb = toggle.querySelector('.nx-iter-thumb');
+    function place() {
+        var b = toggle.querySelector('.nx-iter-btn.is-active');
+        if (!thumb || !b) return;
+        thumb.style.left = '0';
+        thumb.style.width = b.offsetWidth + 'px';
+        thumb.style.transform = 'translateX(' + b.offsetLeft + 'px)';
+    }
+
     function activate(ver, focus) {
         btns.forEach(function (b, i) {
             var on = b.getAttribute('data-ver') === ver;
@@ -192,6 +203,7 @@
                 if (focus) b.focus();
             }
         });
+        place();
         views.forEach(function (v) {
             var on = v.getAttribute('data-ver') === ver;
             v.classList.toggle('is-active', on);
@@ -199,6 +211,10 @@
             else v.setAttribute('hidden', '');
         });
     }
+
+    place();
+    window.addEventListener('resize', place);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
 
     btns.forEach(function (b, i) {
         b.addEventListener('click', function () { activate(b.getAttribute('data-ver')); });

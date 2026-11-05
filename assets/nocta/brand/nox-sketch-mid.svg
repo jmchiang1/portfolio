@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Illustrative: a mid-fidelity construction of Nox (made for the case study, 2026-11-05) -->
+  <defs>
+    <mask id="b"><rect width="400" height="400" fill="#fff"/><circle cx="276" cy="134" r="66" fill="#000"/></mask>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#ffffff" stroke-opacity=".05"/></pattern>
+  </defs>
+  <rect width="400" height="400" fill="#10152a"/>
+  <rect width="400" height="400" fill="url(#grid)"/>
+  <!-- guides -->
+  <g fill="none" stroke="#6b7594" stroke-width="1">
+    <path d="M200 60v300M50 215h300" stroke-opacity=".35" stroke-dasharray="4 5"/>
+    <circle cx="200" cy="215" r="126" stroke-opacity=".5" stroke-dasharray="5 5"/>
+    <circle cx="276" cy="134" r="66" stroke="#9aa5c4" stroke-opacity=".7" stroke-dasharray="3 4"/>
+  </g>
+  <!-- the body, flat grey -->
+  <circle cx="200" cy="215" r="126" fill="#3a4258" mask="url(#b)"/>
+  <circle cx="131" cy="284" r="15" fill="#2c3346" mask="url(#b)"/>
+  <circle cx="248" cy="299" r="9" fill="#2c3346" mask="url(#b)"/>
+  <!-- eyes -->
+  <rect x="143" y="168" width="26" height="51" rx="13" fill="#c9d0e0"/>
+  <rect x="197" y="168" width="26" height="51" rx="13" fill="#c9d0e0"/>
+  <!-- stars as plain dots -->
+  <g fill="#c9d0e0"><circle cx="318" cy="70" r="5"/><circle cx="352" cy="104" r="4"/><circle cx="330" cy="200" r="3.5"/></g>
+  <!-- measurements -->
+  <g fill="#8d97b5" font-family="ui-monospace,Menlo,monospace" font-size="12" letter-spacing=".5">
+    <text x="24" y="40">NOX · MID-FI · GREYS ONLY</text>
+    <text x="210" y="356">r 126</text>
+    <text x="300" y="166">bite r 66</text>
+    <text x="232" y="196">eye 26 × 51</text>
+  </g>
+  <path d="M200 215h126" stroke="#8d97b5" stroke-width="1"/>
+  <path d="M226 196l-6 3" stroke="#8d97b5"/>
+</svg>

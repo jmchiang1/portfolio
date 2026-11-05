@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Illustrative: an early pencil exploration of Nox (made for the case study, 2026-11-05) -->
+  <defs>
+    <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .47  0 0 0 0 .42  0 0 0 .07 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
+  </defs>
+  <rect width="400" height="400" fill="#efe9dc"/>
+  <rect width="400" height="400" fill="#efe9dc" filter="url(#paper)"/>
+  <g fill="none" stroke="#3d3d45" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)">
+    <!-- construction: a light circle and cross -->
+    <circle cx="180" cy="210" r="104" stroke-opacity=".18" stroke-width="1"/>
+    <path d="M70 210h220M180 100v220" stroke-opacity=".14" stroke-width="1"/>
+    <!-- the moon, drawn twice, with its bite -->
+    <path d="M262 150c-14-36-50-58-90-56-58 3-100 52-96 110 4 56 54 98 110 94 50-3 88-42 94-88-26 8-54-4-66-28-10-20-6-34 1-48" stroke-width="2.6" stroke-opacity=".85"/>
+    <path d="M259 146c-16-33-52-53-89-50-55 4-96 50-93 106 4 54 51 94 106 92 49-2 87-40 93-85-28 6-55-6-67-31-9-19-5-33 2-46" stroke-width="1.4" stroke-opacity=".45"/>
+    <!-- eyes, tried twice -->
+    <path d="M148 186c-6 0-9 9-9 19s3 19 9 19 9-9 9-19-3-19-9-19z" stroke-width="2.4"/>
+    <path d="M192 186c-6 0-9 9-9 19s3 19 9 19 9-9 9-19-3-19-9-19z" stroke-width="2.4"/>
+    <path d="M146 192c-2 6-2 18 0 24M190 192c-2 6-2 18 0 24" stroke-width="5" stroke-opacity=".55"/>
+    <!-- craters -->
+    <path d="M118 262c-6 2-8 10-2 13 6 3 13-2 11-8-1-4-5-6-9-5z" stroke-width="1.6" stroke-opacity=".6"/>
+    <path d="M198 280c-4 1-5 6-1 8 4 1 8-2 6-6" stroke-width="1.4" stroke-opacity=".55"/>
+    <!-- stars -->
+    <path d="M300 90v18M291 99h18M306 70v10M301 75h10M330 124v12M324 130h12" stroke-width="1.8" stroke-opacity=".7"/>
+    <!-- a crescent tried and crossed out -->
+    <path d="M338 288c-16 4-28 20-24 38 4 16 22 24 38 18-14-2-24-14-24-28 0-12 6-22 10-28z" stroke-width="1.6" stroke-opacity=".6"/>
+    <path d="M310 290l46 50M356 290l-46 50" stroke-width="1.4" stroke-opacity=".5"/>
+    <!-- an arrow to the bite, and a note -->
+    <path d="M300 214c14-8 20-22 16-38M309 179l7-4 2 8" stroke-width="1.6" stroke-opacity=".7"/>
+  </g>
+  <g fill="#3d3d45" fill-opacity=".72" font-family="'Bradley Hand','Segoe Print','Comic Sans MS',cursive" font-size="17">
+    <text x="296" y="236">bite = night?</text>
+    <text x="40" y="364">nox v1 · softer, rounder</text>
+  </g>
+</svg>
