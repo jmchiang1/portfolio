@@ -5789,3 +5789,70 @@ body::before {
         display: none;
     }
 }
+
+/* ---- the problem → what Nocta does (2026-11-05) ---- */
+.nx-ps {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: stretch;
+    gap: 1.5rem;
+}
+
+.nx-ps-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2.25rem 2.25rem 2.5rem;
+    border-radius: 1.25rem;
+    background: var(--nx-surface);
+}
+
+.nx-ps-card.is-answer {
+    background:
+        radial-gradient(120% 120% at 0% 0%, rgba(243, 168, 124, 0.14), transparent 65%),
+        var(--nx-surface);
+}
+
+.nx-ps-k {
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--nx-fg-3);
+}
+
+.nx-ps-card.is-answer .nx-ps-k {
+    color: var(--nx-peach);
+}
+
+.nx-ps-text {
+    font-family: var(--nx-serif);
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+    line-height: 1.4;
+    color: var(--nx-fg-2);
+}
+
+.nx-ps-card.is-answer .nx-ps-text {
+    color: var(--nx-fg);
+}
+
+.nx-ps-text strong {
+    font-weight: 400;
+    color: var(--nx-peach);
+}
+
+.nx-ps-arrow {
+    align-self: center;
+    font-size: var(--text-22);
+    color: var(--nx-peach);
+}
+
+@media (max-width: 900px) {
+    .nx-ps {
+        grid-template-columns: 1fr;
+    }
+    .nx-ps-arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+    }
+}

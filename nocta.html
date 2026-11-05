@@ -101,7 +101,6 @@
                     <p class="nx-hero-sub">Nocta reads a CPAP machine's overnight data and writes one honest, plain-language story — what happened, what likely caused it, and the single next thing to try.</p>
                     <div class="nx-hero-cta">
                         <a href="https://www.noctaapp.com/" target="_blank" rel="noopener" class="nx-btn nx-btn-peach">Try Nocta <i class="hn hn-external-link"></i></a>
-                        <a href="#problem" class="nx-btn nx-btn-ghost">Read the case study</a>
                     </div>
                 </div>
                 <div class="nx-hero-phones">
@@ -293,7 +292,6 @@
                             </div>
                         </div>
                         <p class="nx-person-take">Wished out loud for a “CPAP virtual assistant” that gives tips for her specific issues.</p>
-                        <p class="nx-person-stack">ResMed F40 · OSA · myAir + SleepHQ</p>
                     </figure>
                     <figure class="nx-person">
                         <div class="nx-person-top">
@@ -304,7 +302,6 @@
                             </div>
                         </div>
                         <p class="nx-person-take">myAir's averaged-out data hides what actually happened overnight.</p>
-                        <p class="nx-person-stack">Memory-foam mask · Moderate OSA · myAir</p>
                     </figure>
                     <figure class="nx-person">
                         <div class="nx-person-top">
@@ -315,7 +312,6 @@
                             </div>
                         </div>
                         <p class="nx-person-take">Self-tunes with OSCAR, Python &amp; ChatGPT — wants longitudinal depth and autonomy.</p>
-                        <p class="nx-person-stack">Full-face mask · UARS · OSCAR</p>
                     </figure>
                     <figure class="nx-person">
                         <div class="nx-person-top">
@@ -326,7 +322,6 @@
                             </div>
                         </div>
                         <p class="nx-person-take">It shouldn't feel so medical — therapy should feel personal.</p>
-                        <p class="nx-person-stack">Nasal pillow · OSA + CSA · MyBreeze + SleepHQ + OSCAR</p>
                     </figure>
                     <figure class="nx-person">
                         <div class="nx-person-top">
@@ -337,7 +332,6 @@
                             </div>
                         </div>
                         <p class="nx-person-take">A comfortable mask is what makes compliance actually stick.</p>
-                        <p class="nx-person-stack">ResMed full-face mask · Severe OSA · myAir</p>
                     </figure>
                     <figure class="nx-person">
                         <div class="nx-person-top">
@@ -348,7 +342,6 @@
                             </div>
                         </div>
                         <p class="nx-person-take">I need to know I'm passing compliance — my CDL depends on it.</p>
-                        <p class="nx-person-stack">Nasal pillow · OSA · myAir</p>
                     </figure>
                 </div>
 
@@ -387,11 +380,16 @@
                     <p class="nx-eyebrow"><span class="nx-idx">02</span> The Problem</p>
                     <h2 class="nx-h2">Most people quit CPAP therapy <em>before it can help them.</em></h2>
                 </div>
-                <div class="nx-turn">
-                    <p class="nx-hmw">“How might we make CPAP data feel actionable and human — so people feel <em>guided, not graded?</em>”</p>
-                    <div class="nx-solution">
-                        <p class="nx-solution-label">The Solution</p>
-                        <p class="nx-solution-text">Distill each night into <strong>one story</strong> — what happened, what likely caused it, and <strong>the next thing to try</strong> — wrapped in calm charts and wearable context.</p>
+                <!-- the problem and what Nocta does about it, side by side (2026-11-05) -->
+                <div class="nx-ps">
+                    <div class="nx-ps-card">
+                        <p class="nx-ps-k">The problem</p>
+                        <p class="nx-ps-text">CPAP apps either show raw charts or hide everything behind one score. Either way, people can’t tell what went wrong last night or what to change.</p>
+                    </div>
+                    <i class="hn hn-arrow-right nx-ps-arrow" aria-hidden="true"></i>
+                    <div class="nx-ps-card is-answer">
+                        <p class="nx-ps-k">What Nocta does</p>
+                        <p class="nx-ps-text">Nocta reads each night from the machine’s SD card and tells you what happened, what likely caused it, and <strong>one thing to try tonight</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -587,8 +585,8 @@
                         </defs>
                     </svg>
                     <div class="nx-nox-head">
-                        <p class="nx-panel-k">Meet Nox</p>
-                        <h3 class="nx-sub">Nocta's coach, there to answer your questions</h3>
+                        <p class="nx-panel-k">Nox various personalities</p>
+                        <!-- <h3 class="nx-sub">Nocta's coach, there to answer your questions</h3> -->
                     </div>
                     <div class="nx-nox-states">
                         <figure class="nx-nox-state">
@@ -850,7 +848,7 @@
                         </div>
                         <div class="nx-ac-row is-hl">
                             <pre class="nx-ac-code"><code>    checkin: checkinTags(date),</code></pre>
-                            <div class="nx-ac-side"><p class="nx-ac-note">This morning’s check-in, like a drink or a cold.</p></div>
+                            <div class="nx-ac-side"><p class="nx-ac-note">This morning’s check-in answers.</p></div>
                         </div>
                         <div class="nx-ac-row is-hl">
                             <pre class="nx-ac-code"><code>    quiet: quietKinds(date),</code></pre>
@@ -895,13 +893,14 @@
              change. Security: the app's git history, Oct 29 – Nov 2 (anonymised
              research and the CSP were live before testers arrived, so they're not
              claimed as fixes). Chart shots: the app at 98b69d7 (Oct 27) vs today.
-             Numbers: PostHog, Oct 23 – Nov 3, 2026, own testing excluded. -->
+             Numbers: PostHog, Oct 23 – Nov 5, 2026, own testing excluded
+             (176 opened the app, 24 imported a card, 5,019 nights). -->
         <section id="beta" class="cs-section">
             <div class="nx-wrap">
                 <div class="nx-head">
                     <p class="nx-eyebrow"><span class="nx-idx">06</span> Beta Findings</p>
                     <h2 class="nx-h2">Testers worried about who could read their health data, <em>so I locked it down.</em></h2>
-                    <p class="nx-lead">About 170 people tried the beta and 23 imported their own SD card. Within five days of their feedback, every place Nocta keeps their data was encrypted.</p>
+                    <p class="nx-lead">About 175 people tried the beta and 24 imported their own SD card. Within five days of their feedback, every place Nocta keeps their data was encrypted.</p>
                 </div>
 
                 <!-- where a night goes, and what now protects it at each stop
