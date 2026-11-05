@@ -2104,7 +2104,8 @@ body::before {
     top: 0.25rem;
     bottom: 0.25rem;
     left: 0.25rem;
-    width: calc((100% - 0.5rem) / 5);
+    /* one of six versions (V0 sketches … V5) */
+    width: calc((100% - 0.5rem) / 6);
     border-radius: 62.4375rem;
     background: rgba(243, 168, 124, 0.14);
     border: 0.0625rem solid var(--nx-peach);
@@ -2221,7 +2222,7 @@ body::before {
     }
 }
 
-/* five versions don't fit a tablet or phone with their names; keep just V1–V5 */
+/* six versions don't fit a tablet or phone with their names; keep just V0–V5 */
 @media (max-width: 900px) {
     .nx-iter-word {
         display: none;
@@ -4406,4 +4407,199 @@ body::before {
         font-size: var(--text-10);
         line-height: 1.7;
     }
+}
+
+
+/* ===========================================================================
+   2026-11-03 REFRESH: a one-band background, the result section (showcase,
+   features and desktop together), the insight loop, beta findings
+   =========================================================================== */
+
+/* ---- background: three facts in one band ---- */
+.nx-band {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.125rem;
+}
+
+.nx-band-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2rem 1.875rem;
+    border-radius: 1.25rem;
+    background: var(--nx-surface);
+}
+
+.nx-band-cell:last-child {
+    border: 0.0625rem solid rgba(243, 168, 124, 0.28);
+    background:
+        radial-gradient(110% 130% at 50% 0%, rgba(243, 168, 124, 0.1), transparent 62%),
+        var(--nx-surface);
+}
+
+.nx-band-title {
+    font-family: var(--nx-serif);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+    line-height: 1.12;
+    margin: 0;
+}
+
+.nx-band-body {
+    font-size: var(--text-15);
+    line-height: 1.65;
+    color: var(--nx-fg-2);
+}
+
+.nx-band-body b {
+    font-weight: 500;
+    color: var(--nx-fg);
+}
+
+.nx-compliance-formula.is-compact {
+    justify-content: flex-start;
+    gap: 0.875rem;
+    margin: 0.25rem 0;
+}
+
+.nx-compliance-formula.is-compact .nx-cf-item b {
+    font-size: clamp(2rem, 3.4vw, 2.625rem);
+}
+
+.nx-compliance-formula.is-compact .nx-cf-op {
+    font-size: var(--text-16);
+}
+
+@media (max-width: 900px) {
+    .nx-band {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- problem: the question and the answer follow the head ---- */
+#problem .nx-turn {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* ---- iterations: V0 is paper sketches, not phone screens ---- */
+.nx-iter-view .nx-device.is-sketch {
+    border-radius: 0.375rem;
+    align-self: center;
+}
+
+/* ---- the result: the showcase leads, the features follow it ---- */
+#features .nx-showcase {
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.nx-result-features {
+    margin-top: 2rem;
+}
+
+.nx-feature-wide {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+    padding-top: 1.75rem;
+}
+
+.nx-feature-wide .nx-feature-text {
+    max-width: 40rem;
+}
+
+/* ---- AI safety: the loop ---- */
+.nx-loop {
+    display: grid;
+    grid-template-columns: 17.5rem 30rem;
+    justify-content: center;
+    align-items: center;
+    gap: 4.5rem;
+    padding-top: 2rem;
+}
+
+.nx-loop-media {
+    margin: 0;
+}
+
+.nx-loop-media .nx-device {
+    width: 17.5rem;
+    filter: drop-shadow(0 1.875rem 3.75rem rgba(0, 0, 0, 0.5));
+}
+
+.nx-loop-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nx-loop-lead {
+    font-size: var(--text-16);
+    line-height: 1.7;
+    color: var(--nx-fg-2);
+}
+
+.nx-loop-steps {
+    list-style: none;
+    counter-reset: loop;
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    margin-top: 0.5rem;
+}
+
+.nx-loop-steps li {
+    counter-increment: loop;
+    position: relative;
+    padding-left: 2.75rem;
+    font-size: var(--text-15);
+    line-height: 1.65;
+    color: var(--nx-fg-2);
+}
+
+.nx-loop-steps li::before {
+    content: counter(loop, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.125rem;
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.12em;
+    color: var(--nx-peach);
+}
+
+.nx-loop-steps b {
+    font-weight: 500;
+    color: var(--nx-fg);
+}
+
+@media (max-width: 900px) {
+    .nx-loop {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 2.25rem;
+    }
+    .nx-loop-text {
+        max-width: 34rem;
+    }
+}
+
+/* ---- beta findings ---- */
+.nx-rails.is-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 900px) {
+    .nx-rails.is-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.nx-source {
+    font-family: var(--nx-mono);
+    font-size: var(--text-12);
+    letter-spacing: 0.04em;
+    color: var(--nx-fg-3);
 }
