@@ -576,18 +576,24 @@ body::before {
     font-size: var(--text-18);
 }
 
+/* the same button as noctaapp.com's "Open Nocta": one flat peach, a pill,
+   no gradient or glow */
 .nx-btn-peach {
-    background: linear-gradient(180deg, var(--nx-peach-soft), var(--nx-peach-deep));
-    color: #2a1206;
-    box-shadow: 0 0.875rem 2.125rem -0.75rem rgba(243, 168, 124, 0.6);
+    background: #f0a47a;
+    color: #1a1424;
+    border-radius: 62.4375rem;
 }
 
 .nx-btn-peach:hover {
-    transform: translateY(-0.125rem);
-    box-shadow: 0 1.25rem 2.75rem -0.75rem rgba(243, 168, 124, 0.7);
+    background: #f4b896;
+}
+
+.nx-btn-peach:active {
+    transform: scale(0.985);
 }
 
 .nx-btn-ghost {
+    border-radius: 62.4375rem;
     color: var(--nx-fg);
     border: 0.0625rem solid var(--nx-line-2);
     background: rgba(255, 255, 255, 0.02);
