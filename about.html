@@ -27,6 +27,9 @@
         @keyframes jc-body-fade { to { opacity: 1; } }
     </style>
     <link rel="stylesheet" href="mascot-chat.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap">
+    <link rel="stylesheet" href="pixel-theme.css">
+    <link rel="stylesheet" href="about-select.css">
 </head>
 <body>
     <!-- Background Grid — CSS grid pattern -->
@@ -35,7 +38,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="nav-logo">
-            <img src="assets/logo.png" alt="JC" />
+            <img src="assets/logo-keycap.svg" alt="JC" />
         </a>
         <div class="nav-links">
             <a href="/" class="nav-link">UX/UI</a>
@@ -76,148 +79,56 @@
     <!-- About Content -->
     <main class="about-layout">
         <h1 class="visually-hidden">About</h1>
-        <!-- Bento Hero -->
-        <div class="bento-hero about-enter" style="--delay: 0.45s">
-            <!-- Intro card -->
-            <div class="bento-card bento-intro">
-                <h3 class="bento-intro-title">
-                    I'm a
-                    <span class="rotator-wrapper">
-                        <span class="rotator-text"></span><span class="rotator-cursor" aria-hidden="true">|</span>
-                    </span>
-                </h3>
-                <p class="bento-bio">that's focused on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I'm especially interested in the details that make products feel seamless — from user flows and interface systems to motion, responsiveness, and overall polish.<br><br>My background spans UX/UI design, prototyping, research, and front-end development, which allows me to think beyond static screens and design with execution in mind.</p>
+        <!-- Character select: the roster is the career. Picking a chapter
+             dresses the character for it and fills in the summary. Filled by
+             about-select.js. The journey list below stays plain, so nobody has
+             to click through the roster to read the history. -->
+        <section class="select" aria-label="Career chapters">
+            <div class="select-top">
+                <div class="select-stage">
+                    <canvas id="selectStage" aria-hidden="true"></canvas>
+                    <div class="select-plate">
+                        <p class="select-name">Jonathan Chiang</p>
+                        <p class="select-status"><i aria-hidden="true"></i>Open to full-time roles</p>
+                    </div>
+                </div>
+
+                <div class="select-summary" id="selectSummary" aria-live="polite"></div>
             </div>
 
-            <!-- Skills stack: design + development in a flex column next to About -->
-            <div class="bento-skills-stack">
-                <div class="bento-card bento-skill bento-skill-design">
-                    <p class="bento-label">Design</p>
-                    <div class="bento-skill-pills">
-                        <span class="skill-pill">Figma</span>
-                        <span class="skill-pill">After Effects</span>
-                        <span class="skill-pill">ChatGPT Images</span>
-                        <span class="skill-pill">Claude Design</span>
-                        <span class="skill-pill">Nano Banana 2</span>
-                    </div>
-                </div>
+            <div class="select-roster" id="selectRoster" role="group" aria-label="Choose a chapter"></div>
+            <p class="select-hint">Use the arrow keys or pick a chapter</p>
+        </section>
 
-                <div class="bento-card bento-skill bento-skill-dev">
-                    <p class="bento-label">Development</p>
-                    <div class="bento-skill-pills">
-                        <span class="skill-pill">HTML / CSS</span>
-                        <span class="skill-pill">JavaScript</span>
-                        <span class="skill-pill">React</span>
-                        <span class="skill-pill">Claude Code</span>
-                        <span class="skill-pill">Cursor</span>
-                    </div>
+        <div class="select-lower">
+            <section class="select-panel" aria-labelledby="gearTitle">
+                <h2 id="gearTitle">Equipment</h2>
+                <div class="gear-group">
+                    <h3>Design</h3>
+                    <ul class="gear-slots">
+                        <li>Figma</li>
+                        <li>After Effects</li>
+                        <li>ChatGPT Images</li>
+                        <li>Claude Design</li>
+                        <li>Nano Banana 2</li>
+                    </ul>
                 </div>
-            </div>
-
-            <!-- Now card (below the About + Skills row, full width) -->
-            <!-- <div class="bento-card bento-now">
-                <p class="bento-label">Now</p>
-                <p class="bento-now-text">Designing at <span class="bento-skillcat">SkillCat</span></p>
-                <p class="bento-now-sub">Design Engineer · 2025 — Present</p>
-                <img class="bento-now-logo" src="assets/Companies/skillcat.png" alt="SkillCat">
-            </div> -->
-        </div>
-
-        <!-- Education -->
-        <div class="about-section about-enter" style="--delay: 0.55s">
-            <h2 class="about-section-title">Education</h2>
-            <div class="education-row">
-                <div class="education-card">
-                    <img class="education-logo" src="assets/Companies/parsons.png" alt="Parsons School of Design">
-                    <div class="education-text">
-                        <p class="education-degree">M.S. Communication Design</p>
-                        <p class="education-school">Parsons School of Design</p>
-                    </div>
+                <div class="gear-group">
+                    <h3>Development</h3>
+                    <ul class="gear-slots">
+                        <li>HTML / CSS</li>
+                        <li>JavaScript</li>
+                        <li>React</li>
+                        <li>Claude Code</li>
+                        <li>Cursor</li>
+                    </ul>
                 </div>
-                <div class="education-card">
-                    <img class="education-logo" src="assets/Companies/ub-logo.jpg" alt="University at Buffalo">
-                    <div class="education-text">
-                        <p class="education-degree">B.S. Business Administration</p>
-                        <p class="education-school">University at Buffalo</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- Experience -->
-        <div id="experience" class="about-section about-enter" style="--delay: 0.6s">
-            <h2 class="about-section-title">Experience</h2>
-
-            <div class="exp-list">
-                <div class="exp-row is-open">
-                    <button class="exp-row-header" aria-expanded="true">
-                        <span class="exp-year">2025 — Present</span>
-                        <span class="exp-row-main">
-                            <span class="exp-role">Design Engineer</span>
-                            <span class="exp-company">SkillCat</span>
-                        </span>
-                        <img class="exp-logo" src="assets/Companies/skillcat.png" alt="SkillCat">
-                        <i class="hn hn-chevron-down exp-chevron"></i>
-                    </button>
-                    <div class="exp-row-body">
-                        <div class="exp-row-body-inner">
-                            <p class="exp-description">Leading design and front-end development for a mobile learning platform focused on trade skills. Building UI components, prototyping interactions, and bridging the gap between design and engineering.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="exp-row">
-                    <button class="exp-row-header" aria-expanded="false">
-                        <span class="exp-year">2025</span>
-                        <span class="exp-row-main">
-                            <span class="exp-role">UX Designer</span>
-                            <span class="exp-company">ScriptChain Health</span>
-                        </span>
-                        <img class="exp-logo" src="assets/Companies/scriptchain.png" alt="ScriptChain Health">
-                        <i class="hn hn-chevron-down exp-chevron"></i>
-                    </button>
-                    <div class="exp-row-body">
-                        <div class="exp-row-body-inner">
-                            <p class="exp-description">Designed patient-facing dashboards and data visualization tools for a health-tech startup. Conducted user research and usability testing to simplify complex medical data workflows.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="exp-row">
-                    <button class="exp-row-header" aria-expanded="false">
-                        <span class="exp-year">2022</span>
-                        <span class="exp-row-main">
-                            <span class="exp-role">Software Engineer</span>
-                            <span class="exp-company">JPMorgan Chase</span>
-                        </span>
-                        <!-- <img class="exp-logo" src="assets/Companies/chase.png" alt="JPMorgan Chase"> -->
-                        <img class="exp-logo" src="assets/Companies/chase-logo.jpg" alt="JPMorgan Chase">
-                        <i class="hn hn-chevron-down exp-chevron"></i>
-                    </button>
-                    <div class="exp-row-body">
-                        <div class="exp-row-body-inner">
-                            <p class="exp-description">Developed internal tools and front-end features for financial applications. Collaborated with cross-functional teams to deliver scalable, production-ready code.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="exp-row">
-                    <button class="exp-row-header" aria-expanded="false">
-                        <span class="exp-year">2018 - 2019</span>
-                        <span class="exp-row-main">
-                            <span class="exp-role">Marketing Analyst</span>
-                            <span class="exp-company">Omnicom Media Group</span>
-                        </span>
-                        <img class="exp-logo" src="assets/Companies/omd.png" alt="Omnicom Media Group">
-                        <i class="hn hn-chevron-down exp-chevron"></i>
-                    </button>
-                    <div class="exp-row-body">
-                        <div class="exp-row-body-inner">
-                            <p class="exp-description">Analyzed campaign performance data and consumer insights to optimize digital marketing strategies for major brand clients across multiple channels.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <section class="select-panel" id="experience" aria-labelledby="journeyTitle">
+                <h2 id="journeyTitle">Journey</h2>
+                <ol class="journey" id="selectJourney"></ol>
+            </section>
         </div>
     </main>
 
@@ -243,6 +154,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="transitions.js"></script>
     <script src="about.js"></script>
+    <script src="about-select.js"></script>
     <script src="mascot-chat.js" defer></script>
+    <script src="pixel-bg.js"></script>
 </body>
 </html>

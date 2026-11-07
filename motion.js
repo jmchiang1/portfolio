@@ -1,8 +1,8 @@
-// Motion page — vibes-style grid layout
+// Motion page — a wall of every video, playing at once
 (function () {
     var cards = Array.from(document.querySelectorAll('.motion-card'));
 
-    // Every thumbnail autoplays muted on loop so the grid feels alive.
+    // Thumbnails loop muted while on screen so the grid feels alive.
     // Sound only kicks in once a card is opened into its modal (below).
     cards.forEach(function (card) {
         var video = card.querySelector('.project-video');
@@ -10,9 +10,8 @@
 
         video.muted = true;
         video.loop = true;
-        video.setAttribute('autoplay', '');
-        var p = video.play();
-        if (p && p.catch) p.catch(function () {});
+        video.dataset.preview = video.getAttribute('src');
+        video.setAttribute('data-autoplay', ''); // video-budget.js plays it while on screen
     });
 
     // ---- Project modal -------------------------------------------------
@@ -40,6 +39,24 @@
     function playQuietly(video) {
         var p = video.play();
         if (p && p.catch) p.catch(function () {});
+    }
+
+    // Cards play a small silent preview and the popup plays the full file.
+    // Changing source blanks the video until the new one loads, so the current
+    // frame stands in as its poster.
+    function setSource(video, url) {
+        if (!url || video.getAttribute('src') === url) return;
+        var at = video.currentTime;
+        if (video.videoWidth) {
+            var still = document.createElement('canvas');
+            still.width = Math.min(video.videoWidth, 720);
+            still.height = Math.round(still.width * video.videoHeight / video.videoWidth);
+            still.getContext('2d').drawImage(video, 0, 0, still.width, still.height);
+            video.poster = still.toDataURL('image/jpeg', 0.8);
+        }
+        video.src = url;
+        video.addEventListener('loadedmetadata', function () { video.currentTime = at; }, { once: true });
+        video.addEventListener('playing', function () { video.removeAttribute('poster'); }, { once: true });
     }
 
     // Shared fly helper — moves `video` into a fixed wrapper at `from`,
@@ -91,6 +108,7 @@
     function mountInTarget(video, panel) {
         fitToPanel(video, panel);
         target.appendChild(video);
+        setSource(video, video.dataset.full);
         if (panel && panel.hasAttribute('data-unmute')) {
             video.muted = false;
             video.controls = true;
@@ -108,6 +126,7 @@
         fitToPanel(video, null);
         video.classList.add('project-video');
         frame.insertBefore(video, overlay);
+        setSource(video, video.dataset.preview);
         if (paused) video.pause();
         else playQuietly(video);
     }
@@ -119,11 +138,17 @@
     }
 
     function pauseGrid() {
+        if (window.VideoBudget) VideoBudget.hold = true;
         gridVideos().forEach(function (v) { v.pause(); });
     }
 
     function resumeGrid() {
-        gridVideos().forEach(playQuietly);
+        if (window.VideoBudget) {
+            VideoBudget.hold = false;
+            VideoBudget.refresh();
+        } else {
+            gridVideos().forEach(playQuietly);
+        }
     }
 
     function pauseExtras(panel) {

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Main Menu, centered (title screen prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Jersey+25&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../pixel-theme.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+    /* ---- The visual: a wall of the real work ---- */
+    .wall {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        overflow: hidden;
+        background: var(--page-bg);
+    }
+
+    .col {
+        flex: 0 0 var(--col-w);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: var(--col-y);
+        animation: drift 15s steps(45, end) infinite alternate;
+    }
+
+    .col:nth-child(even) { animation-direction: alternate-reverse; }
+
+    @keyframes drift {
+        from { translate: 0 -26px; }
+        to { translate: 0 26px; }
+    }
+
+    .tile {
+        position: relative;
+        flex: none;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        background: #0c0b0a;
+        box-shadow: 0 0 0 3px #3a3936;
+        opacity: 0.74;
+        transition: opacity 0.2s steps(4, end), box-shadow 0.1s steps(2, end);
+    }
+
+    .tile.is-tall { aspect-ratio: 9 / 15; }
+    .tile img, .tile video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+    /* Level Select: only the highlighted project stays lit */
+    .wall.has-focus .tile { opacity: 0.16; }
+    .wall.has-focus .tile.is-focus { opacity: 1; box-shadow: 0 0 0 3px #fff; }
+
+    /* Dark centre for the text, dissolved in ordered dither */
+    #mask { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+    /* ---- All the text, in the middle ---- */
+    .center {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        z-index: 2;
+        translate: -50% -50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(1040px, calc(100vw - 32px));
+        text-align: center;
+    }
+
+    .logo {
+        --e: 0.042em;
+        font-size: min(calc(var(--text-128) * 0.95), 10.4vw, 15vh);
+        line-height: 0.9;
+        white-space: nowrap;
+        text-shadow:
+            0 var(--e) 0 #2f96ff,
+            0 calc(var(--e) * 2) 0 #1180f9,
+            0 calc(var(--e) * 3) 0 #0a4a9a,
+            0 calc(var(--e) * 4) 0 #0c0b0a;
+    }
+
+    .role {
+        margin-top: 20px;
+        font-size: var(--text-24);
+        line-height: 1;
+        color: #cfe3ff;
+    }
+
+    .lists {
+        position: relative;
+        width: 100%;
+        height: 212px;
+        margin-top: 30px;
+        transition: height 0.2s steps(4, end);
+    }
+
+    .lists.is-levels { height: 244px; }
+
+    .list {
+        position: absolute;
+        inset: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        list-style: none;
+        transition: translate 0.2s steps(4, end), opacity 0.2s steps(4, end), visibility 0s;
+    }
+
+    .list li { width: min(340px, 100%); }
+
+    .list.is-away {
+        translate: -36px 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: translate 0.2s steps(4, end), opacity 0.2s steps(4, end), visibility 0s 0.2s;
+    }
+
+    #levels.is-away { translate: 36px 0; }
+
+    .item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        padding: 5px 34px 7px;
+        border: 0;
+        background: none;
+        color: rgba(255, 255, 255, 0.78);
+        font-family: var(--px-font);
+        font-size: var(--text-36);
+        line-height: 1;
+        text-decoration: none;
+    }
+
+    #levels .item { justify-content: flex-start; font-size: var(--text-28); padding-block: 3px 4px; }
+    #levels .item.is-back { justify-content: center; margin-top: 4px; font-size: var(--text-24); }
+    .item canvas { width: 30px; height: 30px; flex: none; }
+    .item small { margin-left: auto; font-family: inherit; font-size: var(--text-20); opacity: 0.72; }
+
+    /* The selected row is the site's active key: white, with a hard edge */
+    .item.is-sel {
+        background: #fff;
+        color: #161514;
+        box-shadow: 0 3px 0 #8d8c88;
+    }
+
+    .item.is-sel::before {
+        content: '';
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        width: 0;
+        height: 0;
+        margin-top: -8px;
+        border-block: 8px solid transparent;
+        border-left: 10px solid #1180f9;
+    }
+
+    .item.is-picked { animation: picked 0.32s steps(1, end) 1; }
+
+    @keyframes picked {
+        0%, 100% { background: #fff; color: #161514; }
+        50% { background: #1180f9; color: #fff; }
+    }
+
+    .hint {
+        min-height: 1.1em;
+        margin-top: 16px;
+        font-size: var(--text-22);
+        line-height: 1.1;
+        color: #7fc4ff;
+    }
+
+    .center .skip { margin-top: 14px; }
+
+    /* Opening and closing share these */
+    .logo, .role, .lists, .hint, .center .skip { transition: translate 0.36s steps(6, end), opacity 0.36s steps(6, end), height 0.2s steps(4, end); }
+    .opening .logo, .opening .role { translate: 0 -40px; opacity: 0; }
+    .opening .lists, .opening .hint, .opening .skip { translate: 0 30px; opacity: 0; }
+    .wall { transition: opacity 0.4s steps(5, end); }
+    .opening-wall { opacity: 0; }
+
+    /* Closing: a dither that fills the screen */
+    #wipe { position: fixed; inset: 0; z-index: 50; width: 100%; height: 100%; pointer-events: none; }
+
+    @media (min-width: 1800px) and (min-height: 1000px) {
+        .logo { font-size: calc(var(--text-128) * 1.3); }
+        .role { font-size: var(--text-32); }
+    }
+
+    @media (max-width: 640px) {
+        .logo { font-size: 20vw; white-space: normal; }
+        .role { margin-top: 14px; font-size: var(--text-18); }
+        .item { font-size: var(--text-28); }
+        .hint { font-size: var(--text-18); }
+        .lists { height: 176px; margin-top: 20px; }
+        .lists.is-levels { height: 220px; }
+        #levels .item { font-size: var(--text-24); }
+    }
+
+    @media (max-height: 720px) {
+        .role { margin-top: 12px; }
+        .lists { height: 172px; margin-top: 14px; }
+        .lists.is-levels { height: 206px; }
+        .item { font-size: var(--text-28); padding-block: 3px 5px; }
+        #levels .item { font-size: var(--text-22); padding-block: 2px 3px; }
+        .item canvas { width: 24px; height: 24px; }
+        .hint { margin-top: 10px; }
+        .center .skip { margin-top: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .col { animation: none; }
+        .list, .tile, .wall, .logo, .role, .lists, .hint, .center .skip { transition: none; }
+    }
+</style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+    <a class="t-back" href="index.html">All versions</a>
+
+    <div class="wall opening-wall" id="wall" aria-hidden="true"></div>
+    <canvas class="pixel" id="mask" aria-hidden="true"></canvas>
+
+    <main class="center opening" id="stage">
+        <h1 class="logo px">Jonathan Chiang</h1>
+        <p class="role px">Product Designer &amp; Design Engineer</p>
+
+        <div class="lists" id="lists">
+            <ul class="list" id="main">
+                <li><a class="item is-sel" href="../index.html" data-hint="Enter the portfolio.">Start game</a></li>
+                <li><button class="item" type="button" data-open="levels" data-hint="Jump straight to a case study.">Level select</button></li>
+                <li><a class="item" href="../assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" data-hint="Open the PDF.">Resume</a></li>
+                <li><a class="item" href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" data-hint="Open to full-time roles. Say hi on LinkedIn.">LinkedIn</a></li>
+            </ul>
+            <ul class="list is-away" id="levels"></ul>
+        </div>
+
+        <p class="hint px" id="hint" aria-live="polite">Enter the portfolio.</p>
+        <a class="skip" href="../index.html" id="skip">Skip intro</a>
+    </main>
+
+    <canvas class="pixel" id="wipe" aria-hidden="true" hidden></canvas>
+
+    <script src="sprites.js"></script>
+    <script src="shared.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var T = window.Title;
+        var stage = document.getElementById('stage');
+        var wall = document.getElementById('wall');
+        var main = document.getElementById('main');
+        var levels = document.getElementById('levels');
+        var lists = document.getElementById('lists');
+        var hint = document.getElementById('hint');
+        var current = main, sel = 0, leaving = false;
+
+        // ---- Wall ------------------------------------------------------------
+        // Columns of real screens. One clip per project plays, placed clear of
+        // the dark centre. The rest are stills, so the page stays light.
+        function tile(w) {
+            var t = document.createElement('div');
+            t.className = 'tile' + (w.tall ? ' is-tall' : '');
+            t.dataset.id = w.id;
+            var img = document.createElement('img');
+            img.src = w.poster;
+            img.alt = '';
+            t.appendChild(img);
+            return t;
+        }
+
+        function play(t, w) {
+            var v = document.createElement('video');
+            v.muted = true;
+            v.loop = true;
+            v.playsInline = true;
+            v.poster = w.poster;
+            v.src = w.video;
+            t.appendChild(v);
+            var p = v.play();
+            if (p && p.catch) p.catch(function () {});
+        }
+
+        function buildWall() {
+            wall.textContent = '';
+            var vw = innerWidth, vh = innerHeight;
+            var colW = Math.max(190, Math.min(300, Math.round(vw / 5.1)));
+            var cols = Math.ceil(vw / (colW + 14)) + 1;
+            if (cols % 2 === 0) cols++;
+            wall.style.setProperty('--col-w', colW + 'px');
+
+            var all = [];
+            for (var c = 0; c < cols; c++) {
+                var col = document.createElement('div');
+                col.className = 'col';
+                col.style.setProperty('--col-y', (-40 - (c % 3) * 74) + 'px');
+                var y = 0, n = 0;
+                while (y < vh + 240) {
+                    var w = T.WORK[(c * 2 + n) % T.WORK.length];
+                    var t = tile(w);
+                    col.appendChild(t);
+                    var h = colW * (w.tall ? 15 / 9 : 10 / 16);
+                    all.push({ el: t, w: w, c: c, mid: y + h / 2 });
+                    y += h + 14;
+                    n++;
+                }
+                wall.appendChild(col);
+            }
+
+            if (T.reduce) return;
+
+            // Outer columns first, since those stay in full view
+            var used = {};
+            var centre = (cols - 1) / 2;
+            all.sort(function (a, b) { return Math.abs(b.c - centre) - Math.abs(a.c - centre); });
+            all.forEach(function (a) {
+                // Reveal's clip opens on white, which would outshine the title
+                if (!a.w.video || a.w.id === 'reveal' || used[a.w.id]) return;
+                if (a.mid < 60 || a.mid > vh - 60) return;
+                var x = (a.c - centre) * (colW + 14) + vw / 2;
+                if (x < 0 || x > vw) return;
+                used[a.w.id] = true;
+                play(a.el, a.w);
+            });
+        }
+
+        function focus(id) {
+            wall.classList.toggle('has-focus', !!id);
+            wall.querySelectorAll('.tile').forEach(function (t) {
+                t.classList.toggle('is-focus', t.dataset.id === id);
+            });
+        }
+
+        // ---- Mask ------------------------------------------------------------
+        // Sized from the text block, so it follows the font and the list height.
+        var maskEl = document.getElementById('mask');
+        function buildMask() {
+            var s = 6;
+            var w = Math.ceil(innerWidth / s), h = Math.ceil(innerHeight / s);
+            maskEl.width = w;
+            maskEl.height = h;
+            maskEl.style.width = (w * s) + 'px';
+            maskEl.style.height = (h * s) + 'px';
+            var x2 = maskEl.getContext('2d');
+            x2.fillStyle = '#161514';
+            var rx = (stage.querySelector('.logo').offsetWidth / 2 + 64) / s;
+            var ry = (stage.offsetHeight / 2 + 44) / s;
+            var cx = w / 2, cy = h / 2;
+            for (var y = 0; y < h; y++) {
+                for (var x = 0; x < w; x++) {
+                    var nx = Math.abs(x - cx) / rx, ny = Math.abs(y - cy) / ry;
+                    var d = Math.pow(Math.pow(nx, 4) + Math.pow(ny, 4), 0.25);
+                    var t = (d - 1) / 0.2;
+                    if (t <= 0 || 1 - t > T.bayer(x, y)) x2.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+
+        // ---- Level list ------------------------------------------------------
+        T.WORK.forEach(function (w) {
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.className = 'item';
+            a.href = w.href;
+            a.dataset.hint = w.blurb + ' ' + w.status + '.';
+            a.dataset.id = w.id;
+
+            var icon = document.createElement('canvas');
+            icon.className = 'pixel';
+            icon.width = icon.height = 16;
+            PX.draw(icon.getContext('2d'), PX.ICONS[w.id], 0, 0);
+
+            var name = document.createElement('span');
+            name.textContent = w.short || w.name;
+
+            var year = document.createElement('small');
+            year.textContent = w.year;
+
+            a.append(icon, name, year);
+            li.appendChild(a);
+            levels.appendChild(li);
+        });
+
+        var backLi = document.createElement('li');
+        backLi.innerHTML = '<button class="item is-back" type="button" data-close data-hint="Back to the main menu.">Back</button>';
+        levels.appendChild(backLi);
+
+        function items() { return Array.prototype.slice.call(current.querySelectorAll('.item')); }
+
+        function select(i, quiet) {
+            var list = items();
+            sel = (i + list.length) % list.length;
+            list.forEach(function (el, n) { el.classList.toggle('is-sel', n === sel); });
+            var el = list[sel];
+            hint.textContent = el.dataset.hint || '';
+            if (!quiet) T.click(0.14);
+            focus(el.dataset.id || null);
+        }
+
+        function openList(list) {
+            current.classList.add('is-away');
+            list.classList.remove('is-away');
+            lists.classList.toggle('is-levels', list === levels);
+            current = list;
+        }
+
+        function closeLevels() {
+            openList(main);
+            select(1, true);
+        }
+
+        // ---- Leaving ---------------------------------------------------------
+        // The confirm flashes once, then a dither fills the screen.
+        function wipe() {
+            return new Promise(function (done) {
+                if (T.reduce) { done(); return; }
+                var c = document.getElementById('wipe');
+                c.hidden = false;
+                var s = 6;
+                var w = Math.ceil(innerWidth / s), h = Math.ceil(innerHeight / s);
+                c.width = w;
+                c.height = h;
+                var x2 = c.getContext('2d');
+                x2.fillStyle = '#161514';
+                var frame = 0, frames = 9;
+                var id = setInterval(function () {
+                    frame++;
+                    var t = frame / frames;
+                    x2.clearRect(0, 0, w, h);
+                    for (var y = 0; y < h; y++) {
+                        for (var x = 0; x < w; x++) {
+                            if (t >= T.bayer(x, y)) x2.fillRect(x, y, 1, 1);
+                        }
+                    }
+                    if (frame >= frames) { clearInterval(id); done(); }
+                }, 42);
+            });
+        }
+
+        async function confirm(el) {
+            if (leaving) return;
+            if (el.dataset.open) { T.click(0.25); openList(levels); select(0, true); return; }
+            if (el.hasAttribute('data-close')) { T.click(0.25); closeLevels(); return; }
+
+            // New tab items open without leaving the title
+            if (el.target === '_blank') {
+                T.click(0.25);
+                window.open(el.href, '_blank', 'noopener');
+                return;
+            }
+
+            leaving = true;
+            T.click();
+            el.classList.add('is-picked');
+            await T.wait(320);
+            await wipe();
+            T.go(el.getAttribute('href'));
+        }
+
+        // ---- Setup -----------------------------------------------------------
+        buildWall();
+        buildMask();
+        new ResizeObserver(buildMask).observe(stage);
+
+        var resizing;
+        addEventListener('resize', function () {
+            clearTimeout(resizing);
+            resizing = setTimeout(function () {
+                buildWall();
+                buildMask();
+                focus(items()[sel].dataset.id || null);
+            }, 160);
+        });
+
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                stage.classList.remove('opening');
+                wall.classList.remove('opening-wall');
+            });
+        });
+
+        // ---- Input -----------------------------------------------------------
+        if (!T.thumb) {
+            addEventListener('keydown', function (e) {
+                if (e.metaKey || e.ctrlKey || e.altKey || leaving) return;
+                if (e.key === 'ArrowDown') { e.preventDefault(); select(sel + 1); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); select(sel - 1); }
+                else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); confirm(items()[sel]); }
+                else if (e.key === 'Escape' && current === levels) closeLevels();
+            });
+
+            lists.addEventListener('pointerover', function (e) {
+                var el = e.target.closest('.item');
+                if (!el) return;
+                var i = items().indexOf(el);
+                if (i >= 0 && i !== sel) select(i);
+            });
+            lists.addEventListener('focusin', function (e) {
+                var el = e.target.closest('.item');
+                if (!el) return;
+                var i = items().indexOf(el);
+                if (i >= 0 && i !== sel) select(i, true);
+            });
+            lists.addEventListener('click', function (e) {
+                var el = e.target.closest('.item');
+                if (!el) return;
+                e.preventDefault();
+                confirm(el);
+            });
+        }
+
+        document.getElementById('skip').addEventListener('click', function (e) {
+            e.preventDefault();
+            T.go(T.HOME);
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Star Map (title screen prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Jersey+25&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../pixel-theme.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+    /* The real background sits underneath, waiting. Its dots are hidden and its
+       blue floor is parked below the screen until the stars settle. */
+    body.is-sky #background-grid { background-image: none !important; }
+    #background-grid::after { transition: translate 0.6s steps(8, end); }
+    body.is-sky #background-grid::after { translate: 0 100%; }
+
+    #sky { position: fixed; inset: 0; z-index: 0; }
+
+    .center {
+        position: fixed;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    .center a { pointer-events: auto; }
+
+    .brand { width: 58px; margin-bottom: 22px; }
+
+    .logo {
+        font-size: min(var(--text-96), 11vw);
+        line-height: 1;
+    }
+
+    .tag {
+        margin-top: 10px;
+        font-size: var(--text-18);
+        color: rgba(255, 255, 255, 0.72);
+    }
+
+    .tag em { color: #fff; }
+
+    .start { margin-top: 30px; font-size: var(--text-28); padding: 7px 22px 9px; }
+    .center .skip { margin-top: 20px; }
+
+    /* Case studies as stops on the map */
+    .planet {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        width: 120px;
+        margin: -32px 0 0 -60px;
+        color: #fff;
+        text-decoration: none;
+        transition: opacity 0.3s steps(4, end);
+    }
+
+    .planet canvas {
+        width: 48px;
+        height: 48px;
+        transition: scale 0.12s steps(2, end);
+    }
+
+    .planet:hover canvas, .planet:focus-visible canvas { scale: 1.34; }
+
+    .planet span {
+        font-family: var(--px-font);
+        font-size: var(--text-20);
+        line-height: 1;
+        white-space: nowrap;
+        color: rgba(255, 255, 255, 0.72);
+    }
+
+    .planet:hover span, .planet:focus-visible span { color: var(--c); }
+
+    .hud {
+        position: fixed;
+        left: 28px;
+        right: 28px;
+        bottom: 22px;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: var(--text-20);
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.72);
+        pointer-events: none;
+    }
+
+    /* Opening and closing share these */
+    .brand, .logo, .tag, .start, .center .skip, .hud {
+        transition: translate 0.4s steps(5, end), opacity 0.4s steps(5, end);
+    }
+
+    .opening .brand, .opening .logo, .opening .tag, .opening .start, .opening .skip, .opening .hud,
+    .leaving .brand, .leaving .logo, .leaving .tag, .leaving .start, .leaving .skip, .leaving .hud { opacity: 0; }
+    .opening .logo, .leaving .logo { translate: 0 10px; }
+    .opening .planet, .leaving .planet { opacity: 0; }
+
+    @media (max-width: 760px) {
+        .brand { width: 46px; margin-bottom: 14px; }
+        .logo { font-size: 12.5vw; }
+        .tag { max-width: 22em; padding-inline: 16px; font-size: var(--text-16); }
+        .planet { width: 64px; margin: -22px 0 0 -32px; gap: 3px; }
+        .planet canvas { width: 32px; height: 32px; }
+        .planet span { font-size: var(--text-14); }
+        .hud { left: 16px; right: 16px; bottom: 16px; font-size: var(--text-16); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .brand, .logo, .tag, .start, .center .skip, .hud, .planet, .planet canvas { transition: none; }
+        #background-grid::after { transition: none; }
+    }
+</style>
+</head>
+<body class="is-sky opening" id="body">
+    <div id="background-grid" class="grid-visible"></div>
+    <a class="t-back" href="index.html">All versions</a>
+    <canvas id="sky" aria-hidden="true"></canvas>
+
+    <main class="center">
+        <img class="brand" src="../assets/logo.png" alt="">
+        <h1 class="logo px">Jonathan Chiang</h1>
+        <p class="tag">Turning product ideas into <em>shipped</em> experiences.</p>
+        <a class="keycap is-white start" href="../index.html" id="start">Start <span aria-hidden="true">&rarr;</span></a>
+        <a class="skip" href="../index.html" id="skip">Skip intro</a>
+    </main>
+
+    <div id="planets"></div>
+
+    <div class="hud px" aria-hidden="true">
+        <span id="clock">NYC</span>
+        <span id="pick">Pick a planet, or press any key</span>
+    </div>
+
+    <script src="sprites.js"></script>
+    <script src="shared.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var T = window.Title;
+        var body = document.getElementById('body');
+        var cv = document.getElementById('sky');
+        var ctx = cv.getContext('2d');
+        var planetsEl = document.getElementById('planets');
+        var clock = document.getElementById('clock');
+
+        if (T.touch) document.getElementById('pick').textContent = 'Tap a planet to jump in';
+
+        // The exact dots in the site background's 216px tile
+        var TILE = 216;
+        var DOTS = [[30, 18, 0.5], [102, 54, 0.32], [174, 30, 0.42], [66, 114, 0.3], [150, 132, 0.5], [18, 162, 0.34], [114, 186, 0.28], [198, 102, 0.36]];
+
+        var dpr = 1, W, H, stars = [], planets = [], paused = false, leaving = false, leaveAt = 0;
+
+        // ---- Sky -------------------------------------------------------------
+        // Every star has a home on the site's dot grid. It starts scattered and
+        // settles there on the way out, so the sky becomes the home background.
+        function build() {
+            W = innerWidth;
+            H = innerHeight;
+            dpr = Math.min(2, devicePixelRatio || 1);
+            cv.width = W * dpr;
+            cv.height = H * dpr;
+            cv.style.width = W + 'px';
+            cv.style.height = H + 'px';
+            var rand = PX.rng(23);
+            var clearW = Math.min(W * 0.46, 350);
+            var clearH = 170;
+            stars = [];
+            for (var ty = 0; ty < H; ty += TILE) {
+                for (var tx = 0; tx < W; tx += TILE) {
+                    DOTS.forEach(function (d) {
+                        var hx = tx + d[0], hy = ty + d[1];
+                        var ang = rand() * 6.28;
+                        var far = 60 + rand() * 180;
+                        var sx = hx + Math.cos(ang) * far;
+                        var sy = hy + Math.sin(ang) * far;
+
+                        // Scattered stars stay out from behind the title
+                        if (Math.abs(sx - W / 2) < clearW && Math.abs(sy - H / 2) < clearH) {
+                            sx += (sx < W / 2 ? -1 : 1) * clearW;
+                        }
+
+                        stars.push({
+                            hx: hx, hy: hy, a: d[2],
+                            sx: sx,
+                            sy: sy,
+                            p: rand() * 6.28,
+                            sp: 0.4 + rand() * 1.2,
+                            big: rand() < 0.1
+                        });
+                    });
+                }
+            }
+        }
+
+        function snap(v) { return Math.round(v / 3) * 3; }
+
+        function drawSky(now) {
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, W, H);
+            var t = leaving ? Math.min(1, (now - leaveAt) / 760) : 0;
+            var e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+            e = Math.round(e * 10) / 10;
+
+            for (var i = 0; i < stars.length; i++) {
+                var s = stars[i];
+                var drift = Math.sin(now / 9000 + s.p) * 6;
+                var tw = 0.5 + 0.5 * Math.sin(now / 900 * s.sp + s.p);
+                var a = Math.max(s.a, Math.round(tw * 4) / 4 * 0.95);
+                var x = snap(s.sx + drift + (s.hx - s.sx - drift) * e);
+                var y = snap(s.sy + (s.hy - s.sy) * e);
+                if (e >= 1) { x = s.hx; y = s.hy; }
+                var size = s.big && e < 0.6 ? 6 : 3;
+                ctx.fillStyle = 'rgba(255,255,255,' + (a + (s.a - a) * e) + ')';
+                ctx.fillRect(x, y, size, size);
+            }
+
+            drawOrbit(t);
+        }
+
+        // ---- Map -------------------------------------------------------------
+        function orbitBox() {
+            var narrow = W < 760;
+            return { cx: W / 2, cy: H / 2 - (narrow ? 0 : 12), rx: narrow ? W * 0.4 : Math.min(W * 0.36, 560), ry: narrow ? H * 0.36 : Math.min(H * 0.36, 320) };
+        }
+
+        function drawOrbit(t) {
+            var o = orbitBox();
+            ctx.fillStyle = 'rgba(127,196,255,' + (0.42 * (1 - t)) + ')';
+            for (var i = 0; i < 132; i++) {
+                var a = (i / 132) * 6.283;
+                ctx.fillRect(snap(o.cx + Math.cos(a) * o.rx), snap(o.cy + Math.sin(a) * o.ry), 3, 3);
+            }
+        }
+
+        var angle = -1.2;
+
+        function placePlanets(now, dt) {
+            if (!paused && !T.reduce) angle += dt * 0.00003;
+            var o = orbitBox();
+            planets.forEach(function (p, i) {
+                var a = angle + (i / planets.length) * 6.283;
+                var x = Math.round(o.cx + Math.cos(a) * o.rx);
+                var y = Math.round(o.cy + Math.sin(a) * o.ry);
+                p.el.style.transform = 'translate(' + (Math.round(x / 3) * 3) + 'px,' + (Math.round(y / 3) * 3) + 'px)';
+            });
+        }
+
+        T.WORK.forEach(function (w) {
+            var a = document.createElement('a');
+            a.className = 'planet';
+            a.href = w.href;
+            a.style.setProperty('--c', w.color);
+            a.setAttribute('aria-label', w.name + ', ' + w.status);
+
+            var c = document.createElement('canvas');
+            c.className = 'pixel';
+            c.width = c.height = 16;
+            PX.draw(c.getContext('2d'), PX.ICONS[w.id], 0, 0);
+
+            var label = document.createElement('span');
+            label.textContent = w.short || w.name;
+
+            a.append(c, label);
+            planetsEl.appendChild(a);
+            planets.push({ el: a });
+
+            a.addEventListener('pointerenter', function () { paused = true; });
+            a.addEventListener('pointerleave', function () { paused = false; });
+            a.addEventListener('focus', function () { paused = true; });
+            a.addEventListener('blur', function () { paused = false; });
+            a.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                leave(w.href);
+            });
+        });
+
+        // ---- Clock -----------------------------------------------------------
+        var fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', second: '2-digit' });
+        function tick() { clock.textContent = 'NYC ' + fmt.format(new Date()); }
+        tick();
+        setInterval(tick, 1000);
+
+        // ---- Loop ------------------------------------------------------------
+        build();
+        var resizing;
+        addEventListener('resize', function () {
+            clearTimeout(resizing);
+            resizing = setTimeout(build, 120);
+        });
+
+        var last = performance.now();
+        if (T.reduce) {
+            drawSky(0);
+            placePlanets(0, 0);
+        } else {
+            T.ticker(20, function (frame, now) {
+                drawSky(now);
+                placePlanets(now, now - last);
+                last = now;
+            });
+        }
+
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () { body.classList.remove('opening'); });
+        });
+
+        // ---- Start -----------------------------------------------------------
+        // The stars fall into the site's grid and the blue floor rises under
+        // them. When the page swaps, the background is already in place.
+        async function leave(href) {
+            if (leaving) return;
+            leaving = true;
+            leaveAt = performance.now();
+            T.click();
+            body.classList.add('leaving');
+            await T.wait(420);
+            body.classList.remove('is-sky');
+            await T.wait(520);
+            cv.style.visibility = 'hidden';
+            T.go(href || T.HOME);
+        }
+
+        var fire = T.onStart(function () { leave(); });
+        document.getElementById('start').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (fire) fire();
+        });
+        document.getElementById('skip').addEventListener('click', function (e) {
+            e.preventDefault();
+            T.go(T.HOME);
+        });
+    })();
+    </script>
+</body>
+</html>

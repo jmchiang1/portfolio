@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Rooftop (title screen prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Jersey+25&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../pixel-theme.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+    .stage { position: fixed; inset: 0; overflow: hidden; }
+
+    .ui {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 11vh;
+        text-align: center;
+    }
+
+    .logo {
+        --e: 0.042em;
+        font-size: min(calc(var(--text-128) * 1.25), 12.4vw);
+        line-height: 0.9;
+        white-space: nowrap;
+        text-shadow:
+            0 var(--e) 0 #2f96ff,
+            0 calc(var(--e) * 2) 0 #1180f9,
+            0 calc(var(--e) * 3) 0 #0a4a9a,
+            0 calc(var(--e) * 4) 0 #0c0b0a;
+    }
+
+    .role {
+        margin-top: 2.4vh;
+        font-size: var(--text-28);
+        line-height: 1;
+        color: #cfe3ff;
+    }
+
+    .prompt {
+        margin-top: 5vh;
+        font-size: var(--text-40);
+        line-height: 1;
+        color: #ffc940;
+        text-shadow: 0 3px 0 #0c0b0a;
+    }
+
+    .foot {
+        position: absolute;
+        left: 28px;
+        right: 28px;
+        bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: var(--text-20);
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.72);
+    }
+
+    /* Closing: the title lifts away in steps while the scene sinks */
+    .logo, .role, .prompt, .foot {
+        transition: translate 0.55s steps(6, end), opacity 0.55s steps(6, end);
+    }
+
+    .leaving .logo { translate: 0 -30vh; opacity: 0; }
+    .leaving .role { translate: 0 -30vh; opacity: 0; transition-delay: 0.05s; }
+    .leaving .prompt { opacity: 0; }
+    .leaving .foot { translate: 0 60px; opacity: 0; }
+
+    /* Opening: the same moves in reverse */
+    .opening .logo, .opening .role { translate: 0 -30vh; opacity: 0; }
+    .opening .prompt { opacity: 0; }
+    .opening .foot { translate: 0 60px; opacity: 0; }
+
+    @media (max-width: 640px) {
+        .ui { padding-top: 13vh; }
+        .logo { font-size: 21vw; white-space: normal; }
+        .role { font-size: var(--text-20); }
+        .prompt { font-size: var(--text-32); }
+        .foot { left: 16px; right: 16px; bottom: 16px; font-size: var(--text-16); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .logo, .role, .prompt, .foot { transition: none; }
+    }
+</style>
+</head>
+<body>
+    <a class="t-back" href="index.html">All versions</a>
+    <main class="stage opening" id="stage">
+        <canvas class="pixel" id="scene" aria-hidden="true"></canvas>
+        <div class="ui">
+            <h1 class="logo px">Jonathan Chiang</h1>
+            <p class="role px"><span>Product Designer &amp; Design Engineer</span></p>
+            <p class="prompt px"><a href="../index.html" id="start" class="blink" style="color: inherit; text-decoration: none;"><span id="promptText">Press any key</span></a></p>
+            <div class="foot px">
+                <span>&copy; 2026 Jonathan Chiang</span>
+                <a class="skip" href="../index.html" id="skip">Skip intro</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="sprites.js"></script>
+    <script src="shared.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var T = window.Title;
+        var stage = document.getElementById('stage');
+        var cv = document.getElementById('scene');
+        var ctx = cv.getContext('2d');
+        var W, H, S, roofY, sky, far, mid, near, roof, stars, pointer = 0, leaving = 0, leaveAt = 0;
+
+        if (T.touch) document.getElementById('promptText').textContent = 'Tap to start';
+
+        // ---- Skyline layers --------------------------------------------------
+        function canvas(w, h) {
+            var c = document.createElement('canvas');
+            c.width = w;
+            c.height = h;
+            return c;
+        }
+
+        function tower(c, x, base, widths, col) {
+            var y = base;
+            widths.forEach(function (t) {
+                y -= t[1];
+                c.fillStyle = col;
+                c.fillRect(x - Math.floor(t[0] / 2), y, t[0], t[1]);
+            });
+            return y;
+        }
+
+        function makeLayer(seed, o) {
+            var rand = PX.rng(seed);
+            var w = W + 40;
+            var c = canvas(w, H);
+            var x2 = c.getContext('2d');
+            var windows = [];
+            var x = -6;
+            while (x < w) {
+                var bw = o.minW + Math.floor(rand() * (o.maxW - o.minW));
+                var bh = Math.floor((o.minH + rand() * (o.maxH - o.minH)) * roofY);
+                var clearing = o.clear && x < o.clear[1] && x + bw > o.clear[0];
+                var quiet = o.quiet && x < o.quiet[1] && x + bw > o.quiet[0];
+                if (clearing) bh = 6 + Math.floor(rand() * 6);
+                var top = roofY - bh + 4;
+                x2.fillStyle = o.col;
+                x2.fillRect(x, top, bw, bh + 8);
+                x2.fillStyle = o.edge;
+                x2.fillRect(x, top, 1, bh + 8);
+                x2.fillRect(x, top, bw, 1);
+
+                var cap = clearing ? 1 : rand();
+                if (cap < 0.28) {
+                    // Antenna
+                    x2.fillStyle = o.col;
+                    x2.fillRect(x + Math.floor(bw / 2), top - 9, 1, 9);
+                } else if (cap < 0.5 && bw > 14) {
+                    // Stepped crown
+                    x2.fillStyle = o.col;
+                    x2.fillRect(x + 3, top - 3, bw - 6, 3);
+                    x2.fillRect(x + 6, top - 6, Math.max(2, bw - 12), 3);
+                } else if (cap < 0.72 && o.tanks) {
+                    // Water tank, the New York detail
+                    var tx = x + 3 + Math.floor(rand() * Math.max(1, bw - 12));
+                    x2.fillStyle = o.col;
+                    x2.fillRect(tx + 1, top - 3, 1, 3);
+                    x2.fillRect(tx + 5, top - 3, 1, 3);
+                    x2.fillRect(tx, top - 9, 7, 6);
+                    x2.fillRect(tx + 1, top - 10, 5, 1);
+                    x2.fillRect(tx + 3, top - 11, 1, 1);
+                }
+
+                if (o.win && !clearing) {
+                    for (var wy = top + 4; wy < roofY - 2; wy += o.gapY) {
+                        for (var wx = x + 3; wx < x + bw - 3; wx += o.gapX) {
+                            // Unlit behind the characters, so they stay readable
+                            var on = !quiet && rand() < o.lit;
+                            var warm = rand() < o.warm;
+                            var win = { x: wx, y: wy, on: on, col: warm ? '#ffc940' : '#7fc4ff', off: o.dark };
+                            if (!quiet) windows.push(win);
+                            x2.fillStyle = on ? win.col : win.off;
+                            x2.fillRect(wx, wy, o.winW, o.winH);
+                        }
+                    }
+                }
+                x += bw + (rand() < 0.3 ? 2 : 0);
+            }
+            return { c: c, x2: x2, windows: windows, w: o.winW, h: o.winH };
+        }
+
+        function makeFar() {
+            var l = makeLayer(11, { col: '#0e3f85', edge: '#14529f', minW: 16, maxW: 40, minH: 0.26, maxH: 0.46 });
+            // One tall stepped tower anchors the skyline
+            var x = Math.floor(W * 0.74);
+            var top = tower(l.x2, x, roofY + 4, [[34, Math.floor(roofY * 0.34)], [26, 14], [18, 10], [10, 8], [5, 6], [1, 10]], '#0e3f85');
+            l.x2.fillStyle = '#14529f';
+            l.x2.fillRect(x, top, 1, 10);
+            return l;
+        }
+
+        function makeRoof() {
+            var c = canvas(W + 20, H);
+            var x2 = c.getContext('2d');
+            x2.fillStyle = '#0c0b0a';
+            x2.fillRect(0, roofY, W + 20, H - roofY);
+            x2.fillStyle = '#2a2927';
+            x2.fillRect(0, roofY, W + 20, 2);
+            x2.fillStyle = '#161514';
+            x2.fillRect(0, roofY + 2, W + 20, 3);
+
+            // Water tower on the right
+            var tx = Math.floor(W * 0.86);
+            var ty = roofY - 50;
+            x2.fillStyle = '#0c0b0a';
+            [[3, 30], [23, 30], [13, 30]].forEach(function (leg) { x2.fillRect(tx + leg[0], ty + 30, 2, 20); });
+            x2.fillRect(tx + 2, ty + 38, 24, 1);
+            x2.fillRect(tx, ty + 6, 28, 26);
+            x2.fillRect(tx + 2, ty + 3, 24, 3);
+            x2.fillRect(tx + 6, ty, 16, 3);
+            x2.fillRect(tx + 11, ty - 3, 6, 3);
+            x2.fillStyle = '#242321';
+            for (var i = 0; i < 26; i += 4) x2.fillRect(tx + 1 + i, ty + 7, 1, 24);
+            x2.fillStyle = '#3a3936';
+            x2.fillRect(tx, ty + 12, 28, 1);
+            x2.fillRect(tx, ty + 24, 28, 1);
+
+            // Vent
+            var vx = Math.floor(W * 0.14);
+            x2.fillStyle = '#0c0b0a';
+            x2.fillRect(vx, roofY - 12, 24, 12);
+            x2.fillStyle = '#242321';
+            x2.fillRect(vx, roofY - 12, 24, 1);
+            for (var v = 3; v < 11; v += 2) x2.fillRect(vx + 3, roofY - 12 + v, 18, 1);
+            return c;
+        }
+
+        function build() {
+            var fit = T.fit(cv, { w: 400, h: 225 });
+            W = fit.w; H = fit.h; S = fit.scale;
+            roofY = H - Math.max(26, Math.floor(H * 0.13));
+            sky = T.ditherSky(W, roofY + 8, ['#161514', '#161514', '#121a2a', '#0f2747', '#0f3d7c', '#1266cc', '#2f96ff']);
+            far = makeFar();
+            mid = makeLayer(29, { col: '#0a2750', edge: '#0f3768', minW: 18, maxW: 44, minH: 0.2, maxH: 0.36, tanks: true,
+                quiet: [W * 0.42, W * 0.58], win: true, gapX: 5, gapY: 6, winW: 2, winH: 3, lit: 0.22, warm: 0.4, dark: '#0d3060' });
+            near = makeLayer(47, { col: '#0a1529', edge: '#12243f', minW: 22, maxW: 54, minH: 0.08, maxH: 0.24, tanks: true,
+                clear: [W * 0.4, W * 0.6], win: true, gapX: 6, gapY: 7, winW: 3, winH: 4, lit: 0.34, warm: 0.82, dark: '#101f38' });
+            roof = makeRoof();
+
+            var rand = PX.rng(5);
+            stars = [];
+            var count = Math.floor(W * H / 620);
+            for (var i = 0; i < count; i++) {
+                stars.push({ x: Math.floor(rand() * W), y: Math.floor(rand() * roofY * 0.5), p: rand() * 6.28, big: rand() < 0.12 });
+            }
+        }
+
+        // ---- Drawing ---------------------------------------------------------
+        var meteor = null;
+
+        // Keeps stars out from behind the small text. Measured as it draws, so
+        // a font swap can't leave it stale. offset* ignores the opening transform.
+        function textBoxes() {
+            return ['.role', '.prompt'].map(function (sel) {
+                var el = document.querySelector(sel);
+                var inner = el.firstElementChild;
+                return {
+                    l: (inner.offsetLeft - 16) / S, r: (inner.offsetLeft + inner.offsetWidth + 16) / S,
+                    t: (el.offsetTop - 10) / S, b: (el.offsetTop + el.offsetHeight + 10) / S
+                };
+            });
+        }
+
+        function drawStars(frame) {
+            var keep = textBoxes();
+            stars.forEach(function (s) {
+                if (keep.some(function (k) { return s.x > k.l && s.x < k.r && s.y > k.t && s.y < k.b; })) return;
+                var a = 0.3 + 0.7 * Math.abs(Math.sin(s.p + frame * 0.05));
+                ctx.fillStyle = 'rgba(255,255,255,' + (Math.round(a * 4) / 4) + ')';
+                ctx.fillRect(s.x, s.y, s.big ? 2 : 1, s.big ? 2 : 1);
+            });
+        }
+
+        function drawMeteor() {
+            if (!meteor) return;
+            meteor.x += 5;
+            meteor.y += 2;
+            meteor.life--;
+            for (var i = 0; i < 6; i++) {
+                ctx.fillStyle = 'rgba(255,255,255,' + (1 - i / 6) + ')';
+                ctx.fillRect(meteor.x - i * 5, meteor.y - i * 2, 4, 1);
+            }
+            if (meteor.life <= 0) meteor = null;
+        }
+
+        function twinkle(layer) {
+            for (var i = 0; i < 2; i++) {
+                var w = layer.windows[Math.floor(Math.random() * layer.windows.length)];
+                if (!w) return;
+                w.on = !w.on;
+                layer.x2.fillStyle = w.on ? w.col : w.off;
+                layer.x2.fillRect(w.x, w.y, layer.w, layer.h);
+            }
+        }
+
+        function step(t, n) { return Math.round(t * n) / n; }
+
+        function draw(frame, now) {
+            var t = 0;
+            if (leaving) t = Math.min(1, (now - leaveAt) / 720);
+
+            var ease = t * t;
+            ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = '#161514';
+            ctx.fillRect(0, 0, W, H);
+
+            // The glow drains away, leaving the same sky as the home page
+            ctx.globalAlpha = 1 - step(t, 6);
+            ctx.drawImage(sky, 0, 0);
+            ctx.globalAlpha = 1;
+            drawStars(frame);
+            drawMeteor();
+
+            var sink = Math.round(ease * H * 0.8);
+            var px = Math.round(pointer * 2);
+            ctx.drawImage(far.c, -20 - px, Math.round(sink * 0.7));
+            ctx.drawImage(mid.c, -20 - px * 2, Math.round(sink * 0.85));
+            ctx.drawImage(near.c, -20 - px * 3, sink);
+
+            // Roof, with Jonathan and Bit standing on it
+            ctx.drawImage(roof, -10 - px * 4, Math.round(sink * 1.2));
+            var y = roofY + Math.round(sink * 1.2);
+            var hx = Math.floor(W * 0.5) - 26 - px * 4;
+            PX.draw(ctx, PX.HERO.stand, hx, y - 38);
+
+            var hop = 0;
+            var beat = frame % 36;
+            if (beat < 6) hop = [0, 2, 3, 3, 2, 0][beat];
+            if (leaving) hop = [0, 2, 4, 5, 4, 2, 0][frame % 7];
+            PX.draw(ctx, PX.BIT, hx + 34, y - 15 - hop);
+            ctx.fillStyle = frame % 16 < 8 ? '#2f96ff' : '#1180f9';
+            ctx.fillRect(hx + 41, y - 14 - hop, 2, 2);
+        }
+
+        build();
+        var resizing;
+        addEventListener('resize', function () {
+            clearTimeout(resizing);
+            resizing = setTimeout(build, 120);
+        });
+
+        addEventListener('pointermove', function (e) {
+            pointer = Math.round((e.clientX / innerWidth - 0.5) * 2 * 3) / 3;
+        });
+
+        if (T.reduce) {
+            draw(0, 0);
+        } else {
+            T.ticker(12, function (frame, now) {
+                if (frame % 3 === 0 && !leaving) { twinkle(mid); twinkle(near); }
+                if (frame % 90 === 60 && !meteor && !leaving) {
+                    meteor = { x: Math.floor(W * (0.1 + Math.random() * 0.4)), y: Math.floor(H * 0.05), life: 14 };
+                }
+                draw(frame, now);
+            });
+        }
+
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () { stage.classList.remove('opening'); });
+        });
+
+        // ---- Start -----------------------------------------------------------
+        async function leave() {
+            if (leaving) return;
+            leaving = 1;
+            leaveAt = performance.now();
+            stage.classList.add('leaving');
+            await T.wait(760);
+            T.go(T.HOME);
+        }
+
+        var fire = T.onStart(leave);
+        document.getElementById('start').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (fire) fire();
+        });
+        document.getElementById('skip').addEventListener('click', function (e) {
+            e.preventDefault();
+            T.go(T.HOME);
+        });
+    })();
+    </script>
+</body>
+</html>

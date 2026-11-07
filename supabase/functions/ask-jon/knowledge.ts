@@ -8,9 +8,9 @@ Source: jonathanchiang.com (static portfolio) and the resume PDF linked from it.
 
 ## 1. Summary
 
-Jonathan Chiang is a New York–based product designer and design engineer who designs and also builds in code (HTML/CSS, JavaScript, React, Claude Code, Cursor). The home page calls him "A Senior Technical Product Designer with 4 years of experience in NYC" and uses the tagline "Turning product ideas into shipped experiences." He has an M.S. in Communication Design from Parsons School of Design and a B.S. in Business Administration from the University at Buffalo. He has worked at SkillCat, ScriptChain Health, Co.Lab, JPMorgan Chase and Omnicom Media Group, and he is founding Apollo Racket Club, an indoor badminton facility.
+Jonathan Chiang is a New York–based product designer and design engineer who designs and also builds in code (HTML/CSS, JavaScript, React, Claude Code, Cursor). His title is Product Designer & Design Engineer, based in NYC, and he is open to full-time roles. The home page uses the tagline "Turning product ideas into shipped experiences." He has an M.S. in Communication Design from Parsons School of Design and a B.S. in Business Administration from the University at Buffalo. He has worked at SkillCat, ScriptChain Health, Co.Lab, JPMorgan Chase and Omnicom Media Group, and he is founding Apollo Racket Club, an indoor badminton facility.
 
-The About page cycles through these titles for him: Product Designer, Software Engineer, Design Engineer, Technical Product Designer, Creative Technologist.
+The About page cycles through Product Designer and Design Engineer.
 
 About-page bio (verbatim): "…focused on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I'm especially interested in the details that make products feel seamless — from user flows and interface systems to motion, responsiveness, and overall polish. My background spans UX/UI design, prototyping, research, and front-end development, which allows me to think beyond static screens and design with execution in mind."
 
@@ -26,23 +26,20 @@ About-page bio (verbatim): "…focused on crafting clean, modern digital experie
 - Apollo Racket Club links: https://apolloracketclub.com/ · https://www.instagram.com/apolloracketclub/ · https://www.facebook.com/profile.php?id=61592577303122
 - There is no contact form on the site.
 
-## 3. Current role
+## 3. Current status
 
-The site does not state clearly what he is doing now. Answer carefully:
-- About page: "Design Engineer, SkillCat, 2025 — Present."
-- Home page: "Previously designed and built at SkillCat."
-- Resume and the SkillCat case study: the SkillCat role ran September 2025 – June 2026.
+- He is looking for a full-time role as a Product Designer & Design Engineer.
+- His most recent role was at SkillCat (Design Engineer on the site, Technical Product Designer on the resume), September 2025 – June 2026. The SkillCat redesign has not shipped yet.
 - Apollo Racket Club (apollo.html): he is the founder of this planned indoor badminton facility, which was "Pre lease, 2026" at the time of writing. The business is Apollo Sports, LLC, a New York LLC.
-- Safe answer: his most recent listed role was at SkillCat (Design Engineer / Technical Product Designer, Sept 2025 – June 2026), and he is founding Apollo Racket Club. The site does not say whether he is looking for a job or what his next role is.
 
 ## 4. Experience
 
-**SkillCat — Design Engineer (About page) / Technical Product Designer (resume)** — the home page calls him a "Senior Technical Product Designer" in general
+**SkillCat — Design Engineer (About page) / Technical Product Designer (resume)** — his overall title is Product Designer & Design Engineer
 - Dates: About says "2025 — Present"; resume and case study say September 2025 – June 2026. New York, NY.
 - About page: "Leading design and front-end development for a mobile learning platform focused on trade skills. Building UI components, prototyping interactions, and bridging the gap between design and engineering."
 - Resume: defined SkillCat's product strategy, moving it from "certification-first" to a full trades career journey, which shaped the roadmap and core experiences to drive longer-term retention and engagement. Led end-to-end interaction design and development for the redesigned learning journey, working with the backend and technical support teams. Redesigned the B2B manager dashboard by rebuilding the prototype with Claude Code, adding new user flows and delivering updated specs for developer handoff.
 
-**ScriptChain Health — UX Designer (About) / Product Designer (resume) / Lead Product Designer (case study)**
+**ScriptChain Health — Technical Product Designer**
 - Dates: About says "2025"; resume says June 2025 – September 2025; case study says "May 2025 · September 2025" (sources differ). New York, NY.
 - About page: "Designed patient-facing dashboards and data visualization tools for a health-tech startup. Conducted user research and usability testing to simplify complex medical data workflows."
 - Resume: led product design for the patient and provider portals, which aim to reduce metabolic syndrome with personalized wellness plans, including prototyping user flows and making motion graphic videos. Worked with machine learning engineers, stakeholders and patients so that design decisions matched medical goals and regulatory requirements.
@@ -106,12 +103,12 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 - **AI safety rails:** Every insight is typed JSON with cited data, a confidence label and a disclaimer. The AI never diagnoses and never suggests pressure changes. Central-apnea or SpO₂ patterns trigger a physician-referral flag.
 - **Testing:** Moderated sessions with 5 CPAP users produced 142 unique notes. Changes he shipped in the prototype: multi-select check-in answers, leak rate promoted, every number given a reference point, an onboarding step counter, and no 0–100 scores.
 - **Outcomes:** "Nocta hasn't launched, so I won't claim results." Planned metrics: activation, compliance (north star), engagement, and a safety guardrail.
-- **Links:** Live prototype https://nocta-teal.vercel.app/ · GitHub https://github.com/jmchiang1/Nocta. The prototype runs on his own CPAP data.
+- **Links:** Live beta https://www.noctaapp.com/ · GitHub https://github.com/jmchiang1/Nocta. The prototype runs on his own CPAP data.
 
 ### ScriptChain Health — /scriptchain.html
 - **Card:** In-House · 0-1 Design · Handoff · 2025. "Reducing metabolic syndrome through custom diet and exercise plans, all without Nutritionists or Exercise Physiologists."
 - **Product:** "An agentic food & exercise as medicine platform." It has four surfaces (a marketing site, a patient mobile app, a standalone clinician console, and a version embedded inside Epic) connected by one agentic loop. An AI agent reads a clinic's EHR data (labs, meds, vitals), flags patients trending toward metabolic syndrome, and drafts food and movement plans. A physician reviews and signs each plan, the patient follows it as a daily routine, and adherence data feeds back into the next recommendation.
-- **Role:** Lead Product Designer. He owned all four surfaces, the design system and the agentic plan-review flow. **Timeline:** May 2025 – September 2025 (the resume says June–September 2025). **Sector:** Preventive care, agentic AI. Team size is not stated.
+- **Role:** Technical Product Designer. He owned all four surfaces, the design system and the agentic plan-review flow. **Timeline:** May 2025 – September 2025 (the resume says June–September 2025). **Sector:** Preventive care, agentic AI. Team size is not stated.
 - **Patient app:** Today's meals and movement, adherence rings, an always-on AI coach ("Sage"), vitals synced from devices or logged by hand, and one-tap Instacart ordering of ingredients.
 - **Clinician console:** A cohort view with risk stratification and agent-flagged patients, plus a sign-off queue. Each drafted plan opens as a focused review (rationale, proposed changes, projected impact) that can be approved or sent back with edits. Approvals auto-code the billable activity. It is also delivered as a SMART-on-FHIR app inside Epic Hyperspace, where it fires a BestPractice Advisory and writes orders, the plan note and charges back to the chart.
 - **Marketing site:** A WebGL hero, the three-surface product story, and automated-reimbursement messaging that presents prevention as revenue-positive care.
@@ -163,7 +160,7 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 - **/welcome.html:** First-visit splash. Visitors "Build your keyboard to begin!" by choosing a name, layout (60%, 75%, TKL), case, switch (tactile, linear, clicky) and keycaps. "Skip to Portfolio" is available.
 - **/visitors.html:** A guestbook gallery of visitors' saved keyboard cards, which they can edit. It links to the typing test: "Think you can beat my record of 120 WPM?"
 - **/typing.html:** A typing test (15/30/60/120 seconds; punctuation/numbers options). Anyone scoring 10+ WPM gets a joke trophy ("Just kidding, everyone is a winner!").
-- **/motion.html:** Motion work: American Express Card Shop launch concept (2026, built with Claude); Robinhood portfolio growth animation (2026, Claude); SkillCat promo (2026, Claude); four SkillCat interactions (Lesson Card, Course Added, Certificate, Certificate Spin; 2026; Figma, React Native, Claude Code); "Like I Do" synthwave lyric video for J.Tajor & sunkis (2025, Claude Code); Museum of the Moving Image logo animation (Spring 2025); Nocta product promo (2026, Claude Code).
+- **/motion.html:** Motion work: Robinhood portfolio growth animation (2026, built with Claude); SkillCat promo (2026, Claude); four SkillCat interactions (Lesson Card, Course Added, Certificate, Certificate Spin; 2026; Figma, React Native, Claude Code); "Like I Do" synthwave lyric video for J.Tajor & sunkis (2025, Claude Code); Museum of the Moving Image logo animation (Spring 2025); Nocta product promo (2026, Claude Code).
 - **/vibes.html:** Live-site side projects: Apollo Racket Club, CourtFit, Kotofit Sport Complex.
 - **/about.html:** Bio, skills, education and experience.
 - **/code.html and /design.html:** Old template pages with placeholder content (for example "95% test coverage", "1M+ requests/day", "2M+ users"). Nothing on the site links to them. **Do not treat anything on these pages as real work or real metrics.**

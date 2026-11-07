@@ -27,6 +27,8 @@
         @keyframes jc-body-fade { to { opacity: 1; } }
     </style>
     <link rel="stylesheet" href="mascot-chat.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap">
+    <link rel="stylesheet" href="pixel-theme.css">
 </head>
 <body>
     <!-- Background Grid — CSS grid pattern -->
@@ -38,7 +40,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="nav-logo">
-            <img src="assets/logo.png" alt="JC" />
+            <img src="assets/logo-keycap.svg" alt="JC" />
         </a>
         <div class="nav-links">
             <a href="/" class="nav-link">UX/UI</a>
@@ -177,15 +179,19 @@
             <!-- Project 3 — Kotofit Website Redesign -->
             <article class="vibes-card" data-live="https://jmchiang1.github.io/kotofit/">
                 <div class="vibes-card-preview">
-                    <div class="vibes-card-frame vibes-card-frame-media">
-                        <video
-                            class="vibes-card-video"
-                            src="assets/Vibes/kotofit-website.mp4"
-                            muted
-                            loop
-                            playsinline
-                            autoplay
-                            preload="metadata"></video>
+                    <div class="vibes-card-frame">
+                        <iframe
+                            class="vibes-card-iframe"
+                            src="https://jmchiang1.github.io/kotofit/"
+                            title="Kotofit Sport Complex — live preview"
+                            loading="lazy"
+                            sandbox="allow-scripts allow-same-origin"
+                            referrerpolicy="no-referrer"></iframe>
+                        <div class="vibes-card-frame-overlay" aria-hidden="true"></div>
+                        <div class="vibes-card-loading">
+                            <div class="vibes-card-spinner"></div>
+                            <span>Loading preview…</span>
+                        </div>
                     </div>
                 </div>
 
@@ -237,5 +243,7 @@
     <script src="transitions.js"></script>
     <script src="vibes.js"></script>
     <script src="mascot-chat.js" defer></script>
+    <script src="pixel-bg.js"></script>
+    <script src="video-budget.js"></script>
 </body>
 </html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Lighter walls (title screen prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Jersey+25&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../pixel-theme.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+    /* ---- The visual. One page, four looks, set by ?look= ---- */
+    .wall {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        transition: opacity 0.4s steps(5, end);
+    }
+
+    .tile {
+        position: relative;
+        display: block;
+        flex: none;
+        overflow: hidden;
+        background: #0c0b0a;
+        box-shadow: 0 0 0 3px #3a3936;
+        transition: opacity 0.2s steps(4, end), filter 0.2s steps(4, end), box-shadow 0.1s steps(2, end), translate 0.1s steps(2, end);
+    }
+
+    .tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+    /* Level Select: only the highlighted project stays lit */
+    .wall.has-focus .tile { opacity: 0.14; }
+    .wall.has-focus .tile.is-focus { opacity: 1; filter: none; box-shadow: 0 0 0 3px #fff; }
+
+    /* Rows: the old streaming shelf. Uniform tiles, sliding slowly. */
+    .rail {
+        --tile-w: calc(var(--rail-h) * 1.6);
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: calc(var(--rail-h) + 6px);
+        padding-block: 3px;
+        overflow: hidden;
+    }
+
+    .track {
+        display: flex;
+        gap: 16px;
+        width: max-content;
+        padding-left: 3px;
+        animation: slide var(--secs) linear infinite;
+    }
+
+    .rail.is-reverse .track { animation-direction: reverse; }
+    .rail:hover .track { animation-play-state: paused; }
+
+    @keyframes slide {
+        to { translate: calc(var(--period) * -1) 0; }
+    }
+
+    .rail .tile { width: var(--tile-w); height: var(--rail-h); opacity: 0.72; }
+    .rail .tile:hover { opacity: 1; box-shadow: 0 0 0 3px #fff; }
+
+    /* Shelf: one row along the bottom */
+    .look-shelf { --rail-h: clamp(84px, 18vh, 176px); }
+    .look-shelf .rail { bottom: 3.4vh; }
+    .look-shelf .center { top: calc(50% - var(--rail-h) / 2 - 1.7vh); }
+
+    /* Rails: a row above and a row below */
+    .look-rails { --rail-h: clamp(60px, 11.5vh, 116px); }
+    .look-rails .rail:first-child { top: 2.4vh; }
+    .look-rails .rail:last-child { bottom: 2.4vh; }
+
+    /* Dim: the full wall, tilted and turned right down. One tile wakes at a time. */
+    .tilt {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        translate: -50% -50%;
+        rotate: -7deg;
+        display: grid;
+        grid-template-columns: repeat(var(--cols), var(--tile-w));
+        gap: 18px;
+    }
+
+    .tilt .tile {
+        aspect-ratio: 16 / 10;
+        opacity: 0.13;
+        filter: grayscale(1);
+        box-shadow: none;
+        transition: opacity 0.6s steps(6, end), filter 0.6s steps(6, end), box-shadow 0.1s steps(2, end);
+    }
+
+    .tilt .tile.is-lit, .tilt .tile:hover { opacity: 0.9; filter: none; }
+
+    /* Box art: flat covers instead of screens, so nothing asks to be read */
+    .cols { position: absolute; inset: 0; display: flex; justify-content: center; gap: 16px; }
+    .col { flex: 0 0 var(--tile-w); display: flex; flex-direction: column; gap: 16px; margin-top: var(--col-y); }
+
+    .col .tile {
+        aspect-ratio: 3 / 4;
+        background: var(--d);
+        box-shadow: none;
+        opacity: 0.6;
+    }
+
+    .col .tile:hover { opacity: 1; box-shadow: 0 0 0 3px #fff; }
+    .col .tile canvas { position: absolute; left: 50%; top: 42%; width: 44%; height: auto; aspect-ratio: 1; translate: -50% -50%; }
+
+    .col .tile span {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 9%;
+        color: #fff;
+        font-family: var(--px-font);
+        font-size: var(--text-18);
+        line-height: 1;
+        text-align: center;
+        opacity: 0.8;
+    }
+
+    /* ---- All the text, in the middle ---- */
+    .center {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        z-index: 2;
+        translate: -50% -50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(1040px, calc(100vw - 32px));
+        text-align: center;
+    }
+
+    .logo {
+        --e: 0.042em;
+        font-size: min(calc(var(--text-128) * 0.95), 10.4vw, 15vh);
+        line-height: 0.9;
+        white-space: nowrap;
+        text-shadow:
+            0 var(--e) 0 #2f96ff,
+            0 calc(var(--e) * 2) 0 #1180f9,
+            0 calc(var(--e) * 3) 0 #0a4a9a,
+            0 calc(var(--e) * 4) 0 #0c0b0a;
+    }
+
+    .role {
+        margin-top: 20px;
+        font-size: var(--text-24);
+        line-height: 1;
+        color: #cfe3ff;
+    }
+
+    .lists {
+        position: relative;
+        width: 100%;
+        height: 212px;
+        margin-top: 30px;
+        transition: height 0.2s steps(4, end);
+    }
+
+    .lists.is-levels { height: 244px; }
+
+    .list {
+        position: absolute;
+        inset: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        list-style: none;
+        transition: translate 0.2s steps(4, end), opacity 0.2s steps(4, end), visibility 0s;
+    }
+
+    .list li { width: min(340px, 100%); }
+
+    .list.is-away {
+        translate: -36px 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: translate 0.2s steps(4, end), opacity 0.2s steps(4, end), visibility 0s 0.2s;
+    }
+
+    #levels.is-away { translate: 36px 0; }
+
+    .item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        padding: 5px 34px 7px;
+        border: 0;
+        background: none;
+        color: rgba(255, 255, 255, 0.78);
+        font-family: var(--px-font);
+        font-size: var(--text-36);
+        line-height: 1;
+        text-decoration: none;
+    }
+
+    #levels .item { justify-content: flex-start; font-size: var(--text-28); padding-block: 3px 4px; }
+    #levels .item.is-back { justify-content: center; margin-top: 4px; font-size: var(--text-24); }
+    .item canvas { width: 30px; height: 30px; flex: none; }
+    .item small { margin-left: auto; font-family: inherit; font-size: var(--text-20); opacity: 0.72; }
+
+    /* The selected row is the site's active key: white, with a hard edge */
+    .item.is-sel {
+        background: #fff;
+        color: #161514;
+        box-shadow: 0 3px 0 #8d8c88;
+    }
+
+    .item.is-sel::before {
+        content: '';
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        width: 0;
+        height: 0;
+        margin-top: -8px;
+        border-block: 8px solid transparent;
+        border-left: 10px solid #1180f9;
+    }
+
+    .item.is-picked { animation: picked 0.32s steps(1, end) 1; }
+
+    @keyframes picked {
+        0%, 100% { background: #fff; color: #161514; }
+        50% { background: #1180f9; color: #fff; }
+    }
+
+    .hint {
+        min-height: 1.1em;
+        margin-top: 16px;
+        font-size: var(--text-22);
+        line-height: 1.1;
+        color: #7fc4ff;
+    }
+
+    .center .skip { margin-top: 14px; }
+
+    /* Plain: no wall, and Start already does what Skip would */
+    .look-plain .center .skip { display: none; }
+
+    /* Opening and closing share these */
+    .logo, .role, .lists, .hint, .center .skip { transition: translate 0.36s steps(6, end), opacity 0.36s steps(6, end), height 0.2s steps(4, end); }
+    .opening .logo, .opening .role { translate: 0 -40px; opacity: 0; }
+    .opening .lists, .opening .hint, .opening .skip { translate: 0 30px; opacity: 0; }
+    .opening-wall { opacity: 0; }
+
+    /* Closing: a dither that fills the screen */
+    #wipe { position: fixed; inset: 0; z-index: 50; width: 100%; height: 100%; pointer-events: none; }
+
+    @media (min-width: 1800px) and (min-height: 1000px) {
+        .logo { font-size: calc(var(--text-128) * 1.3); }
+        .role { font-size: var(--text-32); }
+    }
+
+    @media (max-width: 640px) {
+        .logo { font-size: 20vw; white-space: normal; }
+        .role { margin-top: 14px; font-size: var(--text-18); }
+        .item { font-size: var(--text-28); }
+        .hint { font-size: var(--text-18); }
+        .lists { height: 176px; margin-top: 20px; }
+        .lists.is-levels { height: 220px; }
+        #levels .item { font-size: var(--text-24); }
+        .look-shelf { --rail-h: clamp(84px, 13vh, 120px); }
+        .look-rails { --rail-h: clamp(52px, 9vh, 84px); }
+    }
+
+    @media (max-height: 720px) {
+        .role { margin-top: 12px; }
+        .lists { height: 172px; margin-top: 14px; }
+        .lists.is-levels { height: 206px; }
+        .item { font-size: var(--text-28); padding-block: 3px 5px; }
+        #levels .item { font-size: var(--text-22); padding-block: 2px 3px; }
+        .item canvas { width: 24px; height: 24px; }
+        .hint { margin-top: 10px; }
+        .center .skip { margin-top: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .track { animation: none; }
+        .list, .tile, .wall, .logo, .role, .lists, .hint, .center .skip { transition: none; }
+    }
+</style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+    <a class="t-back" href="walls.html" id="back">All walls</a>
+
+    <div class="wall opening-wall" id="wall" aria-hidden="true"></div>
+
+    <main class="center opening" id="stage">
+        <h1 class="logo px">Jonathan Chiang</h1>
+        <p class="role px">Product Designer &amp; Design Engineer</p>
+
+        <div class="lists" id="lists">
+            <ul class="list" id="main">
+                <li><a class="item is-sel" href="../index.html" data-hint="Enter the portfolio.">Start game</a></li>
+                <li><button class="item" type="button" data-open="levels" data-hint="Jump straight to a case study.">Level select</button></li>
+                <li><a class="item" href="../assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" data-hint="Open the PDF.">Resume</a></li>
+                <li><a class="item" href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" data-hint="Open to full-time roles. Say hi on LinkedIn.">LinkedIn</a></li>
+            </ul>
+            <ul class="list is-away" id="levels"></ul>
+        </div>
+
+        <p class="hint px" id="hint" aria-live="polite">Enter the portfolio.</p>
+        <a class="skip" href="../index.html" id="skip">Skip intro</a>
+    </main>
+
+    <canvas class="pixel" id="wipe" aria-hidden="true" hidden></canvas>
+
+    <script src="sprites.js"></script>
+    <script src="shared.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var T = window.Title;
+        var stage = document.getElementById('stage');
+        var wall = document.getElementById('wall');
+        var main = document.getElementById('main');
+        var levels = document.getElementById('levels');
+        var lists = document.getElementById('lists');
+        var hint = document.getElementById('hint');
+        var current = main, sel = 0, leaving = false;
+
+        // ---- Wall ------------------------------------------------------------
+        var LOOK = new URLSearchParams(location.search).get('look') || 'shelf';
+        document.body.classList.add('look-' + LOOK);
+        if (LOOK === 'plain') { var back = document.getElementById('back'); back.href = 'index.html'; back.textContent = 'All versions'; }
+
+        // Wide art for the uniform rows, since Nocta's poster is a phone
+        var WIDE = { nocta: '../assets/nocta/hero-mockup.jpg' };
+        var DARK = { nocta: '#141d3f', skillcat: '#5a2212', scriptchain: '#123534', mirror: '#26301a', reveal: '#16324f' };
+
+        // Tiles are real links for mouse and touch. The keyboard route is the menu.
+        function tile(w) {
+            var t = document.createElement('a');
+            t.className = 'tile';
+            t.href = w.href;
+            t.tabIndex = -1;
+            t.dataset.id = w.id;
+            return t;
+        }
+
+        function shot(w) {
+            var t = tile(w);
+            var img = document.createElement('img');
+            img.src = WIDE[w.id] || w.poster;
+            img.alt = '';
+            t.appendChild(img);
+            return t;
+        }
+
+        function cover(w) {
+            var t = tile(w);
+            t.style.setProperty('--d', DARK[w.id]);
+            var c = document.createElement('canvas');
+            c.className = 'pixel';
+            c.width = c.height = 16;
+            PX.draw(c.getContext('2d'), PX.ICONS[w.id], 0, 0);
+            var name = document.createElement('span');
+            name.textContent = w.short || w.name;
+            t.append(c, name);
+            return t;
+        }
+
+        function rail(offset, reverse) {
+            var el = document.createElement('div');
+            el.className = 'rail' + (reverse ? ' is-reverse' : '');
+            var track = document.createElement('div');
+            track.className = 'track';
+            el.appendChild(track);
+            wall.appendChild(el);
+
+            var h = parseFloat(getComputedStyle(document.body).getPropertyValue('--rail-h')) || 0;
+            var probe = document.createElement('div');
+            probe.style.cssText = 'position:absolute;height:var(--rail-h)';
+            el.appendChild(probe);
+            h = probe.offsetHeight;
+            probe.remove();
+
+            var period = T.WORK.length * (h * 1.6 + 16);
+            var copies = Math.ceil(innerWidth / period) + 1;
+            for (var c = 0; c < copies; c++) {
+                for (var i = 0; i < T.WORK.length; i++) {
+                    track.appendChild(shot(T.WORK[(i + offset) % T.WORK.length]));
+                }
+            }
+            el.style.setProperty('--period', period + 'px');
+            el.style.setProperty('--secs', Math.round(period / 14) + 's');
+        }
+
+        function dimWall() {
+            var w = Math.max(170, Math.min(250, Math.round(innerWidth / 5.6)));
+            var cols = Math.ceil(innerWidth * 1.3 / (w + 18)) + 1;
+            var rows = Math.ceil(innerHeight * 1.35 / (w * 0.625 + 18)) + 1;
+            var g = document.createElement('div');
+            g.className = 'tilt';
+            g.style.setProperty('--cols', cols);
+            g.style.setProperty('--tile-w', w + 'px');
+            for (var r = 0; r < rows; r++) {
+                for (var c = 0; c < cols; c++) {
+                    g.appendChild(shot(T.WORK[(c + r * 2) % T.WORK.length]));
+                }
+            }
+            wall.appendChild(g);
+        }
+
+        function boxWall() {
+            var w = Math.max(120, Math.min(170, Math.round(innerWidth / 8.4)));
+            var cols = Math.ceil(innerWidth / (w + 16)) + 1;
+            if (cols % 2 === 0) cols++;
+            var box = document.createElement('div');
+            box.className = 'cols';
+            box.style.setProperty('--tile-w', w + 'px');
+            for (var c = 0; c < cols; c++) {
+                var col = document.createElement('div');
+                col.className = 'col';
+                col.style.setProperty('--col-y', (-24 - (c % 2) * Math.round(w * 0.4)) + 'px');
+                var rows = Math.ceil(innerHeight / (w * 4 / 3 + 16)) + 2;
+                for (var n = 0; n < rows; n++) {
+                    col.appendChild(cover(T.WORK[(c * 2 + n) % T.WORK.length]));
+                }
+                box.appendChild(col);
+            }
+            wall.appendChild(box);
+        }
+
+        function buildWall() {
+            wall.textContent = '';
+            if (LOOK === 'plain') return;
+            if (LOOK === 'shelf') rail(0, false);
+            else if (LOOK === 'rails') { rail(0, false); rail(2, true); }
+            else if (LOOK === 'dim') dimWall();
+            else boxWall();
+        }
+
+        // The space the text needs: the logo's width, and the stack's height with
+        // the taller Level Select list allowed for, so nothing pops when it opens.
+        function textBox(pad) {
+            var w = stage.querySelector('.logo').offsetWidth;
+            var h = stage.offsetHeight + (lists.classList.contains('is-levels') ? 0 : 32);
+            var r = stage.getBoundingClientRect();
+            var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+            return { left: cx - w / 2 - pad, right: cx + w / 2 + pad, top: cy - h / 2 - pad, bottom: cy + h / 2 + pad };
+        }
+
+        function clearOf(box, t) {
+            var r = t.getBoundingClientRect();
+            return r.right < box.left || r.left > box.right || r.bottom < box.top || r.top > box.bottom;
+        }
+
+        // Box art only: covers that would touch the text are left out
+        function carve() {
+            if (LOOK !== 'box') return;
+            var box = textBox(28);
+            wall.querySelectorAll('.tile').forEach(function (t) {
+                t.style.visibility = clearOf(box, t) ? '' : 'hidden';
+            });
+        }
+
+        // Dim only: one tile wakes at a time, clear of the text
+        var litTile = null;
+        function wake() {
+            if (LOOK !== 'dim' || wall.classList.contains('has-focus')) return;
+            var keep = textBox(24);
+            var options = Array.prototype.filter.call(wall.querySelectorAll('.tile'), function (t) {
+                var r = t.getBoundingClientRect();
+                var seen = r.left > -60 && r.top > -40 && r.right < innerWidth + 60 && r.bottom < innerHeight + 40;
+                return seen && clearOf(keep, t) && (!litTile || t.dataset.id !== litTile.dataset.id);
+            });
+            if (!options.length) return;
+            if (litTile) litTile.classList.remove('is-lit');
+            litTile = options[Math.floor(Math.random() * options.length)];
+            litTile.classList.add('is-lit');
+        }
+
+        function focus(id) {
+            wall.classList.toggle('has-focus', !!id);
+            if (id && litTile) { litTile.classList.remove('is-lit'); litTile = null; }
+            var keep = LOOK === 'dim' ? textBox(16) : null;
+            wall.querySelectorAll('.tile').forEach(function (t) {
+                // A lit tile never sits behind the text
+                t.classList.toggle('is-focus', t.dataset.id === id && (!keep || clearOf(keep, t)));
+            });
+        }
+
+        // ---- Level list ------------------------------------------------------
+        T.WORK.forEach(function (w) {
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.className = 'item';
+            a.href = w.href;
+            a.dataset.hint = w.blurb + ' ' + w.status + '.';
+            a.dataset.id = w.id;
+
+            var icon = document.createElement('canvas');
+            icon.className = 'pixel';
+            icon.width = icon.height = 16;
+            PX.draw(icon.getContext('2d'), PX.ICONS[w.id], 0, 0);
+
+            var name = document.createElement('span');
+            name.textContent = w.short || w.name;
+
+            var year = document.createElement('small');
+            year.textContent = w.year;
+
+            a.append(icon, name, year);
+            li.appendChild(a);
+            levels.appendChild(li);
+        });
+
+        var backLi = document.createElement('li');
+        backLi.innerHTML = '<button class="item is-back" type="button" data-close data-hint="Back to the main menu.">Back</button>';
+        levels.appendChild(backLi);
+
+        function items() { return Array.prototype.slice.call(current.querySelectorAll('.item')); }
+
+        function select(i, quiet) {
+            var list = items();
+            sel = (i + list.length) % list.length;
+            list.forEach(function (el, n) { el.classList.toggle('is-sel', n === sel); });
+            var el = list[sel];
+            hint.textContent = el.dataset.hint || '';
+            if (!quiet) T.click(0.14);
+            focus(el.dataset.id || null);
+        }
+
+        function openList(list) {
+            current.classList.add('is-away');
+            list.classList.remove('is-away');
+            lists.classList.toggle('is-levels', list === levels);
+            current = list;
+        }
+
+        function closeLevels() {
+            openList(main);
+            select(1, true);
+        }
+
+        // ---- Leaving ---------------------------------------------------------
+        // The confirm flashes once, then a dither fills the screen.
+        function wipe() {
+            return new Promise(function (done) {
+                if (T.reduce) { done(); return; }
+                var c = document.getElementById('wipe');
+                c.hidden = false;
+                var s = 6;
+                var w = Math.ceil(innerWidth / s), h = Math.ceil(innerHeight / s);
+                c.width = w;
+                c.height = h;
+                var x2 = c.getContext('2d');
+                x2.fillStyle = '#161514';
+                var frame = 0, frames = 9;
+                var id = setInterval(function () {
+                    frame++;
+                    var t = frame / frames;
+                    x2.clearRect(0, 0, w, h);
+                    for (var y = 0; y < h; y++) {
+                        for (var x = 0; x < w; x++) {
+                            if (t >= T.bayer(x, y)) x2.fillRect(x, y, 1, 1);
+                        }
+                    }
+                    if (frame >= frames) { clearInterval(id); done(); }
+                }, 42);
+            });
+        }
+
+        async function confirm(el) {
+            if (leaving) return;
+            if (el.dataset.open) { T.click(0.25); openList(levels); select(0, true); return; }
+            if (el.hasAttribute('data-close')) { T.click(0.25); closeLevels(); return; }
+
+            // New tab items open without leaving the title
+            if (el.target === '_blank') {
+                T.click(0.25);
+                window.open(el.href, '_blank', 'noopener');
+                return;
+            }
+
+            leaving = true;
+            T.click();
+            el.classList.add('is-picked');
+            await T.wait(320);
+            await wipe();
+            T.go(el.getAttribute('href'));
+        }
+
+        // ---- Setup -----------------------------------------------------------
+        buildWall();
+        carve();
+        // The logo too: a font swap changes its width without resizing the stack
+        var watcher = new ResizeObserver(carve);
+        watcher.observe(stage);
+        watcher.observe(stage.querySelector('.logo'));
+
+        wake();
+        if (!T.reduce) setInterval(wake, 3400);
+
+        wall.addEventListener('click', async function (e) {
+            var t = e.target.closest('a.tile');
+            if (!t) return;
+            e.preventDefault();
+            if (leaving || T.thumb) return;
+            leaving = true;
+            T.click();
+            await wipe();
+            T.go(t.getAttribute('href'));
+        });
+
+        var resizing;
+        addEventListener('resize', function () {
+            clearTimeout(resizing);
+            resizing = setTimeout(function () {
+                buildWall();
+                carve();
+                focus(items()[sel].dataset.id || null);
+            }, 160);
+        });
+
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                stage.classList.remove('opening');
+                wall.classList.remove('opening-wall');
+            });
+        });
+
+        // ---- Input -----------------------------------------------------------
+        if (!T.thumb) {
+            addEventListener('keydown', function (e) {
+                if (e.metaKey || e.ctrlKey || e.altKey || leaving) return;
+                if (e.key === 'ArrowDown') { e.preventDefault(); select(sel + 1); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); select(sel - 1); }
+                else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); confirm(items()[sel]); }
+                else if (e.key === 'Escape' && current === levels) closeLevels();
+            });
+
+            lists.addEventListener('pointerover', function (e) {
+                var el = e.target.closest('.item');
+                if (!el) return;
+                var i = items().indexOf(el);
+                if (i >= 0 && i !== sel) select(i);
+            });
+            lists.addEventListener('focusin', function (e) {
+                var el = e.target.closest('.item');
+                if (!el) return;
+                var i = items().indexOf(el);
+                if (i >= 0 && i !== sel) select(i, true);
+            });
+            lists.addEventListener('click', function (e) {
+                var el = e.target.closest('.item');
+                if (!el) return;
+                e.preventDefault();
+                confirm(el);
+            });
+        }
+
+        document.getElementById('skip').addEventListener('click', function (e) {
+            e.preventDefault();
+            T.go(T.HOME);
+        });
+    })();
+    </script>
+</body>
+</html>

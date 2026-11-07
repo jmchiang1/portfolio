@@ -10,114 +10,40 @@
 //        inside the fading body, so the staggered nav + content reveal feels
 //        like one coordinated transition.
 //
-// Logo:  A 7×5 grid SVG monogram (JC) replaces the static logo.png on every
-//        page. After the body fade-in completes, a slow, sparse flashing
-//        loop tints a random cell to the accent color for ~550ms, then picks
-//        a new one after a 1.2–2.5s gap. Honors prefers-reduced-motion.
+// Logo:  A pixel keycap replaces whatever is in .nav-logo on every page, and
+//        its LED blinks slowly. Honors prefers-reduced-motion.
 (function () {
     'use strict';
 
     var ENTER_DURATION = 0.35;
 
     // ------------------------------------------------------------------
-    // Logo — geometric JC monogram laid out on an 8-col × 6-row grid.
-    //
-    // Each cell is 10×10 with a 2px gap (so cell-pitch is 12). The top
-    // bar runs across cols 1–7, leaving col 0 empty so the bar feels
-    // weighted toward C. Two vertical stems at col 3 (J) and col 5 (C)
-    // descend through rows 1–4. The bottom uses scattered cells: an
-    // isolated square at (row 4, col 0), J's foot at (row 5, cols 1–2),
-    // and C's bottom at (row 5, cols 6–7). The intentionally missing
-    // squares give the monogram a pixelated, broken-up feel rather than
-    // a perfect block letterform.
+    // Logo — a single pixel keycap with JC on it, plotted on a 22x22 grid.
+    // assets/logo-keycap.svg and assets/favicon.svg hold the same artwork.
     // ------------------------------------------------------------------
     var LOGO_SVG =
-        '<svg class="nav-logo-svg" width="64" height="48" viewBox="0 0 94 70"' +
-        ' style="color:#fff;display:block"' +
-        ' xmlns="http://www.w3.org/2000/svg" role="img" aria-label="JC">' +
-            '<style>.logo-cell{fill:currentColor;transition:fill 0.55s ease}</style>' +
-            // Row 0 — top bar (cols 1–7; col 0 left empty)
-            '<rect class="logo-cell" x="12" y="0"  width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="24" y="0"  width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="36" y="0"  width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="48" y="0"  width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="60" y="0"  width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="72" y="0"  width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="84" y="0"  width="10" height="10" rx="2"/>' +
-            // Row 1 — stems (col 3, col 5)
-            '<rect class="logo-cell" x="36" y="12" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="60" y="12" width="10" height="10" rx="2"/>' +
-            // Row 2 — stems
-            '<rect class="logo-cell" x="36" y="24" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="60" y="24" width="10" height="10" rx="2"/>' +
-            // Row 3 — stems
-            '<rect class="logo-cell" x="36" y="36" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="60" y="36" width="10" height="10" rx="2"/>' +
-            // Row 4 — stems plus isolated cell at far left (col 0)
-            '<rect class="logo-cell" x="0"  y="48" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="36" y="48" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="60" y="48" width="10" height="10" rx="2"/>' +
-            // Row 5 — J foot (cols 1–2) and C bottom (cols 6–7)
-            '<rect class="logo-cell" x="12" y="60" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="24" y="60" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="72" y="60" width="10" height="10" rx="2"/>' +
-            '<rect class="logo-cell" x="84" y="60" width="10" height="10" rx="2"/>' +
+        '<svg class="nav-logo-svg" width="44" height="44" viewBox="0 0 22 22" shape-rendering="crispEdges"' +
+        ' style="display:block" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="JC">' +
+        '<path fill="#fafaf7" d="M1 1h20v1h-20zM1 2h1v1h-1zM20 2h1v1h-1zM1 3h20v1h-20zM1 4h20v1h-20zM1 5h20v1h-20zM1 6h4v1h-4zM8 6h2v1h-2zM13 6h8v1h-8zM1 7h5v1h-5zM7 7h2v1h-2zM10 7h3v1h-3zM14 7h7v1h-7zM1 8h5v1h-5zM7 8h2v1h-2zM10 8h11v1h-11zM1 9h5v1h-5zM7 9h2v1h-2zM10 9h11v1h-11zM1 10h2v1h-2zM4 10h2v1h-2zM7 10h2v1h-2zM10 10h11v1h-11zM1 11h2v1h-2zM4 11h2v1h-2zM7 11h2v1h-2zM10 11h3v1h-3zM14 11h7v1h-7zM1 12h3v1h-3zM6 12h4v1h-4zM13 12h8v1h-8zM1 13h20v1h-20zM1 14h20v1h-20zM1 15h20v1h-20zM1 16h20v1h-20zM1 17h20v1h-20zM1 18h20v1h-20z"/><path fill="#c3bfb6" d="M0 2h1v1h-1zM21 2h1v1h-1zM0 3h1v1h-1zM21 3h1v1h-1zM0 4h1v1h-1zM21 4h1v1h-1zM0 5h1v1h-1zM21 5h1v1h-1zM0 6h1v1h-1zM21 6h1v1h-1zM0 7h1v1h-1zM21 7h1v1h-1zM0 8h1v1h-1zM21 8h1v1h-1zM0 9h1v1h-1zM21 9h1v1h-1zM0 10h1v1h-1zM21 10h1v1h-1zM0 11h1v1h-1zM21 11h1v1h-1zM0 12h1v1h-1zM21 12h1v1h-1zM0 13h1v1h-1zM21 13h1v1h-1zM0 14h1v1h-1zM21 14h1v1h-1zM0 15h1v1h-1zM21 15h1v1h-1zM0 16h1v1h-1zM21 16h1v1h-1zM0 17h1v1h-1zM21 17h1v1h-1zM0 18h1v1h-1zM21 18h1v1h-1zM0 19h22v1h-22zM0 20h22v1h-22zM1 21h20v1h-20z"/><path fill="#ffffff" d="M2 2h18v1h-18z"/><path fill="#161514" d="M5 6h3v1h-3zM10 6h3v1h-3zM6 7h1v1h-1zM9 7h1v1h-1zM13 7h1v1h-1zM6 8h1v1h-1zM9 8h1v1h-1zM6 9h1v1h-1zM9 9h1v1h-1zM3 10h1v1h-1zM6 10h1v1h-1zM9 10h1v1h-1zM3 11h1v1h-1zM6 11h1v1h-1zM9 11h1v1h-1zM13 11h1v1h-1zM4 12h2v1h-2zM10 12h3v1h-3z"/><rect class="logo-led" x="16" y="5" width="3" height="3" fill="#1180f9"/>' +
         '</svg>';
 
     function replaceLogo() {
-        // Swap any <img> inside .nav-logo for the inline SVG. Doing it in JS
-        // means a single source-of-truth for the markup; HTML files don't need
-        // to be touched per-page.
-        document.querySelectorAll('.nav-logo img').forEach(function (img) {
-            img.outerHTML = LOGO_SVG;
+        // One source of truth for the markup; HTML files don't need touching.
+        document.querySelectorAll('.nav-logo img, .nav-logo svg').forEach(function (el) {
+            el.outerHTML = LOGO_SVG;
         });
     }
 
-    function startLogoFlash() {
+    // The keycap's LED ticks between two blues in hard steps.
+    function startLogoBlink() {
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-        var cells = document.querySelectorAll('.nav-logo-svg .logo-cell');
-        if (!cells.length) return;
-
-        var FLASH_COLOR = '#66d2ff';
-        var HOLD_MS = 550;            // how long each cell stays tinted before fading back
-        var MIN_GAP_MS = 1100;        // shortest pause between batches
-        var MAX_GAP_MS = 2200;        // longest pause between batches
-        var BATCH_SIZE = 5;           // cells lit per batch (staggered, not simultaneous)
-        var STAGGER_MIN_MS = 90;      // min delay between cells within a batch — spaced wide
-        var STAGGER_MAX_MS = 180;     // enough that no two cells flash at the same moment
-        // Carry the previous batch forward so we don't immediately re-flash
-        // a cell we just dimmed — keeps the pattern feeling random.
-        var recent = [];
-
-        function tick() {
-            var picked = [];
-            var attempts = 0;
-            // Pick distinct cells that weren't in the last batch. Bail out after
-            // 50 attempts so a tiny grid with lots of recents can't hang us.
-            while (picked.length < BATCH_SIZE && attempts < 50) {
-                var i = Math.floor(Math.random() * cells.length);
-                if (picked.indexOf(i) === -1 && recent.indexOf(i) === -1) {
-                    picked.push(i);
-                }
-                attempts++;
-            }
-
-            picked.forEach(function (i, order) {
-                var stagger = order * (STAGGER_MIN_MS + Math.random() * (STAGGER_MAX_MS - STAGGER_MIN_MS));
-                setTimeout(function () {
-                    cells[i].style.fill = FLASH_COLOR;
-                    setTimeout(function () { cells[i].style.fill = ''; }, HOLD_MS);
-                }, stagger);
-            });
-            recent = picked.slice();
-
-            var nextGap = MIN_GAP_MS + Math.random() * (MAX_GAP_MS - MIN_GAP_MS);
-            setTimeout(tick, nextGap);
-        }
-
-        // Kick off after the page-enter fade has settled.
-        setTimeout(tick, 1800);
+        var led = document.querySelector('.nav-logo-svg .logo-led');
+        if (!led) return;
+        var on = false;
+        setInterval(function () {
+            on = !on;
+            led.setAttribute('fill', on ? '#66d2ff' : '#1180f9');
+        }, 900);
     }
 
     function exit(href) {
@@ -170,7 +96,7 @@
         // sees the old PNG flash through.
         replaceLogo();
         playEnter();
-        startLogoFlash();
+        startLogoBlink();
     }
 
     if (document.readyState === 'loading') {

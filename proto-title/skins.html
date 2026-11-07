@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Modern theme (prototypes)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Jersey+25&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<!-- PROTOTYPE: theme options layered over the real pages. Not linked from the site. -->
+<style>
+    * { box-sizing: border-box; margin: 0; }
+    body { min-height: 100vh; padding: 48px 24px 96px; background: #161514; color: #fff; font-family: 'IBM Plex Sans', sans-serif; font-size: var(--text-16); line-height: 1.5; }
+    .page { width: min(1320px, 100%); margin-inline: auto; }
+    h1 { font-family: 'Jersey 25', sans-serif; font-weight: 400; font-size: var(--text-60); line-height: 1; }
+    .lead { max-width: 64ch; margin-top: 10px; color: rgba(255, 255, 255, 0.72); }
+
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .tabs button { padding: 7px 14px; border: 1px solid rgba(255, 255, 255, 0.18); background: none; color: rgba(255, 255, 255, 0.78); font: 500 var(--text-14) 'IBM Plex Sans', sans-serif; cursor: pointer; }
+    .tabs button:hover { color: #fff; border-color: rgba(255, 255, 255, 0.4); }
+    .tabs button[aria-pressed="true"] { background: #fff; border-color: #fff; color: #161514; }
+    button:focus-visible, a:focus-visible { outline: 2px solid #2f96ff; outline-offset: 3px; }
+
+    .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 28px; margin-top: 28px; }
+    .frame { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #0c0b0a; outline: 1px solid rgba(255, 255, 255, 0.16); }
+    .frame iframe { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; border: 0; transform-origin: 0 0; pointer-events: none; }
+    .option a { display: block; color: inherit; text-decoration: none; }
+    .option a:hover .frame { outline-color: #2f96ff; }
+    .head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 14px; }
+    h2 { font-family: 'Jersey 25', sans-serif; font-weight: 400; font-size: var(--text-32); line-height: 1; }
+    .open { flex: none; font-size: var(--text-14); color: #7fc4ff; }
+    .option p { max-width: 58ch; margin-top: 4px; font-size: var(--text-15); color: rgba(255, 255, 255, 0.72); }
+
+    /* One version, full window, and fully usable */
+    body.is-full { padding: 0; overflow: hidden; }
+    body.is-full .page { display: none; }
+    #full { display: none; position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+    body.is-full #full { display: block; }
+    .bar { display: none; position: fixed; left: 50%; bottom: 10px; z-index: 10; translate: -50% 0; align-items: center; gap: 6px; padding: 6px; background: rgba(12, 11, 10, 0.88); outline: 1px solid rgba(255, 255, 255, 0.16); }
+    body.is-full .bar { display: flex; }
+    .bar .tabs { margin: 0; gap: 4px; flex-wrap: nowrap; }
+    .bar button, .bar a { padding: 4px 9px; font-size: var(--text-12); }
+    .bar a { color: #7fc4ff; text-decoration: none; white-space: nowrap; }
+    .bar .hide, .show { border: 1px solid rgba(255, 255, 255, 0.18); background: none; color: rgba(255, 255, 255, 0.78); font: 500 var(--text-12) 'IBM Plex Sans', sans-serif; cursor: pointer; }
+    .show { display: none; position: fixed; left: 8px; top: 8px; z-index: 10; padding: 4px 9px; background: rgba(12, 11, 10, 0.88); }
+    body.is-full.bar-off .bar { display: none; }
+    body.is-full.bar-off .show { display: block; }
+
+    @media (max-width: 820px) { .options { grid-template-columns: 1fr; } .bar { max-width: calc(100vw - 16px); overflow-x: auto; } }
+</style>
+</head>
+<body>
+    <div class="page">
+        <h1>Modern theme</h1>
+        <p class="lead">The same site with each change layered on top, so you can see what each one does alone and what they do together. Your live theme isn't touched. Switch pages here, or open one to click around it.</p>
+        <div class="tabs" id="pages"></div>
+        <div class="options" id="options"></div>
+    </div>
+
+    <iframe id="full" title="Full view"></iframe>
+    <div class="bar" id="bar"></div>
+    <button class="show" id="show" type="button">Show versions</button>
+
+    <script>
+    (function () {
+        'use strict';
+
+        var VERSIONS = [
+            { id: 'all', name: 'All three', cls: ['sk-accent', 'sk-edges', 'sk-light'], text: 'Clean UI, hairline edges and soft light together, with pixels kept for your logo, headlines, Bit and backgrounds.' },
+            { id: 'now', name: 'Current', cls: [], text: 'Your site as it is today, for comparison.' },
+            { id: 'accent', name: '1. Pixels as an accent', cls: ['sk-accent'], text: 'Small type and controls go clean. Your logo, big headlines, Bit and backgrounds stay pixel.' },
+            { id: 'edges', name: '2. Thinner edges', cls: ['sk-edges'], text: 'Hairlines replace the thick stepped outlines, and the hard shadows and raised button edges go.' },
+            { id: 'light', name: '3. Modern lighting', cls: ['sk-light'], text: 'The center card lights the space around it in its own color, and controls turn to glass.' }
+        ];
+
+        var PAGES = [
+            { id: 'home', name: 'Home', url: '../index.html' },
+            { id: 'title', name: 'Title screen', url: '../index.html?title' },
+            { id: 'about', name: 'About', url: '../about.html' },
+            { id: 'motion', name: 'Motion', url: '../motion.html' },
+            { id: 'vibes', name: 'Vibes', url: '../vibes.html' }
+        ];
+
+        var q = new URLSearchParams(location.search);
+        var view = q.get('view');
+        var pageId = q.get('page') || 'home';
+        function byId(list, id) { return list.filter(function (x) { return x.id === id; })[0]; }
+
+        // Home's title would otherwise play in every preview
+        try { sessionStorage.setItem('jc_title_seen', '1'); } catch (e) {}
+
+        function skin(frame, cls) {
+            var doc;
+            try { doc = frame.contentDocument; } catch (e) { return; }
+            if (!doc || !doc.documentElement || !cls.length) return;
+            cls.forEach(function (c) { doc.documentElement.classList.add(c); });
+            if (doc.getElementById('sk-css')) return;
+            var link = doc.createElement('link');
+            link.id = 'sk-css';
+            link.rel = 'stylesheet';
+            link.href = new URL('skin-modern.css', location.href).href;
+            doc.head.appendChild(link);
+        }
+
+        function tabs(root, list, active, onPick) {
+            root.textContent = '';
+            list.forEach(function (x) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.textContent = x.name;
+                b.setAttribute('aria-pressed', x.id === active ? 'true' : 'false');
+                b.addEventListener('click', function () { onPick(x.id); });
+                root.appendChild(b);
+            });
+        }
+
+        function go(v, p) {
+            var u = new URL(location.href);
+            u.search = '';
+            if (v) u.searchParams.set('view', v);
+            u.searchParams.set('page', p);
+            location.href = u.href;
+        }
+
+        if (view) {
+            var version = byId(VERSIONS, view) || VERSIONS[0];
+            document.body.classList.add('is-full');
+            var full = document.getElementById('full');
+            full.addEventListener('load', function () { skin(full, version.cls); });
+            full.src = byId(PAGES, pageId).url;
+
+            var bar = document.getElementById('bar');
+            var back = document.createElement('a');
+            back.href = 'skins.html?page=' + pageId;
+            back.textContent = 'All versions';
+            var vt = document.createElement('div'); vt.className = 'tabs';
+            var pt = document.createElement('div'); pt.className = 'tabs';
+            var hide = document.createElement('button');
+            hide.type = 'button';
+            hide.className = 'hide';
+            hide.textContent = 'Hide';
+            hide.addEventListener('click', function () { document.body.classList.add('bar-off'); });
+            document.getElementById('show').addEventListener('click', function () { document.body.classList.remove('bar-off'); });
+            bar.append(back, vt, pt, hide);
+            tabs(vt, VERSIONS.map(function (v) { return { id: v.id, name: v.name.replace(/^\d\. /, '') }; }), version.id, function (id) { go(id, pageId); });
+            tabs(pt, PAGES, pageId, function (id) { go(version.id, id); });
+            return;
+        }
+
+        tabs(document.getElementById('pages'), PAGES, pageId, function (id) { go(null, id); });
+
+        var root = document.getElementById('options');
+        VERSIONS.forEach(function (v) {
+            var card = document.createElement('article');
+            card.className = 'option';
+            card.innerHTML = '<a href="skins.html?view=' + v.id + '&page=' + pageId + '"><div class="frame"><iframe tabindex="-1" aria-hidden="true" title="' + v.name + ' preview"></iframe></div>' +
+                '<div class="head"><h2>' + v.name + '</h2><span class="open">Open full screen</span></div><p>' + v.text + '</p></a>';
+            root.appendChild(card);
+            var frame = card.querySelector('iframe');
+            frame.addEventListener('load', function () { skin(frame, v.cls); });
+            frame.src = byId(PAGES, pageId).url;
+        });
+
+        var ro = new ResizeObserver(function (entries) {
+            entries.forEach(function (e) {
+                e.target.querySelector('iframe').style.transform = 'scale(' + (e.contentRect.width / 1440) + ')';
+            });
+        });
+        document.querySelectorAll('.frame').forEach(function (f) { ro.observe(f); });
+    })();
+    </script>
+</body>
+</html>

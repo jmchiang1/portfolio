@@ -1,0 +1,641 @@
+/* ==========================================================================
+   pixel-theme.css — the site's pixel art skin.
+
+   Loaded last on every page, so layouts stay as they are and only the surface
+   changes: square corners, stepped outlines, hard shadows, dithered backgrounds
+   and a pixel headline font. To remove the theme, drop this file's <link> tags.
+
+   Left alone on purpose: product screens, device mockups and the case studies'
+   own brand fonts and colours. The work should still look like the work.
+   ========================================================================== */
+:root {
+    --px: 3px;
+    --px-line: rgba(255, 255, 255, 0.14);
+    --px-edge: #0c0b0a;
+    --px-font: 'Jersey 25', 'Space Grotesk', sans-serif;
+    --px-step: steps(3, end);
+}
+
+/* ---- Corners ------------------------------------------------------------
+   One rule squares everything except real product imagery. :where keeps it at
+   zero specificity, so the few exceptions below stay easy to write. */
+:where(body, body *):not(img, video, canvas, svg, picture, [class*="device"], [class*="phone"], [class*="island"], [class*="mockup"], [class*="thumb"], [class*="bokeh"], .nocta-screen) {
+    border-radius: 0 !important;
+}
+
+/* Stacked tool logos stay round: overlapping squares read as a mess. The
+   keycap grey keeps black logos visible, which a dark circle wouldn't. */
+.vibes-tool-logo,
+.modal-tool-logo {
+    border-radius: 50% !important;
+    background: #c3bfb6;
+}
+
+/* ---- Blur and glass become solid colour ---- */
+.motion-card, .vibes-card, .text-display,
+.typing-options, .result-stat, .results-content, .trophy-content, .modal-content,
+.mc-panel, .mc-bubble, .project-tags, .motion-card-tags, .social-link, .social-link::before,
+.mobile-menu, .edit-modal-backdrop, .visitor-modal-backdrop, body:has(#background-grid) .navbar::before {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ---- Cards: stepped outline plus a hard shadow ---- */
+.text-display, .typing-options, .result-stat, .results-content, .trophy-content, .modal-content,
+.mc-panel, .edit-modal-panel, .cs-next-card {
+    --px-c: var(--px-line);
+    border-color: transparent !important;
+    border-width: 0;
+    box-shadow:
+        0 calc(var(--px) * -1) 0 var(--px-c),
+        0 var(--px) 0 var(--px-c),
+        calc(var(--px) * -1) 0 0 var(--px-c),
+        var(--px) 0 0 var(--px-c),
+        var(--px) calc(var(--px) * 3) 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ---- Project cards: a notched frame with stepped pixel corners ----
+   clip-path cuts off box-shadows, so the edge is its own layer: --px-notch-edge
+   is the same stepped outline with the shape 2px inside it cut out. ::before,
+   because Home's ::after dims the cards at the sides of the carousel. */
+:root {
+    --px-notch: polygon(12px 0, calc(100% - 12px) 0, calc(100% - 12px) 6px, calc(100% - 6px) 6px, calc(100% - 6px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px), calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 6px), 6px calc(100% - 6px), 6px calc(100% - 12px), 0 calc(100% - 12px), 0 12px, 6px 12px, 6px 6px, 12px 6px);
+    --px-notch-edge: polygon(evenodd, 12px 0, calc(100% - 12px) 0, calc(100% - 12px) 6px, calc(100% - 6px) 6px, calc(100% - 6px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px), calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 6px), 6px calc(100% - 6px), 6px calc(100% - 12px), 0 calc(100% - 12px), 0 12px, 6px 12px, 6px 6px, 12px 6px, 12px 0, 14px 2px, calc(100% - 14px) 2px, calc(100% - 14px) 8px, calc(100% - 8px) 8px, calc(100% - 8px) 14px, calc(100% - 2px) 14px, calc(100% - 2px) calc(100% - 14px), calc(100% - 8px) calc(100% - 14px), calc(100% - 8px) calc(100% - 8px), calc(100% - 14px) calc(100% - 8px), calc(100% - 14px) calc(100% - 2px), 14px calc(100% - 2px), 14px calc(100% - 8px), 8px calc(100% - 8px), 8px calc(100% - 14px), 2px calc(100% - 14px), 2px 14px, 8px 14px, 8px 8px, 14px 8px, 14px 2px);
+}
+
+.project-card, .motion-card, .vibes-card {
+    border-color: transparent !important;
+    border-width: 0;
+    box-shadow: none !important;
+    clip-path: var(--px-notch);
+}
+
+.project-card::before, .motion-card::before, .vibes-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 11;
+    background: #5c5b56;
+    clip-path: var(--px-notch-edge);
+    pointer-events: none;
+}
+
+.motion-card, .vibes-card, .text-display, .typing-options,
+.result-stat, .results-content, .trophy-content {
+    background: var(--page-surface, #1f1e1c) !important;
+}
+
+/* Small labels and pills sit flat, with just the stepped outline */
+.project-tags, .motion-card-tags, .modal-tag, .mc-chip, .vibes-hero-eyebrow,
+.typing-secret-tag, .typing-tip kbd {
+    --px-c: var(--px-line);
+    margin: var(--px);
+    border-color: transparent !important;
+    box-shadow:
+        0 calc(var(--px) * -1) 0 var(--px-c),
+        0 var(--px) 0 var(--px-c),
+        calc(var(--px) * -1) 0 0 var(--px-c),
+        var(--px) 0 0 var(--px-c) !important;
+}
+
+.project-tags, .motion-card-tags {
+    --px-c: #0c0b0a;
+    margin: 0;
+    background: #0c0b0a !important;
+}
+
+/* ---- Buttons: keycaps with a hard bottom edge that press down ---- */
+.social-link, .layout-toggle, .carousel-nav, .vibes-btn, .typing-btn, .mode-btn, .duration-btn,
+.modal-close, .mobile-menu-social, .welcome-submit, .edit-modal-close, .welcome-reroll, .nx-btn,
+.ap-carousel-btn, .mc-send, .mc-icon-btn, .mc-bubble-close, .nx-iter-btn, .sk-feature-btn, .peg-cta-icon, .visitors-typing-cta, .back-to-top {
+    --px-face: #33322f;
+    --px-c: #4a4945;
+    border-color: transparent !important;
+    box-shadow:
+        0 calc(var(--px) * -1) 0 var(--px-c),
+        calc(var(--px) * -1) 0 0 var(--px-c),
+        var(--px) 0 0 var(--px-c),
+        0 var(--px) 0 var(--px-c),
+        0 calc(var(--px) * 2) 0 var(--px-edge) !important;
+    transition: translate 0.08s var(--px-step), box-shadow 0.08s var(--px-step), background-color 0.12s var(--px-step), color 0.12s var(--px-step) !important;
+}
+
+.social-link, .layout-toggle, .carousel-nav, .modal-close, .mobile-menu-social, .edit-modal-close, .welcome-reroll, .mc-icon-btn {
+    background: var(--px-face) !important;
+}
+
+.social-link:hover, .layout-toggle:hover, .carousel-nav:hover, .modal-close:hover, .mobile-menu-social:hover,
+.edit-modal-close:hover, .welcome-reroll:hover, .mc-icon-btn:hover {
+    background: #444340 !important;
+}
+
+.social-link:active, .layout-toggle:active, .carousel-nav:active, .vibes-btn:active, .typing-btn:active,
+.mode-btn:active, .duration-btn:active, .modal-close:active, .welcome-submit:active, .nx-btn:active,
+.ap-carousel-btn:active, .mc-send:active, .nx-iter-btn:active, .sk-feature-btn:active, .visitors-typing-cta:active, .back-to-top:active {
+    translate: 0 var(--px);
+    box-shadow:
+        0 calc(var(--px) * -1) 0 var(--px-c),
+        calc(var(--px) * -1) 0 0 var(--px-c),
+        var(--px) 0 0 var(--px-c),
+        0 var(--px) 0 var(--px-c) !important;
+}
+
+/* Primary buttons keep the site's blue */
+.vibes-btn-primary, .welcome-submit, .mc-send, .visitors-typing-cta, .peg-cta-icon {
+    --px-c: #2f96ff;
+    --px-edge: #0a4a9a;
+}
+
+/* Navigation keys */
+.nav-link {
+    --px-c: #3a3936;
+    border-color: transparent !important;
+    font-family: var(--px-font) !important;
+    font-size: var(--text-20) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    box-shadow:
+        0 calc(var(--px) * -1) 0 var(--px-c),
+        calc(var(--px) * -1) 0 0 var(--px-c),
+        var(--px) 0 0 var(--px-c),
+        0 var(--px) 0 var(--px-c),
+        0 calc(var(--px) * 2) 0 var(--px-edge) !important;
+    transition: color 0.1s var(--px-step), background-color 0.1s var(--px-step), translate 0.08s var(--px-step) !important;
+}
+
+.nav-link.active {
+    --px-c: #fff;
+    --px-edge: #8d8c88;
+}
+
+/* Case-study section nav stays flat text, with a square highlight */
+.cs-nav-links .nav-link {
+    box-shadow: none !important;
+    font-size: var(--text-18) !important;
+}
+
+.cs-nav-indicator {
+    box-shadow:
+        0 calc(var(--px) * -1) 0 rgba(255, 255, 255, 0.12),
+        0 var(--px) 0 rgba(255, 255, 255, 0.12),
+        calc(var(--px) * -1) 0 0 rgba(255, 255, 255, 0.12),
+        var(--px) 0 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ---- Backgrounds ---- */
+#background-grid {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='216' height='216' shape-rendering='crispEdges'%3E%3Crect x='30' y='18' width='3' height='3' fill='%23fff' fill-opacity='.5'/%3E%3Crect x='102' y='54' width='3' height='3' fill='%23fff' fill-opacity='.32'/%3E%3Crect x='174' y='30' width='3' height='3' fill='%23fff' fill-opacity='.42'/%3E%3Crect x='66' y='114' width='3' height='3' fill='%23fff' fill-opacity='.3'/%3E%3Crect x='150' y='132' width='3' height='3' fill='%23fff' fill-opacity='.5'/%3E%3Crect x='18' y='162' width='3' height='3' fill='%23fff' fill-opacity='.34'/%3E%3Crect x='114' y='186' width='3' height='3' fill='%23fff' fill-opacity='.28'/%3E%3Crect x='198' y='102' width='3' height='3' fill='%23fff' fill-opacity='.36'/%3E%3C/svg%3E") !important;
+    background-size: 216px 216px !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+}
+
+/* Dithered blue rising from the bottom of the page */
+#background-grid::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 200px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='40' shape-rendering='crispEdges'%3E%3Cpath fill='%231180f9' d='M0 4h1v1h-1zM2 6h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM0 10h1v1h-1zM2 10h1v1h-1zM0 12h1v1h-1zM2 12h1v1h-1zM1 13h1v1h-1zM0 14h1v1h-1zM2 14h1v1h-1zM3 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM1 17h1v1h-1zM3 17h1v1h-1zM0 18h1v1h-1zM2 18h1v1h-1zM1 19h1v1h-1zM3 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM1 21h1v1h-1zM3 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM1 23h1v1h-1zM3 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM1 25h1v1h-1zM3 25h1v1h-1zM0 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM1 27h1v1h-1zM3 27h1v1h-1zM0 28h1v1h-1zM1 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM1 29h1v1h-1zM3 29h1v1h-1zM0 30h1v1h-1zM1 30h1v1h-1zM2 30h1v1h-1zM3 30h1v1h-1zM1 31h1v1h-1zM3 31h1v1h-1zM0 32h1v1h-1zM1 32h1v1h-1zM2 32h1v1h-1zM3 32h1v1h-1zM0 33h1v1h-1zM1 33h1v1h-1zM3 33h1v1h-1zM0 34h1v1h-1zM1 34h1v1h-1zM2 34h1v1h-1zM3 34h1v1h-1zM1 35h1v1h-1zM2 35h1v1h-1zM3 35h1v1h-1zM0 36h1v1h-1zM1 36h1v1h-1zM2 36h1v1h-1zM3 36h1v1h-1zM0 37h1v1h-1zM1 37h1v1h-1zM2 37h1v1h-1zM3 37h1v1h-1zM0 38h1v1h-1zM1 38h1v1h-1zM2 38h1v1h-1zM3 38h1v1h-1zM0 39h1v1h-1zM1 39h1v1h-1zM2 39h1v1h-1zM3 39h1v1h-1z'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: bottom;
+    background-size: 24px 200px;
+    image-rendering: pixelated;
+    opacity: 0.11;
+}
+
+/* The nav sits straight on the background, so it reads the same on every scene */
+body:has(#background-grid) .navbar::before {
+    background: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+}
+
+body:has(#background-grid) .navbar::after {
+    display: none;
+}
+
+/* ---- Pixel headlines ----
+   Jersey 25 ships one weight, so faux bold is off: it would smear the pixels. */
+.hero-heading, .project-title, .counter-current, .counter-total, .counter-name, .motion-card-title, .vibes-hero-title,
+.vibes-card-title, .vibes-card h2, .vibes-card h3, .modal-title, .cs-next-heading, .cs-next-card h3,
+.mc-head-title, .edit-modal-header h2, .result-stat-value, .timer-value, .stat-value {
+    font-family: var(--px-font) !important;
+    font-weight: 400 !important;
+    font-synthesis: none;
+    letter-spacing: 0 !important;
+}
+
+.hero-heading { font-size: var(--text-96); line-height: 0.95; }
+body.grid-mode .hero-tagline, body.grid-mode .footer-name {
+    font-family: var(--px-font) !important;
+    font-weight: 400 !important;
+    font-synthesis: none;
+    letter-spacing: 0 !important;
+}
+body.grid-mode .hero-tagline { font-size: min(var(--text-128), 10.5vw); line-height: 0.95; margin-bottom: 24px; }
+body.grid-mode .hero-tagline em { font-style: normal; }
+body.grid-mode .footer-name { font-size: var(--text-28); }
+body.grid-mode .hero-heading { font-size: min(var(--text-128), 12vw); }
+.motion-card-title { font-size: var(--text-32); }
+.project-title { font-size: var(--text-40); }
+.counter-current, .counter-total { font-size: var(--text-28); }
+.counter-name { font-size: var(--text-22); }
+
+/* ---- Tooltips ---- */
+.social-link::before {
+    background: #f3f3f1 !important;
+    color: #161514 !important;
+    font-family: var(--px-font) !important;
+    font-size: var(--text-16) !important;
+}
+
+/* ---- Bit ---- */
+.mc-msg-user { box-shadow: none; }
+.mc-panel { --px-c: #3a3936; }
+.mc-bubble {
+    --px-c: #3a3936;
+    border-color: transparent !important;
+    box-shadow:
+        0 calc(var(--px) * -1) 0 var(--px-c),
+        0 var(--px) 0 var(--px-c),
+        calc(var(--px) * -1) 0 0 var(--px-c),
+        var(--px) 0 0 var(--px-c) !important;
+}
+
+/* ---- Visitors pegboard ----
+   Square punched holes, flat colour and a chunky frame. Keyboards hang from
+   two pixel pegs, and the rounded slots and soft light are gone. */
+.visitors-grid {
+    --hole: rgba(66, 54, 38, 0.3);
+    background-color: #e2d6c1 !important;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='48' shape-rendering='crispEdges'%3E%3Crect x='15' y='6' width='6' height='12' fill='%23aa9a80'/%3E%3Crect x='15' y='6' width='6' height='3' fill='%2384765f'/%3E%3Crect x='15' y='30' width='6' height='12' fill='%23aa9a80'/%3E%3Crect x='15' y='30' width='6' height='3' fill='%2384765f'/%3E%3C/svg%3E") !important;
+    background-size: 36px 48px !important;
+    background-position: 0 0 !important;
+    box-shadow:
+        0 -6px 0 #7a5a34,
+        0 6px 0 #7a5a34,
+        -6px 0 0 #7a5a34,
+        6px 0 0 #7a5a34,
+        0 -9px 0 #4a3520,
+        0 9px 0 #4a3520,
+        -9px 0 0 #4a3520,
+        9px 0 0 #4a3520,
+        6px 18px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+.peg-tile {
+    animation-timing-function: steps(5, end) !important;
+}
+
+.peg-kb {
+    position: relative;
+    border-color: transparent !important;
+    box-shadow:
+        0 -3px 0 #1a1822,
+        0 3px 0 #1a1822,
+        -3px 0 0 #1a1822,
+        3px 0 0 #1a1822,
+        6px 12px 0 rgba(66, 54, 38, 0.42) !important;
+    transition: translate 0.08s steps(2, end), box-shadow 0.08s steps(2, end) !important;
+}
+
+/* Two pegs the board hangs from */
+.peg-tile .peg-kb::before,
+.peg-tile .peg-kb::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    width: 9px;
+    height: 12px;
+    background: #4a4945;
+    box-shadow: inset 0 3px 0 #8a8982, 0 3px 0 #1a1822;
+}
+
+.peg-tile .peg-kb::before { left: 18%; }
+.peg-tile .peg-kb::after { right: 18%; }
+
+.peg-tile:hover .peg-kb {
+    animation-timing-function: steps(4, end) !important;
+    box-shadow:
+        0 -3px 0 #1180f9,
+        0 3px 0 #1180f9,
+        -3px 0 0 #1180f9,
+        3px 0 0 #1180f9,
+        6px 12px 0 rgba(66, 54, 38, 0.42) !important;
+}
+
+.peg-tile.is-mine .peg-kb {
+    box-shadow:
+        0 -3px 0 #66d2ff,
+        0 3px 0 #66d2ff,
+        -3px 0 0 #66d2ff,
+        3px 0 0 #66d2ff,
+        6px 12px 0 rgba(66, 54, 38, 0.42) !important;
+}
+
+/* Name plaque */
+.peg-name {
+    padding: 2px 10px 4px;
+    background: #2a261f;
+    color: #f3efe6 !important;
+    font-family: var(--px-font) !important;
+    font-size: var(--text-18) !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1.1;
+    opacity: 1 !important;
+    box-shadow: 0 3px 0 rgba(66, 54, 38, 0.42);
+}
+
+.peg-tile.is-mine .peg-name {
+    background: #1180f9;
+    color: #fff !important;
+}
+
+.peg-tile--cta .peg-cta-frame {
+    border: 3px dashed #4a3520 !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: none !important;
+    transition: none !important;
+}
+
+.peg-tile--cta:hover .peg-cta-frame {
+    border-style: solid !important;
+    border-color: #1180f9 !important;
+    transform: none !important;
+}
+
+.peg-cta-label {
+    font-family: var(--px-font) !important;
+    font-size: var(--text-22) !important;
+    letter-spacing: 0.02em !important;
+    color: #2a261f !important;
+}
+
+.vp-btn {
+    border-color: transparent !important;
+    background: #33322f !important;
+    box-shadow:
+        0 -3px 0 #4a4945,
+        0 3px 0 #4a4945,
+        -3px 0 0 #4a4945,
+        3px 0 0 #4a4945,
+        0 6px 0 #0c0b0a !important;
+}
+
+.vp-info {
+    font-family: var(--px-font) !important;
+    font-size: var(--text-20) !important;
+    letter-spacing: 0 !important;
+}
+
+/* ---- Modals ---- */
+.edit-modal-backdrop, .visitor-modal-backdrop {
+    background: rgba(8, 7, 6, 0.84) !important;
+}
+
+.build-card {
+    box-shadow: var(--px) calc(var(--px) * 3) 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ---- Animated background ----
+   pixel-bg.js paints into a canvas here. The stars and dither above stay as
+   the fallback if scripts don't run. */
+#pixelBg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+}
+
+html.has-pixel-bg #background-grid {
+    background-image: none !important;
+}
+
+html.has-pixel-bg #background-grid::after {
+    display: none;
+}
+
+.arena-tab {
+    position: fixed;
+    z-index: 52;
+    left: 50%;
+    bottom: 0;
+    translate: -50% 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px 6px;
+    border: 0;
+    background: #33322f;
+    color: rgba(255, 255, 255, 0.72);
+    font-family: var(--px-font);
+    font-size: var(--text-18);
+    line-height: 1;
+    box-shadow:
+        0 -3px 0 #4a4945,
+        -3px 0 0 #4a4945,
+        3px 0 0 #4a4945;
+    cursor: url('assets/pointer.cur'), pointer;
+    transition: translate 0.08s steps(2, end), background-color 0.1s steps(2, end);
+}
+
+.arena-tab b {
+    font-weight: 400;
+    color: #fff;
+}
+
+.arena-tab:hover {
+    background: #444340;
+    translate: -50% -3px;
+}
+
+.arena-tab.is-hidden {
+    visibility: hidden;
+}
+
+html.title-hold .arena-tab {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Full-width stage select along the bottom of the screen */
+.arena-bar {
+    position: fixed;
+    z-index: 125;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 14px 24px 18px;
+    background: #0c0b0a;
+    box-shadow:
+        0 -3px 0 #4a4945,
+        0 -6px 0 #0c0b0a;
+    animation: arena-up 0.2s steps(4, end) both;
+}
+
+.arena-bar.is-closing {
+    animation: arena-down 0.2s steps(4, end) both;
+}
+
+@keyframes arena-up {
+    from { translate: 0 100%; }
+    to { translate: 0 0; }
+}
+
+@keyframes arena-down {
+    from { translate: 0 0; }
+    to { translate: 0 100%; }
+}
+
+.arena-inner {
+    width: min(1120px, 100%);
+    margin-inline: auto;
+}
+
+.arena-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.arena-head h2 {
+    font-family: var(--px-font);
+    font-weight: 400;
+    font-size: var(--text-32);
+    line-height: 1;
+    color: #fff;
+}
+
+.arena-close {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    background: #33322f;
+    color: #fff;
+    box-shadow: 0 3px 0 #141311;
+    cursor: url('assets/pointer.cur'), pointer;
+}
+
+.arena-close:hover {
+    background: #444340;
+}
+
+.arena-row {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 24px;
+}
+
+.arena-card {
+    position: relative;
+    display: block;
+    padding: 0;
+    border: 0;
+    background: #1f1e1c;
+    color: rgba(255, 255, 255, 0.76);
+    box-shadow:
+        0 -3px 0 #3a3936,
+        0 3px 0 #3a3936,
+        -3px 0 0 #3a3936,
+        3px 0 0 #3a3936;
+    cursor: url('assets/pointer.cur'), pointer;
+    transition: translate 0.08s steps(2, end);
+}
+
+.arena-card canvas {
+    display: block;
+    width: 100%;
+    image-rendering: pixelated;
+}
+
+.arena-card span {
+    display: block;
+    padding: 4px 2px 6px;
+    font-family: var(--px-font);
+    font-size: var(--text-20);
+    line-height: 1;
+}
+
+.arena-card:hover {
+    translate: 0 -3px;
+    color: #fff;
+}
+
+.arena-card[aria-pressed="true"] {
+    background: #1180f9;
+    color: #fff;
+    box-shadow:
+        0 -3px 0 #fff,
+        0 3px 0 #fff,
+        -3px 0 0 #fff,
+        3px 0 0 #fff;
+}
+
+/* Same player cursor as the About roster */
+.arena-card[aria-pressed="true"]::before {
+    content: '1P';
+    position: absolute;
+    left: 50%;
+    top: -24px;
+    translate: -50% 0;
+    padding: 0 6px 1px;
+    background: #fff;
+    color: #0c0b0a;
+    font-family: var(--px-font);
+    font-size: var(--text-16);
+    line-height: 1.2;
+}
+
+@media (max-width: 760px) {
+    .arena-bar {
+        padding: 12px 14px 16px;
+    }
+
+    .arena-head h2 {
+        font-size: var(--text-24);
+    }
+
+    .arena-row {
+        display: flex;
+        gap: 12px;
+        padding: 22px 4px 6px;
+        margin-top: 0;
+        overflow-x: auto;
+    }
+
+    .arena-card {
+        flex: 0 0 108px;
+    }
+}
+
+/* ---- Small things ---- */
+::selection { background: #1180f9; color: #fff; }
+
+a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: var(--px) solid #66d2ff;
+    outline-offset: var(--px);
+}
+
+html { scrollbar-color: #4a4945 #161514; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: #161514; }
+::-webkit-scrollbar-thumb { background: #4a4945; border: 3px solid #161514; }
+
+@media (max-width: 640px) {
+    :root { --px: 2px; }
+    .hero-heading { font-size: var(--text-72); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .social-link, .nav-link, .vibes-btn, .typing-btn { transition: none !important; }
+}

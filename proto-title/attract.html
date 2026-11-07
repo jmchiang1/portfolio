@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Attract Mode (title screen prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Space+Mono&family=Jersey+25&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../pixel-theme.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+    /* The monitor is the home page's own, at its own size and spot */
+    .hero-monitor { opacity: 1; transform: none; animation: none; }
+
+    .tv {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        background: #0c0b0a;
+        transform-origin: center;
+    }
+
+    .scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        visibility: hidden;
+        text-align: center;
+    }
+
+    .scene.is-on { visibility: visible; }
+
+    /* Scene 1: title */
+    .scene-title { padding-bottom: 11%; }
+
+    .walkers {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 34px;
+        height: 84px;
+        border-bottom: 3px solid #3a3936;
+    }
+
+    .walkers canvas { position: absolute; inset: 0; }
+
+    .big {
+        --e: 0.04em;
+        font-size: min(var(--text-128), calc(var(--screen-w) * 0.118));
+        line-height: 0.95;
+        text-shadow:
+            0 var(--e) 0 #1180f9,
+            0 calc(var(--e) * 2) 0 #0a4a9a;
+    }
+
+    .role {
+        margin-top: 14px;
+        font-size: min(var(--text-28), calc(var(--screen-w) * 0.028));
+        line-height: 1;
+        color: #cfe3ff;
+    }
+
+    .coin {
+        margin-top: 6%;
+        font-size: min(var(--text-40), calc(var(--screen-w) * 0.04));
+        line-height: 1;
+        color: #ffc940;
+    }
+
+    .hud {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 12px;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        font-size: min(var(--text-20), calc(var(--screen-w) * 0.022));
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.72);
+        pointer-events: none;
+    }
+
+    /* Scene 2: the roster. No scores: year and status are the real data. */
+    .board-title {
+        font-size: min(var(--text-44), calc(var(--screen-w) * 0.05));
+        line-height: 1;
+        color: #ffc940;
+    }
+
+    .board {
+        display: grid;
+        grid-template-columns: auto auto 1fr auto auto;
+        column-gap: calc(var(--screen-w) * 0.03);
+        row-gap: calc(var(--screen-w) * 0.009);
+        align-items: center;
+        width: 78%;
+        margin-top: calc(var(--screen-w) * 0.024);
+        font-size: min(var(--text-32), calc(var(--screen-w) * 0.034));
+        line-height: 1;
+        text-align: left;
+    }
+
+    .board a {
+        display: contents;
+        color: var(--c);
+        text-decoration: none;
+    }
+
+    .board a > * { visibility: hidden; }
+    .board a.is-in > * { visibility: visible; }
+    .board a:hover .b-name { text-decoration: underline; text-underline-offset: 3px; }
+    .board canvas { width: calc(var(--screen-w) * 0.03); height: calc(var(--screen-w) * 0.03); }
+    .b-rank, .b-year { color: rgba(255, 255, 255, 0.72); }
+    .b-status { text-align: right; }
+
+    /* Scene 3: a real clip, unfiltered. Product footage stays clean. */
+    .scene-demo { background: #0c0b0a; }
+    .scene-demo video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .scene-demo.is-tall video { object-fit: contain; object-position: 82% center; }
+
+    /* A phone clip leaves room beside it, so that room carries the facts */
+    .demo-side { display: none; }
+
+    .is-tall .demo-side {
+        position: absolute;
+        left: 7%;
+        top: 50%;
+        translate: 0 -50%;
+        z-index: 2;
+        display: block;
+        width: 46%;
+        text-align: left;
+    }
+
+    .demo-big {
+        font-size: min(var(--text-96), calc(var(--screen-w) * 0.1));
+        line-height: 0.95;
+        color: var(--c);
+    }
+
+    .demo-blurb {
+        margin-top: 10px;
+        font-size: min(var(--text-28), calc(var(--screen-w) * 0.03));
+        line-height: 1.05;
+    }
+
+    .demo-status {
+        margin-top: 14px;
+        font-size: min(var(--text-24), calc(var(--screen-w) * 0.026));
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.72);
+    }
+
+    .demo-tag {
+        position: absolute;
+        left: 14px;
+        top: 12px;
+        z-index: 2;
+        padding: 2px 10px 4px;
+        background: #0c0b0a;
+        font-size: min(var(--text-24), calc(var(--screen-w) * 0.026));
+        line-height: 1;
+        color: #ffc940;
+    }
+
+    .scene-demo .hud { left: 0; right: 0; bottom: 0; padding: 8px 18px 10px; background: #0c0b0a; }
+
+    /* Closing: a CRT switching off, then the home page's screen takes over */
+    .tv.is-off { animation: crt-off 0.34s steps(6, end) forwards; }
+
+    @keyframes crt-off {
+        0% { transform: scale(1, 1); }
+        60% { transform: scale(1, 0.012); }
+        100% { transform: scale(0, 0.012); }
+    }
+
+    .coin-sprite {
+        position: absolute;
+        left: 50%;
+        top: -40px;
+        z-index: 5;
+        width: 24px;
+        height: 24px;
+        margin-left: -12px;
+        background: #ffc940;
+        box-shadow: inset 6px 0 0 #fff0b8, inset -6px 0 0 #d98f1f;
+    }
+
+    .below {
+        position: fixed;
+        left: 50%;
+        bottom: 26px;
+        translate: -50% 0;
+        transition: opacity 0.2s steps(2, end);
+    }
+
+    .bit-corner {
+        position: fixed;
+        left: 44px;
+        bottom: 42px;
+        display: flex;
+        align-items: flex-end;
+        gap: 14px;
+        transition: opacity 0.2s steps(2, end);
+    }
+
+    .bubble {
+        padding: 8px 12px 9px;
+        background: #1f1e1c;
+        font-size: var(--text-14);
+        line-height: 1.35;
+        box-shadow: 0 -3px 0 var(--px-line), 0 3px 0 var(--px-line), -3px 0 0 var(--px-line), 3px 0 0 var(--px-line);
+    }
+
+    .leaving .below, .leaving .bit-corner { opacity: 0; }
+
+    @media (max-width: 900px) {
+        .hero-monitor { --screen-w: calc(100vw - 32px); }
+        .hero-screen { aspect-ratio: 3 / 4; }
+        .bit-corner { display: none; }
+        .big { font-size: 15vw; }
+        .role { font-size: var(--text-18); }
+        .coin { font-size: var(--text-28); }
+        .board { width: 90%; font-size: var(--text-20); grid-template-columns: auto auto 1fr auto; }
+        .board canvas { width: 24px; height: 24px; }
+        .b-year { display: none; }
+        .hud { font-size: var(--text-16); }
+        .scene-demo.is-tall video { object-position: center; }
+        .is-tall .demo-side { display: none; }
+    }
+</style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+    <a class="t-back" href="index.html">All versions</a>
+
+    <div class="scroll-container">
+        <section class="section section-hero">
+            <div class="hero-monitor entered" id="monitor" style="pointer-events: auto;">
+                <div class="hero-screen">
+                    <div class="hero-screen-bar" aria-hidden="true">
+                        <span class="hero-screen-dots"><i></i><i></i><i></i></span>
+                        <span class="hero-screen-title">~/attract_mode</span>
+                    </div>
+                    <div class="tv" id="tv">
+                        <section class="scene scene-title is-on" data-ms="6000">
+                            <h1 class="big px">Jonathan Chiang</h1>
+                            <p class="role px">Product Designer &amp; Design Engineer</p>
+                            <p class="coin px"><a href="../index.html" id="start" class="blink" style="color: inherit; text-decoration: none;"><span id="promptText">Insert coin to start</span></a></p>
+                            <div class="walkers" aria-hidden="true"><canvas class="pixel" id="walk"></canvas></div>
+                            <div class="hud px"><span>&copy; 2026</span><span id="credit1">Credit 0</span></div>
+                        </section>
+
+                        <section class="scene" data-ms="7000" id="roster">
+                            <h2 class="board-title px">Case studies</h2>
+                            <div class="board px" id="board"></div>
+                            <div class="hud px"><span>Press any key</span><span>Credit 0</span></div>
+                        </section>
+
+                        <section class="scene scene-demo" data-ms="9000" id="demo">
+                            <span class="demo-tag px">Demo</span>
+                            <video id="video" muted playsinline loop preload="none"></video>
+                            <div class="demo-side px">
+                                <p class="demo-big" id="demoBig"></p>
+                                <p class="demo-blurb" id="demoBlurb"></p>
+                                <p class="demo-status" id="demoStatus"></p>
+                            </div>
+                            <div class="hud px"><span id="demoName"></span><span>Press any key</span></div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="bit-corner" id="corner" aria-hidden="true">
+        <span id="bitSlot"></span>
+        <p class="bubble">Psst. Any key works.</p>
+    </div>
+    <a class="skip below" href="../index.html" id="skip">Skip intro</a>
+
+    <script src="sprites.js"></script>
+    <script src="shared.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var T = window.Title;
+        var tv = document.getElementById('tv');
+        var scenes = Array.prototype.slice.call(tv.querySelectorAll('.scene'));
+        var board = document.getElementById('board');
+        var video = document.getElementById('video');
+        var demo = document.getElementById('demo');
+        var RANK = ['1st', '2nd', '3rd', '4th', '5th'];
+        var clips = T.WORK.filter(function (w) { return w.video; });
+        var clip = 0, index = 0, timer = null, leaving = false;
+
+        if (T.touch) document.getElementById('promptText').textContent = 'Tap to insert coin';
+
+        document.getElementById('bitSlot').appendChild(T.sprite(PX.BIT, 3));
+
+        if (T.touch) {
+            document.querySelectorAll('.hud span').forEach(function (s) {
+                if (s.textContent === 'Press any key') s.textContent = 'Tap to start';
+            });
+        }
+
+        // ---- Roster ----------------------------------------------------------
+        T.WORK.forEach(function (w, i) {
+            var a = document.createElement('a');
+            a.href = w.href;
+            a.style.setProperty('--c', w.color);
+            a.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+
+            var rank = document.createElement('span');
+            rank.className = 'b-rank';
+            rank.textContent = RANK[i];
+
+            var name = document.createElement('span');
+            name.className = 'b-name';
+            name.textContent = w.short || w.name;
+
+            var year = document.createElement('span');
+            year.className = 'b-year';
+            year.textContent = w.year;
+
+            var status = document.createElement('span');
+            status.className = 'b-status';
+            status.textContent = w.status;
+
+            var icon = document.createElement('canvas');
+            icon.className = 'pixel';
+            icon.width = icon.height = 16;
+            PX.draw(icon.getContext('2d'), PX.ICONS[w.id], 0, 0);
+
+            a.append(rank, icon, name, year, status);
+            board.appendChild(a);
+        });
+
+        function revealRoster() {
+            var rows = board.querySelectorAll('a');
+            rows.forEach(function (r) { r.classList.toggle('is-in', T.reduce); });
+            if (T.reduce) return;
+            rows.forEach(function (r, i) {
+                setTimeout(function () { r.classList.add('is-in'); }, 350 + i * 340);
+            });
+        }
+
+        // ---- Walkers ---------------------------------------------------------
+        // Jonathan crosses the screen with Bit hopping behind him.
+        var walk = document.getElementById('walk');
+        var wctx = walk.getContext('2d');
+        var WW = 0, WH = 42, wx = -30;
+
+        function sizeWalk() {
+            var box = walk.parentElement.getBoundingClientRect();
+            WW = Math.ceil(box.width / 2);
+            walk.width = WW;
+            walk.height = WH;
+            walk.style.width = (WW * 2) + 'px';
+            walk.style.height = (WH * 2) + 'px';
+        }
+
+        function drawWalk(frame) {
+            wctx.clearRect(0, 0, WW, WH);
+            wx += 1.5;
+            if (wx > WW + 60) wx = -30;
+            var x = Math.round(wx);
+            PX.draw(wctx, PX.HERO[PX.WALK[frame % 4]], x, WH - 39);
+            var hop = [0, 2, 3, 2][frame % 4];
+            PX.draw(wctx, PX.BIT, x - 24, WH - 15 - hop);
+        }
+
+        sizeWalk();
+        addEventListener('resize', sizeWalk);
+        if (T.reduce) { wx = 60; drawWalk(3); wx = 60; }
+        else T.ticker(8, function (frame) { if (index === 0 && !leaving) drawWalk(frame); });
+
+        // ---- Scene loop ------------------------------------------------------
+        function show(i) {
+            scenes.forEach(function (s, n) { s.classList.toggle('is-on', n === i); });
+            var scene = scenes[i];
+            if (scene.id === 'roster') revealRoster();
+            if (scene === demo) {
+                var w = clips[clip++ % clips.length];
+                demo.classList.toggle('is-tall', !!w.tall);
+                video.src = w.video;
+                video.poster = w.poster;
+                // A phone clip already names itself in the side panel
+                document.getElementById('demoName').textContent = w.tall ? '' : w.name + ', ' + w.year;
+                document.getElementById('demoBig').textContent = w.name;
+                document.getElementById('demoBig').style.setProperty('--c', w.color);
+                document.getElementById('demoBlurb').textContent = w.blurb;
+                document.getElementById('demoStatus').textContent = w.status + ', ' + w.year;
+                var p = video.play();
+                if (p && p.catch) p.catch(function () {});
+            } else {
+                video.pause();
+            }
+            if (T.reduce) return;
+            timer = setTimeout(function () {
+                index = (index + 1) % scenes.length;
+                show(index);
+            }, Number(scene.dataset.ms));
+        }
+
+        show(0);
+
+        // ---- Start -----------------------------------------------------------
+        // A coin drops, the credit ticks, and the CRT switches off inside the
+        // same frame the home page opens in.
+        async function leave() {
+            if (leaving) return;
+            leaving = true;
+            clearTimeout(timer);
+            video.pause();
+            document.body.classList.add('leaving');
+            document.querySelectorAll('.hud span:last-child').forEach(function (s) {
+                if (/Credit/.test(s.textContent)) s.textContent = 'Credit 1';
+            });
+
+            if (!T.reduce) {
+                var coin = document.createElement('span');
+                coin.className = 'coin-sprite';
+                tv.appendChild(coin);
+                await coin.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(' + (tv.offsetHeight + 60) + 'px)' }],
+                    { duration: 300, easing: 'steps(8, end)', fill: 'forwards' }).finished;
+                tv.classList.add('is-off');
+                await T.wait(340);
+            }
+            T.go(T.HOME);
+        }
+
+        var fire = T.onStart(leave);
+        document.getElementById('start').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (fire) fire();
+        });
+        document.getElementById('skip').addEventListener('click', function (e) {
+            e.preventDefault();
+            T.go(T.HOME);
+        });
+    })();
+    </script>
+</body>
+</html>

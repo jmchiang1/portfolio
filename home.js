@@ -4,9 +4,6 @@
     var glow = document.querySelector('.glow');
     var heroContent = document.querySelector('.hero-content');
     var footerInfo = document.querySelector('.footer-info');
-    var swipeHint = document.querySelector('.hero-swipe-hint');
-    var socialLinks = document.querySelector('.social-links');
-    var heroSection = document.getElementById('hero');
     var carouselSection = document.getElementById('projects');
     var cards = Array.from(document.querySelectorAll('.project-card'));
     var totalCards = cards.length;
@@ -47,8 +44,7 @@
         counter.classList.toggle('counter-visible', visible);
     }
 
-    // Mirrors the counter's visibility so the prev/next buttons fade in
-    // with the carousel and fade out when returning to hero.
+    // Mirrors the counter's visibility so the prev/next buttons hide with it.
     function setNavVisible(visible) {
         if (navPrev) navPrev.classList.toggle('nav-visible', visible);
         if (navNext) navNext.classList.toggle('nav-visible', visible);
@@ -217,7 +213,6 @@
             document.body.classList.add('grid-mode');
             heroContent.classList.remove('hero-hidden');
             footerInfo.classList.remove('footer-hidden');
-            if (swipeHint) swipeHint.classList.remove('swipe-hint-hidden');
         }, function (hero, footer, cardsArr) {
             // Top-to-bottom: hero → footer (sits just below hero) → cards row by row
             return [hero, footer].concat(cardsArr);
@@ -240,9 +235,6 @@
         crossFade(function () {
             layoutMode = 'carousel';
             document.body.classList.remove('grid-mode');
-            if (currentView === 'carousel') {
-                if (swipeHint) swipeHint.classList.add('swipe-hint-hidden');
-            }
         }, function (hero, footer, cardsArr) {
             // Hero + footer are the visible elements in carousel mode — surface them
             // first so neither feels delayed, then stagger the cards (most offscreen)
@@ -270,7 +262,6 @@
     var POS_CLASSES = ['pos-center', 'pos-left', 'pos-right', 'pos-far-left', 'pos-far-right',
                        'pos-hero-peek', 'pos-back-left', 'pos-back-right'];
 
-    var currentView = 'hero'; // 'hero' or 'carousel'
     var activeIndex = 0;
     var isTransitioning = false;
     var TRANSITION_MS = 450;
@@ -287,22 +278,12 @@
         POS_CLASSES.forEach(function (cls) { card.classList.remove(cls); });
     }
 
-    // The hero screen and the cards share one ring: slot 0 is the screen,
-    // slots 1..N are the cards. The active slot sits in the centre, its
-    // neighbours peek in on either side, and the rest wait on the far side —
-    // so leaving the hero swipes the screen aside just like a card.
-    var monitor = document.querySelector('.hero-monitor');
-    var slots = (monitor ? [monitor] : []).concat(cards);
-    var SLOT_OFFSET = monitor ? 1 : 0;
-
-    function activeSlot() {
-        return currentView === 'hero' ? 0 : activeIndex + SLOT_OFFSET;
-    }
-
+    // The cards sit on one ring. The active card is in the centre, its neighbours
+    // peek in on either side, and the rest wait on the far side.
     // Shortest signed distance around the ring from the active slot
     function ringDiff(slot) {
-        var n = slots.length;
-        var d = ((slot - activeSlot()) % n + n) % n;
+        var n = cards.length;
+        var d = ((slot - activeIndex) % n + n) % n;
         return d > n / 2 ? d - n : d;
     }
 
@@ -314,12 +295,9 @@
     }
 
     function positionRing() {
-        slots.forEach(function (el, slot) {
-            var pose = poseFor(ringDiff(slot));
+        cards.forEach(function (el, slot) {
             removePositions(el);
-            el.classList.add(pose);
-            // Hand the screen off from its entrance keyframes once it moves
-            if (el === monitor && pose !== 'pos-center') el.classList.add('entered');
+            el.classList.add(poseFor(ringDiff(slot)));
         });
     }
 
@@ -328,72 +306,27 @@
         glow.classList.add('glow-' + GLOW_COLORS[activeIndex % GLOW_COLORS.length]);
     }
 
-    function showHero() {
-        currentView = 'hero';
-        if (swipeHint) swipeHint.classList.remove('swipe-hint-hidden');
-        if (socialLinks) socialLinks.classList.remove('social-hidden');
-        heroSection.classList.remove('section-hidden');
-        glow.classList.remove('glow-dimmed', 'glow-blue', 'glow-green', 'glow-gold', 'glow-orange');
-        setCounterVisible(false);
-        setNavVisible(false);
-
+    // The ring keeps turning past either end
+    function turn(direction) {
+        activeIndex = (activeIndex + direction + totalCards) % totalCards;
         positionRing();
-
-        // Keep carousel on top during exit animation, then drop it behind
-        setTimeout(function () {
-            if (currentView === 'hero') {
-                carouselSection.classList.remove('section-active');
-            }
-        }, TRANSITION_MS);
-    }
-
-    function showCarousel() {
-        currentView = 'carousel';
-        if (swipeHint) swipeHint.classList.add('swipe-hint-hidden');
-        if (socialLinks) socialLinks.classList.add('social-hidden');
-        heroSection.classList.add('section-hidden');
-        carouselSection.classList.add('section-active');
-        glow.classList.add('glow-dimmed');
-        updateCounter();
-        setCounterVisible(true);
-        setNavVisible(layoutMode === 'carousel');
-
-        positionRing();
-
         updateGlow();
-    }
-
-    function nextCard() {
-        if (activeIndex < totalCards - 1) {
-            activeIndex++;
-            positionRing();
-            updateGlow();
-            updateCounter();
-        } else {
-            // Last card → the ring keeps turning back round to the hero
-            showHero();
-        }
-    }
-
-    function prevCard() {
-        if (activeIndex > 0) {
-            activeIndex--;
-            positionRing();
-            updateGlow();
-            updateCounter();
-        } else {
-            // First card → turn back to the hero
-            showHero();
-        }
+        updateCounter();
     }
 
     // Initial load: start every card offscreen on its own side of the ring so
-    // they swing into place alongside the screen's entrance
+    // they swing into place
     cards.forEach(function (card, i) {
         removePositions(card);
-        card.classList.add(ringDiff(i + SLOT_OFFSET) < 0 ? 'pos-far-left' : 'pos-far-right');
+        card.classList.add(ringDiff(i) < 0 ? 'pos-far-left' : 'pos-far-right');
     });
-    if (monitor) monitor.classList.add('pos-center');
+
+    carouselSection.classList.add('section-active');
+    glow.classList.add('glow-dimmed');
+    updateCounter();
+    updateGlow();
+    setCounterVisible(true);
+    setNavVisible(true);
 
     // After entrance animation, switch to class-driven state so transitions work
     heroContent.addEventListener('animationend', function handler() {
@@ -404,14 +337,7 @@
         footerInfo.classList.add('entered');
         footerInfo.removeEventListener('animationend', handler);
     });
-    if (swipeHint) {
-        swipeHint.addEventListener('animationend', function handler() {
-            swipeHint.classList.add('entered');
-            swipeHint.removeEventListener('animationend', handler);
-        });
-    }
-    // Enable transitions after a frame, then swing the ring into its hero
-    // positions alongside the monitor entrance
+    // Enable transitions after a frame, then swing the ring into place
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
             carouselSection.classList.add('carousel-ready');
@@ -452,40 +378,19 @@
         isTransitioning = true;
         setTimeout(function () { isTransitioning = false; }, TRANSITION_MS);
 
-        var scrollingDown = delta > 0;
-
-        if (currentView === 'hero') {
-            if (scrollingDown) {
-                activeIndex = 0;
-                showCarousel();
-            }
-        } else {
-            if (scrollingDown) {
-                nextCard();
-            } else {
-                prevCard();
-            }
-        }
+        turn(delta > 0 ? 1 : -1);
     }, { passive: false });
 
     // Prev/next button + arrow-key nav — desktop affordance for the carousel
     // since the wheel/swipe gesture isn't obvious on a laptop. Both routes
     // share the same `isTransitioning` guard the wheel handler uses so rapid
-    // input can't stack moves mid-animation. From the hero, either key
-    // enters the carousel (right → first card, left → last card) so the
-    // arrow keys behave as a continuous horizontal nav across the page.
+    // input can't stack moves mid-animation.
     function stepCarousel(direction) {
         if (layoutMode === 'grid') return;
         if (isTransitioning) return;
         isTransitioning = true;
         setTimeout(function () { isTransitioning = false; }, TRANSITION_MS);
-        if (currentView === 'hero') {
-            activeIndex = direction > 0 ? 0 : totalCards - 1;
-            showCarousel();
-            return;
-        }
-        if (direction > 0) nextCard();
-        else prevCard();
+        turn(direction);
     }
 
     if (navPrev) navPrev.addEventListener('click', function () { stepCarousel(-1); });
@@ -542,16 +447,6 @@
             else window.location.href = href;
         });
     });
-
-    // A peeking hero screen turns the ring back to the hero (and swallows the
-    // click so the SkillCat link inside it doesn't fire while it's aside)
-    if (monitor) {
-        monitor.addEventListener('click', function (e) {
-            if (layoutMode !== 'carousel') return;
-            if (monitor.classList.contains('pos-right')) { e.preventDefault(); stepCarousel(1); }
-            else if (monitor.classList.contains('pos-left')) { e.preventDefault(); stepCarousel(-1); }
-        });
-    }
 
     // Desktop nav-link + logo exits — handled by the shared GSAP transitions module
     if (window.PageTransitions) PageTransitions.bindNavLinks();
@@ -624,116 +519,10 @@
         isTransitioning = true;
         var scrollingDown = Math.abs(deltaY) >= Math.abs(deltaX) ? deltaY > 0 : deltaX > 0;
 
-        if (currentView === 'hero') {
-            if (scrollingDown) {
-                activeIndex = 0;
-                showCarousel();
-            }
-        } else {
-            if (scrollingDown) {
-                nextCard();
-            } else {
-                prevCard();
-            }
-        }
+        turn(scrollingDown ? 1 : -1);
 
         setTimeout(function () {
             isTransitioning = false;
         }, TRANSITION_MS);
     }, { passive: true });
-})();
-
-// Hero monitor — types out the intro and the footer lines together
-(function () {
-    var monitor = document.querySelector('.hero-monitor');
-    if (monitor) {
-        // Hand off from the entrance keyframes so the hide/show transition works
-        monitor.addEventListener('animationend', function handler(e) {
-            if (e.target !== monitor) return;
-            monitor.classList.add('entered');
-            monitor.removeEventListener('animationend', handler);
-        });
-    }
-
-    var heading = document.querySelector('.hero-heading');
-    if (!heading) return;
-    // Preserve the name for screen readers regardless of typing state
-    heading.setAttribute('aria-label', (heading.textContent || '').trim());
-
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    // The intro types first (name → tagline); once the tagline lands, both
-    // footer columns type in together. [element, ms per character, pause]
-    var intro = [[heading, 60, 450], [document.querySelector('.hero-tagline'), 24, 220]];
-    var footerColumns = Array.prototype.map.call(
-        document.querySelectorAll('.footer-info .footer-text'),
-        function (el) { return [[el, 16, 200]]; }
-    );
-
-    // Split each text node into a typed span + an invisible remainder so the
-    // final layout is reserved up front and nothing reflows while typing.
-    function prepare(el) {
-        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-        var nodes = [];
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-        return nodes.filter(function (n) { return n.nodeValue.length; }).map(function (n) {
-            var done = document.createElement('span');
-            var rest = document.createElement('span');
-            rest.className = 'type-rest';
-            rest.textContent = n.nodeValue;
-            n.parentNode.insertBefore(done, n);
-            n.parentNode.replaceChild(rest, n);
-            return { done: done, rest: rest, text: rest.textContent };
-        });
-    }
-
-    function makeCaret() {
-        var caret = document.createElement('span');
-        caret.className = 'type-caret';
-        caret.setAttribute('aria-hidden', 'true');
-        return caret;
-    }
-
-    // Blank every line up front (so the footer stays empty while the intro
-    // types), returning a queue of lines ready to type.
-    function toQueue(lines) {
-        return lines
-            .filter(function (l) { return l[0] && l[0].offsetParent !== null; })
-            .map(function (l) { return { parts: prepare(l[0]), ms: l[1], delay: l[2] }; });
-    }
-
-    // Types a queue line by line. The intro keeps its caret blinking at the
-    // end; each footer caret is removed once its column finishes.
-    function runStream(queue, keepCaret, onDone) {
-        var caret = makeCaret();
-
-        function typeLine(li) {
-            if (li >= queue.length) {
-                if (!keepCaret && caret.parentNode) caret.parentNode.removeChild(caret);
-                if (onDone) onDone();
-                return;
-            }
-            var line = queue[li];
-            var pi = 0, ci = 0;
-            function step() {
-                if (pi >= line.parts.length) return typeLine(li + 1);
-                var part = line.parts[pi];
-                if (ci === 0) part.done.parentNode.insertBefore(caret, part.rest);
-                ci++;
-                part.done.textContent = part.text.slice(0, ci);
-                part.rest.textContent = part.text.slice(ci);
-                var ch = part.text.charAt(ci - 1);
-                if (ci >= part.text.length) { pi++; ci = 0; }
-                setTimeout(step, ch === ' ' ? line.ms * 0.5 : line.ms);
-            }
-            setTimeout(step, line.delay);
-        }
-        typeLine(0);
-    }
-
-    var introQueue = toQueue(intro);
-    var footerQueues = footerColumns.map(toQueue);
-    runStream(introQueue, true, function () {
-        footerQueues.forEach(function (q) { runStream(q, false); });
-    });
 })();

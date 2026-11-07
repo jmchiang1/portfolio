@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="robinhood.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
     <link rel="stylesheet" href="mascot-chat.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap">
+    <link rel="stylesheet" href="pixel-theme.css">
 </head>
 <body>
     <!-- White cover — visible from first paint to prevent flash between pages -->
@@ -27,7 +29,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="nav-logo">
-            <img src="assets/logo.png" alt="JC" />
+            <img src="assets/logo-keycap.svg" alt="JC" />
         </a>
         <div class="nav-links cs-nav-links">
             <a href="#background" class="nav-link">Background</a>
@@ -403,7 +405,7 @@
         <h2 class="cs-next-heading">More case studies</h2>
         <div class="cs-next-grid">
             <a class="cs-next-card" href="reveal.html">
-                <video class="cs-next-thumb" autoplay muted loop playsinline preload="metadata" poster="assets/reveal-mockup.png" aria-label="Reveal case study">
+                <video class="cs-next-thumb" data-autoplay muted loop playsinline preload="metadata" poster="assets/reveal-mockup.png" aria-label="Reveal case study">
                     <source src="assets/Reveal-animation.mp4" type="video/mp4">
                 </video>
                 <div class="cs-next-info">
@@ -417,7 +419,7 @@
                 </div>
                 <div class="nocta-device">
                     <div class="nocta-screen">
-                        <video class="nocta-video" autoplay loop muted playsinline preload="metadata" poster="assets/nocta/v2/flow-week-poster.jpg" aria-label="Nocta app">
+                        <video class="nocta-video" data-autoplay loop muted playsinline preload="metadata" poster="assets/nocta/v2/flow-week-poster.jpg" aria-label="Nocta app">
                             <source src="assets/nocta/v2/flow-week.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -437,5 +439,6 @@
     <script src="robinhood.js"></script>
     <script src="cs-nav.js"></script>
     <script src="mascot-chat.js" defer></script>
+    <script src="video-budget.js"></script>
 </body>
 </html>

@@ -224,7 +224,7 @@
             align-items: stretch;
         }
         /* Keys + gaps sized by discrete classes (kb-1u, kb-1-25u, …) emitted
-           by keyboard-layouts.js — same classes welcome.html uses, so the
+           by keyboard-layouts.js — same classes the builder uses, so the
            saved keyboard matches what the visitor built. */
         .peg-kb .kb-key,
         .peg-kb .kb-gap   { flex: 0 0 auto; min-width: 0; }
@@ -245,7 +245,7 @@
             border-radius: 1.5px;
             box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
         }
-        /* Modifier caps pull toward the case colour (welcome's formula) so a
+        /* Modifier caps pull toward the case colour (the builder's formula) so a
            black/white build paints mods as light grey instead of "still black". */
         .peg-kb .kb-mod {
             background: color-mix(in oklab, var(--vc-keycap, #16161d) 72%, var(--vc-color, #f4f4f6) 28%);
@@ -334,9 +334,8 @@
         }
 
         /* "Build yours" ghost tile — injected at the start of the grid when
-           the visitor hasn't created a keyboard yet. Linking <a>, so Enter
-           and click both navigate to /welcome.html. Drops out automatically
-           once they save a build (because loadOwn() returns non-null). Sits
+           the visitor hasn't created a keyboard yet. Opens the builder modal
+           in create mode. Drops out automatically once they save a build (because loadOwn() returns non-null). Sits
            on the cream pegboard wall, so the dashed frame + label use the
            same dark navy (#2a261f) as the rest of the wall's etched text. */
         /* Reset button chrome so .peg-tile--cta inherits its flex layout
@@ -493,7 +492,7 @@
             text-transform: uppercase;
             color: var(--vc-text, #fff);
         }
-        /* Modal puts the case frame around the keyboard (matching welcome's
+        /* Modal puts the case frame around the keyboard (matching the builder's
            outer chrome). The inner `.peg-kb` becomes transparent so we don't
            double up the frame. Formulas mirror welcome.css exactly. */
         .visitor-modal-card .vmc-kb-frame {
@@ -648,7 +647,7 @@
         .edit-modal-close:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
 
         .edit-modal-header { padding-right: 56px; }
-        .edit-modal h2 {
+        .edit-modal-header h2 {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
             font-size: var(--text-24);
@@ -662,7 +661,7 @@
         }
 
         /* The .welcome-stage inside the modal — gives it room to breathe and
-           overrides the welcome page's vertical centering (which would push
+           overrides welcome.css's vertical centering (which would push
            the card off-screen inside a constrained modal panel). */
         .edit-stage {
             margin-top: 24px;
@@ -780,6 +779,8 @@
         }
     </style>
     <link rel="stylesheet" href="mascot-chat.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap">
+    <link rel="stylesheet" href="pixel-theme.css">
 </head>
 <body>
     <!-- Background Grid -->
@@ -791,7 +792,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="nav-logo">
-            <img src="assets/logo.png" alt="JC" />
+            <img src="assets/logo-keycap.svg" alt="JC" />
         </a>
         <div class="nav-links">
             <a href="/" class="nav-link">UX/UI</a>
@@ -850,7 +851,7 @@
         <article class="visitor-modal-card" id="visitorModalCard"></article>
     </div>
 
-    <!-- Edit-card modal — mirrors the welcome page's build stage so editing
+    <!-- Builder modal — builds a new card or edits your own, so editing
          feels identical to building. Same .build-card + .welcome-panel
          components, same CSS (welcome.css is already loaded above), same
          live-update behaviour driven by the JS at the bottom of this file. -->
@@ -866,7 +867,7 @@
             </header>
 
             <section class="welcome-stage edit-stage">
-                <!-- The Build Card (mirrors welcome.html) -->
+                <!-- The Build Card -->
                 <article class="build-card" id="editCard">
                     <header class="build-card-head">
                         <div class="build-card-brand">
@@ -919,7 +920,7 @@
                     </footer>
                 </article>
 
-                <!-- Right-side controls panel (mirrors welcome.html) -->
+                <!-- Right-side controls panel -->
                 <aside class="welcome-panel">
                     <div class="build-controls">
                         <div class="welcome-name-row">
@@ -1024,7 +1025,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="transitions.js"></script>
     <script src="supabase-config.js"></script>
-    <!-- Shared keyboard layouts + renderer — same source as welcome.js so
+    <!-- Shared keyboard layouts + renderer — same source as the builder so
          every saved keyboard renders identically to the one the visitor built. -->
     <script src="keyboard-layouts.js"></script>
     <script>
@@ -1056,9 +1057,9 @@
         (function () {
             'use strict';
 
-            // Keyed by the display names welcome.js saves (`build.caseName` /
+            // Keyed by the display names the builder saves (`build.caseName` /
              // `build.keycapName`, sourced from each swatch button's data-name).
-             // Keep these in sync with welcome.js's CASES/KEYCAPS — when they
+             // Keep these in sync with the builder's maps below — when they
              // drift, every lookup misses and tiles render as the fallback.
             var CASES = {
                 'White':         { color: '#f4f4f6', text: '#1c1c20', dim: 'rgba(28,28,32,0.55)' },
@@ -1111,7 +1112,7 @@
             // ----- Layout-aware keyboard renderer -----
             // Pulls layout data + per-key HTML from keyboard-layouts.js so
             // every saved keyboard on this page matches the one the visitor
-            // built on welcome.html exactly. KbLayouts.LAYOUTS is aliased on
+            // built in the modal exactly. KbLayouts.LAYOUTS is aliased on
             // both internal keys ('60'/'75'/'tkl') and display names
             // ('60%'/'75%'/'TKL'), so passing v.layout directly works.
             var renderKb     = window.KbLayouts.renderKeyboardHtml;
@@ -1276,8 +1277,7 @@
                 return Math.max(1, Math.ceil((realCount + SEED_VISITORS.length) / TILES_PER_PAGE));
             }
 
-            // Edge-case CTA: the visitor skipped the welcome flow, so there's
-            // no card of theirs to anchor the wall. Drop a ghost "build yours"
+            // No card of theirs on the wall yet, so drop a ghost "build yours"
             // tile at the front of page 1 that opens the SAME modal the
             // pencil edit uses — just in "create" mode (no id, fresh serial).
             // Once they save a build, loadOwn() returns non-null and this
@@ -1487,7 +1487,7 @@
             var saveBtn     = document.getElementById('editSave');
             var statusEl    = document.getElementById('editStatus');
 
-            // Build-card DOM refs (mirror welcome.js field-by-field).
+            // Build-card DOM refs.
             var editCardEl         = document.getElementById('editCard');
             var editCardKeyboard   = document.getElementById('editCardKeyboard');
             var editCardName       = document.getElementById('editCardName');
@@ -1502,7 +1502,7 @@
             var editSpecKeycap     = document.getElementById('editSpecKeycap');
             var editSpecKeycapSwatch = document.getElementById('editSpecKeycapSwatch');
 
-            // Same hex maps welcome.js uses, so the edit-card paints the
+            // Hex maps for the build card, so it paints the
             // identical colours the build flow produces.
             var EDIT_CASES = {
                 white:    { color: '#f4f4f6', text: '#1c1c20', textDim: 'rgba(28,28,32,0.55)' },
@@ -1576,7 +1576,7 @@
                 else saveBtn.textContent = text;
             }
 
-            // ---------- Build-card updaters (welcome.js parity) ----------
+            // ---------- Build-card updaters ----------
             function buildEditKeyboard(layout) {
                 editCardKeyboard.setAttribute('data-layout', layout);
                 editCardKeyboard.innerHTML = '';
@@ -1635,7 +1635,7 @@
             var modalTitleEl = modalEl.querySelector('.edit-modal-header h2');
             var modalSubEl   = modalEl.querySelector('.edit-modal-sub');
 
-            // 4-digit serial — mirrors welcome.js's generateSerial() so a
+            // 4-digit serial, so a
             // build started here continues the same numbering sequence.
             function generateSerial() {
                 var base = parseInt(localStorage.getItem('jc_visitor_serial') || '1037', 10);
@@ -1734,6 +1734,7 @@
                 if (!modalEl.classList.contains('is-open')) return;
                 modalEl.setAttribute('aria-hidden', 'true');
                 modalEl.classList.add('is-closing');
+                clearPressedKeys();
                 var onEnd = function (e) {
                     if (e.target !== modalPanelEl) return;
                     modalPanelEl.removeEventListener('animationend', onEnd);
@@ -1741,6 +1742,12 @@
                     document.body.classList.remove('edit-modal-open');
                 };
                 modalPanelEl.addEventListener('animationend', onEnd);
+            }
+
+            function bumpEditCard() {
+                editCardEl.classList.remove('bouncing');
+                void editCardEl.offsetWidth; // restart the animation
+                editCardEl.classList.add('bouncing');
             }
 
             // Click → resolve key from the chosen button's data-* attr, fire
@@ -1753,6 +1760,7 @@
                     var name = btn.getAttribute('data-name');
                     onPick(key, name);
                     highlightActive(container, dataAttr, key);
+                    bumpEditCard();
                 });
             }
 
@@ -1821,6 +1829,68 @@
                 if (e.key === 'Escape' && modalEl.classList.contains('is-open')) closeEditModal();
             });
 
+            // ---------- Live keypress feedback ----------
+            // While the builder is open, real keystrokes light the matching
+            // cap on the card and play the chosen switch's sound.
+            function pressKey(name, on) {
+                if (!name) return;
+                var cap = editCardKeyboard.querySelector('[data-key="' + name + '"]');
+                if (cap) cap.classList.toggle('is-pressed', on);
+            }
+
+            function clearPressedKeys() {
+                editCardKeyboard.querySelectorAll('.is-pressed').forEach(function (cap) {
+                    cap.classList.remove('is-pressed');
+                });
+            }
+
+            document.addEventListener('keydown', function (e) {
+                if (!modalEl.classList.contains('is-open') || !editState) return;
+                pressKey(window.KbLayouts.keyFromEvent(e), true);
+                if (!e.repeat) playEditSwitchSound(editState.switchKey);
+            }, { passive: true });
+            document.addEventListener('keyup', function (e) {
+                pressKey(window.KbLayouts.keyFromEvent(e), false);
+            }, { passive: true });
+            window.addEventListener('blur', clearPressedKeys);
+
+            // ---------- Card tilt ----------
+            // Tilts the card toward the cursor for a physical feel. Skipped
+            // on touch and reduced motion.
+            (function setupCardTilt() {
+                if (typeof gsap === 'undefined') return;
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                if (window.matchMedia('(hover: none)').matches) return;
+
+                var MAX_TILT = 10;
+                var LIFT     = 14;
+                var rect     = null;
+                var quickRotX = gsap.quickTo(editCardEl, 'rotateX', { duration: 0.5, ease: 'power2.out' });
+                var quickRotY = gsap.quickTo(editCardEl, 'rotateY', { duration: 0.5, ease: 'power2.out' });
+                var quickZ    = gsap.quickTo(editCardEl, 'z',       { duration: 0.5, ease: 'power2.out' });
+
+                gsap.set(editCardEl, { transformPerspective: 1000, transformOrigin: 'center center' });
+
+                editCardEl.addEventListener('mouseenter', function () {
+                    rect = editCardEl.getBoundingClientRect();
+                    quickZ(LIFT);
+                });
+                editCardEl.addEventListener('mousemove', function (e) {
+                    if (!rect) rect = editCardEl.getBoundingClientRect();
+                    var px = (e.clientX - rect.left) / rect.width;
+                    var py = (e.clientY - rect.top)  / rect.height;
+                    quickRotY((px - 0.5) * 2 * MAX_TILT);
+                    quickRotX(-(py - 0.5) * 2 * MAX_TILT);
+                });
+                editCardEl.addEventListener('mouseleave', function () {
+                    rect = null;
+                    gsap.to(editCardEl, {
+                        rotateX: 0, rotateY: 0, z: 0,
+                        duration: 0.8, ease: 'power3.out', overwrite: 'auto'
+                    });
+                });
+            })();
+
             saveBtn.addEventListener('click', function () {
                 if (!editState) return;
                 var name = (editState.name || '').trim().toUpperCase();
@@ -1861,9 +1931,6 @@
                             issued_at:  editState.created_at || new Date().toISOString(),
                             created_at: editState.created_at
                         })));
-                        // Stop the welcome-redirect gate from firing on future
-                        // visits — they've now seeded a card from this page.
-                        localStorage.setItem('jc_welcomed', '1');
                     } catch (e) {}
                 }
                 writeLocal();
@@ -1911,6 +1978,13 @@
                         setSaveLabel(savingLabel);
                     });
             });
+
+            // ?build opens the builder straight away (old /welcome.html links
+            // land here). Anyone who already has a card edits it instead.
+            if (/[?&]build\b/.test(location.search)) {
+                if (loadOwn()) openEditModal(); else openCreateModal();
+                history.replaceState(null, '', location.pathname);
+            }
 
             // ============================================
             // Visitor-details modal — populated on tile click with the
@@ -2024,5 +2098,6 @@
         })();
     </script>
     <script src="mascot-chat.js" defer></script>
+    <script src="pixel-bg.js"></script>
 </body>
 </html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Keycaps (title screen prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Jersey+25&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../pixel-theme.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+    .stage {
+        --cap: min(10.4vw, 16.5vh, 148px);
+        --gap: calc(var(--cap) * 0.09);
+        --k: max(3px, calc(var(--cap) * 0.035));
+        --depth: calc(var(--cap) * 0.11);
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--gap);
+        padding-bottom: 3vh;
+    }
+
+    .row {
+        display: flex;
+        gap: var(--gap);
+    }
+
+    /* Flat colour only. A skirt, a raised top face and a hard outline, drawn
+       the way the logo's keycaps are. */
+    .cap {
+        --face: #403f3b;
+        --top: #5c5b56;
+        --skirt: #2a2927;
+        --side: #171614;
+        --ink: #f3f3f1;
+        --drop: var(--depth);
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: var(--cap);
+        height: var(--cap);
+        margin-bottom: var(--depth);
+        background: var(--skirt);
+        color: var(--ink);
+        font-family: var(--px-font);
+        font-size: calc(var(--cap) * 0.62);
+        line-height: 1;
+        text-decoration: none;
+        user-select: none;
+        box-shadow:
+            0 calc(var(--k) * -1) 0 #0c0b0a,
+            calc(var(--k) * -1) 0 0 #0c0b0a,
+            var(--k) 0 0 #0c0b0a,
+            0 var(--drop) 0 var(--side),
+            calc(var(--k) * -1) var(--drop) 0 #0c0b0a,
+            var(--k) var(--drop) 0 #0c0b0a,
+            0 calc(var(--drop) + var(--k)) 0 #0c0b0a;
+        transition: translate 0.05s steps(2, end);
+    }
+
+    .cap::before {
+        content: '';
+        position: absolute;
+        left: 9%;
+        right: 9%;
+        top: 4%;
+        bottom: 15%;
+        background: var(--face);
+        box-shadow: inset 0 var(--k) 0 var(--top);
+    }
+
+    .cap > span { position: relative; translate: 0 -5%; }
+
+    .cap.is-blue {
+        --face: #1180f9;
+        --top: #5ab0ff;
+        --skirt: #0e62c2;
+        --side: #0a3f85;
+        --ink: #fff;
+    }
+
+    .cap.is-down {
+        --drop: calc(var(--depth) * 0.3);
+        translate: 0 calc(var(--depth) * 0.7);
+    }
+
+    .cap.is-lit {
+        --face: #fff;
+        --top: #fff;
+        --skirt: #c9c8c3;
+        --side: #8d8c88;
+        --ink: #161514;
+    }
+
+    /* The spacebar is the start button */
+    .space {
+        --face: #f3f3f1;
+        --top: #fff;
+        --skirt: #c9c8c3;
+        --side: #8d8c88;
+        --ink: #161514;
+        width: calc(var(--cap) * 6 + var(--gap) * 5);
+        height: calc(var(--cap) * 0.72);
+        font-size: calc(var(--cap) * 0.3);
+    }
+
+    .space::before { left: 2%; right: 2%; }
+
+    .bit {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 4;
+        pointer-events: none;
+    }
+
+    .meta {
+        position: fixed;
+        left: 28px;
+        right: 28px;
+        bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: var(--text-20);
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.72);
+        transition: opacity 0.3s steps(3, end);
+    }
+
+    /* Opening: caps drop in by row. Closing runs the same move downward. */
+    .opening .cap { translate: 0 -110vh; }
+    .opening .meta { opacity: 0; }
+    .leaving .meta { opacity: 0; }
+
+    @media (max-width: 640px) {
+        .stage { --cap: min(11vw, 12vh); }
+        .space { font-size: calc(var(--cap) * 0.44); }
+        .meta { left: 16px; right: 16px; bottom: 16px; font-size: var(--text-16); }
+    }
+</style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+    <a class="t-back" href="index.html">All versions</a>
+
+    <main class="stage opening" id="stage">
+        <h1 class="sr-only">Jonathan Chiang</h1>
+        <div class="row" id="row1" aria-hidden="true"></div>
+        <div class="row" id="row2" aria-hidden="true"></div>
+        <div class="row">
+            <a class="cap space" id="space" href="../index.html?intro"><span id="spaceText">Press space to start</span></a>
+        </div>
+    </main>
+
+    <div class="meta px" id="meta">
+        <span>Product Designer &amp; Design Engineer</span>
+        <a class="skip" href="../index.html" id="skip">Skip intro</a>
+    </div>
+
+    <script src="sprites.js"></script>
+    <script src="shared.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var T = window.Title;
+        var stage = document.getElementById('stage');
+        var space = document.getElementById('space');
+        var caps = [];
+        var leaving = false;
+
+        if (T.touch) document.getElementById('spaceText').textContent = 'Tap to start';
+
+        function row(el, word) {
+            word.split('').forEach(function (ch, i) {
+                var cap = document.createElement('span');
+                cap.className = 'cap' + (i === 0 ? ' is-blue' : '');
+                var legend = document.createElement('span');
+                legend.textContent = ch;
+                cap.appendChild(legend);
+                cap.dataset.key = ch.toLowerCase();
+                el.appendChild(cap);
+                caps.push(cap);
+            });
+        }
+
+        row(document.getElementById('row1'), 'JONATHAN');
+        row(document.getElementById('row2'), 'CHIANG');
+
+        var all = caps.concat(space);
+
+        // ---- Bit -------------------------------------------------------------
+        var scale = Math.max(3, Math.round(caps[0].offsetWidth / 30));
+        var bit = T.sprite(PX.BIT, scale);
+        bit.classList.add('bit');
+        bit.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(bit);
+
+        function seat(cap) {
+            var r = cap.getBoundingClientRect();
+            return { x: r.left + r.width / 2 - bit.offsetWidth / 2, y: r.top - bit.offsetHeight + scale };
+        }
+
+        function put(p) { bit.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px)'; }
+
+        // A short hop in six frames, so it moves like a sprite
+        function hop(from, to, ms) {
+            var frames = [];
+            var height = Math.max(26, Math.abs(to.x - from.x) * 0.5);
+            for (var i = 0; i <= 6; i++) {
+                var t = i / 6;
+                frames.push({ transform: 'translate(' + (from.x + (to.x - from.x) * t) + 'px,' + (from.y + (to.y - from.y) * t - height * 4 * t * (1 - t)) + 'px)' });
+            }
+            return bit.animate(frames, { duration: ms, easing: 'steps(6, end)', fill: 'forwards' }).finished;
+        }
+
+        function press(cap, lit) {
+            cap.classList.add('is-down');
+            if (lit) cap.classList.add('is-lit');
+            setTimeout(function () {
+                cap.classList.remove('is-down', 'is-lit');
+            }, 170);
+        }
+
+        // Bit types the name by hopping across the keys
+        var running = false;
+        async function typeName() {
+            if (running || leaving || document.hidden) return;
+            running = true;
+            var at = seat(caps[0]);
+            for (var i = 0; i < caps.length && !leaving; i++) {
+                var to = seat(caps[i]);
+                await hop(at, to, i === 8 ? 340 : 200);
+                press(caps[i], true);
+                at = to;
+            }
+            if (!leaving) {
+                var home = seat(space);
+                await hop(at, { x: home.x, y: home.y }, 360);
+                press(space);
+                await T.wait(500);
+                await hop(home, seat(caps[0]), 460);
+            }
+            running = false;
+        }
+
+        // ---- Opening ---------------------------------------------------------
+        async function open() {
+            if (T.reduce) {
+                stage.classList.remove('opening');
+                put(seat(caps[0]));
+                return;
+            }
+            all.forEach(function (cap, i) {
+                cap.style.transition = 'translate 0.42s steps(7, end) ' + (i * 0.022) + 's';
+            });
+            await new Promise(requestAnimationFrame);
+            await new Promise(requestAnimationFrame);
+            stage.classList.remove('opening');
+            await T.wait(760);
+            all.forEach(function (cap) { cap.style.transition = ''; });
+            put(seat(caps[0]));
+            await T.wait(420);
+            typeName();
+            setInterval(typeName, 8000);
+        }
+
+        open();
+        addEventListener('resize', function () {
+            if (!running) put(seat(caps[0]));
+        });
+
+        // ---- Keys ------------------------------------------------------------
+        // Letters in the name press their keys. Space or Enter starts.
+        async function leave() {
+            if (leaving) return;
+            leaving = true;
+            T.click();
+            stage.classList.add('leaving');
+            document.getElementById('meta').style.opacity = 0;
+            press(space);
+            bit.getAnimations().forEach(function (a) { a.cancel(); });
+            if (T.reduce) { T.go(T.HOME + '?intro', { intro: true }); return; }
+
+            // The caps fall row by row, the opening in reverse
+            var at = seat(caps[0]);
+            bit.animate([{ transform: 'translate(' + at.x + 'px,' + at.y + 'px)' }, { transform: 'translate(' + at.x + 'px,' + (innerHeight + 60) + 'px)' }],
+                { duration: 420, easing: 'steps(7, end)', fill: 'forwards' });
+            all.slice().reverse().forEach(function (cap, i) {
+                cap.style.transition = 'translate 0.38s steps(7, end) ' + (i * 0.016) + 's';
+                cap.style.translate = '0 110vh';
+            });
+            await T.wait(680);
+            T.go(T.HOME + '?intro', { intro: true });
+        }
+
+        if (!T.thumb) {
+            addEventListener('keydown', function (e) {
+                if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+                if (e.key === ' ' || e.key === 'Enter') {
+                    var el = document.activeElement;
+                    if (e.key === 'Enter' && el && el.matches('a') && el !== space) return;
+                    e.preventDefault();
+                    leave();
+                    return;
+                }
+                var key = e.key.toLowerCase();
+                var hits = caps.filter(function (c) { return c.dataset.key === key; });
+                if (hits.length) {
+                    T.click(0.25);
+                    hits.forEach(function (c) { press(c, true); });
+                }
+            });
+
+            caps.forEach(function (cap) {
+                cap.addEventListener('pointerdown', function () {
+                    T.click(0.25);
+                    press(cap, true);
+                });
+            });
+        }
+
+        space.addEventListener('click', function (e) {
+            e.preventDefault();
+            leave();
+        });
+
+        document.getElementById('skip').addEventListener('click', function (e) {
+            e.preventDefault();
+            T.go(T.HOME);
+        });
+    })();
+    </script>
+</body>
+</html>

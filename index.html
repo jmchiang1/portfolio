@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jonathan Chiang | UX Design + Engineering</title>
+    <title>Jonathan Chiang | Product Designer &amp; Design Engineer</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="shell.css">
-    <link rel="prefetch" href="assets/nocta/hero-mockup.jpg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
 
     <!-- Body starts hidden so GSAP's enter transition can fade it in cleanly.
@@ -28,20 +27,40 @@
         @keyframes jc-body-fade { to { opacity: 1; } }
     </style>
 
-    <!-- First-visit gate — redirect to welcome.html so a visitor lands on
-         the card-builder before seeing the portfolio. Runs synchronously
-         in <head> so there's no flash of the index page. -->
+    <!-- Title screen flag. Set before first paint so the hero never flashes its
+         finished state. Plays on every arrival from outside the site and every
+         refresh, but not on the way back to Home from another page. ?title
+         replays it. title-screen.js clears these classes. -->
     <script>
         (function () {
             try {
-                var welcomed = localStorage.getItem('jc_welcomed');
-                if (!welcomed && !location.search.includes('skipgate')) {
-                    location.replace('welcome.html');
+                var root = document.documentElement;
+                var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+                var forced = /[?&]title\b/.test(location.search);
+                var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+                var reloaded = nav && nav.type === 'reload';
+                var fromSite = document.referrer && document.referrer.indexOf(location.origin + '/') === 0;
+
+                // Anyone already browsing the site has come in. A refresh keeps
+                // the old referrer, so it's checked first.
+                if (fromSite && !forced && !reloaded) sessionStorage.setItem('jc_title_seen', '1');
+
+                if (forced || reloaded || !sessionStorage.getItem('jc_title_seen')) {
+                    root.classList.add('title-on', 'title-hold');
+                    if (reduce) root.classList.add('title-live');
+
+                    // If title-screen.js never loads, the page still has to appear
+                    setTimeout(function () {
+                        if (!window.TitleScreen) root.classList.remove('title-on', 'title-hold', 'title-live');
+                    }, 5000);
                 }
-            } catch (e) { /* localStorage unavailable — let them through */ }
+            } catch (e) { /* storage unavailable: no title, page shows normally */ }
         })();
     </script>
     <link rel="stylesheet" href="mascot-chat.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap">
+    <link rel="stylesheet" href="pixel-theme.css">
+    <link rel="stylesheet" href="title-screen.css">
 </head>
 <body>
     <!-- Background Grid — CSS grid pattern -->
@@ -54,7 +73,7 @@
         <!-- Navigation (fixed) -->
         <nav class="navbar">
             <a href="/" class="nav-logo">
-                <img src="assets/logo.png" alt="JC" />
+                <img src="assets/logo-keycap.svg" alt="JC" />
             </a>
             <div class="nav-links">
                 <a href="#" class="nav-link active">UX/UI</a>
@@ -112,30 +131,21 @@
 
         <!-- Section: Hero -->
         <section class="section section-hero" id="hero">
-            <!-- Hero monitor — a simple desktop screen that types out the
-                 intro. In grid mode the frame collapses (display: contents)
-                 so the grid hero is unchanged. -->
-            <div class="hero-monitor">
-                <div class="hero-screen">
-                    <div class="hero-screen-bar" aria-hidden="true">
-                        <span class="hero-screen-dots"><i></i><i></i><i></i></span>
-                        <span class="hero-screen-title">~/desktop</span>
-                    </div>
-                    <div class="hero-content">
-                        <h1 class="hero-heading">Jonathan Chiang</h1>
-                        <p class="hero-tagline">Turning product ideas into <em>shipped</em> experiences.</p>
-                    </div>
-                    <footer class="footer-info">
-                        <div class="footer-col-left">
-                            <p class="footer-name">Jonathan Chiang</p>
-                            <p class="footer-text footer-desktop">A Senior Technical Product Designer <br>with 4 years of experience in NYC</p>
-                        </div>
-                        <p class="footer-text footer-desktop">Previously designed and built <br>at <a href="https://www.skillcatapp.com/" target="_blank" rel="noopener noreferrer" class="footer-link">SkillCat</a></p>
-                        <!-- <p class="footer-text footer-mobile">Product Designer &amp; Engineer · NYC · Currently at <a href="https://www.skillcatapp.com/" target="_blank" rel="noopener noreferrer" class="footer-link">SkillCat</a></p> -->
-                    </footer>
+            <!-- Grid view's hero. The carousel keeps only the h1, for screen readers:
+                 there, this content lives on the title screen. -->
+            <div class="home-header">
+                <div class="hero-content">
+                    <h1 class="hero-heading">Jonathan Chiang</h1>
+                    <p class="hero-tagline">Turning product ideas into <em>shipped</em> experiences.</p>
                 </div>
+                <footer class="footer-info">
+                    <div class="footer-col-left">
+                        <p class="footer-name">Jonathan Chiang</p>
+                        <p class="footer-text footer-desktop">Product Designer &amp; Design Engineer <br>based in NYC</p>
+                    </div>
+                    <p class="footer-text footer-desktop">Open to full-time roles <br>Previously at <a href="https://www.skillcatapp.com/" target="_blank" rel="noopener noreferrer" class="footer-link">SkillCat</a></p>
+                </footer>
             </div>
-            <p class="hero-swipe-hint">Swipe right to view case studies <span class="swipe-arrow">→</span></p>
         </section>
 
         <!-- Carousel counter — visible only when in carousel view -->
@@ -159,18 +169,52 @@
         <section class="section section-carousel" id="projects">
             <div class="carousel-viewport">
 
-                    <!-- Project 1 — SkillCat -->
+                    <!-- Project 1 — Nocta -->
+                <a href="nocta.html" class="project-card project-card--nocta" style="--card-bg: url('assets/nocta/v4/tonight-escalation.jpg')">
+                    <img class="sk-logo" src="assets/nocta/brand/nox-mark-sm.svg" alt="Nocta logo">
+                    <div class="nocta-sky" aria-hidden="true">
+                        <span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span>
+                    </div>
+                    <div class="nocta-device">
+                        <div class="nocta-screen">
+                            <video class="nocta-video" data-autoplay loop muted playsinline preload="metadata"
+                                   poster="assets/nocta/v4/poster-sky.jpg" aria-label="Nocta app cycling through nights, its sky changing with each one">
+                                <source src="assets/nocta/v4/flow-sky.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="nocta-island" aria-hidden="true"></span>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag-affiliation">Personal</span>
+                        <span class="tag-divider"></span>
+                        <span>0-1 Design</span>
+                        <span class="tag-divider"></span>
+                        <span>Shipped</span>
+                        <span class="tag-divider"></span>
+                        <span>2026</span>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-blur"></div>
+                        <div class="project-overlay-gradient"></div>
+                        <div class="project-info">
+                            <h2 class="project-title">Nocta</h2>
+                            <p class="project-description">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long-term therapy</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 2 — SkillCat -->
                     <a href="skillcat.html" class="project-card project-card--skillcat" style="--card-bg: url('assets/skillcat/B2B/poster-hero.jpg')">
                     <img class="sk-logo" src="assets/skillcat/skillcat-logo.png" alt="SkillCat logo">
                     <div class="sk-thumb">
                         <div class="sk-thumb-desktop">
-                            <video class="sk-thumb-video" autoplay loop muted playsinline preload="auto"
+                            <video class="sk-thumb-video" data-autoplay loop muted playsinline preload="metadata"
                                     poster="assets/skillcat/B2B/poster-hero.jpg" aria-label="SkillCat admin dashboard — touring home, people, notifications and library">
                                 <source src="assets/skillcat/B2B/hero.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="sk-thumb-phone">
-                            <video class="sk-thumb-video" autoplay loop muted playsinline preload="auto"
+                            <video class="sk-thumb-video" data-autoplay loop muted playsinline preload="metadata"
                                     poster="assets/skillcat/poster-complete-task.jpg" aria-label="SkillCat learner app — completing a lesson">
                                 <source src="assets/skillcat/Complete-Task.mp4" type="video/mp4">
                             </video>
@@ -195,53 +239,19 @@
                     </div>
                 </a>
 
-                <!-- Project 2 — Nocta -->
-                <a href="nocta.html" class="project-card project-card--nocta" style="--card-bg: url('assets/nocta/v4/tonight-escalation.jpg')">
-                    <img class="sk-logo" src="assets/nocta/brand/nox-mark-sm.svg" alt="Nocta logo">
-                    <div class="nocta-sky" aria-hidden="true">
-                        <span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span>
-                    </div>
-                    <div class="nocta-device">
-                        <div class="nocta-screen">
-                            <video class="nocta-video" autoplay loop muted playsinline preload="auto"
-                                   poster="assets/nocta/v4/poster-sky.jpg" aria-label="Nocta app cycling through nights, its sky changing with each one">
-                                <source src="assets/nocta/v4/flow-sky.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <span class="nocta-island" aria-hidden="true"></span>
-                    </div>
-                    <div class="project-tags">
-                        <span class="tag-affiliation">Personal</span>
-                        <span class="tag-divider"></span>
-                        <span>0-1 Design</span>
-                        <span class="tag-divider"></span>
-                        <span>Shipped</span>
-                        <span class="tag-divider"></span>
-                        <span>2025</span>
-                    </div>
-                    <div class="project-overlay">
-                        <div class="project-blur"></div>
-                        <div class="project-overlay-gradient"></div>
-                        <div class="project-info">
-                            <h2 class="project-title">Nocta</h2>
-                            <p class="project-description">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long-term therapy</p>
-                        </div>
-                    </div>
-                </a>
-
                 <!-- Project 3 — ScriptChain Health -->
                 <a href="scriptchain.html" class="project-card project-card--scriptchain" style="--card-bg: url('assets/scriptchain/poster-scriptchain-website.jpg')">
                     <img class="sk-logo" src="assets/scriptchain/scriptchain-logo.png" alt="ScriptChain Health logo">
                     <div class="sk-thumb">
                         <div class="sk-thumb-desktop">
-                            <video class="sk-thumb-video" autoplay loop muted playsinline preload="auto"
+                            <video class="sk-thumb-video" data-autoplay loop muted playsinline preload="metadata"
                                    poster="assets/scriptchain/poster-scriptchain-website.jpg" aria-label="ScriptChain Health — patient data dashboard">
                                 <source src="assets/scriptchain/scriptchain-website.mp4" type="video/mp4">
                             </video>
                         </div>
                         <!-- Mobile-only: the iOS app walkthrough, shown as a centered phone on small screens (desktop frame is hidden there) -->
                         <div class="sk-thumb-phone">
-                            <video class="sk-thumb-video" autoplay loop muted playsinline preload="auto"
+                            <video class="sk-thumb-video" data-autoplay loop muted playsinline preload="metadata"
                                    poster="assets/scriptchain/poster-mobile.jpg" aria-label="ScriptChain Health — mobile app walkthrough">
                                 <source src="assets/scriptchain/mobile-walkthrough.mp4" type="video/mp4">
                             </video>
@@ -294,7 +304,7 @@
 
                 <!-- Project 5 — Reveal -->
                 <a href="reveal.html" class="project-card project-card--reveal" style="--card-bg: url('assets/reveal-mockup.png')">
-                    <video class="rv-card-video" autoplay muted loop playsinline preload="auto" poster="assets/reveal-mockup.png" aria-label="Reveal — augmented reality concept">
+                    <video class="rv-card-video" data-autoplay muted loop playsinline preload="metadata" poster="assets/reveal-mockup.png" aria-label="Reveal — augmented reality concept">
                         <source src="assets/Reveal-animation.mp4" type="video/mp4">
                     </video>
                     <div class="project-tags">
@@ -372,7 +382,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="transitions.js"></script>
     <script src="home.js"></script>
-    <script src="keyboard-handoff.js"></script>
+    <script src="title-screen.js"></script>
     <script src="mascot-chat.js" defer></script>
+    <script src="pixel-bg.js"></script>
+    <script src="video-budget.js"></script>
 </body>
 </html>

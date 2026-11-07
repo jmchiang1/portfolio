@@ -2570,429 +2570,72 @@ body.grid-mode .project-title {
     letter-spacing: 0.02em;
 }
 
-/* ===========================================================================
-   Keyboard handoff — one-shot flourish after building on the welcome screen.
-   keyboard-handoff.js injects the EXACT visitor card snapshotted from the
-   welcome screen (full build-card: name, serial, keyboard, specs, signature)
-   at the same on-screen position, then flies it into the Visitors nav tab.
-   The rules below mirror the builder's card + keyboard CSS (welcome.css) so the
-   replayed card is pixel-identical; colours are inline on the snapshot and the
-   key unit is set inline by the script.
-   =========================================================================== */
-.kb-fly {
-    position: fixed;
-    z-index: 9999;
-    pointer-events: none;
-    will-change: transform, opacity;
-    transform-origin: center center;
+/* ============================================
+   Carousel layout. The cards have the page to themselves.
+
+   --deck-top and --deck-bottom are the space kept clear above and below the
+   centre card, for the nav and the counter. Cards shrink on short screens so
+   all of it always fits.
+   ============================================ */
+:root {
+    --deck-top: 86px;
+    --deck-bottom: 86px;
+    --card-w: min(956px, 58vw, calc((100dvh - var(--deck-top) - var(--deck-bottom)) * 956 / 599));
+    --card-h: calc(var(--card-w) * 599 / 956);
+    --deck-shift: calc((var(--deck-top) - var(--deck-bottom)) / 2);
 }
 
-/* "+1" tag dropped beside the Visitors tab when a freshly built keyboard
-   lands in it. Fixed + pointer-events:none so it overlays without nudging
-   the nav. Created and removed by keyboard-handoff.js. */
-.kb-plus-one {
-    position: fixed;
-    z-index: 10000;
+body:not(.grid-mode) .carousel-viewport {
+    box-sizing: border-box;
+    padding-top: calc(var(--deck-shift) * 2);
+    perspective-origin: 50% calc(50% + var(--deck-shift));
+}
+
+body:not(.grid-mode) .project-card {
+    width: var(--card-w);
+    max-width: none;
+}
+
+.carousel-nav {
+    top: calc(50% + var(--deck-shift));
+}
+
+/* Clicks pass through to the cards */
+body:not(.grid-mode) .section-hero {
+    z-index: 3;
     pointer-events: none;
-    font-family: 'Space Mono', monospace;
-    font-size: var(--text-12);
-    font-weight: 700;
-    line-height: 1;
-    color: #fff;
+}
+
+/* The header stays in the page for screen readers, as the h1 only */
+body:not(.grid-mode) .home-header {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
     white-space: nowrap;
 }
 
-/* ---- Card chrome ---- */
-.kb-fly .build-card {
-    position: relative;
-    width: 100%;
-    padding: 36px 40px 32px;
-    border-radius: 4px;
-    overflow: hidden;
-    background: var(--case-color, #f4f4f6);
-    border: 1px solid color-mix(in oklab, var(--case-color, #f4f4f6) 60%, white 25%);
-    box-shadow: 0 40px 80px -28px rgba(0, 0, 0, 0.8), 0 10px 24px -12px rgba(17, 128, 249, 0.2);
-    color: var(--case-text, #1c1c20);
-}
-.kb-fly .build-card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
-.kb-fly .build-card-brand { display: flex; flex-direction: column; gap: 4px; }
-.kb-fly .build-card-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: var(--text-20); letter-spacing: -0.02em; color: var(--case-text, #1c1c20); opacity: 0.95; }
-.kb-fly .build-card-meta { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(28,28,32,0.55)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-serial { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 600; color: var(--case-text-dim, rgba(28,28,32,0.55)); letter-spacing: 0.14em; padding: 3px 9px; border-radius: 4px; border: 1px solid color-mix(in oklab, var(--case-color, #f4f4f6) 60%, white 40%); }
-.kb-fly .build-card-name { font-family: 'Space Mono', monospace; font-size: var(--text-20); font-weight: 700; color: var(--case-text, #1c1c20); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; min-height: 24px; line-height: 1.1; }
-.kb-fly .build-card-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; margin-bottom: 22px; }
-.kb-fly .build-card-spec-row { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.kb-fly .build-card-spec dt { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.5)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-spec dd { display: inline-flex; align-items: center; gap: 7px; font-family: 'Space Mono', monospace; font-size: var(--text-12); font-weight: 600; color: var(--case-text, #1c1c20); letter-spacing: 0.04em; text-transform: uppercase; min-width: 0; }
-.kb-fly .build-card-spec dd i { font-size: var(--text-13); }
-.kb-fly .build-card-swatch { width: 11px; height: 11px; border-radius: 8px; background: var(--swatch-color, #fff); border: 1px solid rgba(255,255,255,0.45); flex-shrink: 0; }
-.kb-fly .build-card-foot { display: grid; grid-template-columns: 1fr 1.6fr; gap: 24px; padding-top: 18px; border-top: 1px dashed color-mix(in oklab, var(--case-text-dim, rgba(255,255,255,0.4)) 60%, transparent); }
-.kb-fly .build-card-foot-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.kb-fly .build-card-foot-label { font-family: 'Space Mono', monospace; font-size: var(--text-10); font-weight: 500; color: var(--case-text-dim, rgba(255,255,255,0.45)); letter-spacing: 0.18em; text-transform: uppercase; }
-.kb-fly .build-card-foot-value { font-family: 'Space Mono', monospace; font-size: var(--text-13); font-weight: 600; color: var(--case-text, #1c1c20); letter-spacing: 0.04em; }
-.kb-fly .build-card-foot-sig { font-family: 'Space Grotesk', serif; font-size: var(--text-16); font-weight: 400; font-style: italic; letter-spacing: 0.04em; color: var(--case-text, #1c1c20); opacity: 0.9; }
-
-/* ---- Keyboard inside the card (matches welcome.css) ---- */
-.kb-fly .build-card-keyboard {
-    --u: 18px;
-    --kb-bg: color-mix(in oklab, var(--case-color, #f4f4f6) 70%, black 30%);
-    --kb-edge: color-mix(in oklab, var(--case-color, #f4f4f6) 55%, white 10%);
-    --kc-bg: var(--keycap-color, #e7dcc2);
-    --kc-edge: color-mix(in oklab, var(--keycap-color, #e7dcc2) 78%, black 22%);
-    --row-h: var(--u);
-    --kb-gap: 3px;
-    width: fit-content;
-    margin: 0 auto 24px;
-    background: var(--kb-bg);
-    border: 1px solid var(--kb-edge);
-    border-radius: 6px;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--kb-gap);
-}
-.kb-fly .kb-row { display: flex; gap: var(--kb-gap); height: var(--row-h); align-items: stretch; }
-.kb-fly .kb-key {
-    flex: 0 0 auto;
-    width: var(--u);
-    background: var(--kc-bg);
-    border: 1px solid var(--kc-edge);
-    border-radius: 2px;
-}
-.kb-fly .kb-key.kb-mod    { --kc-bg: color-mix(in oklab, var(--keycap-color, #e7dcc2) 72%, var(--case-color, #f4f4f6) 28%); }
-.kb-fly .kb-key.kb-accent { --kc-bg: var(--keycap-legend, #1d1a14); --kc-edge: color-mix(in oklab, var(--keycap-legend, #1d1a14) 80%, white 16%); }
-.kb-fly .kb-key.kb-1u    { width: var(--u); }
-.kb-fly .kb-key.kb-1-25u { width: calc(var(--u) * 1.25); }
-.kb-fly .kb-key.kb-1-5u  { width: calc(var(--u) * 1.5); }
-.kb-fly .kb-key.kb-1-75u { width: calc(var(--u) * 1.75); }
-.kb-fly .kb-key.kb-2u    { width: calc(var(--u) * 2); }
-.kb-fly .kb-key.kb-2-25u { width: calc(var(--u) * 2.25); }
-.kb-fly .kb-key.kb-2-75u { width: calc(var(--u) * 2.75); }
-.kb-fly .kb-key.kb-space { width: calc(var(--u) * 6.25); }
-.kb-fly .kb-gap { flex: 0 0 auto; width: var(--u); background: transparent; border: none; }
-.kb-fly .kb-gap.kb-0-5 { width: calc(var(--u) * 0.5); }
-
-/* The Visitors tab text glows as the card lands — driven by the Web Animations
-   API in keyboard-handoff.js (a CSS class would replace the nav's entrance
-   animation and drop its forwards opacity fill, hiding the link). */
-
-@media (prefers-reduced-motion: reduce) {
-    .kb-fly { display: none; }
+body:not(.grid-mode) .home-header .hero-tagline,
+body:not(.grid-mode) .home-header .footer-info {
+    display: none;
 }
 
-
-/* ============================================
-   Hero monitor — a simple desktop screen around the intro.
-   Scoped to carousel layout; grid mode collapses the frame (see below).
-   ============================================ */
-body:not(.grid-mode) .section-hero {
-    /* Same perspective + centre as .carousel-viewport so the screen moves
-       through the ring exactly like a card. Clicks pass through to the
-       cards everywhere except the screen itself. */
-    z-index: 3;
-    pointer-events: none;
-    perspective: 1200px;
-}
-
-/* The screen is the ring's first slot — same footprint as a project card */
-.hero-monitor {
-    --screen-w: min(956px, 58vw);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 4px;
-    pointer-events: auto;
-    opacity: 0;
-    transform: translateY(24px) scale(0.97);
-    animation: monitor-enter 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
-    transition: opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
-                transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-@keyframes monitor-enter {
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.hero-monitor.entered {
-    animation: none;
-    opacity: 1;
-    transform: none;
-}
-
-/* Ring poses for the screen — mirror the .project-card pos-* poses */
-.hero-monitor.entered.pos-left {
-    transform: translateX(-105%) rotateY(30deg) scale(0.75);
-}
-
-.hero-monitor.entered.pos-right {
-    transform: translateX(105%) rotateY(-30deg) scale(0.75);
-}
-
-.hero-monitor.entered.pos-back-left,
-.hero-monitor.entered.pos-back-right {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.hero-monitor.entered.pos-back-left {
-    transform: translateX(-55%) translateZ(-900px) rotateY(25deg);
-}
-
-.hero-monitor.entered.pos-back-right {
-    transform: translateX(55%) translateZ(-900px) rotateY(-25deg);
-}
-
-/* Same dimming as a peeking card */
-.hero-monitor::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: rgba(0, 0, 0, 0);
-    pointer-events: none;
-    transition: background 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.hero-monitor.pos-left::after,
-.hero-monitor.pos-right::after {
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.hero-monitor.pos-left:hover::after,
-.hero-monitor.pos-right:hover::after {
-    background: rgba(0, 0, 0, 0.25);
-}
-
-.hero-monitor.pos-left,
-.hero-monitor.pos-right {
-    cursor: url('assets/pointer.cur'), pointer;
-}
-
-.hero-screen {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: var(--screen-w);
-    aspect-ratio: 956 / 599;
-    border: 12px solid #242321;
-    border-radius: 4px;
-    background:
-        radial-gradient(80% 70% at 50% 45%, rgba(255, 255, 255, 0.035), transparent 70%),
-        var(--page-surface, #1f1e1c);
-    box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.07),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-        0 40px 100px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-}
-
-.hero-screen-bar {
-    position: relative;
-    flex-shrink: 0;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.hero-screen-dots {
-    position: absolute;
-    left: 14px;
-    display: flex;
-    gap: 7px;
-}
-
-.hero-screen-dots i {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.16);
-}
-
-.hero-screen-title {
-    font-family: 'Space Mono', monospace;
-    font-size: var(--text-12);
-    color: rgba(255, 255, 255, 0.4);
-}
-
-/* Content inside the screen — the monitor handles the entrance, so the
-   hero/footer skip their own scale/slide-in and just type out. */
-body:not(.grid-mode) .hero-screen .hero-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: none;
-    padding: 0 48px;
-    animation: none;
-    opacity: 1;
-    transform: none;
-}
-
-body:not(.grid-mode) .hero-screen .hero-heading {
-    font-size: min(var(--text-88), calc(var(--screen-w) * 0.085));
-}
-
-/* Plain block text (not inline-flex) so the typing spans don't pick up
-   flex gaps between words */
-body:not(.grid-mode) .hero-screen .hero-tagline {
-    display: block;
-    font-size: min(var(--text-22), calc(var(--screen-w) * 0.024));
-}
-
-body:not(.grid-mode) .hero-screen .footer-info {
-    position: static;
-    flex-shrink: 0;
-    width: auto;
-    max-width: none;
-    margin: 0 40px 28px;
-    padding-top: 18px;
-    top: auto;
-    bottom: auto;
-    left: auto;
-    right: auto;
-    gap: 32px;
-    border-top: 1px dashed rgba(255, 255, 255, 0.1);
-    animation: none;
-    opacity: 1;
-    transform: none;
-}
-
-body:not(.grid-mode) .hero-screen .footer-text {
-    font-size: min(var(--text-18), calc(var(--screen-w) * 0.018));
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* Grid mode — drop the frame so hero + footer lay out exactly as before */
-body.grid-mode .hero-monitor,
-body.grid-mode .hero-screen {
+/* Grid mode — drop the wrapper so hero + footer lay out exactly as before */
+body.grid-mode .home-header {
     display: contents;
 }
 
-body.grid-mode .hero-screen-bar,
-body.grid-mode .hero-monitor::after {
-    display: none;
-}
-
-body.grid-mode .type-caret {
-    display: none;
-}
-
-/* Typewriter — each text node is split into a typed part and an invisible
-   remainder, so the final layout is reserved and nothing reflows. */
-.type-rest {
-    visibility: hidden;
-}
-
-.type-caret {
-    position: relative;
-    display: inline-block;
-    width: 0;
-    height: 1em;
-}
-
-.type-caret::after {
-    content: '';
-    position: absolute;
-    left: 0.05em;
-    bottom: -0.14em;
-    width: 0.07em;
-    min-width: 2px;
-    height: 1.05em;
-    background: #0082FA;
-    animation: cursor-blink 1s step-end infinite;
-}
-
-@media (max-width: 1200px) {
-    .hero-monitor { --screen-w: min(956px, 55vw); }
-}
-
-@media (max-width: 900px) {
-    .hero-monitor { --screen-w: 60vw; }
-
-    .hero-monitor.entered.pos-left {
-        transform: translateX(-95%) rotateY(25deg) scale(0.7);
-    }
-
-    .hero-monitor.entered.pos-right {
-        transform: translateX(95%) rotateY(-25deg) scale(0.7);
-    }
-}
-
+/* On a phone the cards take the full height */
 @media (max-width: 640px) {
-    .hero-monitor {
-        --screen-w: 90vw;
-        border-radius: 4px;
+    :root {
+        --deck-top: 84px;
+        --deck-bottom: 92px;
+        --card-w: 90vw;
+        --card-h: calc(100dvh - var(--deck-top) - var(--deck-bottom));
     }
 
-    .hero-monitor.entered.pos-left {
-        transform: translateX(-85%) rotateY(20deg) scale(0.65);
-        opacity: 0.4;
-    }
-
-    .hero-monitor.entered.pos-right {
-        transform: translateX(85%) rotateY(-20deg) scale(0.65);
-        opacity: 0.4;
-    }
-
-    /* Same footprint as the mobile project cards */
-    .hero-screen {
-        aspect-ratio: auto;
-        height: 70vh;
-        border-width: 8px;
-        border-radius: 4px;
-    }
-
-    body:not(.grid-mode) .hero-screen .hero-content {
-        padding: 0 16px;
-    }
-
-    body:not(.grid-mode) .hero-screen .hero-heading {
-        font-size: var(--text-56);
-    }
-
-    body:not(.grid-mode) .hero-screen .hero-tagline {
-        font-size: var(--text-18);
-    }
-
-    /* Footer sits at the bottom of the screen like desktop — the two
-       columns stack, and the desktop lines (hidden elsewhere on mobile)
-       show here. */
-    body:not(.grid-mode) .hero-screen .footer-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        margin: 0 18px 20px;
-        padding-top: 14px;
-    }
-
-    body:not(.grid-mode) .hero-screen .footer-desktop {
-        display: block;
-    }
-
-    body:not(.grid-mode) .hero-screen .footer-text {
-        font-size: var(--text-14);
-        line-height: 1.45;
-    }
-
-    /* Each sentence flows as one line on mobile — drop the desktop break
-       (the markup keeps a space before each <br> so the words don't join) */
-    body:not(.grid-mode) .hero-screen .footer-text br {
-        display: none;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .hero-monitor {
-        animation: none;
-        opacity: 1;
-        transform: none;
+    body:not(.grid-mode) .project-card {
+        height: var(--card-h);
     }
 }

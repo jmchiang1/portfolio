@@ -1,0 +1,135 @@
+/* ==========================================================================
+   PROTOTYPE. Three ideas for making the pixel theme feel more modern, layered
+   over the real site by skins.html. Not linked from the site.
+
+   html.sk-accent   pixels as an accent: small type and UI go clean
+   html.sk-edges    thinner edges: hairlines in place of stepped outlines
+   html.sk-light    modern lighting: soft glow and depth around crisp pixels
+   ========================================================================== */
+
+/* Every surface reads its edge and its light from here, so the three ideas stack */
+html[class*="sk-"] {
+    --sk-outline:
+        0 calc(var(--px) * -1) 0 var(--px-c, var(--px-line)),
+        0 var(--px) 0 var(--px-c, var(--px-line)),
+        calc(var(--px) * -1) 0 0 var(--px-c, var(--px-line)),
+        var(--px) 0 0 var(--px-c, var(--px-line));
+    --sk-drop: var(--px) calc(var(--px) * 3) 0 rgba(0, 0, 0, 0.5);
+    --sk-glow: 0 0 0 transparent;
+    --amb: #2f96ff;
+}
+
+html[class*="sk-"] .project-card, html[class*="sk-"] .motion-card, html[class*="sk-"] .vibes-card,
+html[class*="sk-"] .text-display, html[class*="sk-"] .typing-options, html[class*="sk-"] .result-stat,
+html[class*="sk-"] .results-content, html[class*="sk-"] .trophy-content, html[class*="sk-"] .modal-content,
+html[class*="sk-"] .mc-panel, html[class*="sk-"] .cs-next-card {
+    box-shadow: var(--sk-outline), var(--sk-drop), var(--sk-glow) !important;
+}
+
+/* ---- 1. Pixels as an accent -------------------------------------------- */
+/* The logo, big headlines, Bit and the backgrounds stay pixel. The rest goes clean. */
+html.sk-accent .nav-link {
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: var(--text-14) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+}
+
+html.sk-accent .counter-current, html.sk-accent .counter-total, html.sk-accent .counter-name,
+html.sk-accent .arena-tab, html.sk-accent .arena-tab b,
+html.sk-accent .title-hud, html.sk-accent .title-hint, html.sk-accent .mc-head-title {
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-weight: 500 !important;
+}
+
+html.sk-accent .counter-current, html.sk-accent .counter-total { font-size: var(--text-18) !important; }
+html.sk-accent .counter-name { font-size: var(--text-15) !important; }
+html.sk-accent .arena-tab, html.sk-accent .title-hud { font-size: var(--text-13) !important; }
+html.sk-accent .title-hint { font-size: var(--text-15) !important; }
+
+/* Hover panels lose their dither */
+html.sk-accent .project-overlay-gradient {
+    background: linear-gradient(to top, rgba(12, 11, 10, 0.92), transparent 70%) !important;
+}
+
+/* Buttons lose the raised keycap edge */
+html.sk-accent .nav-link, html.sk-accent .social-link, html.sk-accent .layout-toggle, html.sk-accent .carousel-nav,
+html.sk-accent .mobile-menu-social, html.sk-accent .vibes-btn, html.sk-accent .mode-btn, html.sk-accent .duration-btn,
+html.sk-accent .typing-btn, html.sk-accent .back-to-top, html.sk-accent .mc-icon-btn, html.sk-accent .arena-tab,
+html.sk-edges .nav-link, html.sk-edges .social-link, html.sk-edges .layout-toggle, html.sk-edges .carousel-nav,
+html.sk-edges .mobile-menu-social, html.sk-edges .vibes-btn, html.sk-edges .mode-btn, html.sk-edges .duration-btn,
+html.sk-edges .typing-btn, html.sk-edges .back-to-top, html.sk-edges .mc-icon-btn, html.sk-edges .arena-tab {
+    box-shadow: var(--sk-outline), var(--sk-glow) !important;
+}
+
+/* ---- 2. Thinner edges --------------------------------------------------- */
+html.sk-edges {
+    --px: 1px;
+    --px-line: rgba(255, 255, 255, 0.13);
+    --sk-drop: 0 0 0 transparent;
+}
+
+html.sk-edges .nav-link, html.sk-edges .social-link, html.sk-edges .layout-toggle, html.sk-edges .carousel-nav,
+html.sk-edges .project-card, html.sk-edges .motion-card, html.sk-edges .vibes-card {
+    --px-c: rgba(255, 255, 255, 0.13);
+}
+
+html.sk-edges .nav-link.active { --px-c: #fff; }
+html.sk-edges .project-card.pos-center { --px-c: rgba(255, 255, 255, 0.2); }
+
+/* ---- 3. Modern lighting ------------------------------------------------- */
+/* The centre card lights the space around it, in its own colour */
+html.sk-light:has(.project-card[href="nocta.html"].pos-center) { --amb: #4a7bff; }
+html.sk-light:has(.project-card[href="skillcat.html"].pos-center) { --amb: #f05523; }
+html.sk-light:has(.project-card[href="scriptchain.html"].pos-center) { --amb: #2fc4b2; }
+html.sk-light:has(.project-card[href="robinhood.html"].pos-center) { --amb: #b6e33a; }
+html.sk-light:has(.project-card[href="reveal.html"].pos-center) { --amb: #2f96ff; }
+
+html.sk-light .project-card.pos-center {
+    --sk-glow: 0 30px 200px 10px color-mix(in srgb, var(--amb) 30%, transparent), 0 10px 70px -30px color-mix(in srgb, var(--amb) 22%, transparent);
+}
+
+html.sk-light .project-card:not(.pos-center) {
+    --sk-glow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+html.sk-light .motion-card, html.sk-light .vibes-card, html.sk-light .text-display {
+    --sk-glow: 0 18px 50px -18px rgba(0, 0, 0, 0.8);
+}
+
+html.sk-light .motion-card:hover, html.sk-light .vibes-card:hover {
+    --sk-glow: 0 18px 80px -14px color-mix(in srgb, #2f96ff 45%, transparent);
+}
+
+/* Glass controls: light from above, the scene showing through */
+html.sk-light .nav-link:not(.active), html.sk-light .social-link, html.sk-light .layout-toggle,
+html.sk-light .carousel-nav, html.sk-light .arena-tab {
+    background: rgba(255, 255, 255, 0.07) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    backdrop-filter: blur(14px) !important;
+}
+
+html.sk-light .nav-link.active {
+    --sk-glow: 0 0 26px -2px rgba(255, 255, 255, 0.5);
+}
+
+html.sk-light .nav-link.active, html.sk-light .social-link, html.sk-light .layout-toggle, html.sk-light .carousel-nav {
+    box-shadow: var(--sk-outline), var(--sk-glow) !important;
+}
+
+/* Crisp pixels with soft bloom */
+html.sk-light .mc-launcher, html.sk-light .nav-logo {
+    filter: drop-shadow(0 0 16px rgba(47, 150, 255, 0.5));
+}
+
+html.sk-light .title-logo {
+    filter: drop-shadow(0 0 44px rgba(17, 128, 249, 0.55));
+}
+
+html.sk-light .title-item.is-sel {
+    box-shadow: 0 3px 0 #8d8c88, 0 0 34px -4px rgba(255, 255, 255, 0.5);
+}
+
+html.sk-light .vibes-hero-title, html.sk-light .project-title {
+    text-shadow: 0 0 28px rgba(255, 255, 255, 0.28);
+}

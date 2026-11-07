@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Main Menu (title screen prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Jersey+25&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="../pixel-theme.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+    .stage {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+        overflow: hidden;
+    }
+
+    /* ---- Left: title and menu ---- */
+    .panel {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 0 0 clamp(28px, 8vw, 132px);
+    }
+
+    .brand { width: 66px; margin: 0 0 26px -5px; }
+
+    .logo {
+        margin-left: -0.04em;
+        font-size: min(var(--text-128), 8.6vw);
+        line-height: 0.86;
+    }
+
+    .role {
+        margin-top: 16px;
+        font-size: var(--text-24);
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.72);
+    }
+
+    .lists {
+        position: relative;
+        margin-top: 34px;
+        height: 262px;
+    }
+
+    .list {
+        position: absolute;
+        inset: 0 auto auto 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        min-width: 340px;
+        list-style: none;
+        transition: translate 0.2s steps(4, end), opacity 0.2s steps(4, end), visibility 0s;
+    }
+
+    .list.is-away {
+        translate: -36px 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: translate 0.2s steps(4, end), opacity 0.2s steps(4, end), visibility 0s 0.2s;
+    }
+
+    #levels.is-away { translate: 36px 0; }
+
+    .item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 5px 14px 7px 34px;
+        border: 0;
+        background: none;
+        color: rgba(255, 255, 255, 0.72);
+        font-family: var(--px-font);
+        font-size: var(--text-36);
+        line-height: 1;
+        text-align: left;
+        text-decoration: none;
+    }
+
+    .item canvas { width: 32px; height: 32px; flex: none; }
+    #levels .item { font-size: var(--text-28); padding-block: 4px 5px; }
+    #levels .item.is-back { margin-top: 6px; font-size: var(--text-24); }
+    .item small { margin-left: auto; font-family: inherit; font-size: var(--text-20); opacity: 0.72; }
+
+    /* The selected row is the site's active key: white, with a hard edge */
+    .item.is-sel {
+        background: #fff;
+        color: #161514;
+        box-shadow: 0 3px 0 #8d8c88;
+    }
+
+    .item.is-sel::before {
+        content: '';
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        width: 0;
+        height: 0;
+        margin-top: -8px;
+        border-block: 8px solid transparent;
+        border-left: 10px solid #1180f9;
+    }
+
+    .item.is-picked { animation: picked 0.32s steps(1, end) 1; }
+
+    @keyframes picked {
+        0%, 100% { background: #fff; color: #161514; }
+        50% { background: #1180f9; color: #fff; }
+    }
+
+    .hint {
+        min-height: 1.2em;
+        margin-top: 18px;
+        font-size: var(--text-22);
+        line-height: 1.1;
+        color: #7fc4ff;
+    }
+
+    .keys {
+        position: absolute;
+        left: clamp(28px, 8vw, 132px);
+        bottom: 24px;
+        display: flex;
+        gap: 22px;
+        font-size: var(--text-20);
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.72);
+    }
+
+    /* ---- Right: character stage ---- */
+    .right { position: relative; min-width: 0; }
+    .right canvas#scene { position: absolute; inset: 0; }
+
+    .preview {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        top: 50%;
+        translate: 0 -50%;
+        aspect-ratio: 16 / 11;
+        background: #0c0b0a;
+        box-shadow: 0 -3px 0 #fff, 0 3px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff, 6px 12px 0 rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: translate 0.2s steps(4, end), opacity 0.2s steps(4, end), visibility 0s 0.2s;
+    }
+
+    .preview.is-on {
+        opacity: 1;
+        visibility: visible;
+        transition: translate 0.2s steps(4, end), opacity 0.2s steps(4, end), visibility 0s;
+    }
+
+    .preview img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .preview figcaption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 12px 8px;
+        background: #0c0b0a;
+        font-family: var(--px-font);
+        font-size: var(--text-22);
+        line-height: 1;
+    }
+
+    /* Closing: a dither that fills the screen */
+    #wipe { position: fixed; inset: 0; z-index: 50; width: 100%; height: 100%; pointer-events: none; }
+
+    /* Opening */
+    .brand, .logo, .role, .lists, .hint { transition: translate 0.36s steps(6, end), opacity 0.36s steps(6, end); }
+    .opening .brand, .opening .logo, .opening .role, .opening .lists, .opening .hint { translate: -40px 0; opacity: 0; }
+
+    .skip-wrap { position: absolute; right: 24px; bottom: 24px; z-index: 3; }
+
+    @media (max-width: 860px) {
+        .stage { grid-template-columns: 1fr; grid-template-rows: 30vh 1fr; }
+        .right { grid-row: 1; }
+        .panel { grid-row: 2; justify-content: flex-start; padding: 12px 16px 0; }
+        .brand { display: none; }
+        .logo { font-size: 15vw; }
+        .role { font-size: var(--text-18); margin-top: 8px; }
+        .lists { margin-top: 14px; height: 238px; }
+        .list { min-width: 0; width: 100%; }
+        .item { font-size: var(--text-28); }
+        .keys { display: none; }
+        .hint { font-size: var(--text-18); margin-top: 8px; }
+        .skip-wrap { right: 16px; bottom: 16px; }
+    }
+
+    @media (max-height: 720px) {
+        .brand, .keys { display: none; }
+        .lists { margin-top: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .list, .preview, .brand, .logo, .role, .lists, .hint { transition: none; }
+    }
+</style>
+</head>
+<body>
+    <div id="background-grid" class="grid-visible"></div>
+    <a class="t-back" href="index.html">All versions</a>
+
+    <main class="stage opening" id="stage">
+        <div class="panel">
+            <img class="brand" src="../assets/logo.png" alt="">
+            <h1 class="logo px">Jonathan<br>Chiang</h1>
+            <p class="role px">Product Designer &amp; Design Engineer</p>
+
+            <div class="lists">
+                <ul class="list" id="main">
+                    <li style="width: 100%;"><a class="item is-sel" href="../index.html" data-hint="Enter the portfolio.">Start game</a></li>
+                    <li style="width: 100%;"><button class="item" type="button" data-open="levels" data-hint="Jump straight to a case study.">Level select</button></li>
+                    <li style="width: 100%;"><a class="item" href="../assets/Jonathan-Chiang-Design-Resume-2026.pdf" target="_blank" rel="noopener noreferrer" data-hint="Open the PDF.">Resume</a></li>
+                    <li style="width: 100%;"><a class="item" href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" data-hint="Open to full-time roles. Say hi on LinkedIn.">LinkedIn</a></li>
+                </ul>
+                <ul class="list is-away" id="levels"></ul>
+            </div>
+
+            <p class="hint px" id="hint" aria-live="polite">Enter the portfolio.</p>
+        </div>
+
+        <div class="right">
+            <canvas class="pixel" id="scene" aria-hidden="true"></canvas>
+            <figure class="preview" id="preview">
+                <img id="previewImg" alt="">
+                <figcaption><span id="previewName"></span><span id="previewStatus"></span></figcaption>
+            </figure>
+        </div>
+
+        <div class="keys px" id="keys" aria-hidden="true"><span>Up/Down to choose</span><span>Enter to confirm</span></div>
+        <div class="skip-wrap"><a class="skip" href="../index.html" id="skip">Skip intro</a></div>
+    </main>
+
+    <canvas class="pixel" id="wipe" aria-hidden="true" hidden></canvas>
+
+    <script src="sprites.js"></script>
+    <script src="shared.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var T = window.Title;
+        var stage = document.getElementById('stage');
+        var cv = document.getElementById('scene');
+        var ctx = cv.getContext('2d');
+        var main = document.getElementById('main');
+        var levels = document.getElementById('levels');
+        var hint = document.getElementById('hint');
+        var preview = document.getElementById('preview');
+        var previewImg = document.getElementById('previewImg');
+        var W, H, back;
+        var current = main, sel = 0, leaving = false;
+
+        // ---- Level list ------------------------------------------------------
+        T.WORK.forEach(function (w) {
+            var li = document.createElement('li');
+            li.style.width = '100%';
+            var a = document.createElement('a');
+            a.className = 'item';
+            a.href = w.href;
+            a.dataset.hint = w.blurb;
+            a.dataset.id = w.id;
+
+            var icon = document.createElement('canvas');
+            icon.className = 'pixel';
+            icon.width = icon.height = 16;
+            PX.draw(icon.getContext('2d'), PX.ICONS[w.id], 0, 0);
+
+            var name = document.createElement('span');
+            name.textContent = w.short || w.name;
+
+            var year = document.createElement('small');
+            year.textContent = w.year;
+
+            a.append(icon, name, year);
+            li.appendChild(a);
+            levels.appendChild(li);
+        });
+
+        var backLi = document.createElement('li');
+        backLi.style.width = '100%';
+        backLi.innerHTML = '<button class="item is-back" type="button" data-close data-hint="Back to the main menu.">Back</button>';
+        levels.appendChild(backLi);
+
+        function items() { return Array.prototype.slice.call(current.querySelectorAll('.item')); }
+
+        function select(i, quiet) {
+            var list = items();
+            sel = (i + list.length) % list.length;
+            list.forEach(function (el, n) { el.classList.toggle('is-sel', n === sel); });
+            var el = list[sel];
+            hint.textContent = el.dataset.hint || '';
+            if (!quiet) T.click(0.14);
+
+            var work = T.WORK.filter(function (w) { return w.id === el.dataset.id; })[0];
+            if (work) {
+                previewImg.src = work.poster;
+                previewImg.alt = work.name;
+                document.getElementById('previewName').textContent = work.name;
+                document.getElementById('previewStatus').textContent = work.status;
+                document.getElementById('previewStatus').style.color = work.color;
+            }
+            preview.classList.toggle('is-on', !!work);
+        }
+
+        function openList(list) {
+            current.classList.add('is-away');
+            list.classList.remove('is-away');
+            current = list;
+            select(0, true);
+        }
+
+        // ---- Stage -----------------------------------------------------------
+        // The About page's character stage, opened up to fill the right side.
+        function build() {
+            var box = cv.parentElement.getBoundingClientRect();
+            var s = Math.max(3, Math.floor(Math.min(box.height / 118, box.width / 96)));
+            W = Math.ceil(box.width / s);
+            H = Math.ceil(box.height / s);
+            cv.width = W;
+            cv.height = H;
+            cv.style.width = (W * s) + 'px';
+            cv.style.height = (H * s) + 'px';
+
+            back = document.createElement('canvas');
+            back.width = W;
+            back.height = H;
+            var b = back.getContext('2d');
+            var floor = Math.floor(H * 0.78);
+
+            // Blue climbs from the floor in ordered dither and thins to the left
+            b.fillStyle = '#1180f9';
+            // Worked out per 2x2 block, so every dot lands whole
+            for (var y = 0; y < floor; y += 2) {
+                var vy = Math.pow(y / floor, 1.5) * 1.08;
+                for (var x = 0; x < W; x += 2) {
+                    var vx = Math.min(1, (x / W) * 2.6);
+                    if (vy * vx > T.bayer(x >> 1, y >> 1)) b.fillRect(x, y, 2, 2);
+                }
+            }
+
+            // Lit edge and checked floor
+            b.fillStyle = '#5ab0ff';
+            b.fillRect(Math.floor(W * 0.08), floor, W, 1);
+            for (var fy = floor + 1; fy < H; fy += 6) {
+                for (var fx = 0; fx < W; fx += 6) {
+                    var alt = ((fx / 6) + Math.floor((fy - floor) / 6)) % 2;
+                    b.fillStyle = alt ? '#2a2927' : '#1f1e1c';
+                    b.fillRect(fx, fy, 6, 6);
+                }
+            }
+            // The floor dissolves to clear, so the page's own floor shows through
+            for (var dy = floor + 1; dy < H; dy++) {
+                for (var dx = 0; dx < Math.floor(W * 0.32); dx++) {
+                    if ((1 - dx / (W * 0.32)) > T.bayer(dx, dy)) b.clearRect(dx, dy, 1, 1);
+                }
+            }
+        }
+
+        function draw(frame) {
+            var floor = Math.floor(H * 0.78);
+            ctx.clearRect(0, 0, W, H);
+            ctx.drawImage(back, 0, 0);
+
+            var hx = Math.floor(W * 0.52) - 13;
+            var hy = floor - 37;
+
+            // Jonathan and Bit step aside while a case study is on show
+            if (current === levels) return;
+
+            // Shadows are hard bars, as on the About page
+            ctx.fillStyle = '#0c0b0a';
+            ctx.fillRect(hx - 2, floor + 2, 30, 3);
+            ctx.fillRect(hx + 32, floor + 2, 16, 2);
+
+            PX.draw(ctx, PX.HERO.stand, hx, hy);
+            var hop = frame % 40 < 6 ? [0, 2, 3, 3, 2, 0][frame % 40] : 0;
+            PX.draw(ctx, PX.BIT, hx + 32, floor - 13 - hop);
+            ctx.fillStyle = frame % 16 < 8 ? '#2f96ff' : '#1180f9';
+            ctx.fillRect(hx + 39, floor - 12 - hop, 2, 2);
+        }
+
+        build();
+        var resizing;
+        addEventListener('resize', function () {
+            clearTimeout(resizing);
+            resizing = setTimeout(build, 120);
+        });
+
+        if (T.reduce) {
+            draw(0);
+            setInterval(function () { draw(0); }, 400);
+        } else {
+            T.ticker(12, draw);
+        }
+
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () { stage.classList.remove('opening'); });
+        });
+
+        // ---- Leaving ---------------------------------------------------------
+        // The confirm flashes once, then a dither fills the screen.
+        function wipe() {
+            return new Promise(function (done) {
+                if (T.reduce) { done(); return; }
+                var c = document.getElementById('wipe');
+                c.hidden = false;
+                var s = 6;
+                var w = Math.ceil(innerWidth / s), h = Math.ceil(innerHeight / s);
+                c.width = w;
+                c.height = h;
+                var x2 = c.getContext('2d');
+                x2.fillStyle = '#161514';
+                var frame = 0, frames = 9;
+                var id = setInterval(function () {
+                    frame++;
+                    var t = frame / frames;
+                    x2.clearRect(0, 0, w, h);
+                    for (var y = 0; y < h; y++) {
+                        for (var x = 0; x < w; x++) {
+                            if (t >= T.bayer(x, y)) x2.fillRect(x, y, 1, 1);
+                        }
+                    }
+                    if (frame >= frames) { clearInterval(id); done(); }
+                }, 42);
+            });
+        }
+
+        async function confirm(el) {
+            if (leaving) return;
+            if (el.dataset.open) { T.click(0.25); openList(levels); return; }
+            if (el.hasAttribute('data-close')) { T.click(0.25); current.classList.add('is-away'); main.classList.remove('is-away'); current = main; select(1, true); return; }
+
+            // New tab items open without leaving the title
+            if (el.target === '_blank') {
+                T.click(0.25);
+                window.open(el.href, '_blank', 'noopener');
+                return;
+            }
+
+            leaving = true;
+            T.click();
+            el.classList.add('is-picked');
+            await T.wait(320);
+            await wipe();
+            T.go(el.getAttribute('href'));
+        }
+
+        // ---- Input -----------------------------------------------------------
+        if (!T.thumb) {
+            addEventListener('keydown', function (e) {
+                if (e.metaKey || e.ctrlKey || e.altKey || leaving) return;
+                if (e.key === 'ArrowDown') { e.preventDefault(); select(sel + 1); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); select(sel - 1); }
+                else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); confirm(items()[sel]); }
+                else if (e.key === 'Escape' && current === levels) {
+                    current.classList.add('is-away');
+                    main.classList.remove('is-away');
+                    current = main;
+                    select(1, true);
+                }
+            });
+
+            document.querySelectorAll('.lists').forEach(function (root) {
+                root.addEventListener('pointerover', function (e) {
+                    var el = e.target.closest('.item');
+                    if (!el) return;
+                    var i = items().indexOf(el);
+                    if (i >= 0 && i !== sel) select(i);
+                });
+                root.addEventListener('focusin', function (e) {
+                    var el = e.target.closest('.item');
+                    if (!el) return;
+                    var i = items().indexOf(el);
+                    if (i >= 0 && i !== sel) select(i, true);
+                });
+                root.addEventListener('click', function (e) {
+                    var el = e.target.closest('.item');
+                    if (!el) return;
+                    e.preventDefault();
+                    confirm(el);
+                });
+            });
+        }
+
+        document.getElementById('skip').addEventListener('click', function (e) {
+            e.preventDefault();
+            T.go(T.HOME);
+        });
+    })();
+    </script>
+</body>
+</html>

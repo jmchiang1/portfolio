@@ -1,8 +1,8 @@
 // ============================================
 // keyboard-layouts.js
 // Single source of truth for the mini-keyboard layouts and renderer used
-// across welcome.html (build flow), home.html (handoff replay) and
-// visitors.html (saved-builds gallery). Exposes window.KbLayouts.
+// across visitors.html (builder + saved-builds gallery). Exposes
+// window.KbLayouts.
 //
 // Token shape (kept tiny and serializable):
 //   { k: 'esc', s: 1 }                  — a key (1u by default)
@@ -25,9 +25,8 @@
     function gap(size)       { return { gap: true, s: size || 1 }; }
 
     // ---- Layouts -----------------------------------------------------------
-    // Keep these the SINGLE source of truth — both welcome.js and visitors.html
-    // import them via window.KbLayouts so the saved keyboard always matches
-    // the one the visitor built.
+    // Keep these the SINGLE source of truth — everything imports them via
+    // window.KbLayouts so the saved keyboard always matches the one built.
 
     var LAYOUT_60 = [
         [acc('esc'), k('1'), k('2'), k('3'), k('4'), k('5'), k('6'), k('7'), k('8'), k('9'), k('0'), k('dash'), k('equal'), mod('bksp', 2)],
@@ -123,6 +122,41 @@
         return def.units;
     }
 
+    // ---- Physical keyboard mapping -----------------------------------------
+    // e.code is layout-independent, so Shift+1 still lights the "1" cap.
+    var CODE_MAP = {
+        Backquote: 'grave', Minus: 'dash', Equal: 'equal',
+        BracketLeft: 'lbracket', BracketRight: 'rbracket', Backslash: 'bslash',
+        Semicolon: 'semi', Quote: 'quote',
+        Comma: 'comma', Period: 'period', Slash: 'slash',
+        Tab: 'tab', Space: 'space', Escape: 'esc', Enter: 'enter',
+        Backspace: 'bksp', CapsLock: 'caps',
+        ShiftLeft: 'lshift', ShiftRight: 'rshift',
+        ControlLeft: 'lctrl', ControlRight: 'rctrl',
+        AltLeft: 'lalt', AltRight: 'ralt',
+        MetaLeft: 'lwin', MetaRight: 'rwin',
+        ContextMenu: 'menu',
+        ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
+        PageUp: 'pgup', PageDown: 'pgdn',
+        Home: 'home', End: 'end', Insert: 'ins', Delete: 'del',
+        PrintScreen: 'prtsc', ScrollLock: 'scrlk', Pause: 'pause',
+        F1: 'f1', F2: 'f2', F3: 'f3', F4: 'f4', F5: 'f5', F6: 'f6',
+        F7: 'f7', F8: 'f8', F9: 'f9', F10: 'f10', F11: 'f11', F12: 'f12',
+        NumLock: 'num',
+        NumpadAdd: 'npadd', NumpadSubtract: 'npsub',
+        NumpadMultiply: 'npmul', NumpadDivide: 'npdiv',
+        NumpadEnter: 'npenter', NumpadDecimal: 'npdot'
+    };
+
+    function keyFromEvent(e) {
+        var code = e.code;
+        if (!code) return null;
+        if (/^Key[A-Z]$/.test(code))    return code.slice(3).toLowerCase();
+        if (/^Digit[0-9]$/.test(code))  return code.slice(5);
+        if (/^Numpad[0-9]$/.test(code)) return 'np' + code.slice(6);
+        return CODE_MAP[code] || null;
+    }
+
     // ---- Public surface ----------------------------------------------------
     window.KbLayouts = {
         // Tokens
@@ -137,6 +171,7 @@
         renderKeyHtml:      renderKeyHtml,
         renderKeyDom:       renderKeyDom,
         renderKeyboardHtml: renderKeyboardHtml,
-        getUnits:           getUnits
+        getUnits:           getUnits,
+        keyFromEvent:       keyFromEvent
     };
 })();
