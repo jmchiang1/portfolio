@@ -3,13 +3,14 @@
 //
 // Plays over Home's live background on every arrival from outside the site and
 // every refresh of Home:
-//   1. The dark lifts through dither while the name resolves from chunky blue
-//      blocks, sharpening step by step like an old console's mosaic fade.
+//   1. The dark lifts through dither and "Press any key" waits. The press (which
+//      is what lets a browser play sound) brings the name in from chunky blue
+//      blocks, sharpening step by step to a rising chiptune.
 //   2. The blue drops out of the letters, then the tagline and menu land.
-//   3. Start Game swaps the title for Home one block at a time, on one shared
-//      grid: as a block of the title drops out, that block of Home appears.
-//      Level Select goes straight to a case study, and Resume and LinkedIn open
-//      in a new tab.
+//   3. Start Game turns the title into Home on one shared grid of blocks, in
+//      Home's order, so Home builds itself piece by piece: the nav first, then
+//      the cards, then the controls. Level Select goes straight to a case study,
+//      and Resume and LinkedIn open in a new tab.
 //
 // Any input during the opening jumps to the menu, so nobody has to wait for it.
 // Reduced motion gets a still screen. Replay with ?title. The flag script in
@@ -29,9 +30,8 @@
 
     var COVER_MS = 520;  // the dark lifts
     var STEP_MS = 120;   // each mosaic size holds this long
-    var SWAP_MS = 760;   // the title turning into Home
+    var BUILD_MS = 1100; // the last of Home's pieces is in by about here
     var SWAP_CELL = 24;
-    var SWAP_STEPS = 16;
 
     var COVER_CELL = 6;
     var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
@@ -53,9 +53,14 @@
         { name: 'Reveal', year: '2024', href: 'reveal.html', hint: 'AR that uncovers hostile architecture.' }
     ];
 
-    var homeLayers = [];
     var raf = 0, clockTimer = 0, leaving = false, landed = false, chromeReleased = false, finished = false;
     var frames = [], t0 = 0, lastCover = -1;
+    var homeLayers = [];
+
+    // Press start. Browsers allow sound only after a key press, click or tap, so
+    // the name waits for one: the dark lifts, the prompt blinks, and the first
+    // press brings in the name with its sound.
+    var playing = false, started = false, wantStart = false, nameT0 = 0, nameBus = null;
 
     try {
         sessionStorage.setItem('jc_title_seen', '1');
@@ -67,6 +72,7 @@
     layer.innerHTML =
         '<canvas class="title-cover" aria-hidden="true"></canvas>' +
         '<canvas class="title-fx" aria-hidden="true"></canvas>' +
+        '<button class="title-press" type="button">' + (touch ? 'Tap to start' : 'Press any key') + '</button>' +
         '<div class="title-stage">' +
         '<div class="title-center">' +
             '<p class="title-logo">Jonathan Chiang</p>' +
@@ -102,6 +108,7 @@
     var menu   = layer.querySelector('.title-menu');
     var levels = layer.querySelector('.title-levels');
     var hint   = layer.querySelector('.title-hint');
+    var press  = layer.querySelector('.title-press');
     var clock = layer.querySelector('.title-clock');
     var W = innerWidth, H = innerHeight, CX = W / 2, CY = H / 2;
 
@@ -136,7 +143,8 @@
         homeLayers.forEach(function (h) { h.el.style.clipPath = ''; });
         root.classList.remove('title-on', 'title-live', 'title-swap');
         layer.remove();
-        if (audio) setTimeout(function () { audio.close(); }, 200);
+        // Long enough for the last notes to finish
+        if (audio) setTimeout(function () { audio.close(); }, 400);
     }
 
     // ---- Name ----------------------------------------------------------------
@@ -248,13 +256,45 @@
         var t = Math.max(0, now - t0);
         try {
             drawCover(t);
-            drawName(t);
+            if (started) drawName(Math.max(0, now - nameT0));
         } catch (e) {
             land(true); // a broken opening must never leave anyone on a dark screen
             return;
         }
-        if (t < T_END) raf = requestAnimationFrame(frame);
-        else land();
+        if (started) {
+            if (now - nameT0 < T_END) raf = requestAnimationFrame(frame);
+            else land();
+            return;
+        }
+        // Until the first press only the cover moves, and it stops once lifted
+        if (t >= COVER_MS) layer.classList.add('is-waiting');
+        if (t < COVER_MS + 90) raf = requestAnimationFrame(frame);
+    }
+
+    function start() {
+        if (started || landed || leaving) return;
+        if (!playing) { wantStart = true; return; } // pressed before the font was ready
+        started = true;
+        layer.classList.remove('is-waiting');
+        layer.classList.add('is-started');
+
+        // Picture and sound begin together once the audio is running. If it never
+        // gets permission, the name still plays, silently.
+        var begun = false;
+        function begin() {
+            if (begun || landed) return;
+            begun = true;
+            nameT0 = performance.now();
+            nameSound();
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(frame);
+        }
+        if (audio) {
+            audio.resume().then(begin, begin);
+            setTimeout(begin, 150);
+        } else {
+            begin();
+        }
     }
 
     function showMenu() {
@@ -266,6 +306,9 @@
         if (landed) return;
         landed = true;
         cancelAnimationFrame(raf);
+        // Skipped part way: the rest of the name's sound fades out with it
+        if (now && nameBus) nameBus.gain.setTargetAtTime(0, audio.currentTime, 0.02);
+        layer.classList.remove('is-waiting');
         root.classList.add('title-live');
         cover.remove();
         fx.remove();
@@ -285,28 +328,99 @@
             land(true);
             return;
         }
+        playing = true;
         t0 = performance.now();
         raf = requestAnimationFrame(frame);
+        if (wantStart) start();
     }
 
     // ---- Start ---------------------------------------------------------------
-    // The title and Home share one grid of blocks. Each block has a moment when it
-    // swaps, so the title loses it and Home gains it in the same frame. Both are
-    // real, live content, so the blocks are clip shapes rather than pictures. The
-    // background sits outside all of this and never changes.
+    // The title turns into Home on one shared grid of blocks. When a block of the
+    // title drops out, the same block of Home appears in that frame, so the two
+    // never overlap and never leave a gap. The blocks go in Home's order, which is
+    // what makes Home build itself piece by piece: each piece's blocks swap
+    // together in a dither (the nav first, then the cards, then the controls
+    // around them), and blocks over empty background clear first. Both sides are
+    // live content, so the blocks are clip shapes on a few full-screen layers,
+    // redrawn on a steady step rather than every frame.
+    //
+    // [selector, start ms, ms its blocks take, ms between repeats]. Listed top
+    // layer first: a block goes to the first piece that covers it, so the arrows
+    // win over the side cards they sit on.
+    var BUILD = [
+        ['.mc-bubble', 680, 200, 0],
+        ['.mc-launcher', 600, 200, 0],
+        ['.arena-tab', 640, 200, 0],
+        ['.social-links .social-link', 500, 200, 60],
+        ['.carousel-nav-prev', 520, 200, 0],
+        ['.carousel-nav-next', 560, 200, 0],
+        ['.carousel-counter', 560, 220, 0],
+        ['.layout-toggle', 440, 200, 0],
+        ['.hamburger', 160, 200, 0],
+        ['.nav-logo', 100, 200, 0],
+        ['.nav-links .nav-link', 150, 200, 55],
+        ['.home-header', 200, 480, 0]
+    ];
+    var CLEAR_MS = 460;  // blocks over empty background are gone by here
+    var SWAP_TICK = 33;  // the blocks move on this step, about 30 a second
+
+    function onScreen(el) {
+        if (!el.offsetWidth) return false;
+        var r = el.getBoundingClientRect();
+        return r.right > 0 && r.bottom > 0 && r.left < innerWidth && r.top < innerHeight;
+    }
+
+    function swapPieces() {
+        var list = [];
+        BUILD.forEach(function (b) {
+            var n = 0;
+            document.querySelectorAll(b[0]).forEach(function (el) {
+                if (onScreen(el)) list.push({ box: el.getBoundingClientRect(), start: b[1] + b[3] * n++, span: b[2] });
+            });
+        });
+        // The centre card leads and the rest follow. In grid view they go in reading order.
+        var cards = Array.prototype.filter.call(document.querySelectorAll('.project-card'), onScreen);
+        var grid = document.body.classList.contains('grid-mode');
+        cards.sort(function (a, b) {
+            if (!grid) return (b.classList.contains('pos-center') ? 1 : 0) - (a.classList.contains('pos-center') ? 1 : 0);
+            var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+            return ra.top - rb.top || ra.left - rb.left;
+        });
+        cards.forEach(function (el, i) {
+            list.push({ box: el.getBoundingClientRect(), start: grid ? 220 + i * 60 : i ? 420 + (i - 1) * 50 : 220, span: i && !grid ? 420 : 520 });
+        });
+        return list;
+    }
+
     function swapGrid() {
-        var cols = Math.ceil(innerWidth / SWAP_CELL), rows = Math.ceil(innerHeight / SWAP_CELL), cells = [];
+        var cols = Math.ceil(innerWidth / SWAP_CELL), rows = Math.ceil(innerHeight / SWAP_CELL), cells = new Array(cols * rows);
+
+        // Every block a piece touches, its outline and shadow included, swaps with it
+        swapPieces().forEach(function (p) {
+            var c0 = Math.max(0, Math.floor((p.box.left - 4) / SWAP_CELL)), c1 = Math.min(cols - 1, Math.floor((p.box.right + 3) / SWAP_CELL));
+            var r0 = Math.max(0, Math.floor((p.box.top - 4) / SWAP_CELL)), r1 = Math.min(rows - 1, Math.floor((p.box.bottom + 7) / SWAP_CELL));
+            for (var r = r0; r <= r1; r++) {
+                for (var c = c0; c <= c1; c++) {
+                    if (cells[r * cols + c]) continue;
+                    cells[r * cols + c] = {
+                        x: c * SWAP_CELL, y: r * SWAP_CELL,
+                        at: p.start + ((BAYER[(r & 3) * 4 + (c & 3)] / 15) * 0.7 + Math.random() * 0.3) * p.span
+                    };
+                }
+            }
+        });
+        // The rest is empty background on Home: the title clears off it early,
+        // in a dither drifting down the screen
         for (var r = 0; r < rows; r++) {
             for (var c = 0; c < cols; c++) {
-                cells.push({
-                    x: c * SWAP_CELL,
-                    y: r * SWAP_CELL,
-                    // Dither, a little noise, and a drift down the page so the nav goes first
-                    at: (BAYER[(r & 3) * 4 + (c & 3)] / 15) * 0.6 + Math.random() * 0.16 + (r / rows) * 0.24
-                });
+                if (cells[r * cols + c]) continue;
+                cells[r * cols + c] = {
+                    x: c * SWAP_CELL, y: r * SWAP_CELL,
+                    at: ((BAYER[(r & 3) * 4 + (c & 3)] / 15) * 0.6 + Math.random() * 0.16 + (r / rows) * 0.24) * CLEAR_MS
+                };
             }
         }
-        return cells;
+        return cells.sort(function (a, b) { return a.at - b.at; });
     }
 
     function blocks(cells, dx, dy) {
@@ -321,6 +435,7 @@
         var clip = window.CSS && CSS.supports && CSS.supports('clip-path', 'path("M0 0h1v1z")');
         if (!clip) {
             stage.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 240, easing: 'steps(4, end)', fill: 'forwards' });
+            swapSound(240);
             setTimeout(done, 240);
             return;
         }
@@ -335,22 +450,36 @@
         });
         homeLayers.forEach(function (h) { h.el.style.clipPath = blocks([], 0, 0); });
 
-        var cells = swapGrid(), start = performance.now(), lastStep = -1;
+        var cells = swapGrid(), start = performance.now(), shown = 0, lastTick = -1;
+        swapSound(cells[cells.length - 1].at);
+        // Home's side only ever grows, so each layer's outline is kept and added to
+        var grown = {};
         function step(now) {
-            var t = (now - start) / SWAP_MS;
-            if (t >= 1) {
-                stage.style.visibility = 'hidden';
-                done();
-                return;
-            }
-            var at = Math.floor(t * SWAP_STEPS);
-            if (at !== lastStep) {
-                lastStep = at;
-                var line = at / SWAP_STEPS;
-                var title = [], home = [];
-                cells.forEach(function (cell) { (cell.at > line ? title : home).push(cell); });
-                stage.style.clipPath = blocks(title, 0, 0);
-                homeLayers.forEach(function (h) { h.el.style.clipPath = blocks(home, h.x, h.y); });
+            var tick = Math.floor((now - start) / SWAP_TICK);
+            if (tick !== lastTick) {
+                lastTick = tick;
+                var t = tick * SWAP_TICK, k = shown;
+                while (k < cells.length && cells[k].at <= t) k++;
+                if (k !== shown) {
+                    var fresh = cells.slice(shown, k);
+                    shown = k;
+                    stage.style.clipPath = blocks(cells.slice(k), 0, 0);
+                    homeLayers.forEach(function (h) {
+                        var key = h.x + ',' + h.y;
+                        if (!grown[key]) grown[key] = { seen: -1, path: '' };
+                        var g = grown[key];
+                        if (g.seen !== k) {
+                            g.seen = k;
+                            g.path += blocks(fresh, h.x, h.y).slice(6, -2);
+                        }
+                        h.el.style.clipPath = 'path("' + (g.path || 'M0 0') + '")';
+                    });
+                }
+                if (shown >= cells.length) {
+                    stage.style.visibility = 'hidden';
+                    done();
+                    return;
+                }
             }
             raf = requestAnimationFrame(step);
         }
@@ -370,7 +499,7 @@
         swap(finish);
 
         // Animation frames stop in a hidden tab, and the page still has to come back
-        setTimeout(finish, SWAP_MS + 500);
+        setTimeout(finish, BUILD_MS + 600);
     }
 
     // Closing to a case study: a dither fills the screen, then the page changes
@@ -401,9 +530,9 @@
     }
 
     // ---- Sound ---------------------------------------------------------------
-    // A short blip as the selection moves. Made here, so there's no file to load.
-    // Browsers only allow sound after a key press or click, so the audio starts
-    // on the first one, and hovering before that stays silent.
+    // Sounds are made here, so there's no file to load. Browsers only allow sound
+    // after a key press or click, so the audio starts on the first one (the press
+    // that starts the title). The blip plays as the selection moves.
     var audio = null;
 
     function unlockSound() {
@@ -413,22 +542,78 @@
         try { audio = new Ctx(); } catch (e) { audio = null; }
     }
 
+    // The name's sound: a note rising with each mosaic step, then a chime as the
+    // letters come sharp. Timed off the same steps as the picture.
+    var NAME_NOTES = [196, 262, 330, 392, 523, 659, 784];
+
+    function note(freq, at, len, type, vol, bus) {
+        var tone = audio.createOscillator();
+        var level = audio.createGain();
+        tone.type = type;
+        tone.frequency.setValueAtTime(freq, at);
+        level.gain.setValueAtTime(vol, at);
+        level.gain.exponentialRampToValueAtTime(0.0001, at + len);
+        tone.connect(level);
+        level.connect(bus || nameBus);
+        tone.start(at);
+        tone.stop(at + len + 0.02);
+    }
+
+    function nameSound() {
+        if (!audio || audio.state !== 'running') return;
+        nameBus = audio.createGain();
+        nameBus.connect(audio.destination);
+        var now = audio.currentTime + 0.01, step = STEP_MS / 1000;
+        NAME_NOTES.forEach(function (f, i) { note(f, now + i * step, 0.07, 'square', 0.03); });
+        var sharp = now + MOSAIC.length * step;
+        note(1047, sharp, 0.55, 'triangle', 0.09);
+        note(1568, sharp + 0.07, 0.45, 'square', 0.018);
+    }
+
+    // The title-to-Home sound: a confirm tick as Start is chosen, then a patter
+    // of soft notes while the blocks swap, climbing as Home fills in. All
+    // scheduled up front on the audio clock, so a busy frame can't knock it out
+    // of time.
+    var SWAP_SCALE = [392, 440, 523, 587, 659, 784, 880, 1047, 1175];
+
+    function swapSound(ms) {
+        if (!audio || audio.state !== 'running') return;
+        var bus = audio.createGain();
+        bus.connect(audio.destination);
+        var now = audio.currentTime + 0.01, end = ms / 1000;
+        buttonSound(now, 247, 330, 0.06, bus);
+        buttonSound(now + 0.07, 330, 392, 0.05, bus);
+        for (var t = 0.1; t < end - 0.06; t += 0.066) {
+            var climb = Math.floor((t / end) * 6);
+            var f = SWAP_SCALE[climb + Math.floor(Math.random() * 3)];
+            note(f, now + t, 0.045, 'triangle', 0.035, bus);
+        }
+    }
+
+    // A soft, low tick: a square wave with its top cut off, so it reads as a
+    // retro button press without the bright edge. Moving the selection plays
+    // one, and choosing Start plays two going up.
+    function buttonSound(at, from, to, vol, bus) {
+        var tone = audio.createOscillator();
+        var soft = audio.createBiquadFilter();
+        var level = audio.createGain();
+        tone.type = 'square';
+        tone.frequency.setValueAtTime(from, at);
+        tone.frequency.setValueAtTime(to, at + 0.025);
+        soft.type = 'lowpass';
+        soft.frequency.value = 900;
+        level.gain.setValueAtTime(vol, at);
+        level.gain.exponentialRampToValueAtTime(0.0001, at + 0.08);
+        tone.connect(soft);
+        soft.connect(level);
+        level.connect(bus || audio.destination);
+        tone.start(at);
+        tone.stop(at + 0.09);
+    }
+
     function blip() {
         if (!audio) return;
-        audio.resume().then(function () {
-            var now = audio.currentTime;
-            var tone = audio.createOscillator();
-            var level = audio.createGain();
-            tone.type = 'square';
-            tone.frequency.setValueAtTime(660, now);
-            tone.frequency.setValueAtTime(880, now + 0.03);
-            level.gain.setValueAtTime(0.035, now);
-            level.gain.exponentialRampToValueAtTime(0.0001, now + 0.07);
-            tone.connect(level);
-            level.connect(audio.destination);
-            tone.start(now);
-            tone.stop(now + 0.08);
-        }, function () {});
+        audio.resume().then(function () { buttonSound(audio.currentTime, 196, 247, 0.06); }, function () {});
     }
 
     // ---- Menu ----------------------------------------------------------------
@@ -468,7 +653,8 @@
         e.preventDefault();
         e.stopPropagation();
         unlockSound();
-        if (!landed) { land(true); return; }
+        if (!started && !landed) { start(); return; }
+        if (!landed) { if (!e.repeat) land(true); return; }
         if (e.repeat && (e.key === 'Enter' || e.key === ' ')) return;
         if (e.key === 'ArrowDown') { select(sel + 1); blip(); }
         else if (e.key === 'ArrowUp') { select(sel - 1); blip(); }
@@ -476,9 +662,21 @@
         else if (e.key === 'Escape' && current === levels) openList(menu, 1);
     }
 
-    function onPointer() {
+    // A mouse press counts as permission for sound, but a touch only does once the
+    // finger lifts, so touch starts on pointerup
+    function onPointer(e) {
         unlockSound();
+        if (!started && !landed) {
+            if (e.pointerType !== 'touch') start();
+            return;
+        }
         if (!landed) land(true);
+    }
+
+    function onPointerUp(e) {
+        if (started || landed || e.pointerType !== 'touch') return;
+        unlockSound();
+        start();
     }
 
     function onOver(e) {
@@ -498,12 +696,14 @@
     function onScroll(e) {
         e.preventDefault();
         e.stopPropagation();
+        if (!started && !landed) { start(); return; } // a scroll can't unlock sound, so this one plays silent
         if (!landed) land(true);
     }
 
     function removeInput() {
         document.removeEventListener('keydown', onKey, true);
         layer.removeEventListener('pointerdown', onPointer);
+        layer.removeEventListener('pointerup', onPointerUp);
         layer.removeEventListener('pointerover', onOver);
         layer.removeEventListener('focusin', onOver);
         layer.removeEventListener('click', onClick);
@@ -513,6 +713,7 @@
 
     document.addEventListener('keydown', onKey, true);
     layer.addEventListener('pointerdown', onPointer);
+    layer.addEventListener('pointerup', onPointerUp);
     layer.addEventListener('pointerover', onOver);
     layer.addEventListener('focusin', onOver);
     layer.addEventListener('click', onClick);

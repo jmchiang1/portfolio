@@ -7,7 +7,7 @@
    html.title-hold  nav, socials, Bit and the cards wait offstage
    html.title-played  Home arrived through the title, so its own entrance
                     animations stand down
-   html.title-swap  the title is turning into Home, block by block
+   html.title-swap  the title drops out while Home builds itself, block by block
    html.title-live  the title's own cover has painted, so the first-paint
                     cover below can go.
    ========================================================================== */
@@ -308,6 +308,46 @@ html.title-on:not(.title-live)::after {
 
 /* ---- Leaving: the blocks swap the title for Home ---- */
 .is-out { pointer-events: none; }
+
+/* Press start, in the middle of the screen. It blinks while waiting and blinks
+   out in steps once pressed. */
+.title-press {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 2;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff;
+    font-family: 'Jersey 25', sans-serif;
+    font-weight: 400;
+    font-size: var(--text-36);
+    line-height: 1;
+    text-align: center;
+    translate: 0 -50%;
+    visibility: hidden;
+    cursor: inherit;
+}
+
+.title-press:focus-visible { outline: none; color: #7fc4ff; }
+
+.is-waiting .title-press {
+    visibility: visible;
+    animation: title-blink 1.2s steps(1, end) infinite;
+}
+
+.is-started .title-press {
+    visibility: visible;
+    animation: title-press-out 0.24s steps(3, end) forwards;
+}
+
+.is-logo .title-press { display: none; }
+
+@keyframes title-blink { 55% { visibility: hidden; } }
+@keyframes title-press-out { to { opacity: 0; } }
 
 @media (max-width: 1060px) {
     .title-hud { font-size: var(--text-16); }
