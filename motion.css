@@ -555,19 +555,18 @@ a, button, [role="button"],
    Motion Grid — vibes-style card grid
    ============================================ */
 /* Bento: motion videos span two of four columns; interaction tiles take one */
-/* The video wall: three rows that fill the window without scrolling. Each video
-   keeps its own shape, and flex-grow shares out a row in proportion to those
-   shapes (16:9 is 16, 3:4 is 6.75), so nothing is cropped and rows end level.
-   Width is set by whichever runs out first: the side margins, or the height
-   left after the nav and Arena tab. 1.3 is the wall's width-to-height ratio for
-   these rows, so it changes if the mix of videos in a row does. */
+/* The video wall: three rows across the full width. Each card is a panel like
+   the UX/UI cards: the video at its own shape, then its name and a line about
+   it. flex-grow shares a row out in proportion to the videos' shapes (16:9 is
+   16, 3:4 is 6.75) after each card's 24px of padding, so the videos in a row
+   are all the same height and none are cropped. */
 .motion-grid {
-    --wall-gap: 12px;
+    --wall-gap: 16px;
     flex: none;
     display: flex;
     flex-direction: column;
     gap: var(--wall-gap);
-    width: max(600px, min(100vw - 240px, (100dvh - 184px) * 1.3 + 24px));
+    width: min(100vw - 240px, 1440px);
 }
 
 .motion-row {
@@ -576,14 +575,12 @@ a, button, [role="button"],
 }
 
 .motion-card {
-    flex: 16 1 0;
+    flex: 16 1 24px;
     min-width: 0;
-    aspect-ratio: 16 / 9;
 }
 
 .motion-card.motion-card-tile {
-    flex: 6.75 1 0;
-    aspect-ratio: 3 / 4;
+    flex: 6.75 1 24px;
 }
 
 .motion-card {
@@ -636,7 +633,23 @@ a, button, [role="button"],
     background: #fff;
 }
 
-.motion-card-preview,
+/* The panel (its square edge is in pixel-theme.css), with the video inset */
+.motion-card {
+    box-sizing: border-box;
+    gap: 10px;
+    padding: 12px;
+}
+
+.motion-card-preview {
+    flex: none;
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 0 0 2px #0c0b0a;
+}
+
+.motion-card-tile .motion-card-preview {
+    aspect-ratio: 3 / 4;
+}
+
 .motion-card-frame {
     height: 100%;
 }
@@ -678,37 +691,49 @@ a, button, [role="button"],
     opacity: 0.4;
 }
 
-/* Info overlay — hidden until hover, like the UX/UI cards: it rises over the
-   bottom of the video on a blurred, darkened band. Touch screens show it
-   by default (see the hover: none query below). */
-/* On the wall a card shows only its name, in a chip, on hover. The popup has the rest. */
-.motion-card-tags,
-.motion-card-description {
-    display: none;
+/* The name and a line about it sit under the video. The tags drop in at the
+   video's top right on hover, as on the UX/UI cards. */
+.motion-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding: 2px 2px 0;
 }
 
-.motion-card-body {
+.motion-card-description {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.motion-card-tags {
     position: absolute;
-    left: 10px;
-    bottom: 10px;
+    top: 12px;
+    right: 12px;
     z-index: 2;
-    max-width: calc(100% - 20px);
-    box-sizing: border-box;
-    padding: 3px 10px 4px;
-    background: #0c0b0a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: var(--text-14);
+    color: #fff;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.12s steps(2);
+    transform: translateY(-12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.motion-card:hover .motion-card-body {
+.motion-card-tag-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.motion-card:hover .motion-card-tags {
     opacity: 1;
-}
-
-@media (hover: none) {
-    .motion-card-body {
-        opacity: 1;
-    }
+    transform: none;
 }
 
 .motion-card-header {
@@ -743,8 +768,14 @@ a, button, [role="button"],
 
 /* The specificity beats the page-wide title size in pixel-theme.css */
 .motion-grid .motion-card-title {
-    font-size: var(--text-20);
+    font-size: var(--text-24);
     line-height: 1;
+}
+
+.motion-grid .motion-card-description {
+    font-size: var(--text-14);
+    line-height: 1.4;
+    color: #c9c8c6;
 }
 
 /* Too narrow for one screen: wide videos go full width, portrait ones pair up.
@@ -1144,6 +1175,12 @@ a, button, [role="button"],
 .modal-portrait .modal-built {
     flex-wrap: wrap;
     gap: 16px;
+}
+
+/* The info column is narrow beside a vertical video, so the title gets its own
+   line and the tag and year sit together underneath */
+.modal-portrait .modal-title {
+    flex-basis: 100%;
 }
 
 /* Info panel */

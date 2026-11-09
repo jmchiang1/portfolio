@@ -27,18 +27,18 @@
         {
             q: 'What does Jonathan do?',
             a: "Jonathan is a **product designer and design engineer** in New York. He takes products from research and UX/UI through brand and motion, then builds them in code so prototypes are real and handoff is smooth.\n\n" +
-               "He's **open to full-time roles**. His most recent role was Design Engineer at [SkillCat](/skillcat.html), redesigning a mobile learning platform for the skilled trades. He's also founding [Apollo Racket Club](/apollo.html), an indoor badminton club."
+               "He's **open to full-time roles**. His most recent role was Design Engineer at [SkillCat](/skillcat), redesigning a mobile learning platform for the skilled trades. He's also founding [Apollo Racket Club](/apollo), an indoor badminton club."
         },
         {
             q: 'Tell me about Nocta',
             a: "**Nocta** is an AI companion for CPAP users. It turns a machine's overnight data into one plain-language story: what happened, what likely caused it, and the one thing to try next.\n\n" +
-               "Jonathan did it solo, from research (a survey of 14 CPAP users and 6 interviews) through brand, UX/UI and a working React build. It started as his Parsons capstone. Read the [case study](/nocta.html) or try it at [noctaapp.com](https://www.noctaapp.com/)."
+               "Jonathan did it solo, from research (a survey of 14 CPAP users and 6 interviews) through brand, UX/UI and a working React build. It started as his Parsons capstone. Read the [case study](/nocta) or try it at [noctaapp.com](https://www.noctaapp.com/)."
         },
         {
             q: 'What tools does he use?',
             a: "- **Design:** Figma, After Effects, Claude Design, ChatGPT Images, Nano Banana 2\n" +
                "- **Code:** HTML/CSS, JavaScript, React, Claude Code, Cursor\n\n" +
-               "He leans on Claude Code and Cursor to turn Figma designs into working prototypes, and his projects also use TypeScript, Next.js, Tailwind and Supabase. More on the [About page](/about.html)."
+               "He leans on Claude Code and Cursor to turn Figma designs into working prototypes, and his projects also use TypeScript, Next.js, Tailwind and Supabase. More on the [About page](/about)."
         },
         {
             q: 'How can I contact him?',

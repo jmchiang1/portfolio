@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visitors | Jonathan Chiang</title>
+    <link rel="canonical" href="https://jonathanchiang.com/visitors">
 
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="apple-touch-icon" href="assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=3">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=3">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=3">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -424,8 +426,8 @@
         }
         .visitor-modal-card {
             position: relative;
-            width: min(420px, 100%);
-            padding: 26px 24px 22px;
+            width: min(560px, 100%);
+            padding: 32px 30px 26px;
             border-radius: 4px;
             background:
                 radial-gradient(120% 80% at 110% -10%, rgba(255, 255, 255, 0.06), transparent 55%),
@@ -486,7 +488,7 @@
         }
         .visitor-modal-card .vmc-name {
             font-family: 'Space Mono', monospace;
-            font-size: var(--text-20);
+            font-size: var(--text-24);
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -503,9 +505,11 @@
             display: flex;
             justify-content: center;
             width: fit-content;
+            max-width: 100%;
+            align-self: center;
         }
         .visitor-modal-card .peg-kb {
-            --u: 14px;
+            --u: 22px;
             background: transparent;
             border: none;
             box-shadow: none;
@@ -796,9 +800,9 @@
         </a>
         <div class="nav-links">
             <a href="/" class="nav-link">UX/UI</a>
-            <a href="motion.html" class="nav-link">Motion</a>
-            <a href="vibes.html" class="nav-link">Vibes</a>
-            <a href="about.html" class="nav-link">About</a>
+            <a href="/motion" class="nav-link">Motion</a>
+            <a href="/vibes" class="nav-link">Vibes</a>
+            <a href="/about" class="nav-link">About</a>
             <a href="#" class="nav-link active">Visitors</a>
         </div>
         <button class="hamburger" aria-label="Menu">
@@ -811,9 +815,9 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu">
         <a href="/" class="mobile-menu-link">UX/UI</a>
-        <a href="motion.html" class="mobile-menu-link">Motion</a>
-        <a href="vibes.html" class="mobile-menu-link">Vibes</a>
-        <a href="about.html" class="mobile-menu-link">About</a>
+        <a href="/motion" class="mobile-menu-link">Motion</a>
+        <a href="/vibes" class="mobile-menu-link">Vibes</a>
+        <a href="/about" class="mobile-menu-link">About</a>
         <a href="#" class="mobile-menu-link active">Visitors</a>
 
         <div class="mobile-menu-socials">
@@ -838,7 +842,7 @@
         <!-- Closing CTA — sits below the visitor grid as the natural end-of-page action -->
         <div class="visitors-typing-cta-wrap">
             <p class="visitors-typing-cta-tagline">Think you can beat my record of 120 WPM?</p>
-            <a href="typing.html" class="visitors-typing-cta">
+            <a href="/typing" class="visitors-typing-cta">
                 <span>Start Typing Now</span>
                 <i class="hn hn-external-link"></i>
             </a>

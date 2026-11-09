@@ -1198,7 +1198,7 @@ a.project-card {
    few of the app's 4-point sparkles. Sizing uses container units so the
    device + sky scale with the card.
    =========================================================================== */
-.project-card--nocta {
+.project-card--nocta .project-media {
     container-type: size;
     background:
         radial-gradient(70% 55% at 50% 0%, rgba(138, 160, 224, 0.16), transparent 70%),
@@ -1390,7 +1390,7 @@ a.project-card {
    centered on a branded SkillCat-orange backdrop (mirrors the case-study hero
    and the nocta card: devices on a background, not a full-bleed video).
    =========================================================================== */
-.project-card--skillcat {
+.project-card--skillcat .project-media {
     container-type: size;
     background:
         radial-gradient(60% 60% at 50% 2%, rgba(255, 138, 92, 0.45), transparent 58%),
@@ -1471,7 +1471,7 @@ a.project-card {
    a branded backdrop), in ScriptChain's teal. Reuses the .sk-thumb frame; with
    no phone, the desktop is truly centered and a touch larger.
    =========================================================================== */
-.project-card--scriptchain {
+.project-card--scriptchain .project-media {
     container-type: size;
     background:
         radial-gradient(60% 60% at 50% 2%, rgba(126, 205, 201, 0.42), transparent 58%),
@@ -2638,4 +2638,133 @@ body.grid-mode .home-header {
     body:not(.grid-mode) .project-card {
         height: var(--card-h);
     }
+}
+
+/* ============================================
+   Cards show everything: the project's picture, then its name, a line about it
+   and three results. The tags still drop in at the picture's top right when
+   you hover the centre card.
+
+   The picture keeps the card's old 956:599 shape, so the artwork inside it
+   draws exactly as before; the art's background and container rules live on
+   .project-media. --info-h is the room the details take, so the whole card
+   still fits between the nav and the counter.
+   ============================================ */
+:root {
+    --info-h: 240px;
+    --card-w: min(956px, 58vw, calc((100dvh - var(--deck-top) - var(--deck-bottom) - var(--info-h)) * 956 / 599 + 32px));
+}
+
+/* The panel; its square edge comes from pixel-theme.css */
+.carousel-viewport .project-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
+    aspect-ratio: auto;
+    padding: 16px;
+    border-radius: 0;
+    background: #1f1e1c;
+}
+
+.project-media {
+    position: relative;
+    flex: none;
+    aspect-ratio: 956 / 599;
+    overflow: hidden;
+    background: #0d0d0d;
+    box-shadow: 0 0 0 2px #0c0b0a;
+}
+
+/* The card shows the project's name now, so the counter is just "01 / 05".
+   Its empty name slot would otherwise pull the digits left of centre. */
+.carousel-counter .counter-name {
+    display: none;
+}
+
+.project-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.project-name {
+    margin: 0;
+    font-family: var(--px-font);
+    font-size: var(--text-40);
+    font-weight: 400;
+    line-height: 1;
+    color: #fff;
+}
+
+.project-summary {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: var(--text-16);
+    line-height: 1.45;
+    color: #c9c8c6;
+}
+
+.project-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 1px solid #3f3e3a;
+}
+
+.project-stats > div {
+    min-width: 0;
+    padding-right: 12px;
+}
+
+.project-stats > div + div {
+    padding-left: 16px;
+    border-left: 1px solid #3f3e3a;
+}
+
+.project-stat {
+    display: block;
+    font-family: var(--px-font);
+    font-size: var(--text-36);
+    line-height: 1;
+    color: #fff;
+}
+
+.project-stat-label {
+    display: block;
+    margin-top: 6px;
+    overflow: hidden;
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-11);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #8d8c88;
+}
+
+/* Phones: the card fills the height, so the picture takes what the details leave */
+@media (max-width: 640px) {
+    :root { --card-w: 90vw; }
+
+    .project-media {
+        flex: 1;
+        min-height: 0;
+        aspect-ratio: auto;
+    }
+
+    .carousel-viewport .project-card {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .project-name { font-size: var(--text-32); }
+    .project-stat { font-size: var(--text-28); }
 }

@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jonathan Chiang | Product Designer &amp; Design Engineer</title>
+    <link rel="canonical" href="https://jonathanchiang.com/">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="apple-touch-icon" href="assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=3">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=3">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=3">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,10 +80,10 @@
             <div class="nav-links">
                 <a href="#" class="nav-link active">UX/UI</a>
                 <!-- <a href="#" class="nav-link">Coding</a> -->
-                <a href="motion.html" class="nav-link">Motion</a>
-                <a href="vibes.html" class="nav-link">Vibes</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="visitors.html" class="nav-link">Visitors</a>
+                <a href="/motion" class="nav-link">Motion</a>
+                <a href="/vibes" class="nav-link">Vibes</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/visitors" class="nav-link">Visitors</a>
             </div>
             <div class="bg-controls">
                 <button class="layout-toggle" aria-label="Switch to grid view" data-tooltip="Layout: Grid view">
@@ -98,10 +100,10 @@
         <!-- Mobile Menu Overlay -->
         <div class="mobile-menu">
             <a href="#" class="mobile-menu-link active">UX/UI</a>
-            <a href="motion.html" class="mobile-menu-link">Motion</a>
-            <a href="vibes.html" class="mobile-menu-link">Vibes</a>
-            <a href="about.html" class="mobile-menu-link">About</a>
-            <a href="visitors.html" class="mobile-menu-link">Visitors</a>
+            <a href="/motion" class="mobile-menu-link">Motion</a>
+            <a href="/vibes" class="mobile-menu-link">Vibes</a>
+            <a href="/about" class="mobile-menu-link">About</a>
+            <a href="/visitors" class="mobile-menu-link">Visitors</a>
 
             <div class="mobile-menu-socials">
                 <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="LinkedIn">
@@ -170,7 +172,8 @@
             <div class="carousel-viewport">
 
                     <!-- Project 1 — Nocta -->
-                <a href="nocta.html" class="project-card project-card--nocta" style="--card-bg: url('assets/nocta/v4/tonight-escalation.jpg')">
+                <a href="/nocta" class="project-card project-card--nocta" style="--card-bg: url('assets/nocta/v4/tonight-escalation.jpg')">
+                    <div class="project-media">
                     <img class="sk-logo" src="assets/nocta/brand/nox-mark-sm.svg" alt="Nocta logo">
                     <div class="nocta-sky" aria-hidden="true">
                         <span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span><span class="nocta-sparkle"></span>
@@ -193,18 +196,21 @@
                         <span class="tag-divider"></span>
                         <span>2026</span>
                     </div>
-                    <div class="project-overlay">
-                        <div class="project-blur"></div>
-                        <div class="project-overlay-gradient"></div>
-                        <div class="project-info">
-                            <h2 class="project-title">Nocta</h2>
-                            <p class="project-description">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long-term therapy</p>
+                    </div>
+                    <div class="project-details">
+                        <h2 class="project-name">Nocta</h2>
+                        <p class="project-summary">Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long-term therapy</p>
+                        <div class="project-stats">
+                            <div><span class="project-stat">348</span><span class="project-stat-label">Unique visitors</span></div>
+                            <div><span class="project-stat">193</span><span class="project-stat-label">Active users</span></div>
+                            <div><span class="project-stat">5000+</span><span class="project-stat-label">Uploaded nights</span></div>
                         </div>
                     </div>
                 </a>
 
                 <!-- Project 2 — SkillCat -->
-                    <a href="skillcat.html" class="project-card project-card--skillcat" style="--card-bg: url('assets/skillcat/B2B/poster-hero.jpg')">
+                    <a href="/skillcat" class="project-card project-card--skillcat" style="--card-bg: url('assets/skillcat/B2B/poster-hero.jpg')">
+                    <div class="project-media">
                     <img class="sk-logo" src="assets/skillcat/skillcat-logo.png" alt="SkillCat logo">
                     <div class="sk-thumb">
                         <div class="sk-thumb-desktop">
@@ -229,18 +235,21 @@
                         <span class="tag-divider"></span>
                         <span>2026</span>
                     </div>
-                    <div class="project-overlay">
-                        <div class="project-blur"></div>
-                        <div class="project-overlay-gradient"></div>
-                        <div class="project-info">
-                            <h2 class="project-title">SkillCat</h2>
-                            <p class="project-description">Reimagining how trade professionals learn, certify, and grow on mobile — currently in active development</p>
+                    </div>
+                    <div class="project-details">
+                        <h2 class="project-name">SkillCat</h2>
+                        <p class="project-summary">Reimagining how trade professionals learn, certify, and grow on mobile — currently in active development</p>
+                        <div class="project-stats">
+                            <div><span class="project-stat">100+</span><span class="project-stat-label">Screens produced</span></div>
+                            <div><span class="project-stat">~400</span><span class="project-stat-label">User Interviews</span></div>
+                            <div><span class="project-stat">20+</span><span class="project-stat-label">Iterations</span></div>
                         </div>
                     </div>
                 </a>
 
                 <!-- Project 3 — ScriptChain Health -->
-                <a href="scriptchain.html" class="project-card project-card--scriptchain" style="--card-bg: url('assets/scriptchain/poster-scriptchain-website.jpg')">
+                <a href="/scriptchain" class="project-card project-card--scriptchain" style="--card-bg: url('assets/scriptchain/poster-scriptchain-website.jpg')">
+                    <div class="project-media">
                     <img class="sk-logo" src="assets/scriptchain/scriptchain-logo.png" alt="ScriptChain Health logo">
                     <div class="sk-thumb">
                         <div class="sk-thumb-desktop">
@@ -266,19 +275,22 @@
                         <span class="tag-divider"></span>
                         <span>2025</span>
                     </div>
-                    <div class="project-overlay">
-                        <div class="project-blur"></div>
-                        <div class="project-overlay-gradient"></div>
-                        <div class="project-info">
-                            <h2 class="project-title">ScriptChain Health</h2>
-                            <p class="project-description">Reducing metabolic syndrome through custom diet and exercise plans, all without Nutritionists or Exercise Physiologists
+                    </div>
+                    <div class="project-details">
+                        <h2 class="project-name">ScriptChain Health</h2>
+                        <p class="project-summary">Reducing metabolic syndrome through custom diet and exercise plans, all without Nutritionists or Exercise Physiologists
                             </p>
+                        <div class="project-stats">
+                            <div><span class="project-stat">4</span><span class="project-stat-label">Product surfaces</span></div>
+                            <div><span class="project-stat">1</span><span class="project-stat-label">Agentic loop</span></div>
+                            <div><span class="project-stat">Epic</span><span class="project-stat-label">Built in</span></div>
                         </div>
                     </div>
                 </a>
 
                 <!-- Project 4 — Robinhood Mirror -->
-                <a href="robinhood.html" class="project-card" style="--card-bg: url('assets/robinhood-mockup.png')">
+                <a href="/robinhood" class="project-card" style="--card-bg: url('assets/robinhood-mockup.png')">
+                    <div class="project-media">
                     <picture>
                         <source media="(max-width: 640px)" srcset="assets/robinhood-large.png">
                         <img src="assets/robinhood-mockup.png" alt="Robinhood Mirror — investment profile app" class="project-image">
@@ -292,18 +304,21 @@
                         <span class="tag-divider"></span>
                         <span>2024</span>
                     </div>
-                    <div class="project-overlay">
-                        <div class="project-blur"></div>
-                        <div class="project-overlay-gradient"></div>
-                        <div class="project-info">
-                            <h2 class="project-title">Robinhood Mirror</h2>
-                            <p class="project-description">Introducing Public Profiles and Mirror Trading to help young investors build financial expertise and confidence</p>
+                    </div>
+                    <div class="project-details">
+                        <h2 class="project-name">Robinhood Mirror</h2>
+                        <p class="project-summary">Introducing Public Profiles and Mirror Trading to help young investors build financial expertise and confidence</p>
+                        <div class="project-stats">
+                            <div><span class="project-stat">Feature</span><span class="project-stat-label">developed by Robinhood (Robinhood Social)</span></div>
+                            <!-- <div><span class="project-stat">3</span><span class="project-stat-label">Experience tiers</span></div>
+                            <div><span class="project-stat">26.5M</span><span class="project-stat-label">Robinhood users</span></div> -->
                         </div>
                     </div>
                 </a>
 
                 <!-- Project 5 — Reveal -->
-                <a href="reveal.html" class="project-card project-card--reveal" style="--card-bg: url('assets/reveal-mockup.png')">
+                <a href="/reveal" class="project-card project-card--reveal" style="--card-bg: url('assets/reveal-mockup.png')">
+                    <div class="project-media">
                     <video class="rv-card-video" data-autoplay muted loop playsinline preload="metadata" poster="assets/reveal-mockup.png" aria-label="Reveal — augmented reality concept">
                         <source src="assets/Reveal-animation.mp4" type="video/mp4">
                     </video>
@@ -316,12 +331,14 @@
                         <span class="tag-divider"></span>
                         <span>2024</span>
                     </div>
-                    <div class="project-overlay">
-                        <div class="project-blur"></div>
-                        <div class="project-overlay-gradient"></div>
-                        <div class="project-info">
-                            <h2 class="project-title">Reveal</h2>
-                            <p class="project-description">Using augmented reality to uncover, reimagine, and raise awareness for hostile architecture</p>
+                    </div>
+                    <div class="project-details">
+                        <h2 class="project-name">Reveal</h2>
+                        <p class="project-summary">Using augmented reality to uncover, reimagine, and raise awareness for hostile architecture</p>
+                        <div class="project-stats">
+                            <div><span class="project-stat">3</span><span class="project-stat-label">Hostile designs mapped</span></div>
+                            <div><span class="project-stat">5</span><span class="project-stat-label">Core features</span></div>
+                            <!-- <div><span class="project-stat">AR</span><span class="project-stat-label">Headset app</span></div> -->
                         </div>
                     </div>
                 </a>

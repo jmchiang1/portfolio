@@ -30,7 +30,7 @@ About-page bio (verbatim): "…focused on crafting clean, modern digital experie
 
 - He is looking for a full-time role as a Product Designer & Design Engineer.
 - His most recent role was at SkillCat (Design Engineer on the site, Technical Product Designer on the resume), September 2025 – June 2026. The SkillCat redesign has not shipped yet.
-- Apollo Racket Club (apollo.html): he is the founder of this planned indoor badminton facility, which was "Pre lease, 2026" at the time of writing. The business is Apollo Sports, LLC, a New York LLC.
+- Apollo Racket Club (/apollo): he is the founder of this planned indoor badminton facility, which was "Pre lease, 2026" at the time of writing. The business is Apollo Sports, LLC, a New York LLC.
 
 ## 4. Experience
 
@@ -77,7 +77,7 @@ About-page bio (verbatim): "…focused on crafting clean, modern digital experie
 
 Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood Mirror, Reveal. Apollo Racket Club and CourtFit are listed on the Vibes page, not the home page.
 
-### SkillCat — /skillcat.html
+### SkillCat — /skillcat
 - **Card:** In-House · Brand Redesign · Handoff · 2026. "Reimagining how trade professionals learn, certify, and grow on mobile — currently in active development."
 - **Product:** "An all-in-one HVAC learning platform." It is a skilled-trades training platform where people learn HVAC, electrical or plumbing to earn certifications that get them hired, and employers use it to train their teams. It has two surfaces: a consumer mobile app (iOS/Android) for learners and a B2B web dashboard for employers.
 - **Role:** Design Engineer. He owned the desktop screens, the design system, the B2B dashboard, and the written specs and handoff. **Team:** Head of Design, Product Owner and Design Engineer. **Timeline:** September 2025 – June 2026.
@@ -91,7 +91,7 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 - **Reflection:** "A design is never done." Prototyping in code while designing exposed screens that were too complex to build and transitional screens that were missing. Raising these before handoff sped up the product lifecycle.
 - **Outcomes:** No launch metrics are stated.
 
-### Nocta — /nocta.html
+### Nocta — /nocta
 - **Card:** Personal · 0-1 Design · Shipped · 2025. "Transforming complex CPAP data into personalized, actionable insights to improve user confidence and long-term therapy."
 - **Product:** An AI CPAP companion ("Sleep better, knowingly."). It reads a CPAP machine's overnight data and writes one plain-language story: what happened, what likely caused it, and the single next thing to try.
 - **Role:** Solo. UX research, UX/UI and brand design, front-end build. **Timeline:** Capstone at Parsons, Spring 2025 (started March 2025, "built entirely by hand, no AI in the loop"), then a redesign and build in 2026. **Stack:** React + Vite, Chart.js, OpenAI, SleepHQ.
@@ -105,7 +105,7 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 - **Outcomes:** "Nocta hasn't launched, so I won't claim results." Planned metrics: activation, compliance (north star), engagement, and a safety guardrail.
 - **Links:** Live beta https://www.noctaapp.com/ · GitHub https://github.com/jmchiang1/Nocta. The prototype runs on his own CPAP data.
 
-### ScriptChain Health — /scriptchain.html
+### ScriptChain Health — /scriptchain
 - **Card:** In-House · 0-1 Design · Handoff · 2025. "Reducing metabolic syndrome through custom diet and exercise plans, all without Nutritionists or Exercise Physiologists."
 - **Product:** "An agentic food & exercise as medicine platform." It has four surfaces (a marketing site, a patient mobile app, a standalone clinician console, and a version embedded inside Epic) connected by one agentic loop. An AI agent reads a clinic's EHR data (labs, meds, vitals), flags patients trending toward metabolic syndrome, and drafts food and movement plans. A physician reviews and signs each plan, the patient follows it as a daily routine, and adherence data feeds back into the next recommendation.
 - **Role:** Technical Product Designer. He owned all four surfaces, the design system and the agentic plan-review flow. **Timeline:** May 2025 – September 2025 (the resume says June–September 2025). **Sector:** Preventive care, agentic AI. Team size is not stated.
@@ -115,7 +115,7 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 - **Reflection:** "I design systems, not screens."
 - **Outcomes:** No metrics are stated. He also made a motion demo of the patient dashboards in After Effects and Figma.
 
-### Robinhood Mirror — /robinhood.html
+### Robinhood Mirror — /robinhood
 - **Card:** Personal · Feature Add On · Finance · 2024. The page labels it a "Feature Add Concept" (a personal concept).
 - **Product:** A concept expansion of Robinhood with personalized onboarding, investor discovery (public profiles) and Copy/"Mirror" Trading, aimed at young investors.
 - **Role:** UX research and UX/UI design. **Timeline:** Fall 2024.
@@ -125,7 +125,7 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 - **Outcomes:** Proposed metrics only (completion rate, follow rate, discovery time, adoption, allocation, risk settings).
 - **Postscript:** In March 2026 Robinhood announced Robinhood Social at HOOD Summit, about a year and a half after Mirror. Social keeps copying manual and launched to active traders first. Mirror automates copying with safeguards and was designed for beginners.
 
-### Reveal — /reveal.html
+### Reveal — /reveal
 - **Card:** Personal · Motion Design · AR/VR · 2024. "Using augmented reality to uncover, reimagine, and raise awareness for hostile architecture."
 - **Product:** An AR advocacy app concept for headsets that identifies hostile (defensive) architecture in public spaces, educates users about its impact, and lets them act on it.
 - **Role:** UX research and UX/UI design. **Timeline:** Fall 2024.
@@ -134,7 +134,7 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 - **Features:** Auto-identifies hostile architecture, overlays a redesigned version, shows its history, lets users report it to city officials, and maps nearby tagged sites.
 - **Takeaway:** "Accessibility Is a Design Priority, Not a Bonus." No metrics are stated.
 
-### Apollo Racket Club — /apollo.html
+### Apollo Racket Club — /apollo
 - **What:** A planned dedicated indoor badminton facility he is founding (Apollo Sports, LLC, a New York LLC). It is badminton only, not multi-sport. Location: apollo.html says "the Nassau County area of Long Island, NY" (the Great Neck and New Hyde Park corridor into central Nassau); the Vibes page says "Nassau & Northeast Queens" (sources differ).
 - **Role:** Founder, solo design and build. He owned the brand, the marketing site, CourtFit and the research program. **Stage:** pre-lease, 2026 (building a loan file, searching for a building, running demand validation). **Stack:** Next.js, Tailwind, Framer Motion, TypeScript, Supabase, Claude.
 - **Thesis:** There is no dedicated badminton facility in that corridor, against a large, underserved player base.
@@ -143,7 +143,7 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 - **Research:** A Tally survey of about 30 questions after branching, taking 4–5 minutes, with a target of about 300 responses. It was distributed through Facebook groups, subreddits, in-person court visits and paid Facebook ads, with UTM tagging. Fielding is in progress and no results are reported. Operator interviews found: clear height of 25–27 ft is needed against local stock near 16 ft; warehouse-to-assembly permitting takes 8–12 months; conservative utilization is 50% peak and 25% off-peak; there is no dedicated facility within 7–8 miles; nearby clubs are booked near $120 per court hour. Secondary sources: Esri, SimplyAnalytics, US Census/ACS, IBISWorld, SFIA.
 - **Reflection:** The hardest call was the rebrand. Three conclusions reversed once operator-verified data replaced aggregator figures, and the rate premium he had assumed was not there.
 
-### CourtFit — /courtfit.html
+### CourtFit — /courtfit
 - **What:** An AI-assisted underwriting tool for indoor badminton and pickleball facilities ("Turning any listing into a go / no-go in seconds.").
 - **Role:** Solo design and build (product, UX, full-stack build, the AI pipeline). **Timeline:** 2026. **Stack:** Next.js, TypeScript, Supabase, Claude, Google Maps. **Sector:** PropTech / sports real estate.
 - **Problem:** Evaluating warehouse listings by hand meant LoopNet, Excel, court math, Google Maps, demographics and code risk, repeated for every building.
@@ -156,13 +156,13 @@ Home-page case studies, in order: SkillCat, Nocta, ScriptChain Health, Robinhood
 
 ## 8. Other pages on the site
 
-- **/ (index.html):** Home page with the intro and a carousel/grid of the five case studies.
-- **/welcome.html:** First-visit splash. Visitors "Build your keyboard to begin!" by choosing a name, layout (60%, 75%, TKL), case, switch (tactile, linear, clicky) and keycaps. "Skip to Portfolio" is available.
-- **/visitors.html:** A guestbook gallery of visitors' saved keyboard cards, which they can edit. It links to the typing test: "Think you can beat my record of 120 WPM?"
-- **/typing.html:** A typing test (15/30/60/120 seconds; punctuation/numbers options). Anyone scoring 10+ WPM gets a joke trophy ("Just kidding, everyone is a winner!").
-- **/motion.html:** Motion work: Robinhood portfolio growth animation (2026, built with Claude); SkillCat promo (2026, Claude); four SkillCat interactions (Lesson Card, Course Added, Certificate, Certificate Spin; 2026; Figma, React Native, Claude Code); "Like I Do" synthwave lyric video for J.Tajor & sunkis (2025, Claude Code); Museum of the Moving Image logo animation (Spring 2025); Nocta product promo (2026, Claude Code).
-- **/vibes.html:** Live-site side projects: Apollo Racket Club, CourtFit, Kotofit Sport Complex.
-- **/about.html:** Bio, skills, education and experience.
+- **/ (Home):** Home page with the intro and a carousel/grid of the five case studies.
+- **/welcome:** First-visit splash. Visitors "Build your keyboard to begin!" by choosing a name, layout (60%, 75%, TKL), case, switch (tactile, linear, clicky) and keycaps. "Skip to Portfolio" is available.
+- **/visitors:** A guestbook gallery of visitors' saved keyboard cards, which they can edit. It links to the typing test: "Think you can beat my record of 120 WPM?"
+- **/typing:** A typing test (15/30/60/120 seconds; punctuation/numbers options). Anyone scoring 10+ WPM gets a joke trophy ("Just kidding, everyone is a winner!").
+- **/motion:** Motion work: Robinhood portfolio growth animation (2026, built with Claude); SkillCat promo (2026, Claude); four SkillCat interactions (Lesson Card, Course Added, Certificate, Certificate Spin; 2026; Figma, React Native, Claude Code); "Like I Do" synthwave lyric video for J.Tajor & sunkis (2025, Claude Code); Museum of the Moving Image logo animation (Spring 2025); Nocta product promo (2026, Claude Code).
+- **/vibes:** Live-site side projects: Apollo Racket Club, CourtFit, Kotofit Sport Complex.
+- **/about:** Bio, skills, education and experience.
 - **/code.html and /design.html:** Old template pages with placeholder content (for example "95% test coverage", "1M+ requests/day", "2M+ users"). Nothing on the site links to them. **Do not treat anything on these pages as real work or real metrics.**
 - **/proto-desk.html and /proto-orbit.html:** Unlinked layout prototypes of the home page. proto-desk says "Currently Design Engineering at SkillCat."
 

@@ -317,10 +317,48 @@ function endGame() {
     // The secret-trophy bar is intentionally low (1 WPM) so almost any
     // real attempt clears it — that's the joke.
     if (finalWpm >= 1) {
-        trophyModal.classList.add('show');
+        openModal(trophyModal);
+        countUp(trophyWpm, finalWpm);
     } else {
-        resultsModal.classList.add('show');
+        openModal(resultsModal);
     }
+
+    // leaderboard.js offers to save timed runs
+    document.dispatchEvent(new CustomEvent('typing:finished', {
+        detail: { wpm: finalWpm, accuracy: finalAccuracy, duration: gameState.duration, mode: gameState.mode }
+    }));
+}
+
+// ============================================
+// Result modals: content steps in when one opens, and steps out before it
+// closes. Close, Escape or a click outside closes it and starts a new test.
+// ============================================
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function openModal(modal) {
+    modal.classList.remove('is-closing');
+    modal.classList.add('show');
+}
+
+function closeModals() {
+    const open = [trophyModal, resultsModal].filter(m => m.classList.contains('show'));
+    if (!open.length) { resetGame(); return; }
+    open.forEach(m => m.classList.add('is-closing'));
+    setTimeout(() => {
+        open.forEach(m => m.classList.remove('show', 'is-closing'));
+        resetGame();
+    }, reduceMotion ? 0 : 220);
+}
+
+// The WPM ticks up to its value as the modal lands
+function countUp(el, to) {
+    if (reduceMotion) { el.textContent = to; return; }
+    const start = performance.now(), length = 600;
+    (function step(now) {
+        const t = Math.min(1, (now - start) / length);
+        el.textContent = Math.round(to * (1 - Math.pow(1 - t, 3)));
+        if (t < 1) requestAnimationFrame(step);
+    })(start);
 }
 
 function resetGame() {
@@ -528,8 +566,14 @@ function setupEventListeners() {
     typingInput.addEventListener('keydown', handleKeyDown);
 
     restartBtn.addEventListener('click', resetGame);
-    resultsRestartBtn.addEventListener('click', resetGame);
-    trophyRestartBtn.addEventListener('click', resetGame);
+    resultsRestartBtn.addEventListener('click', closeModals);
+    trophyRestartBtn.addEventListener('click', closeModals);
+
+    // The close buttons, and a click on the dimmed area around a modal
+    document.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', closeModals));
+    [trophyModal, resultsModal].forEach(modal => {
+        modal.addEventListener('click', e => { if (e.target === modal) closeModals(); });
+    });
 
     // Focus input when clicking on text display
     document.querySelector('.text-display').addEventListener('click', () => {
@@ -544,11 +588,7 @@ function setupEventListeners() {
         }
 
         // Escape to close results
-        if (e.key === 'Escape') {
-            resultsModal.classList.remove('show');
-            trophyModal.classList.remove('show');
-            resetGame();
-        }
+        if (e.key === 'Escape') closeModals();
     });
 }
 

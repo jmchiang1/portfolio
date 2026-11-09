@@ -28,7 +28,7 @@
 .vibes-tool-logo,
 .modal-tool-logo {
     border-radius: 50% !important;
-    background: #c3bfb6;
+    background: #ffffff;
 }
 
 /* ---- Blur and glass become solid colour ---- */
@@ -54,30 +54,14 @@
         var(--px) calc(var(--px) * 3) 0 rgba(0, 0, 0, 0.5) !important;
 }
 
-/* ---- Project cards: a notched frame with stepped pixel corners ----
-   clip-path cuts off box-shadows, so the edge is its own layer: --px-notch-edge
-   is the same stepped outline with the shape 2px inside it cut out. ::before,
-   because Home's ::after dims the cards at the sides of the carousel. */
-:root {
-    --px-notch: polygon(12px 0, calc(100% - 12px) 0, calc(100% - 12px) 6px, calc(100% - 6px) 6px, calc(100% - 6px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px), calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 6px), 6px calc(100% - 6px), 6px calc(100% - 12px), 0 calc(100% - 12px), 0 12px, 6px 12px, 6px 6px, 12px 6px);
-    --px-notch-edge: polygon(evenodd, 12px 0, calc(100% - 12px) 0, calc(100% - 12px) 6px, calc(100% - 6px) 6px, calc(100% - 6px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px), calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 6px), 6px calc(100% - 6px), 6px calc(100% - 12px), 0 calc(100% - 12px), 0 12px, 6px 12px, 6px 6px, 12px 6px, 12px 0, 14px 2px, calc(100% - 14px) 2px, calc(100% - 14px) 8px, calc(100% - 8px) 8px, calc(100% - 8px) 14px, calc(100% - 2px) 14px, calc(100% - 2px) calc(100% - 14px), calc(100% - 8px) calc(100% - 14px), calc(100% - 8px) calc(100% - 8px), calc(100% - 14px) calc(100% - 8px), calc(100% - 14px) calc(100% - 2px), 14px calc(100% - 2px), 14px calc(100% - 8px), 8px calc(100% - 8px), 8px calc(100% - 14px), 2px calc(100% - 14px), 2px 14px, 8px 14px, 8px 8px, 14px 8px, 14px 2px);
-}
-
+/* ---- Project cards: square corners and a quiet 2px edge ----
+   The same frame on UX/UI, Motion and Vibes. Each page lays out its own
+   picture and details inside it. */
 .project-card, .motion-card, .vibes-card {
     border-color: transparent !important;
     border-width: 0;
-    box-shadow: none !important;
-    clip-path: var(--px-notch);
-}
-
-.project-card::before, .motion-card::before, .vibes-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 11;
-    background: #5c5b56;
-    clip-path: var(--px-notch-edge);
-    pointer-events: none;
+    border-radius: 0 !important;
+    box-shadow: 0 0 0 2px #3f3e3a !important;
 }
 
 .motion-card, .vibes-card, .text-display, .typing-options,

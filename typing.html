@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Type · the secret · Jonathan Chiang</title>
+    <link rel="canonical" href="https://jonathanchiang.com/typing">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="apple-touch-icon" href="assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=3">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=3">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=3">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=DotGothic16&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="tokens.css">
-    <link rel="stylesheet" href="typing.css?v=2">
+    <link rel="stylesheet" href="typing.css?v=5">
     <link rel="stylesheet" href="shell.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackernoon/pixel-icon-library@1.1.0/fonts/iconfont.css">
     <link rel="stylesheet" href="mascot-chat.css">
@@ -33,10 +35,10 @@
         </a>
         <div class="nav-links">
             <a href="/" class="nav-link">UX/UI</a>
-            <a href="motion.html" class="nav-link">Motion</a>
-            <a href="vibes.html" class="nav-link">Vibes</a>
-            <a href="about.html" class="nav-link">About</a>
-            <a href="visitors.html" class="nav-link">Visitors</a>
+            <a href="/motion" class="nav-link">Motion</a>
+            <a href="/vibes" class="nav-link">Vibes</a>
+            <a href="/about" class="nav-link">About</a>
+            <a href="/visitors" class="nav-link">Visitors</a>
         </div>
         <button class="hamburger" aria-label="Menu">
             <span class="hamburger-line"></span>
@@ -48,10 +50,10 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu">
         <a href="/" class="mobile-menu-link">UX/UI</a>
-        <a href="motion.html" class="mobile-menu-link">Motion</a>
-        <a href="vibes.html" class="mobile-menu-link">Vibes</a>
-        <a href="about.html" class="mobile-menu-link">About</a>
-        <a href="visitors.html" class="mobile-menu-link">Visitors</a>
+        <a href="/motion" class="mobile-menu-link">Motion</a>
+        <a href="/vibes" class="mobile-menu-link">Vibes</a>
+        <a href="/about" class="mobile-menu-link">About</a>
+        <a href="/visitors" class="mobile-menu-link">Visitors</a>
 
         <div class="mobile-menu-socials">
             <a href="https://www.linkedin.com/in/jmchiang5/" target="_blank" rel="noopener noreferrer" class="mobile-menu-social" aria-label="LinkedIn">
@@ -130,15 +132,22 @@
                 <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" shape-rendering="crispEdges" style="vertical-align:-0.125em" aria-hidden="true"><rect x="2" y="4" width="20" height="2"/><rect x="2" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="14" y="6" width="2" height="2"/><rect x="20" y="6" width="2" height="2"/><rect x="2" y="8" width="12" height="2"/><rect x="16" y="8" width="6" height="2"/><rect x="2" y="10" width="2" height="2"/><rect x="6" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="14" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="2" y="12" width="12" height="2"/><rect x="16" y="12" width="6" height="2"/><rect x="2" y="14" width="2" height="2"/><rect x="8" y="14" width="8" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="2" y="16" width="20" height="2"/></svg>
                 <span>click the text and start typing — <kbd>tab</kbd> + <kbd>enter</kbd> to restart</span>
             </p>
+            <div class="typing-footer-actions">
+            <button type="button" class="typing-btn" id="leaderboardBtn" aria-haspopup="dialog" aria-controls="leaderboardPanel">
+                <img src="assets/trophy-pixel.svg" alt="" aria-hidden="true" class="typing-btn-trophy">
+                <span>Leaderboard</span>
+            </button>
             <button class="typing-btn" id="restartBtn" title="Restart test (Tab + Enter)">
                 <i class="hn hn-refresh"></i>
                 <span>Restart</span>
             </button>
+            </div>
         </div>
 
         <!-- Results Modal -->
         <div class="results-modal" id="resultsModal">
-            <div class="results-content">
+            <div class="results-content" role="dialog" aria-modal="true" aria-label="Results">
+                <button type="button" class="typing-modal-close" data-close-modal aria-label="Close"><svg class="typing-modal-x" viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h-1zM6 0h1v1h-1zM1 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1zM3 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM5 5h1v1h-1zM0 6h1v1h-1zM6 6h1v1h-1z"/></svg></button>
                 <div class="results-header">
                     <p class="results-eyebrow">test complete</p>
                     <h2 class="results-title">Results</h2>
@@ -174,10 +183,12 @@
 
         <!-- Trophy Modal — shown when WPM ≥ 10 (so basically everyone) -->
         <div class="trophy-modal" id="trophyModal">
-            <div class="trophy-content">
-                <img class="trophy-art" src="assets/crown.svg" alt="" aria-hidden="true">
-                <div class="trophy-text">
-                    <h2 class="trophy-title">Just kidding, everyone is a winner!</h2>
+            <div class="trophy-content" role="dialog" aria-modal="true" aria-label="Your results">
+                <button type="button" class="typing-modal-close" data-close-modal aria-label="Close"><svg class="typing-modal-x" viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h-1zM6 0h1v1h-1zM1 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1zM3 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM5 5h1v1h-1zM0 6h1v1h-1zM6 6h1v1h-1z"/></svg></button>
+                <div class="trophy-art-wrap" aria-hidden="true">
+                    <img class="trophy-art" src="assets/trophy-pixel.svg" alt="">
+                    <span class="trophy-shine"></span>
+                    <span class="trophy-spark trophy-spark--1" aria-hidden="true"><svg viewBox="0 0 5 5" shape-rendering="crispEdges"><path fill="currentColor" d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"/></svg></span><span class="trophy-spark trophy-spark--2" aria-hidden="true"><svg viewBox="0 0 5 5" shape-rendering="crispEdges"><path fill="currentColor" d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"/></svg></span><span class="trophy-spark trophy-spark--3" aria-hidden="true"><svg viewBox="0 0 5 5" shape-rendering="crispEdges"><path fill="currentColor" d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"/></svg></span><span class="trophy-spark trophy-spark--4" aria-hidden="true"><svg viewBox="0 0 5 5" shape-rendering="crispEdges"><path fill="currentColor" d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"/></svg></span><span class="trophy-spark trophy-spark--5" aria-hidden="true"><svg viewBox="0 0 5 5" shape-rendering="crispEdges"><path fill="currentColor" d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"/></svg></span><span class="trophy-spark trophy-spark--6" aria-hidden="true"><svg viewBox="0 0 5 5" shape-rendering="crispEdges"><path fill="currentColor" d="M2 0h1v2h2v1h-2v2h-1v-2h-2v-1h2z"/></svg></span>
                 </div>
                 <div class="trophy-stats">
                     <div class="trophy-stat">
@@ -195,6 +206,13 @@
                         <span class="trophy-stat-label">seconds</span>
                     </div>
                 </div>
+                <!-- leaderboard.js shows this after a timed test -->
+                <form class="trophy-submit" id="trophySubmit" hidden>
+                    <div class="trophy-submit-row">
+                        <input class="trophy-submit-input" id="trophyName" name="name" maxlength="20" placeholder="Your name" autocomplete="nickname" required>
+                        <button type="submit" class="typing-btn trophy-submit-btn" id="trophySubmitBtn" aria-live="polite"><span class="trophy-submit-text">Submit</span></button>
+                    </div>
+                </form>
                 <button class="typing-btn typing-btn-primary" id="trophyRestartBtn">
                     <i class="hn hn-refresh"></i>
                     <span>Try again</span>
@@ -202,6 +220,28 @@
             </div>
         </div>
     </main>
+
+    <!-- Leaderboard (leaderboard.js): a panel that slides in from the right, so
+         the scores are on this page but off the typing screen -->
+    <div class="leaderboard-panel" id="leaderboardPanel" hidden>
+        <div class="leaderboard-backdrop" data-close-board></div>
+        <aside class="leaderboard" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <div class="leaderboard-head">
+                <img src="assets/trophy-pixel.svg" alt="" aria-hidden="true" class="leaderboard-trophy">
+                <h2 class="leaderboard-title" id="leaderboardTitle">Fastest typers</h2>
+                <button type="button" class="typing-modal-close" data-close-board aria-label="Close leaderboard"><svg class="typing-modal-x" viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h-1zM6 0h1v1h-1zM1 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1zM3 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM5 5h1v1h-1zM0 6h1v1h-1zM6 6h1v1h-1z"/></svg></button>
+            </div>
+            <div class="leaderboard-tabs" role="group" aria-label="Test length">
+                <button type="button" class="leaderboard-tab" data-board="15">15s</button>
+                <button type="button" class="leaderboard-tab" data-board="30">30s</button>
+                <button type="button" class="leaderboard-tab" data-board="60">60s</button>
+                <button type="button" class="leaderboard-tab" data-board="120">120s</button>
+            </div>
+            <ol class="leaderboard-list" id="leaderboardList"></ol>
+            <p class="leaderboard-empty" id="leaderboardEmpty" hidden></p>
+            <p class="leaderboard-foot">Top 10 timed runs. Finish a timed test to add yours.</p>
+        </aside>
+    </div>
 
     <!-- Social links -->
     <div class="social-links">
@@ -217,7 +257,10 @@
     </div>
 
     <script src="transitions.js"></script>
-    <script src="typing.js"></script>
+    <script src="typing.js?v=4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="leaderboard.js?v=4"></script>
     <script src="mascot-chat.js" defer></script>
     <script src="pixel-bg.js"></script>
 </body>

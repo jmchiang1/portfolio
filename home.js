@@ -337,6 +337,24 @@
         footerInfo.classList.add('entered');
         footerInfo.removeEventListener('animationend', handler);
     });
+    // The counter sits a fixed gap under the cards rather than at the bottom of
+    // the window, so it stays with the card on tall screens. Measured from the
+    // tallest card, so it doesn't move as the cards change.
+    var COUNTER_GAP = 18;
+    function placeCounter() {
+        if (!counter || document.body.classList.contains('grid-mode') || innerWidth <= 640) {
+            if (counter) counter.style.top = '';
+            return;
+        }
+        var centre = cards[activeIndex].getBoundingClientRect();
+        var tallest = Math.max.apply(null, cards.map(function (c) { return c.offsetHeight; }));
+        counter.style.top = Math.round(centre.top + centre.height / 2 + tallest / 2 + COUNTER_GAP) + 'px';
+        counter.style.bottom = 'auto';
+    }
+    placeCounter();
+    window.addEventListener('resize', placeCounter);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeCounter);
+
     // Enable transitions after a frame, then swing the ring into place
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
@@ -344,6 +362,7 @@
             setTimeout(positionRing, 400);
         });
     });
+
 
     // Wheel event handler — one swipe gesture = one card move.
     //

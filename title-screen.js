@@ -46,11 +46,11 @@
 
     // Keep in step with the cards on Home
     var LEVELS = [
-        { name: 'Nocta', year: '2026', href: 'nocta.html', hint: 'An AI companion for CPAP users.' },
-        { name: 'SkillCat', year: '2026', href: 'skillcat.html', hint: 'Mobile learning for the skilled trades.' },
-        { name: 'ScriptChain', year: '2025', href: 'scriptchain.html', hint: 'Doctor-signed food and exercise plans.' },
-        { name: 'Mirror', year: '2024', href: 'robinhood.html', hint: 'Mirror trading for young investors.' },
-        { name: 'Reveal', year: '2024', href: 'reveal.html', hint: 'AR that uncovers hostile architecture.' }
+        { name: 'Nocta', year: '2026', href: '/nocta', hint: 'An AI companion for CPAP users.' },
+        { name: 'SkillCat', year: '2026', href: '/skillcat', hint: 'Mobile learning for the skilled trades.' },
+        { name: 'ScriptChain', year: '2025', href: '/scriptchain', hint: 'Doctor-signed food and exercise plans.' },
+        { name: 'Mirror', year: '2024', href: '/robinhood', hint: 'Mirror trading for young investors.' },
+        { name: 'Reveal', year: '2024', href: '/reveal', hint: 'AR that uncovers hostile architecture.' }
     ];
 
     var raf = 0, clockTimer = 0, leaving = false, landed = false, chromeReleased = false, finished = false;
