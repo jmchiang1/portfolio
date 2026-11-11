@@ -1,0 +1,677 @@
+/* ==========================================================================
+   About page: equipment screen. Hobbies and clothes are gear on a paper doll
+   standing in a scene that changes with the preset, with a bag (drag items
+   onto the sheet), loadout presets, an item tooltip, and rarity-coloured slots.
+   ========================================================================== */
+.equip {
+    --panel-edge: rgba(255, 255, 255, 0.14);
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    /* Jonathan (44 px canvas) and Apollo (30 px) share one pixel size, 7 css px
+       here, so their outlines match. Fixed, so he's the same size whatever he's
+       wearing and whether Apollo is there or not. */
+    --hero-w: 308px;
+    --dog-w: 210px;
+    gap: 24px;
+    align-items: stretch;
+    /* Breathing room above and below, and together with it the section fills
+       the first screen under the nav (the layout's 128px top padding), so the
+       Bio starts just below the fold */
+    padding-block: 4rem;
+    min-height: calc(100vh - 128px);
+    min-height: calc(100svh - 128px);
+}
+
+.equip-sheet,
+.equip-detail,
+.equip-bag {
+    background: var(--page-surface, #1f1e1c);
+    box-shadow:
+        0 -3px 0 var(--panel-edge),
+        0 3px 0 var(--panel-edge),
+        -3px 0 0 var(--panel-edge),
+        3px 0 0 var(--panel-edge),
+        3px 9px 0 rgba(0, 0, 0, 0.5);
+}
+
+.equip button:focus-visible,
+.equip a:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 5px;
+}
+
+/* ---- Character sheet ---- */
+.equip-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px 24px 22px;
+}
+
+.equip-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.equip-head h2 {
+    font-family: var(--px-font);
+    font-weight: 400;
+    font-size: var(--text-40);
+    line-height: 1;
+    color: #fff;
+}
+
+.equip-role {
+    margin-top: 4px;
+    font-size: var(--text-14);
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.equip-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 4px 10px 5px;
+    background: #0c0b0a;
+    font-size: var(--text-13);
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.equip-status i {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+}
+
+.equip-figure {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* The stage grows to fill the sheet; the slot columns sit centred beside it */
+.equip-doll {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr) 76px;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.equip-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+.equip-stage {
+    position: relative;
+    min-height: 320px;
+    overflow: hidden;
+    background: #0c0b0a;
+    box-shadow: 0 0 0 3px #0c0b0a;
+}
+
+.equip-stage canvas {
+    position: absolute;
+    display: block;
+    image-rendering: pixelated;
+}
+
+/* The scene: painted by about-equip.js at 4 px per pixel */
+.equip-stage .equip-scene {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* He stands a little left of centre so Apollo has room on the right */
+.equip-hero {
+    z-index: 2;
+    bottom: 4px;
+    left: calc(38% - var(--hero-w) / 2);
+    width: var(--hero-w);
+    height: var(--hero-w);
+}
+
+.equip-dog {
+    z-index: 1;
+    bottom: 4px;
+    right: 2%;
+    width: var(--dog-w);
+    height: calc(var(--dog-w) * 19 / 30);
+}
+
+.equip-hero.is-changing {
+    animation: equip-change 0.36s steps(6, end);
+}
+
+@keyframes equip-change {
+    0% { filter: brightness(3); scale: 0.92; }
+    40% { filter: brightness(1.8); scale: 1.05; }
+    100% { filter: none; scale: 1; }
+}
+
+.equip-dog.is-away {
+    display: none;
+}
+
+.equip-dog.is-entering {
+    animation: equip-in 0.24s steps(4, end);
+}
+
+.equip-dog.is-leaving {
+    animation: equip-out 0.14s steps(3, end) forwards;
+}
+
+.equip-hands {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+}
+
+/* ---- Slots (paper doll and bag share the frame) ---- */
+.equip-slot,
+.bag-cell {
+    --rarity: #34332f;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: #0c0b0a;
+    box-shadow: 0 0 0 3px var(--rarity);
+    cursor: pointer;
+    transition: translate 0.08s steps(2, end);
+}
+
+.equip-slot {
+    width: 76px;
+    height: 76px;
+}
+
+.equip-slot canvas,
+.bag-cell canvas {
+    display: block;
+    width: 76%;
+    height: 76%;
+    image-rendering: pixelated;
+}
+
+.equip-slot-label {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    font-size: var(--text-12);
+    line-height: 1.2;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.equip-slot.is-empty .equip-slot-label {
+    display: flex;
+}
+
+.equip-slot:not(.is-empty):hover,
+.bag-cell:not(.is-empty):hover {
+    translate: 0 -2px;
+}
+
+.equip-slot[aria-pressed="true"],
+.bag-cell[aria-pressed="true"] {
+    box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--rarity);
+}
+
+.equip-slot.is-empty[aria-pressed="true"] {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+}
+
+.bag-cell.is-empty {
+    cursor: default;
+}
+
+/* Equip and unequip: the icon pops out of where it was, then into where it lands */
+.equip-slot.is-leaving canvas,
+.bag-cell.is-leaving canvas {
+    animation: equip-out 0.14s steps(3, end) forwards;
+}
+
+.equip-slot.is-entering canvas,
+.bag-cell.is-entering canvas {
+    animation: equip-in 0.2s steps(4, end);
+}
+
+@keyframes equip-out {
+    to { scale: 0.5; opacity: 0; }
+}
+
+@keyframes equip-in {
+    0% { scale: 0.5; opacity: 0; }
+    70% { scale: 1.12; opacity: 1; }
+    100% { scale: 1; }
+}
+
+/* ---- Presets (one click swaps outfit and loadout) ---- */
+.equip-presets {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    padding: 12px;
+    background: #0c0b0a;
+}
+
+.preset {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 6px 10px 6px 6px;
+    border: 0;
+    background: #24231f;
+    box-shadow: 0 0 0 2px #3a3934, 0 3px 0 rgba(0, 0, 0, 0.55);
+    color: rgba(255, 255, 255, 0.82);
+    font-family: var(--px-font);
+    font-size: var(--text-18);
+    line-height: 1;
+    text-align: left;
+    cursor: pointer;
+    transition: translate 0.08s steps(2, end), box-shadow 0.08s steps(2, end);
+}
+
+.preset canvas {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    image-rendering: pixelated;
+}
+
+.preset span {
+    min-width: 0;
+}
+
+.preset:hover {
+    translate: 0 -2px;
+}
+
+.preset[aria-pressed="true"] {
+    background: #33322c;
+    box-shadow: 0 0 0 2px #fff, 0 3px 0 rgba(0, 0, 0, 0.55);
+    color: #fff;
+}
+
+/* ---- Side: item tooltip and bag ---- */
+.equip-side {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 20px;
+    min-width: 0;
+}
+
+.equip-detail {
+    --rarity: #5c5b57;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px 22px 20px;
+}
+
+.detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detail-body.is-swapping {
+    animation: detail-swap 0.18s steps(3, end);
+}
+
+@keyframes detail-swap {
+    from { opacity: 0.2; translate: -6px 0; }
+}
+
+.detail-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.detail-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 104px;
+    height: 104px;
+    background: #0c0b0a;
+    box-shadow: 0 0 0 3px var(--rarity);
+}
+
+.detail-icon canvas {
+    width: 96px;
+    height: 96px;
+    image-rendering: pixelated;
+}
+
+.detail-name {
+    font-family: var(--px-font);
+    font-weight: 400;
+    font-size: var(--text-36);
+    line-height: 0.95;
+    color: var(--rarity);
+}
+
+.detail-meta {
+    margin-top: 4px;
+    font-size: var(--text-13);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.detail-state {
+    margin-top: 6px;
+    font-size: var(--text-13);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.detail-state.is-on {
+    color: #5fe08a;
+}
+
+.detail-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    list-style: none;
+    font-family: var(--px-font);
+    font-size: var(--text-22);
+    line-height: 1.1;
+    color: #5fe08a;
+}
+
+.detail-lines .is-special {
+    color: #ffd36b;
+}
+
+.detail-text {
+    max-width: 60ch;
+    font-size: var(--text-15);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    margin-top: auto;
+}
+
+.detail-action {
+    padding: 6px 16px 8px;
+    border: 0;
+    background: var(--rarity);
+    color: #0c0b0a;
+    font-family: var(--px-font);
+    font-size: var(--text-22);
+    line-height: 1;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    transition: translate 0.08s steps(2, end), box-shadow 0.08s steps(2, end);
+}
+
+.detail-action[hidden] {
+    display: none;
+}
+
+.detail-action:hover {
+    translate: 0 2px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+}
+
+.detail-link {
+    font-size: var(--text-14);
+    color: var(--rarity);
+    text-underline-offset: 3px;
+}
+
+.detail-link:hover {
+    color: #fff;
+}
+
+.equip-bag {
+    padding: 16px 22px 22px;
+}
+
+.bag-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.bag-head h3 {
+    font-family: var(--px-font);
+    font-weight: 400;
+    font-size: var(--text-28);
+    line-height: 1;
+    color: #fff;
+}
+
+.bag-head p {
+    font-size: var(--text-13);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bag-grid {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.bag-cell {
+    aspect-ratio: 1;
+    box-shadow: 0 0 0 2px var(--rarity);
+}
+
+/* ---- Drag and drop ---- */
+.equip-slot,
+.bag-cell:not(.is-empty) {
+    touch-action: none;
+}
+
+.equip.is-dragging,
+.equip.is-dragging * {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.equip-slot.is-dragging canvas,
+.bag-cell.is-dragging canvas {
+    opacity: 0.25;
+}
+
+/* Slots the dragged item fits into pulse; the sheet or bag lights up as a drop zone */
+.equip-slot.is-target {
+    animation: slot-pulse 0.6s steps(2, end) infinite;
+}
+
+.equip-slot.is-target.is-over {
+    animation: none;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--rarity);
+    translate: 0 -2px;
+}
+
+@keyframes slot-pulse {
+    50% { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.75); }
+}
+
+.equip-sheet.is-drop,
+.equip-bag.is-drop {
+    outline: 2px dashed rgba(255, 255, 255, 0.25);
+    outline-offset: 6px;
+}
+
+.equip-sheet.is-drop.is-over,
+.equip-bag.is-drop.is-over {
+    outline-color: #fff;
+}
+
+.equip-ghost {
+    --rarity: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: #0c0b0a;
+    box-shadow: 0 0 0 3px var(--rarity), 4px 8px 0 rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    rotate: -6deg;
+}
+
+.equip-ghost canvas {
+    width: 52px;
+    height: 52px;
+    image-rendering: pixelated;
+}
+
+.equip-ghost.is-returning {
+    rotate: 0deg;
+    transition: transform 0.18s steps(4, end), rotate 0.18s steps(4, end);
+}
+
+/* ---- Smaller screens ---- */
+@media (max-width: 1100px) {
+    .equip {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* 6 px per pixel where the stage gets narrow */
+@media (max-width: 1280px) {
+    .equip {
+        --hero-w: 264px;
+        --dog-w: 180px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .equip {
+        --hero-w: 308px;
+        --dog-w: 210px;
+    }
+}
+
+@media (max-width: 900px) {
+    .equip {
+        min-height: calc(100vh - 112px);
+        min-height: calc(100svh - 112px);
+    }
+}
+
+@media (max-width: 640px) {
+    .equip-sheet,
+    .equip-detail,
+    .equip-bag {
+        padding-inline: 16px;
+    }
+
+    .equip-head {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .equip-head h2 {
+        font-size: var(--text-32);
+    }
+
+    /* The stage takes the full width; slots sit in rows under it */
+    /* 5 px per pixel on phones */
+    .equip {
+        --hero-w: 220px;
+        --dog-w: 150px;
+    }
+
+    .equip-doll {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "stage" "left" "right";
+        gap: 12px;
+    }
+
+    .equip-stage { grid-area: stage; }
+    .equip-doll [data-slots="left"] { grid-area: left; }
+    .equip-doll [data-slots="right"] { grid-area: right; }
+
+    .equip-col {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .equip-slot {
+        width: 60px;
+        height: 60px;
+    }
+
+    .equip-slot-label {
+        font-size: var(--text-10);
+    }
+
+    .equip-stage {
+        min-height: 260px;
+    }
+
+    .equip-presets {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .detail-icon {
+        width: 72px;
+        height: 72px;
+    }
+
+    .detail-icon canvas {
+        width: 64px;
+        height: 64px;
+    }
+
+    .detail-name {
+        font-size: var(--text-28);
+    }
+
+    .bag-head {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .bag-grid {
+        gap: 7px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .equip-slot,
+    .bag-cell,
+    .preset,
+    .detail-action {
+        transition: none;
+    }
+
+    .equip-slot.is-target {
+        animation: none;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.75);
+    }
+}

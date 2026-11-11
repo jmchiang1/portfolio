@@ -28,10 +28,10 @@
         body { opacity: 0; animation: jc-body-fade 0.4s ease 0.05s forwards; }
         @keyframes jc-body-fade { to { opacity: 1; } }
     </style>
-    <link rel="stylesheet" href="mascot-chat.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap">
     <link rel="stylesheet" href="pixel-theme.css">
-    <link rel="stylesheet" href="about-select.css">
+    <link rel="stylesheet" href="about-panels.css">
+    <link rel="stylesheet" href="about-equip.css">
 </head>
 <body>
     <!-- Background Grid — CSS grid pattern -->
@@ -81,38 +81,81 @@
     <!-- About Content -->
     <main class="about-layout">
         <h1 class="visually-hidden">About</h1>
-        <!-- Character select: the roster is the career. Picking a chapter
-             dresses the character for it and fills in the summary. Filled by
-             about-select.js. The journey list below stays plain, so nobody has
-             to click through the roster to read the history. -->
-        <section class="select" aria-label="Career chapters">
-            <div class="select-top">
-                <div class="select-stage">
-                    <canvas id="selectStage" aria-hidden="true"></canvas>
-                    <div class="select-plate">
-                        <p class="select-name">Jonathan Chiang</p>
-                        <p class="select-status"><i aria-hidden="true"></i>Open to full-time roles</p>
+        <!-- Equipment screen: hobbies are gear. Items sit in slots around the
+             character or in the bag; pick one to see its tooltip, then Equip or
+             Unequip it. Filled by about-equip.js. -->
+        <section class="equip" id="equip" aria-labelledby="equipTitle">
+            <div class="equip-sheet">
+                <header class="equip-head">
+                    <div>
+                        <h2 id="equipTitle">Jonathan Chiang</h2>
+                        <p class="equip-role">Product Designer &amp; Design Engineer, off the clock</p>
                     </div>
+                    <p class="equip-status"><i aria-hidden="true"></i>Open to full-time roles</p>
+                </header>
+                <div class="equip-figure">
+                <div class="equip-doll">
+                    <div class="equip-col" data-slots="left"></div>
+                    <div class="equip-stage">
+                        <canvas class="equip-hero" role="img" aria-label="Jonathan's character wearing the equipped hobbies"></canvas>
+                        <canvas class="equip-dog" aria-hidden="true"></canvas>
+                    </div>
+                    <div class="equip-col" data-slots="right"></div>
                 </div>
-
-                <div class="select-summary" id="selectSummary" aria-live="polite"></div>
+                <div class="equip-hands" data-slots="hands"></div>
+                </div>
+                <div class="equip-presets preset-row" role="group" aria-label="Presets"></div>
             </div>
 
-            <div class="select-roster" id="selectRoster" role="group" aria-label="Choose a chapter"></div>
-            <p class="select-hint">Use the arrow keys or pick a chapter</p>
+            <div class="equip-side">
+                <section class="equip-detail" aria-label="Item details" aria-live="polite">
+                    <div class="detail-body">
+                        <div class="detail-top">
+                            <div class="detail-icon"></div>
+                            <div>
+                                <h3 class="detail-name"></h3>
+                                <p class="detail-meta"></p>
+                                <p class="detail-state"></p>
+                            </div>
+                        </div>
+                        <ul class="detail-lines"></ul>
+                        <p class="detail-text"></p>
+                    </div>
+                    <div class="detail-actions">
+                        <button type="button" class="detail-action">Equip</button>
+                        <button type="button" class="detail-action" hidden>Equip</button>
+                        <a class="detail-link" href="#" hidden></a>
+                    </div>
+                </section>
+
+                <section class="equip-bag" aria-labelledby="bagTitle">
+                    <div class="bag-head">
+                        <h3 id="bagTitle">Bag</h3>
+                        <p><span class="bag-count"></span> · drag an item onto Jonathan, or pick it to inspect</p>
+                    </div>
+                    <div class="bag-grid"></div>
+                </section>
+            </div>
         </section>
 
         <div class="select-lower">
+            <section class="select-panel" aria-labelledby="bioTitle">
+                <h2 id="bioTitle">Bio</h2>
+                <p class="bio-text">I focus on crafting clean, modern digital experiences that balance usability, visual clarity, and strong interaction design. I'm especially interested in the details that make products feel seamless, from user flows and interface systems to motion, responsiveness, and overall polish.</p>
+                <p class="bio-text">My background spans UX/UI design, prototyping, research, and front-end development, which lets me think beyond static screens and design with execution in mind.</p>
+            </section>
+
             <section class="select-panel" aria-labelledby="gearTitle">
-                <h2 id="gearTitle">Equipment</h2>
+                <h2 id="gearTitle">Skills</h2>
                 <div class="gear-group">
                     <h3>Design</h3>
                     <ul class="gear-slots">
                         <li>Figma</li>
                         <li>After Effects</li>
-                        <li>ChatGPT Images</li>
+                        <li>Claude AI</li>
                         <li>Claude Design</li>
-                        <li>Nano Banana 2</li>
+                        <li>MidJourney</li>
+                        <li>ReCraft</li>
                     </ul>
                 </div>
                 <div class="gear-group">
@@ -120,6 +163,7 @@
                     <ul class="gear-slots">
                         <li>HTML / CSS</li>
                         <li>JavaScript</li>
+                        <li>Swift (IOS)</li>
                         <li>React</li>
                         <li>Claude Code</li>
                         <li>Cursor</li>
@@ -128,7 +172,7 @@
             </section>
 
             <section class="select-panel" id="experience" aria-labelledby="journeyTitle">
-                <h2 id="journeyTitle">Journey</h2>
+                <h2 id="journeyTitle">Career Journey</h2>
                 <ol class="journey" id="selectJourney"></ol>
             </section>
         </div>
@@ -156,8 +200,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="transitions.js"></script>
     <script src="about.js"></script>
-    <script src="about-select.js"></script>
-    <script src="mascot-chat.js" defer></script>
     <script src="pixel-bg.js"></script>
+    <script src="about-equip.js"></script>
+    <script src="about-journey.js"></script>
 </body>
 </html>

@@ -1,0 +1,260 @@
+/* ==========================================================================
+   About page: the panels under the equipment screen (Bio, Equipment, Journey).
+   ========================================================================== */
+.about-layout {
+    gap: 0;
+}
+
+/* ---- Lower panels ---- */
+.select-lower {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 34px;
+}
+
+.select-panel {
+    padding: 20px 24px 24px;
+    background: var(--page-surface, #1f1e1c);
+    box-shadow:
+        0 -3px 0 rgba(255, 255, 255, 0.14),
+        0 3px 0 rgba(255, 255, 255, 0.14),
+        -3px 0 0 rgba(255, 255, 255, 0.14),
+        3px 0 0 rgba(255, 255, 255, 0.14),
+        3px 9px 0 rgba(0, 0, 0, 0.5);
+}
+
+.select-panel h2 {
+    font-family: var(--px-font);
+    font-weight: 400;
+    font-size: var(--text-36);
+    line-height: 1;
+    color: #fff;
+}
+
+.bio-text {
+    margin-top: 12px;
+    font-size: var(--text-16);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.84);
+}
+
+.gear-group {
+    margin-top: 16px;
+}
+
+.gear-group h3 {
+    font-size: var(--text-14);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.gear-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 9px;
+    list-style: none;
+}
+
+.gear-slots li {
+    padding: 5px 11px 6px;
+    background: #0c0b0a;
+    box-shadow:
+        0 -3px 0 #3a3936,
+        0 3px 0 #3a3936,
+        -3px 0 0 #3a3936,
+        3px 0 0 #3a3936;
+    font-family: var(--px-font);
+    font-size: var(--text-20);
+    line-height: 1;
+    color: #fff;
+}
+
+.journey {
+    margin-top: 10px;
+    list-style: none;
+}
+
+.journey li {
+    border-bottom: 3px solid #0c0b0a;
+}
+
+.journey li:last-child {
+    border-bottom: 0;
+}
+
+.journey-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 0 14px;
+    width: 100%;
+    padding: 8px 8px 9px;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.journey-row:hover,
+.journey-row:focus-visible,
+.journey li.is-open .journey-row {
+    background: #0c0b0a;
+}
+
+/* Pixel plus that drops its vertical bar to become a minus when open */
+.journey-toggle {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
+    position: relative;
+    width: 12px;
+    height: 12px;
+}
+
+.journey-toggle::before,
+.journey-toggle::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.66);
+}
+
+.journey-toggle::before {
+    left: 0;
+    top: 4px;
+    width: 12px;
+    height: 4px;
+}
+
+.journey-toggle::after {
+    left: 4px;
+    top: 0;
+    width: 4px;
+    height: 12px;
+    transition: scale 0.16s steps(3, end);
+}
+
+.journey li.is-open .journey-toggle::after {
+    scale: 1 0;
+}
+
+.journey-row:hover .journey-toggle::before,
+.journey-row:hover .journey-toggle::after,
+.journey li.is-open .journey-toggle::before {
+    background: #fff;
+}
+
+/* Opens and closes on the same stepped height change; visibility waits
+   for the close to finish so a collapsed link can't take focus */
+.journey-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.24s steps(6, end), visibility 0s linear 0.24s;
+}
+
+.journey li.is-open .journey-body {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.24s steps(6, end), visibility 0s linear 0s;
+}
+
+.journey-inner {
+    min-height: 0;
+    overflow: hidden;
+    background: #0c0b0a;
+}
+
+.journey-inner p {
+    max-width: 62ch;
+    padding: 0 8px;
+    font-size: var(--text-15);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.journey-inner p:first-child {
+    padding-top: 2px;
+}
+
+/* Resume bullets with square pixel markers */
+.journey-inner ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 72ch;
+    padding: 2px 8px 0 28px;
+    list-style: none;
+}
+
+.journey .journey-inner li {
+    position: relative;
+    border: 0;
+    font-size: var(--text-15);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.journey-inner li::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    background: var(--era-soft);
+}
+
+.journey-inner p + p {
+    margin-top: 8px;
+}
+
+.journey-inner > :last-child {
+    margin-bottom: 14px;
+}
+
+.journey-link {
+    display: inline-block;
+    margin: 12px 8px 0;
+    font-size: var(--text-14);
+    color: var(--era-soft);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.journey-link:hover {
+    color: #fff;
+}
+
+.journey b {
+    font-family: var(--px-font);
+    font-weight: 400;
+    font-size: var(--text-24);
+    line-height: 1.05;
+    color: #fff;
+}
+
+.journey span {
+    grid-column: 1;
+    font-size: var(--text-14);
+    color: rgba(255, 255, 255, 0.66);
+}
+
+.journey time {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    justify-self: end;
+    font-size: var(--text-14);
+    color: rgba(255, 255, 255, 0.66);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .journey-body,
+    .journey li.is-open .journey-body,
+    .journey-toggle::after {
+        transition: none;
+    }
+}

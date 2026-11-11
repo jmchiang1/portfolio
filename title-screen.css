@@ -43,8 +43,7 @@ html.title-played .social-link {
 
 /* The blocks are the entrance, so nothing fades in behind them */
 html.title-swap .carousel-counter,
-html.title-swap .carousel-nav,
-html.title-swap .arena-tab {
+html.title-swap .carousel-nav {
     transition: none;
 }
 

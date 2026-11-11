@@ -3,21 +3,17 @@
 //
 // Each scene paints into a low-resolution buffer that the browser scales up
 // with hard pixels, at a few frames a second so it reads as sprite animation
-// and stays cheap. The arena tab at the bottom of the page opens the picker,
-// the choice is remembered, and scenes change through a dither dissolve.
+// and stays cheap. Pages show Stars; the other scenes can be previewed with
+// ?bg=<id>.
 //
 // Only pages with #background-grid get this, so case studies keep their own
 // backgrounds. Reduced motion paints one still frame. Painting stops in hidden
 // tabs and while the page is scrolling, so it never competes with the scroll.
-// ?bg=<id> previews a scene without saving it.
+// ?bg=<id> previews a scene on the page background.
 // ============================================
 (function () {
     'use strict';
 
-    var host = document.getElementById('background-grid');
-    if (!host) return;
-
-    var STORE = 'jc_bg';
     var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
 
@@ -294,7 +290,9 @@
         frame: function (s, st) { s.fill(st.bg); }
     };
 
-    var ORDER = ['stars', 'city', 'rain', 'keys', 'aurora', 'off'];
+
+    var host = document.getElementById('background-grid');
+    if (!host) return;
 
     // ---- Stage ---------------------------------------------------------------
     var canvas = document.createElement('canvas');
@@ -305,16 +303,13 @@
 
     var ctx = canvas.getContext('2d', { alpha: false });
     var surface, image, state, tick = 0;
-    var old = null, fade = 0, FADE_TICKS = 5;
 
-    function saved() {
+    function chosen() {
         var q = /[?&]bg=([a-z]+)/.exec(location.search);
-        if (q && SCENES[q[1]]) return q[1];
-        try { var v = localStorage.getItem(STORE); if (SCENES[v]) return v; } catch (e) {}
-        return 'stars';
+        return q && SCENES[q[1]] ? q[1] : 'stars';
     }
 
-    var current = saved();
+    var current = chosen();
 
     function size() {
         var k = innerWidth < 760 ? 3 : 4;
@@ -323,37 +318,12 @@
         surface = new Surface(w, h);
         image = ctx.createImageData(w, h);
         state = SCENES[current].init(surface);
-        old = null;
     }
 
     function draw() {
         SCENES[current].frame(surface, state, tick);
-        var out = new Uint32Array(image.data.buffer);
-        if (old && fade < FADE_TICKS) {
-            // Ordered-dither dissolve from the last scene into this one
-            var cut = fade / FADE_TICKS * 16, w = surface.w, b = surface.buf;
-            for (var i = 0; i < b.length; i++) {
-                var x = i % w, y = (i / w) | 0;
-                out[i] = BAYER[(y & 3) * 4 + (x & 3)] < cut ? b[i] : old[i];
-            }
-            fade++;
-        } else {
-            old = null;
-            out.set(surface.buf);
-        }
+        new Uint32Array(image.data.buffer).set(surface.buf);
         ctx.putImageData(image, 0, 0);
-    }
-
-    function setScene(id) {
-        if (id === current || !SCENES[id]) return;
-        old = reduce ? null : surface.buf.slice();
-        fade = 0;
-        current = id;
-        state = SCENES[id].init(surface);
-        tick = 0;
-        try { localStorage.setItem(STORE, id); } catch (e) {}
-        syncPicker();
-        draw();
     }
 
     size();
@@ -371,11 +341,11 @@
 
     function loop() {
         var fps = SCENES[current].fps;
-        if (!document.hidden && !scrolling && (fps || old)) {
+        if (!document.hidden && !scrolling && fps) {
             tick++;
             draw();
         }
-        setTimeout(loop, old ? 70 : 1000 / (fps || 2));
+        setTimeout(loop, 1000 / (fps || 2));
     }
     if (!reduce) setTimeout(loop, 200);
 
@@ -384,108 +354,4 @@
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () { size(); draw(); }, 150);
     });
-
-    // ---- Arena select --------------------------------------------------------
-    // A tab on the bottom edge opens a full-width strip of arenas.
-    var tab = document.createElement('button');
-    tab.type = 'button';
-    tab.className = 'arena-tab';
-    tab.setAttribute('aria-expanded', 'false');
-    tab.setAttribute('aria-controls', 'arenaBar');
-    tab.innerHTML = '<i class="hn hn-angle-up" aria-hidden="true"></i><span>Arena</span><b></b>';
-
-    var bar = document.createElement('section');
-    bar.className = 'arena-bar';
-    bar.id = 'arenaBar';
-    bar.setAttribute('aria-label', 'Choose an arena');
-    bar.hidden = true;
-    bar.innerHTML =
-        '<div class="arena-inner">' +
-            '<div class="arena-head"><h2>Select your arena</h2>' +
-            '<button type="button" class="arena-close" aria-label="Close"><i class="hn hn-times" aria-hidden="true"></i></button></div>' +
-            '<div class="arena-row" role="group" aria-label="Arenas"></div>' +
-        '</div>';
-    var row = bar.querySelector('.arena-row');
-
-    ORDER.forEach(function (id) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'arena-card';
-        b.dataset.scene = id;
-        var cv = document.createElement('canvas');
-        cv.width = 72; cv.height = 40;
-        var label = document.createElement('span');
-        label.textContent = SCENES[id].name;
-        b.append(cv, label);
-        b.addEventListener('click', function () { setScene(id); });
-        row.appendChild(b);
-    });
-
-    // Previews are only painted the first time the strip opens
-    var thumbsDone = false;
-    function paintThumbs() {
-        if (thumbsDone) return;
-        thumbsDone = true;
-        row.querySelectorAll('.arena-card').forEach(function (b) {
-            var id = b.dataset.scene, cv = b.querySelector('canvas');
-            var s = new Surface(72, 40), st = SCENES[id].init(s);
-            for (var i = 0; i < 24; i++) SCENES[id].frame(s, st, i);
-            var c = cv.getContext('2d'), im = c.createImageData(72, 40);
-            new Uint32Array(im.data.buffer).set(s.buf);
-            c.putImageData(im, 0, 0);
-        });
-    }
-
-    function syncPicker() {
-        tab.querySelector('b').textContent = SCENES[current].name;
-        row.querySelectorAll('.arena-card').forEach(function (b) {
-            b.setAttribute('aria-pressed', b.dataset.scene === current ? 'true' : 'false');
-        });
-    }
-
-    function open() {
-        paintThumbs();
-        syncPicker();
-        bar.hidden = false;
-        bar.classList.remove('is-closing');
-        tab.setAttribute('aria-expanded', 'true');
-        tab.classList.add('is-hidden');
-    }
-
-    function close() {
-        if (bar.hidden || bar.classList.contains('is-closing')) return;
-        tab.setAttribute('aria-expanded', 'false');
-        var finish = function () {
-            bar.classList.remove('is-closing');
-            bar.hidden = true;
-            tab.classList.remove('is-hidden');
-        };
-        if (reduce) { finish(); return; }
-        bar.classList.add('is-closing');
-        bar.addEventListener('animationend', function done() {
-            bar.removeEventListener('animationend', done);
-            finish();
-        });
-    }
-
-    tab.addEventListener('click', function (e) { e.stopPropagation(); open(); });
-    bar.addEventListener('click', function (e) { e.stopPropagation(); });
-    bar.querySelector('.arena-close').addEventListener('click', function () { close(); tab.focus(); });
-    document.addEventListener('click', close);
-
-    // While open, the arrows move through arenas instead of the page behind
-    document.addEventListener('keydown', function (e) {
-        if (bar.hidden) return;
-        if (e.key === 'Escape') { close(); tab.focus(); return; }
-        var step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if (!step) return;
-        e.preventDefault();
-        e.stopPropagation();
-        var n = ORDER.length, next = ORDER[(ORDER.indexOf(current) + step + n) % n];
-        setScene(next);
-        row.querySelector('[data-scene="' + next + '"]').focus({ preventScroll: true });
-    }, true);
-
-    document.body.append(tab, bar);
-    syncPicker();
 })();

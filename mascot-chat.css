@@ -1,9 +1,10 @@
 /* ==========================================================================
-   mascot-chat.css — Bit, the pixel keycap who answers questions about
-   Jonathan. Markup is injected by mascot-chat.js; everything is scoped
-   under .mc-root so it drops onto any page (shell or case study) cleanly.
+   mascot-chat.css — Apollo, Jonathan's pixel golden retriever, who walks the
+   bottom of the window and answers questions about Jonathan. Markup is
+   injected by mascot-chat.js; everything is scoped under .mc-root so it
+   drops onto any page (shell or case study) cleanly.
 
-   Bit lives in the bottom-left corner, on the site's 40px gutter.
+   The chat panel opens in the bottom-left corner, on the site's 40px gutter.
    ========================================================================== */
 
 .mc-root {
@@ -17,7 +18,10 @@
     --mc-key: #fafaf7;
     --mc-key-shade: #c3bfb6;
     --mc-ink: #161514;
-    --mc-size: 60px;
+    --mc-px: 2px;                     /* one sprite pixel; keep in step with SC in mascot-chat.js */
+    --mc-dog-w: calc(var(--mc-px) * 50);
+    --mc-dog-h: calc(var(--mc-px) * 30);
+    --mc-floor: 2px;
     --mc-bottom: 40px;
     --mc-left: 40px;
     --mc-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -45,139 +49,150 @@
 }
 
 /* --------------------------------------------------------------------------
-   The mascot SVG — shared by the launcher and the panel header
+   Apollo — the launcher is the dog himself, walking the bottom of the window.
+   mascot-chat.js moves him (transform) and picks his frame from the sprite
+   sheet (background-position); everything here is size and layering.
+   He sits under the site's fixed buttons (socials 50) so he
+   never covers them, and over the page content. The floor layer (ball,
+   squirrel, z's) is one step above him, so the ball he drops at his nose
+   can still be grabbed.
    -------------------------------------------------------------------------- */
-.mc-bot {
+.mc-sprite {
     display: block;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    shape-rendering: crispEdges;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
-.mc-bot .mc-face { fill: var(--mc-key); }
-.mc-bot .mc-skirt { fill: var(--mc-key-shade); }
-.mc-bot .mc-ink { fill: var(--mc-ink); }
-.mc-bot .mc-blush { fill: #ff9fb3; opacity: 0.85; }
-.mc-bot .mc-stem { fill: var(--mc-key-shade); }
-.mc-bot .mc-tip { fill: var(--mc-accent); animation: mc-tip 2.6s steps(1) infinite; }
-
-.mc-bot .mc-look { transition: transform 0.25s var(--mc-ease-out); }
-.mc-bot .mc-eyes { transition: transform 0.3s var(--mc-ease-out); }
-.mc-bot .mc-eye {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: mc-blink 5s infinite;
-}
-.mc-bot .mc-eye:nth-of-type(2) { animation-delay: 0.04s; }
-.mc-bot .mc-happy { opacity: 0; }
-.mc-bot .mc-mouth {
-    transform-box: fill-box;
-    transform-origin: center top;
-}
-
-/* Thinking — eyes drift up and to the side, antenna pings faster */
-.mc-root.is-thinking .mc-bot .mc-eyes { transform: translate(0.6px, -0.7px); }
-.mc-root.is-thinking .mc-bot .mc-tip { animation-duration: 0.5s; }
-
-/* Talking — mouth chatters while a reply streams in */
-.mc-root.is-talking .mc-bot .mc-mouth { animation: mc-talk 0.22s steps(2) infinite alternate; }
-
-@keyframes mc-blink {
-    0%, 93%, 100% { transform: scaleY(1); }
-    95.5% { transform: scaleY(0.12); }
-}
-
-@keyframes mc-tip {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-}
-
-@keyframes mc-talk {
-    from { transform: scaleY(1); }
-    to { transform: scaleY(2.4); }
-}
-
-/* --------------------------------------------------------------------------
-   Launcher — Bit himself, a keycap you can press
-   -------------------------------------------------------------------------- */
 .mc-launcher {
     position: fixed;
-    left: var(--mc-left);
-    bottom: var(--mc-bottom);
-    z-index: 120;
-    width: var(--mc-size);
-    height: var(--mc-size);
+    left: 0;
+    top: 0;
+    z-index: 48;
+    width: var(--mc-dog-w);
+    height: var(--mc-dog-h);
     padding: 0;
     border: 0;
     background: none;
     -webkit-tap-highlight-color: transparent;
-    animation: mc-pop-in 0.7s var(--mc-ease-spring) 0.9s both;
-    transition: opacity 0.25s ease, scale 0.25s var(--mc-ease-out);
+    will-change: transform;
 }
 
-.mc-launcher-body {
-    display: block;
+.mc-dog {
     width: 100%;
     height: 100%;
-    animation: mc-bob 3.2s ease-in-out infinite;
+    animation: mc-dog-in 0.5s steps(5) 0.2s both;
 }
 
-.mc-launcher-press {
-    display: block;
-    width: 100%;
-    height: 100%;
-    transition: translate 0.12s ease;
-}
-
-/* Soft floor shadow that shrinks as Bit bobs up */
-.mc-launcher::after {
+/* Soft floor shadow under his paws; it stays on the floor when he jumps
+   (--mc-jy is his height in the air, set by mascot-chat.js) */
+.mc-launcher::before {
     content: '';
     position: absolute;
-    left: 22%;
-    right: 22%;
-    bottom: -7px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.45);
-    filter: blur(2px);
-    animation: mc-shadow 3.2s ease-in-out infinite;
-    z-index: -1;
+    left: 26%;
+    width: 52%;
+    bottom: -1px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.35);
+    transform: translateY(var(--mc-jy, 0px)) scaleX(calc(1 - var(--mc-jy, 0px) / 300px));
 }
-
-.mc-launcher:hover .mc-launcher-press,
-.mc-launcher:active .mc-launcher-press { translate: 0 3px; }
-.mc-launcher:hover .mc-bot .mc-eye,
-.mc-launcher:focus-visible .mc-bot .mc-eye { opacity: 0; }
-.mc-launcher:hover .mc-bot .mc-happy,
-.mc-launcher:focus-visible .mc-bot .mc-happy { opacity: 1; }
 
 .mc-launcher:focus-visible {
     outline: 2px solid rgba(255, 255, 255, 0.8);
-    outline-offset: 6px;
-    border-radius: 12px;
+    outline-offset: 4px;
 }
 
-/* While the panel is open Bit tucks away; he lives in the panel header */
-.mc-root.is-open .mc-launcher {
-    opacity: 0;
-    scale: 0.6;
+@keyframes mc-dog-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Ball, squirrel, sleepy z's and the "!" when he spots something */
+.mc-floor {
+    position: fixed;
+    inset: 0;
+    z-index: 49;
     pointer-events: none;
+    overflow: hidden;
 }
 
-@keyframes mc-pop-in {
-    from { opacity: 0; transform: translateY(18px) scale(0.6); }
-    to { opacity: 1; transform: none; }
+.mc-floor > * {
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: transform;
 }
 
-@keyframes mc-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+.mc-floor [hidden] { display: none; }
+
+.mc-toy {
+    width: calc(var(--mc-px) * 10);
+    height: calc(var(--mc-px) * 10);
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
 }
 
-@keyframes mc-shadow {
-    0%, 100% { transform: scaleX(1); opacity: 1; }
-    50% { transform: scaleX(0.78); opacity: 0.6; }
+/* A bigger target than the ball itself, for fingers */
+.mc-toy::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+}
+
+html.mc-grabbing,
+html.mc-grabbing * {
+    cursor: grabbing !important;
+    user-select: none;
+}
+
+/* "Throw me!" over the ball, the first time it's left out and on hover */
+.mc-toy-hint {
+    padding: 3px 8px 5px;
+    background: #161514;
+    box-shadow: 0 0 0 2px #3a3936;
+    font-family: 'Jersey 25', 'DotGothic16', monospace;
+    font-size: 18px;
+    line-height: 1;
+    white-space: nowrap;
+    color: #f4f2ee;
+    animation: mc-hint 0.3s steps(3) both;
+}
+
+.mc-toy-hint.is-leaving { animation: mc-hint 0.2s steps(2) reverse both; }
+
+@keyframes mc-hint {
+    from { opacity: 0; translate: 0 6px; }
+    to { opacity: 1; translate: 0 0; }
+}
+
+.mc-squirrel {
+    width: calc(var(--mc-px) * 14);
+    height: calc(var(--mc-px) * 10);
+}
+
+.mc-z,
+.mc-bang {
+    font-family: 'Jersey 25', 'DotGothic16', monospace;
+    line-height: 1;
+    text-shadow: 2px 2px 0 #3a2c20;
+}
+
+.mc-z {
+    font-size: 26px;
+    color: #fff8ea;
+}
+
+.mc-bang {
+    font-size: 44px;
+    color: #ffd25a;
+    text-shadow: 3px 3px 0 #3a2c20;
+    animation: mc-bang 0.3s steps(3) both;
+}
+
+@keyframes mc-bang {
+    from { scale: 0.4; opacity: 0; }
+    to { scale: 1; opacity: 1; }
 }
 
 /* --------------------------------------------------------------------------
@@ -185,8 +200,8 @@
    -------------------------------------------------------------------------- */
 .mc-bubble {
     position: fixed;
-    left: calc(var(--mc-left) + var(--mc-size) + 12px);
-    bottom: calc(var(--mc-bottom) + var(--mc-size) * 0.45);
+    left: var(--mc-left);
+    bottom: calc(var(--mc-floor) + var(--mc-dog-h) + 10px);
     z-index: 120;
     display: flex;
     align-items: flex-start;
@@ -285,12 +300,20 @@
 
 .mc-head-bot {
     flex: none;
-    width: 40px;
+    display: grid;
+    place-items: end center;
+    width: 44px;
     height: 40px;
-    padding: 4px;
+    overflow: hidden;
     border-radius: 10px;
     background: var(--mc-surface);
     box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* 20 x 16 sprite pixels of his head, at 2x */
+.mc-head-dog {
+    width: 40px;
+    height: 32px;
 }
 
 .mc-head-text { flex: 1; min-width: 0; }
@@ -323,6 +346,11 @@
 }
 
 .mc-root.is-thinking .mc-status::before { background: var(--mc-accent); animation: mc-tip 0.5s steps(1) infinite; }
+
+@keyframes mc-tip {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
 
 /* Small keycap-style icon buttons (reset, close) */
 .mc-icon-btn {
@@ -554,7 +582,6 @@
    -------------------------------------------------------------------------- */
 @media (max-width: 640px) {
     .mc-root {
-        --mc-size: 54px;
         --mc-bottom: 18px;
         --mc-left: 18px;
     }
@@ -574,18 +601,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .mc-launcher,
-    .mc-launcher-body,
-    .mc-launcher::after,
-    .mc-bot .mc-eye,
-    .mc-bot .mc-tip,
+    .mc-dog,
+    .mc-bang,
     .mc-typing span,
     .mc-msg,
     .mc-chip {
         animation: none;
     }
 
-    .mc-root.is-talking .mc-bot .mc-mouth { animation: none; }
     .mc-panel.is-entering,
     .mc-bubble.is-entering { animation: mc-fade 0.15s ease both; }
     .mc-panel.is-leaving,

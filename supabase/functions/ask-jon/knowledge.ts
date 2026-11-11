@@ -1,7 +1,7 @@
-// Everything Bit knows about Jonathan. Compiled from the site and resume;
+// Everything Apollo (the chat mascot) knows about Jonathan. Compiled from the site and resume;
 // edit freely (plain markdown inside the template string), then redeploy:
 //   supabase functions deploy ask-jon --no-verify-jwt
-// Only state facts that are on the site. Bit is told to never go beyond this.
+// Only state facts that are on the site. Apollo is told to never go beyond this.
 export default `# Jonathan Chiang — Knowledge Base
 
 Source: jonathanchiang.com (static portfolio) and the resume PDF linked from it. Only facts stated there are included. Where pages disagree, both versions are given and marked "(sources differ)". Do not fill gaps with guesses.

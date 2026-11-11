@@ -350,7 +350,6 @@
     var BUILD = [
         ['.mc-bubble', 680, 200, 0],
         ['.mc-launcher', 600, 200, 0],
-        ['.arena-tab', 640, 200, 0],
         ['.social-links .social-link', 500, 200, 60],
         ['.carousel-nav-prev', 520, 200, 0],
         ['.carousel-nav-next', 560, 200, 0],
