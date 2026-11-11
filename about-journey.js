@@ -1,5 +1,6 @@
-// About page: the Journey list. Every row opens its resume bullets in place;
-// a case study, when there is one, is a labelled link inside the opened row.
+// About page: the Journey list. Each row shows the company logo, title, place
+// and years, and opens its resume bullets in place; a case study, when there
+// is one, is a labelled link inside the opened row.
 (function () {
     'use strict';
 
@@ -7,28 +8,28 @@
     if (!list) return;
 
     var JOURNEY = [
-        { id: 'skillcat', title: 'Design Engineer', guild: 'SkillCat', years: '2025 to 2026', soft: '#ffb18f',
+        { id: 'skillcat', title: 'Design Engineer', guild: 'SkillCat', years: '2025 to 2026', soft: '#ffb18f', logo: 'assets/Companies/skillcat.png',
           href: '/skillcat', hrefLabel: 'Read the SkillCat case study',
           points: ['Defined SkillCat’s product strategy from “certification-first” to a full trades career journey, shaping the roadmap and core experiences to drive longer-term retention and engagement',
                    'Led end-to-end interaction design and development for the redesigned learning journey, collaborating with backend and technical support teams to align user goals and technical constraints',
                    'Built fully functional prototypes in Claude Code for rapid user testing and developed complex product launch and explainer videos using Claude Motion for marketing purposes'] },
-        { id: 'scriptchain', title: 'Technical Product Designer', guild: 'ScriptChain Health', years: '2025', soft: '#a9e6e2',
+        { id: 'scriptchain', title: 'Technical Product Designer', guild: 'ScriptChain Health', years: '2025', soft: '#a9e6e2', logo: 'assets/Companies/scriptchain.png',
           href: '/scriptchain', hrefLabel: 'Read the ScriptChain case study',
           points: ['Led product design for both patient and provider portals aimed at reducing metabolic syndrome with personalized wellness plans, including prototyping out user flows and motion graphic videos',
                    'Collaborate with machine learning engineers, stakeholders, and patients to balance user flows, ensuring data driven design decisions aligned with medical goals and regulatory requirements'] },
-        { id: 'parsons', title: 'M.S. Communication Design', guild: 'Parsons School of Design', years: 'Class of 2025', soft: '#ffb3b0',
+        { id: 'parsons', title: 'M.S. Communication Design', guild: 'Parsons School of Design', years: 'Class of 2025', soft: '#ffb3b0', logo: 'assets/Companies/parsons.png',
           href: '/nocta', hrefLabel: 'Read the Nocta case study',
           text: ['Studied digital product design. Nocta began here as my capstone, then grew into a live beta.'] },
         { id: 'freelance', title: 'Product Designer', guild: 'Freelance', years: '2023 to 2024', soft: '#cdb9ff',
           points: ['Partnered with founders and stakeholders across hospitality, fitness, sports, and healthcare companies to define product goals and deliver end-to-end UX/UI, from research to high-fidelity designs',
                    'Led the website redesign and new brand identity for Resolve Parkinson’s, working directly with the board of directors to translate their research findings and patient stories into a clear, accessible experience'] },
-        { id: 'jpm', title: 'Software Engineer', guild: 'JPMorgan Chase', years: '2022', soft: '#a8c8ff',
+        { id: 'jpm', title: 'Software Engineer', guild: 'JPMorgan Chase', years: '2022', soft: '#a8c8ff', logo: 'assets/Companies/chase-logo.jpg',
           points: ['Utilized React and TypeScript to refactor front-end components for the retail Chase web application',
                    'Designed custom privileges and navigations for rendering components using JavaScript, HTML, and CSS',
                    'Collaborated with UX designers to assess design feasibility and improve user flows and interactions'] },
-        { id: 'omnicom', title: 'Marketing Analyst', guild: 'Omnicom Media Group', years: '2018 to 2019', soft: '#ffe08a',
+        { id: 'omnicom', title: 'Marketing Analyst', guild: 'Omnicom Media Group', years: '2018 to 2019', soft: '#ffe08a', logo: 'assets/Companies/omd.png',
           text: ['Analyzed campaign performance data and consumer insights to optimize digital marketing strategies for major brand clients across multiple channels.'] },
-        { id: 'ub', title: 'B.S. Business Administration', guild: 'University at Buffalo', years: 'Class of 2018', soft: '#9cc8ff',
+        { id: 'ub', title: 'B.S. Business Administration', guild: 'University at Buffalo', years: 'Class of 2018', soft: '#9cc8ff', logo: 'assets/Companies/ub-logo.jpg',
           text: ['Studied business before moving into marketing, engineering and design.'] }
     ];
 
@@ -46,6 +47,21 @@
         row.children[0].textContent = ch.title;
         row.children[1].textContent = ch.guild;
         row.children[2].textContent = ch.years;
+        // Logo tile; freelance work has no logo, so it gets its initial
+        var logo;
+        if (ch.logo) {
+            logo = document.createElement('img');
+            logo.src = ch.logo;
+            logo.alt = '';
+            logo.loading = 'lazy';
+        } else {
+            logo = document.createElement('i');
+            logo.textContent = ch.guild.charAt(0);
+            logo.classList.add('is-initial');
+        }
+        logo.classList.add('journey-logo');
+        logo.setAttribute('aria-hidden', 'true');
+        row.insertBefore(logo, row.firstChild);
 
         var body = document.createElement('div');
         body.className = 'journey-body';
