@@ -17,9 +17,16 @@
 }
 
 /* ---- Corners ------------------------------------------------------------
-   One rule squares everything except real product imagery. :where keeps it at
-   zero specificity, so the few exceptions below stay easy to write. */
-:where(body, body *):not(img, video, canvas, svg, picture, [class*="device"], [class*="phone"], [class*="island"], [class*="mockup"], [class*="thumb"], [class*="bokeh"], .nocta-screen) {
+   One rule squares everything except real product imagery, phone and device
+   frames included (SkillCat's are named sk-video-frame, sk-lineup-frame and
+   sk-stack-card). :where keeps it at zero specificity, so the few exceptions
+   below stay easy to write. */
+:where(body, body *):not(img, video, canvas, svg, picture, [class*="device"], [class*="phone"], [class*="island"], [class*="mockup"], [class*="thumb"], [class*="bokeh"], .nocta-screen, .sk-video-frame, .sk-lineup-frame, .sk-stack-card) {
+    border-radius: 0 !important;
+}
+
+/* A sliding selection inside a square control is square too */
+.nx-iter-thumb {
     border-radius: 0 !important;
 }
 
