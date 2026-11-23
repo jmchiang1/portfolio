@@ -1409,13 +1409,10 @@ a.project-card {
     z-index: 2;
 }
 
-/* Nocta's logo is a transparent mark (not a baked-in app icon like the other
-   two), so give it a matching framed background + border. */
+/* Nocta's logo is its app icon now (the pillow on its lit tile, 2026-11-23),
+   baked in like the other two, so it needs no frame of its own. */
 .project-card--nocta .sk-logo {
-    background: #0e1424;
-    /* border: 1px solid rgba(255, 255, 255, 0.12); */
-    object-fit: contain;
-    padding: 6px;
+    border-radius: 22%;
 }
 
 /* Device composition, centered on the card. */
